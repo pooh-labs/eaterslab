@@ -25,9 +25,8 @@ Stworzony system ma w przyjazny dla użytkowników sposób umożliwiać im:
 
 Projekt ma składać się z 3 modułów, rozwijanych neizależnie, które mają ze sobą komunikować się przez stworzone API:
 
-1. Serwer zbierający i porządkujący wszystkie dane, który jednocześnie udostępnia użytkownikom interfejs WWW stworzony z wykorzystaniem
+1. Serwer zbierający i porządkujący wszystkie dane, który jednocześnie udostępnia użytkownikom interfejs WWW stworzony z wykorzystaniem - Serwer WWW [Kotlin/Java/Python]
 
-2. System zbierający dane z kamer i wysyłający przetworzone dane na serwer w celu, tak by krytyczne analizy obrazu odbywały się poza serwerem klienckim
+2. System zbierający dane z kamer i wysyłający przetworzone dane na serwer w celu, tak by krytyczne analizy obrazu odbywały się poza serwerem klienckim - OpenCV [C++/Java/Python]
 
-3. Aplikacja mobilna
-
+3. Aplikacja mobilna - Android [Java/Kotlin]
