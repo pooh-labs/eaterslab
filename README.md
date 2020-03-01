@@ -1,32 +1,28 @@
 # System **MyCanteen**
 
-## Krótki opis projektu
+System MyCanteen jest przeznaczony dla klientów oraz właścicieli stołówek. Klienci przed wyjściem na obiad będą mogli sprawdzić aktualne obłożenie stołówki, oferowane menu, a także ocenić serwowane potrawy. Właściciel stołówki może przeglądać zebrane informacje, zapoznać się z historycznymi trendami odwiedzin, a także przeglądać informacje zwrotne.
 
-Stworzone oprogramowanie ma być odpowiedzialne za zarządzanie ruchem w stołówkach, ich opiniowaniem, usprawnianiem pracy pracowników w stołówkach oraz ułatwieniem klientom stołówek pozyskiwania zarówno informacji dotyczących aktualnego stanu stołówek, jak i zasięgania opinii innych użytkowników dotyczących wszelakich potraw serwowanych w stołówkach.
+## Zakres funkcjonalny
 
-## Funkcjonalności stworzonego oprogramowania
-
-Stworzony system ma w przyjazny dla użytkowników sposób umożliwiać im:
-
-1. Śledzenie aktualnego stanu stołówek:
-    * zbieranie informacji na temat aktualnego zatłoczenia w pomieszczeniach stołówki z wykorzystaniem kamer internetowych
-    * zbieranie informacji na temat aktulanego menu w stołówkach od użytkowników (rozpoznawanie tekstu ze zdjęć menu) jak i możliwość dodawania aktualnego menu przez osoby prowadzące lokale
-    * zbieranie informacji na temat aktualnych długości kolejek w lokalach, średniego czasu oczekiwania na posiłek
-2. Zbieranie danych od użytkowników aplikacji:
-    * wystawianie opinii na temat posiłków serwowanych w stołówkach każdego dnia
+1. Śledzenie liczby użytkowników:
+    * zbieranie informacji o aktualnym zatłoczeniu stołówki
+    * zbieranie informacji o aktualnych długościach kolejek i średnim czasie oczekiwania na posiłek
+    * podgląd informacji o obłożeniu na żywo
+    * przegląd historii i trendów dla właścicieli
+        * powiadomienia o spodziewanych skokach liczby użytkowników
+        * szacowanie ilości zamówionych dań 
+2. Obsługa menu:
+    * dodawanie menu przez użytkowników i właścicieli stołówek
+    * podgląd oferty dla użytkowników
+3. Zbieranie informacji zwrotnej od użytkowników:
+    * wystawianie opinii na temat serwowanych posiłków
     * prowadzenie statystyk ogólnego zadowolenia klientów z lokali
-3. Udostępnianie zebranych informacji w przyjazny dla użyttkownika sposób:
-   * stworzenie aplikacji WWW zawierającej panel użytkownika stołówek wraz ze wszystkimi zebranymi danymi
-   * stworzenie aplikacji mobilnej dla pracowników stółówek pomagającej im w pracy na podstawie zbieranych danych:
-       * powiadomienia o nadchodzących klientach
-       * statystyki oczekiwanych przez klientów dań i szacowanie ilości potrzebnego jedzenia
 
-## Plany wykorzystania technologii
+Opisane funkcje będą oferowane poprzed stronę WWW oraz aplikację na system Android.
 
-Projekt ma składać się z 3 modułów, rozwijanych niezależnie, które mają komunikować się ze sobą przez API:
+## Zarys architektury
 
-1. Serwer zbierający i porządkujący wszystkie dane, który jednocześnie udostępnia użytkownikom interfejs WWW stworzony z wykorzystaniem - Serwer WWW [Kotlin/Java/Python]
-
-2. System zbierający dane z kamer i wysyłający przetworzone dane na serwer w celu, tak by krytyczne analizy obrazu odbywały się poza serwerem klienckim - OpenCV [C++/Java/Python]
-
-3. Aplikacja mobilna - Android [Java/Kotlin]
+1. Centralny punkt dostępowy zbiera informacje i udostępnia je klientom. [Kotlin/Java/Python]
+2. System kamer zlicza liczbę osób wchodzących i wychodzących ze stołówki i przekazuje je do serwera. Obrazy są przetwarzane na urządzeniu, do serwera trafiają tylko liczby użytkowników. [OpenCV/C++/Java/Python]
+3. Klient WWW udostępnia informacje dla użytkowników i dostarcza panel administracyjny dla właścicieli. [?]
+4. Aplikacja Android udostępnia informacje dla użytkowników i dostarcza panel administracyjny dla właścicieli. [Java/Kotlin]
