@@ -2,7 +2,7 @@
 
 ## Krótki opis projektu
 
-Stworzone oprogramowanie ma być odpowiedzialne przede wszystkim za zarządzanie ruchem w stółkach, ich opiniowaniem, usprawnianiem pracy pracowników w stołówkach oraz ułatwieniem klientom stołówek pozyskimwania zaróno informacji dotyczących aktualnego stanu stołówek, jak i zasiegania opinii innych uzytkowników dotyczących wszelakich potraw serwowanych w stołówkach.
+Stworzone oprogramowanie ma być odpowiedzialne za zarządzanie ruchem w stołówkach, ich opiniowaniem, usprawnianiem pracy pracowników w stołówkach oraz ułatwieniem klientom stołówek pozyskiwania zarówno informacji dotyczących aktualnego stanu stołówek, jak i zasięgania opinii innych użytkowników dotyczących wszelakich potraw serwowanych w stołówkach.
 
 ## Funkcjonalności stworzonego oprogramowania
 
@@ -23,7 +23,7 @@ Stworzony system ma w przyjazny dla użytkowników sposób umożliwiać im:
 
 ## Plany wykorzystania technologii
 
-Projekt ma składać się z 3 modułów, rozwijanych neizależnie, które mają ze sobą komunikować się przez stworzone API:
+Projekt ma składać się z 3 modułów, rozwijanych niezależnie, które mają komunikować się ze sobą przez API:
 
 1. Serwer zbierający i porządkujący wszystkie dane, który jednocześnie udostępnia użytkownikom interfejs WWW stworzony z wykorzystaniem - Serwer WWW [Kotlin/Java/Python]
 
