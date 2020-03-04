@@ -34,7 +34,7 @@ wget -q --show-progress "${RASPBIAN_ISO_URL}" -O "${VM_ISO_PATH}"
 
 echo "Creating vm..."
 vboxmanage createvm --name "${VM_NAME}" --ostype "Linux" --register --basefolder "${CURRENT_DIR}" && # Linux OS type is "Other Linux (32-bit)"
-vboxmanage modifyvm "${VM_NAME}" --memory 6144 --vram 128 &&
+vboxmanage modifyvm "${VM_NAME}" --memory 6144 --vram 128 && # 6 GB RAM, 128 MB VRAM
 vboxmanage modifyvm "${VM_NAME}" --nic1 nat &&
 vboxmanage createhd --filename "${VM_DISK_FILE_PATH}" --size "14336" --format VDI && 
 vboxmanage storagectl "${VM_NAME}" --name "IDE Controller" --add ide --controller PIIX4 &&
