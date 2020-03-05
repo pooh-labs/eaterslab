@@ -1,7 +1,15 @@
 #!/bin/sh
 
+print_usage() {
+    echo >&2 "Usage: $0 [options]"
+    echo >&2 "  --help\tShow help and quit"
+    echo >&2 "  --disk=<y>\tSet <y> MB of disk space (14336 MB by default)"
+    echo >&2 "  --ram=<x>\tSet <x> MB of RAM (512 MB by default)"
+    echo >&2 "  --vm-dir=<d>\tSet VM files directory to <dir> (./vm-files by default)"
+}
+
 print_usage_and_die() {
-    echo >&2 "Usage: $0 [<vm-files-directory>]"
+    print_usage
     exit 1
 }
 
@@ -11,12 +19,38 @@ if [ "$PWD" != "$(dirname "$(realpath "$0")")" ]; then
     print_usage_and_die
 fi
 
-# Check for custom VM_DIR
-if [ "$#" -eq 1 ]; then
-    VM_DIR="$1"
-else
-    VM_DIR="vm-files"
-fi
+# Defaults for flags
+DISK_SIZE=14336
+RAM_SIZE=512
+VM_DIR="./vm-files"
+
+# process flags
+for arg in "$@"
+do
+    case $arg in
+        --help)
+        print_usage
+        exit 0
+        ;;
+        --disk=*)
+        DISK_SIZE="${arg#*=}"
+        echo "Selected disk size: ${DISK_SIZE} MB"
+        shift
+        ;;
+        --ram=*)
+        RAM_SIZE="${arg#*=}"
+        echo "Selected RAM size: ${RAM_SIZE} MB"
+        shift
+        ;;
+        --vm-dir=*)
+        VM_DIR="${arg#*=}"
+        shift
+        ;;
+    esac
+done
+
+mkdir -p "${VM_DIR}"
+echo "Using vm dir: ${VM_DIR}"
 
 PROJECT_NAME=ivory-beam
 RASPBIAN_ISO_URL="https://downloads.raspberrypi.org/rpd_x86/images/rpd_x86-2020-02-14/2020-02-12-rpd-x86-buster.iso"
@@ -26,17 +60,14 @@ VM_NAME="${PROJECT_NAME}-camera"
 VM_ISO_PATH="${VM_DIR}/${RASPBIAN_BUILD}.iso"
 VM_DISK_FILE_PATH="${VM_DIR}/${VM_NAME}-disk.vdi"
 
-mkdir -p "${VM_DIR}"
-echo "Using vm dir: ${VM_DIR}"
-
 echo "Downloading image..."
 wget -q --show-progress "${RASPBIAN_ISO_URL}" -O "${VM_ISO_PATH}"
 
 echo "Creating vm..."
 vboxmanage createvm --name "${VM_NAME}" --ostype "Linux" --register --basefolder "${CURRENT_DIR}" && # Linux OS type is "Other Linux (32-bit)"
-vboxmanage modifyvm "${VM_NAME}" --memory 6144 --vram 128 && # 6 GB RAM, 128 MB VRAM
+vboxmanage modifyvm "${VM_NAME}" --memory "${RAM_SIZE}" --vram 128 &&
 vboxmanage modifyvm "${VM_NAME}" --nic1 nat &&
-vboxmanage createhd --filename "${VM_DISK_FILE_PATH}" --size "14336" --format VDI && 
+vboxmanage createhd --filename "${VM_DISK_FILE_PATH}" --size "${DISK_SIZE}" --format VDI && 
 vboxmanage storagectl "${VM_NAME}" --name "IDE Controller" --add ide --controller PIIX4 &&
 vboxmanage storageattach "${VM_NAME}" --storagectl "IDE Controller" --port 0 --device 0 --type hdd --medium "${VM_DISK_FILE_PATH}" &&
 vboxmanage storageattach "${VM_NAME}" --storagectl "IDE Controller" --port 1 --device 0 --type dvddrive --medium "${VM_ISO_PATH}" && 

@@ -8,7 +8,7 @@ A quick overview of directory structure:
 
 You will need ~3 GB for Raspbian Desktop image and up to 14 GB for the disk file.
 
-1. Run `./set-up-vm.sh [<vm-files-path>]`,
+1. Run `./set-up-vm.sh` (`--help` shows configuration options).
 2. Start VM from Virtual Box and choose `Install` option.
     1. Keymap to use: `American English`
     2. Partition disks: `Guided partitioning`, `Guided - use entire disk`
