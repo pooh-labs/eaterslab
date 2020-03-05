@@ -1,11 +1,16 @@
 #!/bin/sh
 
+# Defaults for flags
+DISK_SIZE=14336
+RAM_SIZE=512
+VM_DIR="./vm-files"
+
 print_usage() {
     echo >&2 "Usage: $0 [options]"
     echo >&2 "  --help\tShow help and quit"
-    echo >&2 "  --disk=<y>\tSet <y> MB of disk space (14336 MB by default)"
-    echo >&2 "  --ram=<x>\tSet <x> MB of RAM (512 MB by default)"
-    echo >&2 "  --vm-dir=<d>\tSet VM files directory to <dir> (./vm-files by default)"
+    echo >&2 "  --disk=<y>\tSet <y> MB of disk space (${DISK_SIZE} MB by default)"
+    echo >&2 "  --ram=<x>\tSet <x> MB of RAM (${RAM_SIZE} MB by default)"
+    echo >&2 "  --vm-dir=<d>\tSet VM files directory to <dir> (${VM_DIR} by default)"
 }
 
 print_usage_and_die() {
@@ -18,11 +23,6 @@ if [ "$PWD" != "$(dirname "$(realpath "$0")")" ]; then
     echo >&2 "Error: Script called from a different directory" 
     print_usage_and_die
 fi
-
-# Defaults for flags
-DISK_SIZE=14336
-RAM_SIZE=512
-VM_DIR="./vm-files"
 
 # process flags
 for arg in "$@"
