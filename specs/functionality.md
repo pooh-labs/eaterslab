@@ -14,27 +14,37 @@ The MyCanteen system is intended for customers and canteen owners. Before going 
         * Person leaving
     * Send video stream to the main server (optional)
 2. Occupance statistics on the server
-    * Get number of people in the room (relatively to the max capacity)
+    * Get number of people in the room (relatively to the full capacity)
         * Now/by year/month/28 days/week/7 days/day/hour
     * Get expected number of people in the next X minutes (optional)
     * Get expected wait time in the line (optional)
+    * Get expected wait time for some dishes based on other users feedback (optional)
 3. Admin panel
     * 2FA with OTP (optional)
     * Manage canteens
-        * Create canteen with name
-        * Update canteen
+        * Create canteen with properties (name, address, constant menu, opening hours)
+        * Update canteen data
         * Delete canteen
     * Manage menus (**TODO**: needs work)
         * List current menu options (text version if available, then photos)
         * Option rating (visible for everyone)
         * Admin upload menu photos
         * Text extraction from images (optional)
+        * View historical menu options
     * Manage cameras
         * Register new camera and generate authentication key
         * List assigned cameras with state (on/off/lost connection)
         * Update and remove camera
-    * Browse historical data and predictions
+    * Browse historical data
         * Histogram with number of people
             * Break by year/month/28 days/week/7 days/day/hour
-        * **TODO** Include predictions
-4. Android app (**TODO**)
+        * Popularity of concrete dishes based on canteens owners data (optional)
+4. Android app and webclient (**TODO**)
+    * View the current canteen status
+    * Get the predictions about canteen occupance (optional)
+    * Get predictions of periodical menu changes (optional)
+    * View most of the statistics data
+    * Review canteens and dishes
+    * Get information about eaten food (calories and nutritional values) (optional)
+    * Get access to administration panel (optional on android)
+    
