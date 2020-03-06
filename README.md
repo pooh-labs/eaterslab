@@ -1,6 +1,13 @@
-# System **MyCanteen**
+# **MyCanteen**  System 
 
-System MyCanteen jest przeznaczony dla klientów oraz właścicieli stołówek. Klienci przed wyjściem na obiad będą mogli sprawdzić aktualne obłożenie stołówki, oferowane menu, a także ocenić serwowane potrawy. Właściciel stołówki może przeglądać zebrane informacje, zapoznać się z historycznymi trendami odwiedzin, a także przeglądać informacje zwrotne.
+The MyCanteen system is designed for customers and canteen owners. Before going out for dinner, customers will be able to check the current canteen occupancy, offered menu and served food. The canteen owner can view the collected information, compare thems with historical visit trends, as well as view cutomers feedback.
+
+# System components
+
+The whole system consists of three main apps:
+* camera system for data capturing and main analyze process (written in C++ using openCV)
+* webserver app for data management and webclient app (written in Python using Django)
+* android app for users feedback and statistics management (app written in Kotlin for Android) 
 
 ## Zakres funkcjonalny
 
