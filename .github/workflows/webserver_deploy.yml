@@ -1,4 +1,4 @@
-name: Webserver CI
+name: Webserver deploy
 
 on:
   push:
@@ -15,6 +15,5 @@ jobs:
         env:
             HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_TOKEN }}
             HEROKU_APP_NAME: "MyCanteenWebserver"
-            if: github.ref == 'refs/heads/webserver' && job.status == 'success'
             run: git push https://heroku:$HEROKU_API_TOKEN@git.heroku.com/$HEROKU_APP_NAME.git origin/webserver:master
 
