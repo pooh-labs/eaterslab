@@ -1,16 +1,23 @@
 # **MyCanteen** System Functionalities
 
 1. Camera input from Raspberry Pi
+    * Setup workflow
+        * Register API authorization key on device
+        * Enable/disable logging
+        * Provide setup GUI (optional)
     * Read video stream from camera or USB webcam
-    * Compute number of people entering and leaving the room
+    * Analyze video stream
+        * Compute number of people entering and leaving the room
+        * Log numbers to device
+        * Track actors inside canteen (optional)
     * Send camera state information to the server
         * Monitoring starts
         * Monitoring ends
         * Person entering
+            * Send actor ID if tracking (optional)
         * Person leaving
-    * Anonymousely track people positions in canteen  (optional)
-    * Send video stream to the main server (optional)
-    * Give access to simple setup graphical interface (optional)  
+            * Send actor ID if tracking (optional)
+        * Send video stream to the main server (optional)
 2. Admin panel
     * Manage canteens
         * Create canteen with properties (name, address, constant menu, opening hours)
