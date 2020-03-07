@@ -2,7 +2,6 @@ name: API checks
 
 on:
   pull_request:
-    branches: [ master ]
     paths: ['specs/api.yaml']
 
 jobs:
