@@ -16,4 +16,4 @@ jobs:
           ref: server
       - name: Deploy to Heroku
         if: github.ref == 'refs/heads/server' && job.status == 'success'
-        run: git subtree push --prefix server https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/mycanteenapp.git server:master
+        run: git subtree push --prefix server https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/mycanteenapp.git master
