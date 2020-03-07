@@ -13,5 +13,5 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Deploy to Heroku
-        if: github.ref == 'refs/heads/webserver' && job.status == 'success'
+        if: github.ref == 'refs/heads/server' && job.status == 'success'
         run: git subtree push --prefix server https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/mycanteenapp.git origin/server:master
