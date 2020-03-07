@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+        with:
+          ref: server
       - name: Deploy to Heroku
         if: github.ref == 'refs/heads/server' && job.status == 'success'
         run: git subtree push --prefix server https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/mycanteenapp.git server:master
