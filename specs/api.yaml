@@ -33,7 +33,11 @@ paths:
                 - $ref: "#/components/schemas/CafeteriaPrivateProperties"
       responses:
         201:
-          description: Null response
+          description: New cafeteria ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ObjectId"
         default:
           description: Unexpected error
           content:
