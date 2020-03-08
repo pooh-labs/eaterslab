@@ -54,3 +54,4 @@
     * Review canteens and dishes
     * Get information about eaten food (calories and nutritional values) (optional)
     * Do review of eaten food and visited canteens
+    * Widget with basic data from canteens for Android app
