@@ -6,7 +6,7 @@ Cafeterias are popular among students and office workers going for lunch or dinn
 
 ## Value proposition
 
-Informing customers about cafeteria state saves them time and helps them decide whether to go for lunch. They should know beforehands the menu and how many people are currently having lunch. With rating options, users can guide each other in search for the best dishes. Foreign visitors and disabled users can easily access all data on their devices.
+Informing customers about cafeteria state saves them time and helps them decide whether to go for lunch at given time. They should know how many people are currently having lunch and what the menu is beforehands. With rating options, users can guide each other in search for the best dishes. Foreign visitors and disabled users can easily access all data on their devices.
 
 Owners will benefit from analytics. Historical data and occupancy predictions help to prepare for lunch in advance, while updating customers mitigates traffic spikes. Publishing menus is a new marketing channel promoting cafe directly to interested users. Administration panel can automate posting to social media channels. Collected feedback will contribute to service improvements.
 
