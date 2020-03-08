@@ -16,6 +16,4 @@ jobs:
           ref: server
       - name: Deploy to Heroku
         if: github.ref == 'refs/heads/server' && job.status == 'success'
-        run: |
-          git fetch --all --unshallow
-          git push -f https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/mycanteenapp.git server:master
+        run: git push -f https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/mycanteenapp.git server:master
