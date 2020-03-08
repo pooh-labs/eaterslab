@@ -15,3 +15,4 @@ jobs:
       - name: Deploy to Heroku
         if: job.status == 'success'
         run: git subtree push --prefix server https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/mycanteenapp.git origin/server:master
+	
