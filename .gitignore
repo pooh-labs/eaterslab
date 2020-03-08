@@ -5,5 +5,5 @@ android/.gradle
 
 # Python server
 __pycache__/
-server/db.sqlite3
 .idea/
+server/db.sqlite3
