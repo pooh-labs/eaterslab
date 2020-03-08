@@ -2,3 +2,5 @@
 android/build
 android/local.properties
 android/.gradle
+server/__pycache__/**
+server/db.sqlite3
