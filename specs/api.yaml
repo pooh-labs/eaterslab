@@ -1,0 +1,100 @@
+openapi: "3.0.0"
+info:
+  version: 0.0.0
+  title: ivory-beam API
+servers:
+  - url: http://ivory-beam.example/beta
+paths:
+  /cafeterias:
+    get:
+      summary: List all cafeterias
+      responses:
+        200:
+          description: Array of cafeterias
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CafeteriaPublicArray"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Create new cafeteria
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/CafeteriaPublicProperties"
+                - $ref: "#/components/schemas/CafeteriaPrivateProperties"
+      responses:
+        201:
+          description: New cafeteria ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ObjectId"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    ObjectId:
+      required:
+        - id
+      properties:
+        id:
+          type: integer
+          format: int32
+          minimum: 1
+    CafeteriaPublicProperties:
+      required:
+        - name
+      properties:
+        name:
+          type: string
+    CafeteriaPrivateProperties:
+      required:
+        - capacity
+      properties:
+        capacity:
+          type: integer
+          format: int32
+          minimum: 1
+    CafeteriaPublic:
+      allOf:
+        - $ref: "#/components/schemas/ObjectId"
+        - $ref: "#/components/schemas/CafeteriaPublicProperties"
+      example:
+        id: 1
+        name: "Kubuś"
+    CafeteriaPrivate:
+      allOf:
+        - $ref: "#/components/schemas/ObjectId"
+        - $ref: "#/components/schemas/CafeteriaPublicProperties"
+        - $ref: "#/components/schemas/CafeteriaPrivateProperties"
+      example:
+        id: 1
+        name: "Kubuś"
+        capacity: 50
+    CafeteriaPublicArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/CafeteriaPublic"
+    Error:
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
