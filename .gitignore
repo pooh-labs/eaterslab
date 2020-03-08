@@ -1,6 +1,8 @@
-.idea/
 android/build
 android/local.properties
 android/.gradle
-server/__pycache__/**
+
+# Python server
+__pycache__/
 server/db.sqlite3
+.idea/
