@@ -1,11 +1,11 @@
-# **MyCanteen** System Functionalities
+# **MyCanteen** Functionality
 
-1. Camera input from Raspberry Pi
+1. Camera devices
     * Setup workflow
         * Register API authorization key on device
         * Enable/disable logging
         * Provide setup GUI (optional)
-    * Read video stream from camera or USB webcam
+    * Read video stream from integrated camera or USB webcam
     * Analyze video stream
         * Compute number of people entering and leaving the room
         * Log numbers to device
@@ -13,45 +13,84 @@
     * Send camera state information to the server
         * Monitoring starts
         * Monitoring ends
-        * Person entering
-            * Send actor ID if tracking (optional)
-        * Person leaving
-            * Send actor ID if tracking (optional)
+        * Visitor count update (batched)
+            * People entering
+            * People leaving
+            * Send actor IDs if tracking (optional)
         * Send video stream to the main server (optional)
-2. Admin panel
+2. Data ingestion endpoint
+    * Check for cameras losing connection
+    * Set up prediction pipeline (optional)
+        * Get expected number of people in the next X minutes
+    * Save numbers to database (aggregate by X seconds/minutes)
+3. Admin panel
+    * Login flow for owners
+        * 2FA with OTP (optional)
     * Manage canteens
-        * Create canteen with properties (name, address, constant menu, opening hours)
-        * Update canteen data
+        * List owned cafes
+        * Register canteen
+            * Name
+            * Capacity
+            * Logo (optional)
+            * Address (optional)
+            * Regular menu (optional)
+            * Opening hours (optional)
+        * Update canteen
         * Delete canteen
     * Manage menus
-        * List current menu options (text version if available, then photos)
-        * Option rating (visible for everyone)
-        * Admin upload menu photos
-        * Text extraction from images (optional)
-        * View historical menu options
-        * Get suggestions for future menu creation based on canteens owners data (optional)
+        * Create menu for day
+            * Add entries to the list
+                * Tag as vegetarian
+                * Add different tags (vegan, halaal, locally sourced etc.) (optional)
+                    * Support user-created tags
+            * Recognize entry list from a photo (optional)
+                * Upload photo
+                * Send photo to external service for analysis
+        * Browse menus
+            * Display options with ratings
+                * Stars (1-5)
+                * Text reviews (optional)
+            * Display photo if photo uploaded and no text options (optional)
+        * Update menus
+        * Delete menus
+        * Post menu to Facebook (optional)
+        * Export menu as PDF (optional)
     * Manage cameras
         * Register new camera and generate authentication key
-        * List assigned cameras with state (on/off/lost connection)
-        * Update and remove camera
-    * Browse historical data
-        * Plot histogram with number of people
+        * List cameras
+            * Show state (on/off/lost connection)
+        * Update camera
+            * Reset auth key
+        * Unregister camera
+    * Browse analytics
+        * Plot cafeteria occupancy
             * Break by year/month/week/day/hour
-        * Popularity of concrete dishes based on canteens owners data (optional)
-    * 2FA with OTP (optional)
-3. Client App [Adroid and Web]
-    * View the current canteen status
-        * closed/open
-        * has specified food - based on canteens owners data (optional)
-    * Get the predictions of canteen occupance (optional)
-        * Get number of people in the room (relatively to the full capacity)
-            * Now/in last year/month/week/day/hour
-        * Get expected number of people in the next minutes (optional)
-        * Get expected wait time in the line (optional)
-        * Get expected wait time for some dishes based on other users feedback (optional)
-    * Get predictions of periodical menu changes (optional)
+        * Plot review count
+            * Break by year/month/week/day/hour
+        * Plot different charts together for correlation analysis
+        * Popularity of dishes based on canteens owners data (optional)
+4. Client app
+    * Browse canteens
+        * View canteen
+            * Open/closed
+            * Live number of visitors (relatively to the full capacity)
+                * Create widget for mobile devices (optional)
+            * Display predicted occupance (optional)
+            * Has specified food - based on tags (optional)
+            * List menu options (see below)
+            * List historical menus (see below)
+        * Filter canteen list
+            * Open/closed
+            * Minimum rating
+            * Has tags (optional)
+    * Browse menus
+        * Display menu options
+        * Rate option
+        * Get nutrition values (optional)
     * View most of the statistics data
-    * Review canteens and dishes
-    * Get information about eaten food (calories and nutritional values) (optional)
-    * Do review of eaten food and visited canteens
-    * Widget with basic data from canteens for Android app
+        * **TODO**: More specific
+5. Other prediction pipelines (optional)
+    * Get suggestions for menu options based on ratings
+    * Get expected line wait time
+    * Get expected wait time for dishes based on other users feedback
+    
