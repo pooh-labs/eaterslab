@@ -3,7 +3,7 @@ name: Webserver deploy
 on:
   push:
     branches:
-      - "avan1235/webapp-heroku-setup"
+      - 'avan1235/webapp-heroku-setup'
 
 jobs:
   build:
@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: "avan1235/webapp-heroku-setup"
+          ref: 'avan1235/webapp-heroku-setup'
       - name: Deploy to Heroku
         if: github.ref == 'refs/heads/avan1235/webapp-heroku-setup' && job.status == 'success'
         run: git subtree push --prefix server https://heroku:${{ secrets.HEROKU_API_TOKEN }}@git.heroku.com/mycanteenapp.git master
