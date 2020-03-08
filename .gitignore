@@ -4,3 +4,6 @@
 *.pot
 *.pyc
 local_settings.py
+android/build
+android/local.properties
+android/.gradle
