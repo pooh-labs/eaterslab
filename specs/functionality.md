@@ -89,6 +89,8 @@
         * Get nutrition values (optional)
     * View most of the statistics data
         * **TODO**: More specific
+    * Provide English version (optional)
+    * Implement accessibility features (optional)
 5. Other prediction pipelines (optional)
     * Get suggestions for menu options based on ratings
     * Get expected line wait time
