@@ -35,6 +35,7 @@
             * Address (optional)
             * Regular menu (optional)
             * Opening hours (optional)
+            * Fixed menu with prices (optional)
         * Update canteen
         * Delete canteen
     * Manage menus
@@ -48,9 +49,9 @@
                 * Send photo to external service for analysis
         * Browse menus
             * Display options with ratings
-                * Stars (1-5)
+                * Stars (integeres in range [1..5])
                 * Text reviews (optional)
-            * Display photo if photo uploaded and no text options (optional)
+            * Display photo if uploaded (optional)
         * Update menus
         * Delete menus
         * Post menu to Facebook (optional)
@@ -83,16 +84,21 @@
             * Open/closed
             * Minimum rating
             * Has tags (optional)
+        * Find nearby canteens (optional on Android)
     * Browse menus
         * Display menu options
         * Rate option
         * Get nutrition values (optional)
     * View most of the statistics data
-        * **TODO**: More specific
+        * Plot cafeteria occupancy
+            * Break by year/month/week/day/hour
+            * Correlated to specified menu options (optional)
+        * Plot menu options prices changes (optional)
+        * Plot different cafeterias occupancy comparision
+            * Break by year/month/week/day/hour
     * Provide English version (optional)
     * Implement accessibility features (optional)
 5. Other prediction pipelines (optional)
     * Get suggestions for menu options based on ratings
     * Get expected line wait time
     * Get expected wait time for dishes based on other users feedback
-    
