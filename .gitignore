@@ -1,3 +1,8 @@
+# Android
+android/build
+android/local.properties
+android/.gradle
+
 # Python server
 __pycache__/
 .idea/
