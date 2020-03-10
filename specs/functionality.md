@@ -23,7 +23,14 @@
     * Set up prediction pipeline (optional)
         * Get expected number of people in the next X minutes
     * Save numbers to database (aggregate by X seconds/minutes)
-3. Admin panel **TODO**
+3. Admin panel
+    * Register canteen owner (optional)
+        * Username
+        * First Name
+        * Last Name
+        * Password
+    * Edit canteen owner (optional)
+    * Remove canteen owner (optional)
 4. Owner panel
     * Login flow for owners
         * 2FA with OTP (optional)
