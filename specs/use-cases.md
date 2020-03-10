@@ -12,7 +12,7 @@
 
 ### Log in to the panel
 
-Pre-condition: User is not logged in and enteres any admin panel website.
+Pre-condition: User is not logged in and enters any admin panel website.
 
 Post-condition: User is logged in.
 
