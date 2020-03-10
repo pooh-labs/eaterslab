@@ -23,9 +23,11 @@
     * Set up prediction pipeline (optional)
         * Get expected number of people in the next X minutes
     * Save numbers to database (aggregate by X seconds/minutes)
-3. Admin panel
+3. Admin panel **TODO**
+4. Owner panel
     * Login flow for owners
         * 2FA with OTP (optional)
+        * 2FA registration flow (optional)
     * Manage canteens
         * List owned cafes
         * Register canteen
@@ -72,7 +74,7 @@
             * Break by year/month/week/day/hour
         * Plot different charts together for correlation analysis
         * Popularity of dishes based on canteens owners data (optional)
-4. Client app
+5. Client app
     * Browse canteens
         * View canteen
             * Open/closed
@@ -100,7 +102,7 @@
             * Break by year/month/week/day/hour
     * Provide English version (optional)
     * Implement accessibility features (optional)
-5. Other prediction pipelines (optional)
+6. Other prediction pipelines (optional)
     * Get suggestions for menu options based on ratings
     * Get expected line wait time
     * Get expected wait time for dishes based on other users feedback
