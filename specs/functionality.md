@@ -49,9 +49,11 @@
                 * Send photo to external service for analysis
         * Browse menus
             * Display options with ratings
-                * Stars (integeres in range [1..5])
+                * Stars (integers in range [1..5])
                 * Text reviews (optional)
-            * Display photo if uploaded (optional)
+                * Photos of dishes (optional)
+                * Prices of dishes (optional)
+            * Display photo of menu board if uploaded and no text options (optional)
         * Update menus
         * Delete menus
         * Post menu to Facebook (optional)
@@ -84,7 +86,7 @@
             * Open/closed
             * Minimum rating
             * Has tags (optional)
-        * Find nearby canteens (optional on Android)
+        * Find nearby canteens based on used location (optional on Android)
     * Browse menus
         * Display menu options
         * Rate option
