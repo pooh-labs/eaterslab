@@ -4,9 +4,17 @@
 
 ### Log in to the panel
 
+### Register new canteen
+
+### Delete canteen
+
+### Change canteen information / resize canteen
+
 ### Register new canteen owner
 
 ### Delete canteen owner
+
+**TODO**: More manage canteens use cases
 
 ## Owner Panel related
 
@@ -15,6 +23,20 @@
 Pre-condition: User is not logged in and enters any admin panel website.
 
 Post-condition: User is logged in.
+
+## Canteen management
+
+Pre-condition (management): Canteen admin/owner is logged in.
+
+### Upload today's menu
+
+### Remove uploaded menu
+
+### Change menu item
+
+### Remove / hide / report a user's menu item review
+
+**TODO**: More manage menus use cases
 
 #### Basic path:
 
@@ -26,11 +48,7 @@ Post-condition: User is logged in.
 
 #### Exception paths:
 
-* If username-password pair or OTP code are incorrect, flow goes back to (1). Website will show error message above the form.
-
-### **TODO**: Manage canteens use cases
-
-### **TODO**: Manage menus use cases
+* If username-password pair or OTP code are incorrect, flow goes back to (1). Website will show error message above the form. 
 
 ### Register new camera
 
