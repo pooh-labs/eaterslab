@@ -7,3 +7,5 @@ android/.gradle
 __pycache__/
 .idea/
 server/db.sqlite3
+.env
+
