@@ -54,7 +54,7 @@ For each point prepended by priority:
             * [3] Address
             * [4] Geo location from address
             * [4] Regular menu
-            * [3] Opening hours
+            * [2] Opening hours
             * [4] Fixed menu with prices
         * [2] Update canteen
         * [1] Delete canteen
@@ -112,6 +112,8 @@ For each point prepended by priority:
         * [3] Find nearby canteens based on used location
     * Browse menus
         * [1] Display menu options
+            * [1] Show price
+            * [3] Show average rating
         * [1] Rate option
         * [4] Get nutrition values
     * View most of the statistic data
