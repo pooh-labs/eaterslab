@@ -1,5 +1,7 @@
 package labs.pooh.mycanteen
 
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
@@ -59,6 +61,13 @@ class MapSearchActivity : AppCompatActivity() {
             myLocationOverlay = MyLocationNewOverlay(gpsProvider, this)
             myLocationOverlay.enableMyLocation()
             overlays += myLocationOverlay
+
+            fabMap.setOnClickListener {
+                gpsProvider.lastKnownLocation?.let {
+                    val locationPoint = GeoPoint(it.latitude, it.longitude)
+                    controller.animateTo(locationPoint)
+                }
+            }
 
             controller.setCenter(GeoPoint(52.211903, 20.982224))
             controller.setZoom(DEFAULT_ZOOM)

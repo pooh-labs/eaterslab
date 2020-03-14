@@ -40,7 +40,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textSize="@dimen/tiny_font"
-            android:text="@string/occupancy"
             app:layout_constraintEnd_toEndOf="@id/bubble_description"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@id/bubble_description"

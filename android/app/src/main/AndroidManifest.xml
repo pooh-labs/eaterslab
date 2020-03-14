@@ -20,8 +20,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MapSearchActivity"
-            android:label="@string/search_map_title"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/search_map_title">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
