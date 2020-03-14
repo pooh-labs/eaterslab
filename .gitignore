@@ -8,5 +8,5 @@ __pycache__/
 .idea/
 server/db.sqlite3
 .env
-serverenv/*
+server/serverenv/*
 
