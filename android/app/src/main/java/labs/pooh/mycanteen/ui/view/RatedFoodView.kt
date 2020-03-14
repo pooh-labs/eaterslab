@@ -10,21 +10,21 @@ import labs.pooh.mycanteen.R
 
 class RatedFoodView(context: Context) : ConstraintLayout(context) {
 
-    var numStars: Float = 0F
+    private var numStars: Float = 0F
         set(value) {
             assert(value >= 0) { "Rating cannot be negative value" }
             field = value
             ratingBarStars.rating = numStars
         }
 
-    var price: Double = 0.0
+    private var price: Double = 0.0
         set(value) {
             assert(value >= 0.0) { "Price cannot be negative value" }
             field = value
             textViewPrice.text = String.format("%.2f zł", value)
         }
 
-    var text: String = ""
+    private var text: String = ""
         set(value) {
             field = value
             textViewName.text = value
@@ -54,7 +54,7 @@ class RatedFoodView(context: Context) : ConstraintLayout(context) {
         }
     }
 
-    fun setImageDrawable(img: Drawable) = ratedImage.setImageDrawable(img)
+    private fun setImageDrawable(img: Drawable) = ratedImage.setImageDrawable(img)
 
-    fun setImageBitmap(img: Bitmap) = ratedImage.setImageBitmap(img)
+    private fun setImageBitmap(img: Bitmap) = ratedImage.setImageBitmap(img)
 }
