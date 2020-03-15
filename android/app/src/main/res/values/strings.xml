@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MyCanteen</string>
     <string name="search_map_title">Find your canteen</string>
+    <string name="select_action_title">Select your action</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">MyCanteen System</string>
@@ -15,4 +16,7 @@
     <string name="home_second">Home Second</string>
     <string name="image_came_intent">image from camera intent</string>
     <string name="occupancy">Relative occupancy</string>
+    <string name="find_on_map">Find on map</string>
+    <string name="search_in_list">Search in list</string>
+    <string name="choose_action">What would you like to do?</string>
 </resources>

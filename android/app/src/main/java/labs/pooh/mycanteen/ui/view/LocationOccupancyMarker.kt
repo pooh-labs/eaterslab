@@ -7,11 +7,11 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 
-class LocationMarker(mapView: MapView, title: String, val description: String, position: GeoPoint) : Marker(mapView) {
+class LocationOccupancyMarker(mapView: MapView, title: String, val description: String, position: GeoPoint, val occupancy: Int) : Marker(mapView) {
 
     init {
         this.infoWindow = LocationInfo(mapView).apply {
-            progress = (1..100).random()
+            progress = occupancy
         }
         this.title = title
         this.snippet = description
@@ -20,6 +20,5 @@ class LocationMarker(mapView: MapView, title: String, val description: String, p
         this.position = position
         setVisible(true)
         setPanToView(true)
-
     }
 }
