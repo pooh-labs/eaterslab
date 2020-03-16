@@ -155,6 +155,6 @@ For each point prepended by priority:
       user might see must be modifiable without changing source code. That is, no user ‐ visible text will be “hard ‐ coded.”
 7. [1] Installability
     * It shall be possible for the mobile application to be installed by a typical customer who has no special expertise.
-      The client application shall be downloaded from the service’s Web site or from Google Play.
+      The client application shall be downloaded from the service’s Web site or Google Play.
 8. [2] Interoperability
     * Web application must be able to interface with any HTML (HyperText Markup Language) browser.
