@@ -4,12 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View.GONE
 import androidx.preference.PreferenceManager
-import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_map_search.*
+import labs.pooh.mycanteen.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_X
+import labs.pooh.mycanteen.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
 import labs.pooh.mycanteen.ui.view.LocationOccupancyMarker
-import labs.pooh.mycanteen.ui.view.rotate
+import labs.pooh.mycanteen.ui.view.rotateAnimation
 import labs.pooh.mycanteen.util.*
-import labs.pooh.mycanteen.util.LOCATION_PERMISSION
 import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -23,7 +23,7 @@ import org.osmdroid.views.overlay.mylocation.IMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
 
-class MapSearchActivity : AppCompatActivity() {
+class MapSearchActivity : AbstractRevealedActivity() {
 
     companion object {
         const val DEFAULT_ZOOM = 16.0
@@ -35,6 +35,11 @@ class MapSearchActivity : AppCompatActivity() {
         private const val REQUEST_LOCATION_ON_BUTTON_CODE = 1001
     }
 
+    override val revealedLayout = lazy { rootMapSearchLayout }
+
+    override fun getXStartPosition(): Int = intent.getIntExtra(BUTTON_MAP_POSITION_X, 0)
+    override fun getYStartPosition(): Int = intent.getIntExtra(BUTTON_MAP_POSITION_Y, 0)
+
     private lateinit var rotationGestureOverlay: RotationGestureOverlay
     private lateinit var myLocationOverlay: MyLocationNewOverlay
 
@@ -44,8 +49,6 @@ class MapSearchActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
-
-        // TODO: handle permission to get access to internet, gps, etc.
 
         Configuration.getInstance().load(applicationContext, PreferenceManager.getDefaultSharedPreferences(applicationContext))
         setContentView(R.layout.activity_map_search)
@@ -63,8 +66,8 @@ class MapSearchActivity : AppCompatActivity() {
             overlays += mimMarker
             overlays += bioMarker
 
-            fabMap.setOnClickListener {
-                fabMap.rotate()
+            fabGPS.setOnClickListener {
+                fabGPS.rotateAnimation()
 
                 if (!hasPermission(applicationContext, LOCATION_PERMISSION)) {
                     requestListedPermission(this@MapSearchActivity, REQUEST_LOCATION_ON_BUTTON_CODE, LOCATION_PERMISSION)
@@ -86,7 +89,7 @@ class MapSearchActivity : AppCompatActivity() {
                     map?.controller?.let { setLocationToGPS(it) }
                 }
                 else {
-                    fabMap.visibility = GONE
+                    fabGPS.visibility = GONE
                 }
             }
         }
