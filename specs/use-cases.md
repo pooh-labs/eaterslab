@@ -49,23 +49,29 @@ Post-condition: Canteen owner is logged in.
 
 * If username-password pair or OTP code are incorrect, flow goes back to (1). Website will show error message above the form. 
 
+### • View canteen list
+
 ### • Register new canteen
 
 ### • Delete canteen
 
-### • Change canteen information / resize canteen
+### • Edit canteen information
 
-### **TODO**: More manage canteens use cases
+### • Add today's menu
 
-### • Upload today's menu
+### • Add today's menu photo
+
+### • Upload today's menu from a photo
 
 ### • Remove uploaded menu
 
 ### • Change menu item
 
-### • Remove / hide / report a user's menu item review
+### • View user's menu item review
 
-### **TODO**: More manage menus use cases
+### • Post menu to Facebook
+
+### • Export menu to PDF
 
 ### • Register new camera
 
