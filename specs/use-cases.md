@@ -25,7 +25,24 @@ Post-condition: Admin is logged in.
 
 * If username-password pair or OTP code are incorrect, flow goes back to (1). Website will show error message above the form. 
 
+### • Change password
+
+### • Enable 2FA
+
 ### • Register new canteen owner
+
+Post-condition: New canteen owner account is created
+
+#### Basic path:
+
+1. Admin enters "Add canteen owner" page.
+2. Website displays form with a field for username and submit button.
+3. Admin fills in username and clicks the submit button.
+4. Website displays username and generated one-time password. This password will never be revealed again.
+
+#### Exception paths:
+
+* If username already exists, panel will show form from (2), with an error message.
 
 ### • Delete canteen owner
 
@@ -43,11 +60,15 @@ Post-condition: Canteen owner is logged in.
 2. User enters credentials in the form and clicks the submit button.
 3. If 2FA is disabled, go to (5). Otherwise, website shows OTP form with single input and submit button.
 4. User enters OTP code and clicks the submit button.
-5. Website shows default canteen owner panel website.
+5. If user logged in for the first time, they will be redirected to password change page. Otherwise, website shows default canteen owner panel page.
 
 #### Exception paths:
 
-* If username-password pair or OTP code are incorrect, flow goes back to (1). Website will show error message above the form. 
+* If username-password pair or OTP code are incorrect, flow goes back to (1). Website will show error message above the form.
+
+### • Change password
+
+### • Enable 2FA
 
 ### • View canteen list
 
