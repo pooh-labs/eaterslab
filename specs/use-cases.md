@@ -3,7 +3,7 @@
 There are three user roles in the system:
 * Admin: Manages canteen owners
 * Canteen owner: Third-party business owner, manages canteens and owns devices
-* (Unregistered) user: Browses public data
+* No role (unregistered user): Browses public data
 
 ## Admin Panel related
 
