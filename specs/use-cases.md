@@ -72,6 +72,8 @@ Post-condition: Canteen owner is logged in.
 
 ### • View canteen list
 
+### • View canteen details
+
 ### • Register new canteen
 
 ### • Delete canteen
@@ -94,13 +96,42 @@ Post-condition: Canteen owner is logged in.
 
 ### • Export menu to PDF
 
-### • Register new camera
+### • Register new camera in the system
 
-### • Check camera state (on/off/lost connection)
+Post-condition: New camera device is registered and ready to transfer data.
 
-### • Change camera name
+#### Basic path:
+
+1. Canteen owner enters "Register new device" page.
+2. Website displays form with a dropdown and submit button. Dropdown lists owned canteens.
+3. User selects the canteen and clicks the submit button.
+4. Website displays new device name and generated API key. This key will never be revealed again.
+5. User performs device setup.
+
+### • Run camera device setup
+
+### • View registered devices
+
+#### Basic path:
+
+1. Canteen owner enters "Devices" page.
+2. Website displays a list of managed devices. Each row contains canteen name, device name, device status (on/off/lost connection) and edit/delete buttons.
+
+#### Exception paths:
+
+* If no devices are registered, in (2) website displays an empty state page with a link to "Register new device page".
 
 ### • Reset camera authentication key
+
+Post-condition: Selected camera device has new API key.
+
+#### Basic path:
+
+1. Canteen owner enters "Devices" page.
+2. User clicks the edit button next to selected device entry.
+3. Website shows confirmation page for API key reset with a submit button.
+4. User clicks the submit button.
+5. Website displays device name and new API key. This key will never be revealed again.
 
 ### • Unregister camera
 
