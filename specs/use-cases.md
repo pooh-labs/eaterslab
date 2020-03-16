@@ -2,17 +2,17 @@
 
 ## Admin Panel related
 
-### Log in to the panel
+### • Log in to the panel
 
 Same as "Log in to the panel", but with Admin role.
 
-### Register new canteen owner
+### • Register new canteen owner
 
-### Delete canteen owner
+### • Delete canteen owner
 
 ## Canteen owner Panel related
 
-### Log in to the panel
+### • Log in to the panel
 
 Pre-condition: Canteen owner is not logged in and enters any canteen owner panel website.
 
@@ -30,68 +30,38 @@ Post-condition: Canteen owner is logged in.
 
 * If username-password pair or OTP code are incorrect, flow goes back to (1). Website will show error message above the form. 
 
-### Register new canteen
+### • Register new canteen
 
-Pre-condition: Canteen owner is logged in.
+### • Delete canteen
 
-### Delete canteen
-
-Pre-condition: Canteen owner is logged in.
-
-### Change canteen information / resize canteen
-
-Pre-condition: Canteen owner is logged in.
+### • Change canteen information / resize canteen
 
 ### **TODO**: More manage canteens use cases
 
-### Upload today's menu
+### • Upload today's menu
 
-Pre-condition: Canteen owner is logged in.
+### • Remove uploaded menu
 
-### Remove uploaded menu
+### • Change menu item
 
-Pre-condition: Canteen owner is logged in.
+### • Remove / hide / report a user's menu item review
 
-### Change menu item
+### **TODO**: More manage menus use cases
 
-Pre-condition: Canteen owner is logged in.
+### • Register new camera
 
-### Remove / hide / report a user's menu item review
+### • Check camera state (on/off/lost connection)
 
-Pre-condition: Canteen owner is logged in.
+### • Change camera name
 
-**TODO**: More manage menus use cases
+### • Reset camera authentication key
 
-### Register new camera
+### • Unregister camera
 
-Pre-condition: Canteen owner is logged in.
+### • View cafeteria occupancy broken by period
 
-### Check camera state (on/off/lost connection)
+### • View average menu option price broken by period
 
-Pre-condition: Canteen owner is logged in.
-
-### Change camera name
-
-Pre-condition: Canteen owner is logged in.
-
-### Reset camera authentication key
-
-Pre-condition: Canteen owner is logged in.
-
-### Unregister camera
-
-Pre-condition: Canteen owner is logged in.
-
-### View cafeteria occupancy broken by period
-
-Pre-condition: Canteen owner is logged in.
-
-### View average menu option price broken by period
-
-Pre-condition: Canteen owner is logged in.
-
-### View multiple analytics datasets broken by period
-
-Pre-condition: Canteen owner is logged in.
+### • View multiple analytics datasets broken by period
 
 ## **TODO**: Android app related
