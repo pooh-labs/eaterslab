@@ -3,8 +3,62 @@ info:
   version: 0.0.0
   title: ivory-beam API
 servers:
-  - url: http://ivory-beam.example/beta
+  - url: https://ivory-beam.example/beta
 paths:
+  /cameras/{id}/events:
+    post:
+      summary: Capture single camera event from authenticated camera
+      security:
+        - deviceId: []
+          apikey: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: Camera ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CameraEvent"
+      responses:
+        201:
+          description: Event saved.
+        401:
+          $ref: '#/components/responses/KeyUnauthorizedError'
+        500:
+          description: Internal server error. Event not saved.
+  /cameras/{id}/events/batch:
+    post:
+      summary: Log batch of camera events from authenticated camera
+      security:
+        - deviceId: []
+          apikey: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: Camera ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CameraEventArray"
+      responses:
+        201:
+          description: All log entries were created
+        401:
+          $ref: '#/components/responses/KeyUnauthorizedError'
+        500:
+          description: Internal server error. No events saved.
   /cafeterias:
     get:
       summary: List all cafeterias
@@ -45,6 +99,15 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 components:
+  securitySchemes:
+    deviceId:
+      type: apiKey
+      in: header
+      name: X-DEVICE-ID
+    apiKey:
+      type: apiKey
+      in: header
+      name: X-API-KEY
   schemas:
     ObjectId:
       required:
@@ -54,6 +117,46 @@ components:
           type: integer
           format: int32
           minimum: 1
+    Timestamp:
+      description: Timestamp with RFC 3339 datetime.
+      required:
+        - timestamp
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+      example:
+        timestamp: "2017-07-21T17:32:28Z"
+    CameraEventType:
+      required:
+        - event_type
+      properties:
+        event_type:
+          type: string
+          enum:
+            - monitoring_started
+            - monitoring_ended
+            - person_entered
+            - person_left
+      example:
+        event_type: "person_entered"
+    CameraEvent:
+      allOf:
+          - $ref: "#/components/schemas/CameraEventType"
+          - $ref: "#/components/schemas/Timestamp"
+    CameraEventArray:
+      type: array
+      items:
+        $ref: "#/components/schemas/CameraEvent"
+      example:
+        - event_type: "monitoring_started"
+          timestamp: "2017-07-21T17:32:28Z"
+        - event_type: "person_entered"
+          timestamp: "2017-07-21T17:32:56Z"
+        - event_type: "person_entered"
+          timestamp: "2017-07-21T17:33:10Z"
+        - event_type: "person_left"
+          timestamp: "2017-07-21T17:33:40Z"
     CafeteriaPublicProperties:
       required:
         - name
@@ -98,3 +201,6 @@ components:
           format: int32
         message:
           type: string
+  responses:
+    KeyUnauthorizedError:
+      description: API key is missing or invalid
