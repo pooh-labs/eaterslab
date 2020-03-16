@@ -71,7 +71,7 @@ Post-condition: Canteen owner is logged in.
 
 ## Android app related
 
-### Find user's canteen
+### • Find user's canteen
 
 Pre-condition: Android app is in the initial screen
 
@@ -93,7 +93,7 @@ Post-condition: Android app is in the concrete canteen screen
 #### Exception path: 
   1. After selecting filters there are no matches for user so none of the canteen can be selected and user stays at the search screen or changes his
 
-### Browse canteen info data
+### • Browse canteen info data
 
 Pre-condition: Concrete canteen screen was opened by user and user didn't go back to initial or search screen
 
@@ -103,7 +103,7 @@ Post-condition: User can see all the information about specified canteen (addres
   1. User clicks on navigation menu button or swipe from left to right to open navigation menu
   2. User selects "Place info" item in application navigation menu
 
-### Browse canteen statistics data
+### • Browse canteen statistics data
 
 Pre-condition: Concrete canteen screen was opened by user and user didn't go back to initial or search screen
 
@@ -113,7 +113,7 @@ Post-condition: User can see all of the specified canteen statistics data
   1. User clicks on navigation menu button or swipe from left to right to open navigation menu
   2. User selects "Stats and data" item in application navigation menu
 
-### Browse canteen dishes data
+### • Browse canteen dishes data
 
 Pre-condition: Concrete canteen screen was opened by user and user didn't go back to initial or search screen
 
@@ -123,7 +123,7 @@ Post-condition: User can see all food served in canteen with names, prices and r
   1. User clicks on navigation menu button or swipe from left to right to open navigation menu
   2. User selects "Menu" item in application navigation menu
 
-### Rate canteen dishes
+### • Rate canteen dishes
 
 Pre-condition: Concrete canteen screen was opened by user and user selected the "Menu" screen in app
 
@@ -134,4 +134,4 @@ Post-condition: User's feedback sent to server and the ratings in menu is update
   2. User selects his rating by clicking on proper star on rating bar
   3. Rating abr closes and the menu data is updated
 
-### Use app settings **TODO**
+### **TODO**: Use app settings
