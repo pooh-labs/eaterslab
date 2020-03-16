@@ -9,7 +9,21 @@ There are three user roles in the system:
 
 ### • Log in to the panel
 
-Same as "Log in to the panel", but with Admin role.
+Pre-condition: Admin is not logged in and enters any admin panel website.
+
+Post-condition: Admin is logged in.
+
+#### Basic path:
+
+1. Website displays login form with "Username", "Password" fields and submit button.
+2. User enters credentials in the form and clicks the submit button.
+3. If 2FA is disabled, go to (5). Otherwise, website shows OTP form with single input and submit button.
+4. User enters OTP code and clicks the submit button.
+5. Website shows default admin panel website.
+
+#### Exception paths:
+
+* If username-password pair or OTP code are incorrect, flow goes back to (1). Website will show error message above the form. 
 
 ### • Register new canteen owner
 
@@ -29,7 +43,7 @@ Post-condition: Canteen owner is logged in.
 2. User enters credentials in the form and clicks the submit button.
 3. If 2FA is disabled, go to (5). Otherwise, website shows OTP form with single input and submit button.
 4. User enters OTP code and clicks the submit button.
-5. Website shows default admin panel website.
+5. Website shows default canteen owner panel website.
 
 #### Exception paths:
 
