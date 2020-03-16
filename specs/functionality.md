@@ -129,3 +129,32 @@ For each point prepended by priority:
     * Get suggestions for menu options based on ratings
     * Get expected line wait time
     * Get expected wait time for dishes based on other users feedback
+
+## Non-functional requirements
+
+1. [1] Access security
+    * Canteen owner must change the initially assigned login authentication information (password) immediately after the first
+      successful login. The initial password may never be reused.
+    * Employees shall be forced to change their password the next time they log in if they have not changed it within the
+      length of time established as “password expiration duration.”
+    * The canteen owner account can only be created by an administrator.
+2. [1] Availability
+    * System shall be at least 99 percent available on weekdays between 6:00 a.m. and 6:00 p.m. local time.
+    * Unless the system is non‐operational, the system shall present a user with notification informing them that the
+      system is unavailable.
+    * A new installation of the system shall be available for first‐time use within 24 hours of the start of the install.
+3. Efficiency
+    * TODO (How many users can use at one moment? Time of response?)
+4. [2] Integrity
+    * The actual number of people in the canteen may differ from the figures provided by the applications by 20 percent.
+5. [2] Usability
+    * Client app shall be easy to use with only one hand free.
+    * Owner panel shall be intuitive and easy to use by adult members (age 18 to 70) without training.
+6. [3] Flexibility
+    * No piece of text that might be displayed to a user shall reside in program source code. Every piece of text that a
+      user might see must be modifiable without changing source code. That is, no user ‐ visible text will be “hard ‐ coded.”
+7. [1] Installability
+    * It shall be possible for the mobile application to be installed by a typical customer who has no special expertise.
+      The client application shall be downloaded from the service’s Web site or from Google Play.
+8. [2] Interoperability
+    * Web application must be able to interface with any HTML (HyperText Markup Language) browser.
