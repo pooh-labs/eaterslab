@@ -29,7 +29,7 @@ abstract class AbstractRevealedActivity : AppCompatActivity() {
         }
     }
 
-    val REVEAL_ANIMATION_TIME = 700L
+    val REVEAL_ANIMATION_TIME = 1100L
 
     /**
      * Specify the x position to start the reveal activity animation point

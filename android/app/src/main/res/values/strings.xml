@@ -19,4 +19,5 @@
     <string name="find_on_map">Find on map</string>
     <string name="search_in_list">Search in list</string>
     <string name="choose_action">What would you like to do?</string>
+    <string name="select">Select</string>
 </resources>

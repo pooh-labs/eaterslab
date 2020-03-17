@@ -1,14 +1,22 @@
 package labs.pooh.mycanteen.ui.view
 
+import android.os.ParcelFileDescriptor
 import kotlinx.android.synthetic.main.map_item_view.view.*
 import labs.pooh.mycanteen.R
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow
 
-class LocationInfo(mapView: MapView) : MarkerInfoWindow(R.layout.map_item_view, mapView) {
+class SingleLocationInfo(mapView: MapView, private val onCloseListener: (() -> Unit)? = null) : MarkerInfoWindow(R.layout.map_item_view, mapView) {
 
     companion object {
-        private var openedInfo: LocationInfo? = null
+        private var openedInfo: SingleLocationInfo? = null
+
+        fun closeOpened() = openedInfo?.close()
+    }
+
+    init {
+        // mark it as it wouldn't be clicked so other markers under it can be clocked through it
+        this.mView.setOnTouchListener { _, _ -> false }
     }
 
 
@@ -22,7 +30,7 @@ class LocationInfo(mapView: MapView) : MarkerInfoWindow(R.layout.map_item_view, 
     }
 
     override fun onOpen(item: Any?) {
-        openedInfo?.close()
+        closeOpened()
         super.onOpen(item)
         openedInfo = this
     }
@@ -30,5 +38,6 @@ class LocationInfo(mapView: MapView) : MarkerInfoWindow(R.layout.map_item_view, 
     override fun onClose() {
         super.onClose()
         openedInfo = null
+        onCloseListener?.let { it() }
     }
 }

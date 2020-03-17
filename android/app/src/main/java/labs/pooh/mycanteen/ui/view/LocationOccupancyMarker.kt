@@ -1,24 +1,35 @@
 package labs.pooh.mycanteen.ui.view
 
-import android.provider.Settings.Global.getString
+import android.view.View
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import labs.pooh.mycanteen.R
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 
-class LocationOccupancyMarker(mapView: MapView, title: String, val description: String, position: GeoPoint, val occupancy: Int) : Marker(mapView) {
+class LocationOccupancyMarker(mapView: MapView, title: String, val id: Int, val description: String,
+                              val latitude: Double, val longitude: Double, val occupancy: Int,
+                              private val onMarkerClickListener: (LocationOccupancyMarker.() -> Boolean)? = null) : Marker(mapView) {
 
     init {
-        this.infoWindow = LocationInfo(mapView).apply {
+        this.infoWindow = SingleLocationInfo(mapView).apply {
             progress = occupancy
         }
         this.title = title
         this.snippet = description
         this.subDescription = mResources.getString(R.string.occupancy)
         this.icon = getDrawable(mapView.context, R.drawable.ic_location)
-        this.position = position
+        this.position = GeoPoint(latitude, longitude)
         setVisible(true)
         setPanToView(true)
+    }
+
+    override fun onMarkerClickDefault(marker: Marker, mapView: MapView): Boolean {
+        val superResult = super.onMarkerClickDefault(marker, mapView)
+
+        val locationMarker = (marker as? LocationOccupancyMarker)
+        return locationMarker?.let {  mark ->
+            onMarkerClickListener?.invoke(mark) ?: superResult
+        } ?: superResult
     }
 }

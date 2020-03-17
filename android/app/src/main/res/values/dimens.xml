@@ -7,4 +7,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="small_font">12sp</dimen>
     <dimen name="tiny_font">9sp</dimen>
+    <dimen name="button_radius">24dp</dimen>
+    <dimen name="padding_button_image">10dp</dimen>
 </resources>

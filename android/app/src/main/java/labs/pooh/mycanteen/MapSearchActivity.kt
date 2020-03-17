@@ -2,13 +2,14 @@ package labs.pooh.mycanteen
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.view.View.GONE
 import androidx.preference.PreferenceManager
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_map_search.*
 import labs.pooh.mycanteen.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_X
 import labs.pooh.mycanteen.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
-import labs.pooh.mycanteen.ui.view.LocationOccupancyMarker
-import labs.pooh.mycanteen.ui.view.rotateAnimation
+import labs.pooh.mycanteen.ui.view.*
 import labs.pooh.mycanteen.util.*
 import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
@@ -16,7 +17,6 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.OverlayItem
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider
@@ -31,21 +31,15 @@ class MapSearchActivity : AbstractRevealedActivity() {
         const val MAX_ZOOM = 19.0
 
         const val ZOOM_ANIMATION_TIME: Long = 400
+        val DEFAULT_CENTER_LOCATION = GeoPoint(52.211903, 20.982224)
 
         private const val REQUEST_LOCATION_ON_BUTTON_CODE = 1001
     }
-
-    override val revealedLayout = lazy { rootMapSearchLayout }
-
-    override fun getXStartPosition(): Int = intent.getIntExtra(BUTTON_MAP_POSITION_X, 0)
-    override fun getYStartPosition(): Int = intent.getIntExtra(BUTTON_MAP_POSITION_Y, 0)
 
     private lateinit var rotationGestureOverlay: RotationGestureOverlay
     private lateinit var myLocationOverlay: MyLocationNewOverlay
 
     private lateinit var gpsProvider: GpsMyLocationProvider
-
-    private val mapItems = mutableListOf<OverlayItem>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState);
@@ -53,6 +47,7 @@ class MapSearchActivity : AbstractRevealedActivity() {
         Configuration.getInstance().load(applicationContext, PreferenceManager.getDefaultSharedPreferences(applicationContext))
         setContentView(R.layout.activity_map_search)
 
+        buttonSelect.moveDownAndHide()
         gpsProvider = GpsMyLocationProvider(applicationContext)
 
         with(map) {
@@ -61,25 +56,20 @@ class MapSearchActivity : AbstractRevealedActivity() {
             rotationGestureOverlay = configureZoomOverlay()
             myLocationOverlay = configureGPSOverlay(applicationContext, gpsProvider)
 
-            val mimMarker = LocationOccupancyMarker(this, "Kubuś MIMUW", "Szybko i smacznie", GeoPoint(52.211903, 20.982224), (1..100).random())
-            val bioMarker = LocationOccupancyMarker(this, "Biologia UW", "Wejdź i wyjdź", GeoPoint(52.213231, 20.986494), (1..100).random())
-            overlays += mimMarker
-            overlays += bioMarker
-
-            fabGPS.setOnClickListener {
-                fabGPS.rotateAnimation()
-
-                if (!hasPermission(applicationContext, LOCATION_PERMISSION)) {
-                    requestListedPermission(this@MapSearchActivity, REQUEST_LOCATION_ON_BUTTON_CODE, LOCATION_PERMISSION)
-                }
-                else {
-                    setLocationToGPS(controller)
-                }
+            // this layer should be created BEFORE markers overlay in order
+            // to firstly get the listeners on markers and if none touched then
+            // the touch event goes to transparent layer listener
+            overlays += TransparentListenerOverlay {
+                SingleLocationInfo.closeOpened()
+                buttonSelect.moveDownAndHide()
             }
+            addMapPlaces()
 
-            controller.setCenter(GeoPoint(52.211903, 20.982224))
+            controller.setCenter(DEFAULT_CENTER_LOCATION)
             controller.setZoom(DEFAULT_ZOOM)
         }
+
+        fabGPS.setOnClickListener(this@MapSearchActivity::fabGPSListener)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -95,6 +85,12 @@ class MapSearchActivity : AbstractRevealedActivity() {
         }
     }
 
+    override val revealedLayout = lazy { rootMapSearchLayout }
+
+    override fun getXStartPosition(): Int = intent.getIntExtra(BUTTON_MAP_POSITION_X, 0)
+
+    override fun getYStartPosition(): Int = intent.getIntExtra(BUTTON_MAP_POSITION_Y, 0)
+
     override fun onResume() {
         super.onResume()
         map.onResume()
@@ -103,6 +99,17 @@ class MapSearchActivity : AbstractRevealedActivity() {
     override fun onPause() {
         super.onPause()
         map.onPause()
+    }
+
+    private fun fabGPSListener(view: View) {
+        view.rotateAnimation()
+
+        if (!hasPermission(applicationContext, LOCATION_PERMISSION)) {
+            requestListedPermission(this@MapSearchActivity, REQUEST_LOCATION_ON_BUTTON_CODE, LOCATION_PERMISSION)
+        }
+        else {
+            setLocationToGPS(map.controller)
+        }
     }
 
     private fun setLocationToGPS(mapController: IMapController) {
@@ -149,5 +156,37 @@ class MapSearchActivity : AbstractRevealedActivity() {
 
         overlays += myLocationOverlay
         return myLocationOverlay
+    }
+
+    private fun onSelectPlaceButtonClick(marker: LocationOccupancyMarker, view: View) {
+        Snackbar.make(view, "You selected ${marker.id} id marker", Snackbar.LENGTH_LONG)
+            .setAction("Action", null).show()
+    }
+
+    private fun onMarkerClickListener(marker: LocationOccupancyMarker): Boolean {
+        buttonSelect.moveUpAndShow(yMove = 0)
+        buttonSelect.setOnClickListener { onSelectPlaceButtonClick(marker, it) }
+        return true
+    }
+
+    private fun MapView.addMapPlaces() {
+
+        val mimMarker = LocationOccupancyMarker(this,
+            title = "Kubuś MIMUW", id = 0,
+            description = "Szybko i smacznie",
+            latitude = 52.211903, longitude = 20.982224,
+            occupancy = (1..100).random(),
+            onMarkerClickListener = this@MapSearchActivity::onMarkerClickListener
+        )
+        val bioMarker = LocationOccupancyMarker(this,
+            title = "Biologia UW", id = 1,
+            description = "Wejdź i wyjdź",
+            latitude = 52.213231, longitude = 20.986494,
+            occupancy = (1..100).random(),
+            onMarkerClickListener = this@MapSearchActivity::onMarkerClickListener
+        )
+
+        overlays += mimMarker
+        overlays += bioMarker
     }
 }
