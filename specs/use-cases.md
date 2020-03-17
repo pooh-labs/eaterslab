@@ -3,15 +3,46 @@
 There are three user roles in the system:
 * Admin: Manages canteen owners
 * Canteen owner: Third-party business owner, manages canteens and owns devices
-* (Unregistered) user: Browses public data
+* No role (unregistered user): Browses public data
 
 ## Admin Panel related
 
 ### • Log in to the panel
 
-Same as "Log in to the panel", but with Admin role.
+Pre-condition: Admin is not logged in and enters any admin panel website.
+
+Post-condition: Admin is logged in.
+
+#### Basic path:
+
+1. Website displays login form with "Username", "Password" fields and submit button.
+2. User enters credentials in the form and clicks the submit button.
+3. If 2FA is disabled, go to (5). Otherwise, website shows OTP form with single input and submit button.
+4. User enters OTP code and clicks the submit button.
+5. Website shows default admin panel website.
+
+#### Exception paths:
+
+* If username-password pair or OTP code are incorrect, flow goes back to (1). Website will show error message above the form. 
+
+### • Change password
+
+### • Enable 2FA
 
 ### • Register new canteen owner
+
+Post-condition: New canteen owner account is created
+
+#### Basic path:
+
+1. Admin enters "Add canteen owner" page.
+2. Website displays form with a field for username and submit button.
+3. Admin fills in username and clicks the submit button.
+4. Website displays username and generated one-time password. This password will never be revealed again.
+
+#### Exception paths:
+
+* If username already exists, panel will show form from (2), with an error message.
 
 ### • Delete canteen owner
 
@@ -29,37 +60,78 @@ Post-condition: Canteen owner is logged in.
 2. User enters credentials in the form and clicks the submit button.
 3. If 2FA is disabled, go to (5). Otherwise, website shows OTP form with single input and submit button.
 4. User enters OTP code and clicks the submit button.
-5. Website shows default admin panel website.
+5. If user logged in for the first time, they will be redirected to password change page. Otherwise, website shows default canteen owner panel page.
 
 #### Exception paths:
 
-* If username-password pair or OTP code are incorrect, flow goes back to (1). Website will show error message above the form. 
+* If username-password pair or OTP code are incorrect, flow goes back to (1). Website will show error message above the form.
+
+### • Change password
+
+### • Enable 2FA
+
+### • View canteen list
+
+### • View canteen details
 
 ### • Register new canteen
 
 ### • Delete canteen
 
-### • Change canteen information / resize canteen
+### • Edit canteen information
 
-### **TODO**: More manage canteens use cases
+### • Add today's menu
 
-### • Upload today's menu
+### • Add today's menu photo
+
+### • Upload today's menu from a photo
 
 ### • Remove uploaded menu
 
 ### • Change menu item
 
-### • Remove / hide / report a user's menu item review
+### • View user's menu item review
 
-### **TODO**: More manage menus use cases
+### • Post menu to Facebook
 
-### • Register new camera
+### • Export menu to PDF
 
-### • Check camera state (on/off/lost connection)
+### • Register new camera in the system
 
-### • Change camera name
+Post-condition: New camera device is registered and ready to transfer data.
+
+#### Basic path:
+
+1. Canteen owner enters "Register new device" page.
+2. Website displays form with a dropdown and submit button. Dropdown lists owned canteens.
+3. User selects the canteen and clicks the submit button.
+4. Website displays new device name and generated API key. This key will never be revealed again.
+5. User performs device setup.
+
+### • Run camera device setup
+
+### • View registered devices
+
+#### Basic path:
+
+1. Canteen owner enters "Devices" page.
+2. Website displays a list of managed devices. Each row contains canteen name, device name, device status (on/off/lost connection) and edit/delete buttons.
+
+#### Exception paths:
+
+* If no devices are registered, in (2) website displays an empty state page with a link to "Register new device page".
 
 ### • Reset camera authentication key
+
+Post-condition: Selected camera device has new API key.
+
+#### Basic path:
+
+1. Canteen owner enters "Devices" page.
+2. User clicks the edit button next to selected device entry.
+3. Website shows confirmation page for API key reset with a submit button.
+4. User clicks the submit button.
+5. Website displays device name and new API key. This key will never be revealed again.
 
 ### • Unregister camera
 
@@ -71,7 +143,7 @@ Post-condition: Canteen owner is logged in.
 
 ## Android app related
 
-### Find user's canteen
+### • Find user's canteen
 
 Pre-condition: Android app is in the initial screen
 
@@ -93,7 +165,7 @@ Post-condition: Android app is in the concrete canteen screen
 #### Exception path: 
   1. After selecting filters there are no matches for user so none of the canteen can be selected and user stays at the search screen or changes his
 
-### Browse canteen info data
+### • Browse canteen info data
 
 Pre-condition: Concrete canteen screen was opened by user and user didn't go back to initial or search screen
 
@@ -103,7 +175,7 @@ Post-condition: User can see all the information about specified canteen (addres
   1. User clicks on navigation menu button or swipe from left to right to open navigation menu
   2. User selects "Place info" item in application navigation menu
 
-### Browse canteen statistics data
+### • Browse canteen statistics data
 
 Pre-condition: Concrete canteen screen was opened by user and user didn't go back to initial or search screen
 
@@ -113,7 +185,7 @@ Post-condition: User can see all of the specified canteen statistics data
   1. User clicks on navigation menu button or swipe from left to right to open navigation menu
   2. User selects "Stats and data" item in application navigation menu
 
-### Browse canteen dishes data
+### • Browse canteen dishes data
 
 Pre-condition: Concrete canteen screen was opened by user and user didn't go back to initial or search screen
 
@@ -123,7 +195,7 @@ Post-condition: User can see all food served in canteen with names, prices and r
   1. User clicks on navigation menu button or swipe from left to right to open navigation menu
   2. User selects "Menu" item in application navigation menu
 
-### Rate canteen dishes
+### • Rate canteen dishes
 
 Pre-condition: Concrete canteen screen was opened by user and user selected the "Menu" screen in app
 
