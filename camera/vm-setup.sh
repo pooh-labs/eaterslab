@@ -25,40 +25,6 @@ if [ "$PWD" != "${SCRIPT_PATH}" ]; then
     print_usage_and_die
 fi
 
-# Process flags
-for arg in "$@"
-do
-    case $arg in
-        --help)
-        print_usage
-        exit 0
-        ;;
-        --disk=*)
-        DISK_SIZE="${arg#*=}"
-        echo "Selected disk size: ${DISK_SIZE} MB"
-        shift
-        ;;
-        --ram=*)
-        RAM_SIZE="${arg#*=}"
-        echo "Selected RAM size: ${RAM_SIZE} MB"
-        shift
-        ;;
-        --sshp=*)
-        SSH_PORT="${arg#*=}"
-        echo "Selected SSH port: ${SSH_PORT}"
-        shift
-        ;;
-        --vm-dir=*)
-        VM_DIR="${arg#*=}"
-        shift
-        ;;
-        --enable-kvm)
-        ENABLE_KVM=1
-        shift
-        ;;
-    esac
-done
-
 mkdir -p "${VM_DIR}" &&
 echo "Using vm files dir: ${VM_DIR}"
 
