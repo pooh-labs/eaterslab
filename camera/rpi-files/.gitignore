@@ -1,0 +1,5 @@
+# Ignore Python environment
+env
+
+# Ignore app logs
+app.log
