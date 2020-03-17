@@ -1,4 +1,8 @@
-# **MyCanteen** Functionality
+# System Requirements
+
+## Functional requirements
+
+### Priorities
 
 For each point prepended by priority:
 
@@ -7,7 +11,7 @@ For each point prepended by priority:
 3. Optional with higher priority
 4. Optional
 
-## Functional requirements
+### Functionality
 
 1. Camera devices
     * Setup workflow
@@ -129,3 +133,40 @@ For each point prepended by priority:
     * Get suggestions for menu options based on ratings
     * Get expected line wait time
     * Get expected wait time for dishes based on other users feedback
+
+## Non-functional requirements
+
+1. Access security
+    * Canteen owner must change the initially assigned login authentication information (password) immediately after the first
+      successful login. The initial password may never be reused.
+    * Employees shall be forced to change their password the next time they log in if they have not changed it within the
+      length of time established as “password expiration duration.”
+    * The canteen owner account can only be created by an administrator.
+    * User passwords are never displayed and are masked in input fields.
+    * API keys and first-login passwords are never revealed again.
+    * All keys and passwords are one-way hashed in data stores.
+2. Availability
+    * System shall be at least 99 percent available on weekdays between 6:00 a.m. and 6:00 p.m. local time.
+    * Unless the system is non‐operational, the system shall present a user with notification informing them that the
+      system is unavailable.
+    * A new installation of the system shall be available for first‐time use within 24 hours of the start of the install.
+3. Efficiency
+    * System restart should execute under 60 seconds.
+    * Public API should respond under 500 ms in 99 percentile under 100 QPS.
+    * Camera ingestion system should handle 100 single event API calls per second.
+    * Any user interface should present results under 2 seconds in 99 percentile.
+4. Integrity
+    * The actual number of people in the canteen may differ from the figures provided by the applications by 20 percent.
+5. Usability
+    * Client app shall be easy to use with only one hand free.
+    * Owner panel shall be intuitive and easy to use by adult members (age 18 to 70) without training.
+    * User should be able to read occupation from the mobile widget standing 1 meter from the device.
+6. Flexibility
+    * No piece of text that might be displayed to a user shall reside in program source code. Every piece of text that a
+      user might see must be modifiable without changing source code. That is, no user ‐ visible text will be “hard‐coded.”
+7. Installability
+    * It shall be possible for the mobile application to be installed by a typical customer who has no special expertise.
+      The client application shall be downloaded from the service’s Web site or Google Play.
+8. Interoperability
+    * Web application must be able to interface with any HTML (HyperText Markup Language) browser.
+    * All public information should be accessible via API.
