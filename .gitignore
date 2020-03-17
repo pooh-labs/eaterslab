@@ -1,3 +1,5 @@
-android/build
+
+6candroid/build
 android/local.properties
 android/.gradle
+android/app/*.iml
