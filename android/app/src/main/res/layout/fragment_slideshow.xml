@@ -12,9 +12,9 @@
         android:id="@+id/textSlideshow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="@dimen/slideshow_marign"
+        android:layout_marginTop="@dimen/slideshow_marign"
+        android:layout_marginEnd="@dimen/slideshow_marign"
         android:textAlignment="center"
         android:textSize="@dimen/card_view_text_size"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +33,7 @@
             android:id="@+id/verticalReviewSlideShow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="@dimen/slideshow_padding"
             android:orientation="vertical"/>
 
     </ScrollView>
