@@ -21,8 +21,8 @@
         <ImageView
             android:id="@+id/ratedImage"
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:layout_marginBottom="8dp"
+            android:layout_height="@dimen/menu_item_image_height"
+            android:layout_marginBottom="@dimen/menu_item_bottom_margin"
             android:background="@color/colorWhite"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
@@ -36,8 +36,8 @@
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginTop="@dimen/rating_bar_margin"
+            android:layout_marginEnd="@dimen/rating_bar_margin"
             android:isIndicator="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ratedImage" />
@@ -47,8 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/card_view_price_size"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="@dimen/menu_item_price_margin"
+            android:layout_marginEnd="@dimen/menu_item_price_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -56,8 +56,8 @@
             android:id="@+id/textViewName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="@dimen/menu_item_price_margin"
+            android:layout_marginEnd="@dimen/menu_item_name_space"
             android:textSize="@dimen/card_view_text_size"
             android:ellipsize="end"
             android:maxLines="1"
