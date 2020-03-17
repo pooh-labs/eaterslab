@@ -134,4 +134,13 @@ Post-condition: User's feedback sent to server and the ratings in menu is update
   2. User selects his rating by clicking on proper star on rating bar
   3. Rating abr closes and the menu data is updated
 
-### Use app settings **TODO**
+### Use app settings
+
+Pre-condition: Concrete canteen screen was opened by user and user didn't go back to initial or search screen
+
+Post-condition: User is back in the concrete canteen screen
+
+#### Possible path:
+  1. User clicks on special menu button and selects settings
+  2. User can change the application theme, language, turn on/off application notifications (if any available) and get some information about the whole system of canteens
+  3. User goes back and the settings are applied for app
