@@ -1,4 +1,6 @@
 android/build
 android/local.properties
 android/.gradle
-android/app/app.iml
+android/app/*.iml
+# IDEs
+.vscode
