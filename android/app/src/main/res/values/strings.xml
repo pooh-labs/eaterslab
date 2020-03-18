@@ -15,10 +15,14 @@
 
     <string name="home_second">Home Second</string>
     <string name="image_came_intent">image from camera intent</string>
+
     <string name="occupancy">Relative occupancy</string>
     <string name="find_on_map">Find on map</string>
     <string name="search_in_list">Search in list</string>
     <string name="choose_action">What would you like to do?</string>
     <string name="select">Select</string>
     <string name="info_image">Info image</string>
+
+    <string name="food_image">food image</string>
+    <string name="loading">Loading…</string>
 </resources>

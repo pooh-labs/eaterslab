@@ -86,17 +86,17 @@ fi
 
 echo "Creating vm..."
 vboxmanage createvm --name "${VM_NAME}" --ostype "Linux" --register --basefolder "${CURRENT_DIR}" && # Linux OS type is "Other Linux (32-bit)"
-vboxmanage modifyvm "${VM_NAME}" --memory "${RAM_SIZE}" --vram 128 &&
+vboxmanage modifyvm "${VM_NAME}" --memory "${RAM_SIZE}" --vram 128 && # Set RAM and VRAM in MB
 vboxmanage modifyvm "${VM_NAME}" --graphicscontroller "vmsvga" &&
-vboxmanage modifyvm "${VM_NAME}" --nic1 nat &&
-vboxmanage modifyvm "${VM_NAME}" --usbxhci on && # Enables USB 3.0 for webcams
-vboxmanage createhd --filename "${VM_DISK_FILE_PATH}" --size "${DISK_SIZE}" --format VDI && 
-vboxmanage storagectl "${VM_NAME}" --name "IDE Controller" --add ide --controller PIIX4 &&
-vboxmanage storageattach "${VM_NAME}" --storagectl "IDE Controller" --port 0 --device 0 --type hdd --medium "/media/kantoniak/rpi-files/ivory-beam-camera-disk.vdi" &&
-vboxmanage storageattach "${VM_NAME}" --storagectl "IDE Controller" --port 1 --device 0 --type dvddrive --medium "${VM_ISO_PATH}" && 
-vboxmanage modifyvm "${VM_NAME}" --boot1 dvd --boot2 disk --boot3 none --boot4 none
+vboxmanage modifyvm "${VM_NAME}" --nic1 nat && # NAT
+vboxmanage modifyvm "${VM_NAME}" --usbxhci on && # Enable USB 3.0 for webcams to attach
+vboxmanage createhd --filename "${VM_DISK_FILE_PATH}" --size "${DISK_SIZE}" --format VDI && # Create new empty VDI disk
+vboxmanage storagectl "${VM_NAME}" --name "IDE Controller" --add ide --controller PIIX4 && # Enable IDE controller for disk and drive
+vboxmanage storageattach "${VM_NAME}" --storagectl "IDE Controller" --port 0 --device 0 --type hdd --medium "${VM_DISK_FILE_PATH}" && # Attach empty virtual disk
+vboxmanage storageattach "${VM_NAME}" --storagectl "IDE Controller" --port 1 --device 0 --type dvddrive --medium "${VM_ISO_PATH}" && # Attach ISO with Raspbian image
+vboxmanage modifyvm "${VM_NAME}" --boot1 dvd --boot2 disk --boot3 none --boot4 none # Set boot order to DVD, then disk
 
 if [ "${ENABLE_KVM}" -eq "1" ]; then
     echo "Enabling KVM..."
-    vboxmanage modifyvm "${VM_NAME}" --paravirtprovider "kvm"
+    vboxmanage modifyvm "${VM_NAME}" --paravirtprovider "kvm" # Enable KVM acceleration
 fi
