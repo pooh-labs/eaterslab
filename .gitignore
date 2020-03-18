@@ -1,3 +1,6 @@
 android/build
 android/local.properties
 android/.gradle
+
+# IDEs
+.vscode
