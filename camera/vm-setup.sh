@@ -60,7 +60,7 @@ echo "Creating vm..."
 vboxmanage createvm --name "${VM_NAME}" --ostype "Linux" --register --basefolder "${CURRENT_DIR}" && # Linux OS type is "Other Linux (32-bit)"
 vboxmanage modifyvm "${VM_NAME}" --memory "${RAM_SIZE}" --vram 128 && # Set RAM and VRAM in MB
 vboxmanage modifyvm "${VM_NAME}" --graphicscontroller "vmsvga" &&
-vboxmanage modifyvm "${VM_NAME}" --nic1 nat --natpf1 "SSH forwarding,tcp,127.0.0.1,${SSH_PORT},10.0.2.15,22" && # NAT and SSH forwarding
+vboxmanage modifyvm "${VM_NAME}" --nic1 nat --natpf1 "SSH forwarding,tcp,127.0.0.1,${SSH_PORT},10.0.2.15,22" && # NAT and SSH forwarding (NAT IP default is 10.0.2.15 with default SSH port 22)
 vboxmanage modifyvm "${VM_NAME}" --usbxhci on && # Enable USB 3.0 for webcams to attach
 vboxmanage createhd --filename "${VM_DISK_FILE_PATH}" --size "${DISK_SIZE}" --format VDI && # Create new empty VDI disk
 vboxmanage storagectl "${VM_NAME}" --name "IDE Controller" --add ide --controller PIIX4 && # Enable IDE controller for disk and drive
