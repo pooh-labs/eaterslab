@@ -1,6 +1,5 @@
-package labs.pooh.mycanteen.ui.view
+package labs.pooh.mycanteen.ui.map
 
-import android.os.ParcelFileDescriptor
 import kotlinx.android.synthetic.main.map_item_view.view.*
 import labs.pooh.mycanteen.R
 import org.osmdroid.views.MapView

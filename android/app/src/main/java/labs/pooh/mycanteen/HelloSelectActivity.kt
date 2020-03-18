@@ -22,7 +22,7 @@ class HelloSelectActivity : AppCompatActivity() {
         fabSearch.setOnClickListener {
             markButtonsClickable(false)
             startActivity(Intent(applicationContext, MainActivity::class.java).apply {
-                getCenterPosition(fabSearch).let { (x, y) ->
+                getCenterPositionOf(fabSearch).let { (x, y) ->
                     putExtra(BUTTON_SEARCH_POSITION_X, x)
                     putExtra(BUTTON_SEARCH_POSITION_Y, y)
                 }
@@ -32,7 +32,7 @@ class HelloSelectActivity : AppCompatActivity() {
         fabMap.setOnClickListener {
             markButtonsClickable(false)
             startActivity(Intent(applicationContext, MapSearchActivity::class.java).apply {
-                getCenterPosition(fabMap).let { (x, y) ->
+                getCenterPositionOf(fabMap).let { (x, y) ->
                     putExtra(BUTTON_MAP_POSITION_X, x)
                     putExtra(BUTTON_MAP_POSITION_Y, y)
                 }
@@ -50,7 +50,7 @@ class HelloSelectActivity : AppCompatActivity() {
         fabSearch.isClickable = clickable
     }
 
-    private fun getCenterPosition(view: View): Pair<Int, Int> {
+    private fun getCenterPositionOf(view: View): Pair<Int, Int> {
         val x = view.x + view.width / 2
         val y = view.y + view.height / 2
         return Pair(x.toInt(), y.toInt())

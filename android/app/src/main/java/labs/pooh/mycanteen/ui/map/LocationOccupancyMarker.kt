@@ -1,6 +1,5 @@
-package labs.pooh.mycanteen.ui.view
+package labs.pooh.mycanteen.ui.map
 
-import android.view.View
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import labs.pooh.mycanteen.R
 import org.osmdroid.util.GeoPoint
@@ -12,7 +11,8 @@ class LocationOccupancyMarker(mapView: MapView, title: String, val id: Int, val 
                               private val onMarkerClickListener: (LocationOccupancyMarker.() -> Boolean)? = null) : Marker(mapView) {
 
     init {
-        this.infoWindow = SingleLocationInfo(mapView).apply {
+        this.infoWindow = SingleLocationInfo(mapView)
+            .apply {
             progress = occupancy
         }
         this.title = title

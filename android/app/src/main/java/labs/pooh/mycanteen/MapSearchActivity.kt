@@ -9,6 +9,9 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_map_search.*
 import labs.pooh.mycanteen.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_X
 import labs.pooh.mycanteen.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
+import labs.pooh.mycanteen.ui.map.LocationOccupancyMarker
+import labs.pooh.mycanteen.ui.map.SingleLocationInfo
+import labs.pooh.mycanteen.ui.map.TransparentListenerOverlay
 import labs.pooh.mycanteen.ui.view.*
 import labs.pooh.mycanteen.util.*
 import org.osmdroid.api.IMapController
@@ -42,7 +45,7 @@ class MapSearchActivity : AbstractRevealedActivity() {
     private lateinit var gpsProvider: GpsMyLocationProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState)
 
         Configuration.getInstance().load(applicationContext, PreferenceManager.getDefaultSharedPreferences(applicationContext))
         setContentView(R.layout.activity_map_search)
@@ -105,7 +108,7 @@ class MapSearchActivity : AbstractRevealedActivity() {
         view.rotateAnimation()
 
         if (!hasPermission(applicationContext, LOCATION_PERMISSION)) {
-            requestListedPermission(this@MapSearchActivity, REQUEST_LOCATION_ON_BUTTON_CODE, LOCATION_PERMISSION)
+            requestListedPermission(REQUEST_LOCATION_ON_BUTTON_CODE, LOCATION_PERMISSION)
         }
         else {
             setLocationToGPS(map.controller)
@@ -171,14 +174,16 @@ class MapSearchActivity : AbstractRevealedActivity() {
 
     private fun MapView.addMapPlaces() {
 
-        val mimMarker = LocationOccupancyMarker(this,
+        val mimMarker = LocationOccupancyMarker(
+            this,
             title = "Kubuś MIMUW", id = 0,
             description = "Szybko i smacznie",
             latitude = 52.211903, longitude = 20.982224,
             occupancy = (1..100).random(),
             onMarkerClickListener = this@MapSearchActivity::onMarkerClickListener
         )
-        val bioMarker = LocationOccupancyMarker(this,
+        val bioMarker = LocationOccupancyMarker(
+            this,
             title = "Biologia UW", id = 1,
             description = "Wejdź i wyjdź",
             latitude = 52.213231, longitude = 20.986494,

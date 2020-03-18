@@ -9,4 +9,12 @@
     <dimen name="tiny_font">9sp</dimen>
     <dimen name="button_radius">24dp</dimen>
     <dimen name="padding_button_image">10dp</dimen>
+    <dimen name="map_item_info_description_margin">8dp</dimen>
+    <dimen name="map_item_info_description_width">120dp</dimen>
+    <dimen name="map_item_info_title_margin">8dp</dimen>
+    <dimen name="map_item_info_image_margin">8dp</dimen>
+    <dimen name="map_item_progress_height">6dp</dimen>
+    <dimen name="map_item_progress_margin_top">2dp</dimen>
+    <dimen name="map_item_progress_margin_bottom">8dp</dimen>
+    <dimen name="map_item_subdescription_margin_top">4dp</dimen>
 </resources>

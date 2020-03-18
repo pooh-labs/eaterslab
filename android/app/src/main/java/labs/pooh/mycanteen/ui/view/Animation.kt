@@ -24,7 +24,7 @@ internal fun View.moveYAndHide(yMove: Int? = null, duration: Int) {
         .setListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 super.onAnimationEnd(animation)
-                this@moveYAndHide.visibility = View.GONE
+                this@moveYAndHide.visibility = GONE
             }
         })
 }

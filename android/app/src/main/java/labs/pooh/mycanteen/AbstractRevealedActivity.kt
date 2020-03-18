@@ -29,7 +29,7 @@ abstract class AbstractRevealedActivity : AppCompatActivity() {
         }
     }
 
-    val REVEAL_ANIMATION_TIME = 1100L
+    private val revealAnimationTime = 800L
 
     /**
      * Specify the x position to start the reveal activity animation point
@@ -50,7 +50,7 @@ abstract class AbstractRevealedActivity : AppCompatActivity() {
             getYStartPosition(),
             0F, finalRadius.toFloat())
 
-        circularReveal.duration = REVEAL_ANIMATION_TIME
+        circularReveal.duration = revealAnimationTime
         view.visibility = View.VISIBLE
         circularReveal.start()
     }
