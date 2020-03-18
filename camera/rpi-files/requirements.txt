@@ -4,6 +4,7 @@ astroid==2.3.3
 attrs==19.3.0
 bandit==1.6.2
 black==19.10b0
+certifi==2019.11.28
 click==7.1.1
 cognitive-complexity==0.0.4
 colorama==0.4.1
@@ -49,6 +50,8 @@ pydocstyle==5.0.2
 pyflakes==2.1.1
 Pygments==2.6.1
 pylint==2.4.4
+python-dateutil==2.8.1
+python-dotenv==0.12.0
 PyYAML==5.3
 radon==4.1.0
 regex==2020.2.20
@@ -61,6 +64,7 @@ testfixtures==6.14.0
 toml==0.10.0
 typed-ast==1.4.1
 typing-extensions==3.7.4.1
+urllib3==1.25.8
 wemake-python-styleguide==0.13.4
 wrapt==1.11.2
 zipp==3.1.0

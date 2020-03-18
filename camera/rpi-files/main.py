@@ -7,8 +7,11 @@ Main application module will start monitoring for people entereing and leaving.
 """
 
 import logging
+import os
 import signal
 import time
+
+from dotenv import load_dotenv
 
 import openapi_client
 from openapi_client.rest import ApiException
@@ -18,7 +21,7 @@ class Main(object):
     """Handle application lifecycle."""
 
     def __init__(self):
-        """Initialize signal handlers and run."""
+        """Initialize signal handlers, API client and run."""
         self.should_close = False
 
         # Add signal handlers
@@ -27,9 +30,9 @@ class Main(object):
 
         # Set API configuration
         configuration = openapi_client.Configuration()
-        configuration.host = 'http://localhost:8080/beta'
-        configuration.api_key['X-DEVICE-ID'] = 'test-cam-1'
-        configuration.api_key['X-API-KEY'] = 'XXXXXX'
+        configuration.host = os.getenv('API_HOST')
+        configuration.api_key['X-DEVICE-ID'] = os.getenv('DEVICE_ID')
+        configuration.api_key['X-API-KEY'] = os.getenv('API_KEY')
 
         # Start
         with openapi_client.ApiClient(configuration) as api_client:
@@ -81,4 +84,5 @@ if __name__ == '__main__':
         filemode='w',
         level=logging.DEBUG,
     )
+    load_dotenv()
     Main()

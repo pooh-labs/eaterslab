@@ -1,4 +1,5 @@
 # Ignore Python environment
+.env
 env
 
 # Ignore generated API client
