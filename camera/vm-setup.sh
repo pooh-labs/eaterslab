@@ -11,6 +11,7 @@ print_usage() {
     echo >&2 "  --ram=<x>\tSet <x> MB of RAM (${RAM_SIZE} MB by default)"
     echo >&2 "  --vm-dir=<d>\tSet VM files directory to <dir> (${VM_DIR} by default)"
     echo >&2 "  --enable-kvm\tEnable fast KVM virtualization"
+    echo >&2 "  --sshp=<p>\tSet forwarded SSH port to <p> (${SSH_PORT} by default)"
 }
 
 print_usage_and_die() {
@@ -23,35 +24,6 @@ if [ "$PWD" != "${SCRIPT_PATH}" ]; then
     echo >&2 "Error: Script called from a different directory" 
     print_usage_and_die
 fi
-
-# Process flags
-for arg in "$@"
-do
-    case $arg in
-        --help)
-        print_usage
-        exit 0
-        ;;
-        --disk=*)
-        DISK_SIZE="${arg#*=}"
-        echo "Selected disk size: ${DISK_SIZE} MB"
-        shift
-        ;;
-        --ram=*)
-        RAM_SIZE="${arg#*=}"
-        echo "Selected RAM size: ${RAM_SIZE} MB"
-        shift
-        ;;
-        --vm-dir=*)
-        VM_DIR="${arg#*=}"
-        shift
-        ;;
-        --enable-kvm)
-        ENABLE_KVM=1
-        shift
-        ;;
-    esac
-done
 
 mkdir -p "${VM_DIR}" &&
 echo "Using vm files dir: ${VM_DIR}"
@@ -88,7 +60,7 @@ echo "Creating vm..."
 vboxmanage createvm --name "${VM_NAME}" --ostype "Linux" --register --basefolder "${CURRENT_DIR}" && # Linux OS type is "Other Linux (32-bit)"
 vboxmanage modifyvm "${VM_NAME}" --memory "${RAM_SIZE}" --vram 128 && # Set RAM and VRAM in MB
 vboxmanage modifyvm "${VM_NAME}" --graphicscontroller "vmsvga" &&
-vboxmanage modifyvm "${VM_NAME}" --nic1 nat && # NAT
+vboxmanage modifyvm "${VM_NAME}" --nic1 nat --natpf1 "SSH forwarding,tcp,127.0.0.1,${SSH_PORT},10.0.2.15,22" && # NAT and SSH forwarding (NAT IP default is 10.0.2.15 with default SSH port 22)
 vboxmanage modifyvm "${VM_NAME}" --usbxhci on && # Enable USB 3.0 for webcams to attach
 vboxmanage createhd --filename "${VM_DISK_FILE_PATH}" --size "${DISK_SIZE}" --format VDI && # Create new empty VDI disk
 vboxmanage storagectl "${VM_NAME}" --name "IDE Controller" --add ide --controller PIIX4 && # Enable IDE controller for disk and drive
