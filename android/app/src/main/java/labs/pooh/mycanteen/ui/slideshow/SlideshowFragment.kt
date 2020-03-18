@@ -11,7 +11,6 @@ import androidx.fragment.app.viewModels
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.toObservable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_slideshow.*
@@ -33,8 +32,7 @@ class SlideshowFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_slideshow, container, false)
-        return root
+        return inflater.inflate(R.layout.fragment_slideshow, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

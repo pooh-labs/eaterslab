@@ -12,7 +12,7 @@
     <dimen name="rating_bar_margin">8dp</dimen>
     <dimen name="menu_item_price_margin">8dp</dimen>
     <dimen name="menu_item_name_space">16dp</dimen>
-    <dimen name="slideshow_marign">8dp</dimen>
+    <dimen name="slideshow_margin">8dp</dimen>
     <dimen name="menu_item_card_height">220dp</dimen>
     <dimen name="menu_card_radius">4dp</dimen>
     <dimen name="slideshow_padding">16dp</dimen>
