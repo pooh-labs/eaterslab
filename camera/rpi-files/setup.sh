@@ -12,7 +12,7 @@ sudo systemctl start ssh &&
 
 # Install Python
 sudo apt-get update &&
-sudo apt-get install python3.7 &&
+sudo apt-get install python3.7 openjdk-11-jdk &&
 
 # Set up virtual environment
 python3 -m venv env &&
@@ -21,3 +21,7 @@ python3 -m venv env &&
 source env/bin/activate &&
 pip install -r requirements.txt &&
 deactivate
+
+# Download API generator
+wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/4.2.3/openapi-generator-cli-4.2.3.jar -O openapi-generator-cli.jar
+./generate-api-client.sh

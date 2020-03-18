@@ -10,6 +10,9 @@ import logging
 import signal
 import time
 
+import openapi_client
+from openapi_client.rest import ApiException
+
 
 class Main(object):
     """Handle application lifecycle."""
@@ -22,11 +25,37 @@ class Main(object):
         signal.signal(signal.SIGINT, self.handle_signals)
         signal.signal(signal.SIGTERM, self.handle_signals)
 
-        self.start()
+        # Set API configuration
+        configuration = openapi_client.Configuration()
+        configuration.host = 'http://localhost:8080/beta'
+        configuration.api_key['X-DEVICE-ID'] = 'test-cam-1'
+        configuration.api_key['X-API-KEY'] = 'XXXXXX'
+
+        # Start
+        with openapi_client.ApiClient(configuration) as api_client:
+            self.api = openapi_client.DefaultApi(api_client)
+            self.start()
 
     def start(self):
         """Start the system."""
         logging.info('System starts')
+
+        try:
+            logging.info(self.api.cafeterias_get())
+        except ApiException as api_exception:
+            logging.error(
+                'ApiException when calling DefaultApi->cafeterias_get: {0}'.format(
+                    api_exception,
+                ),
+            )
+            self.should_close = True
+        except Exception as exception:
+            logging.error(
+                'Exception when calling DefaultApi->cafeterias_get: {0}'.format(
+                    exception,
+                ),
+            )
+            self.should_close = True
 
         while not self.should_close:
             time.sleep(1)
