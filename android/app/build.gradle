@@ -50,6 +50,17 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.1'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+    /**
+     * libraries for multithreading operations with data for working
+     * mainly with internet connections in order to get data in background
+     * and to subscribe on received data just when the data is received
+     * in a functional way
+     */
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
 
     testImplementation 'junit:junit:4.12'
 
