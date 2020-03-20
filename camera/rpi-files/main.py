@@ -11,9 +11,8 @@ import os
 import signal
 import time
 
-from dotenv import load_dotenv
-
 import openapi_client
+from dotenv import load_dotenv
 from openapi_client.rest import ApiException
 
 
