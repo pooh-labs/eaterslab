@@ -46,18 +46,12 @@ class Main(object):
         try:
             logging.info(self.api.cafeterias_get())
         except ApiException as api_exception:
-            logging.error(
-                'ApiException when calling DefaultApi->cafeterias_get: {0}'.format(
-                    api_exception,
-                ),
-            )
+            msg = 'ApiException when calling DefaultApi->cafeterias_get: {0}'
+            logging.error(msg.format(api_exception))
             self.should_close = True
         except Exception as exception:
-            logging.error(
-                'Exception when calling DefaultApi->cafeterias_get: {0}'.format(
-                    exception,
-                ),
-            )
+            msg = 'Exception when calling DefaultApi->cafeterias_get: {0}'
+            logging.error(msg.format(exception))
             self.should_close = True
 
         while not self.should_close:
