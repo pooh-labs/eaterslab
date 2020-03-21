@@ -22,4 +22,4 @@ fun allRequestedPermissionsGranted(grantResults: IntArray)
         = grantResults.none { it == PackageManager.PERMISSION_DENIED }
 
 fun Context.sendNotification(text: String, shortDuration: Boolean = true)
-        = Toast.makeText(this, text, if (shortDuration) LENGTH_SHORT else LENGTH_LONG)
+        = Toast.makeText(this, text, if (shortDuration) LENGTH_SHORT else LENGTH_LONG).show()
