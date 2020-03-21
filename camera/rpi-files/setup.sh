@@ -1,5 +1,7 @@
 #!/bin/sh
 
+OPENAPI_GENERATOR_VERSION="4.2.3"
+
 # Force running from the same directory
 if [ "$PWD" != "${SCRIPT_PATH}" ]; then
     echo >&2 "Error: Script called from a different directory" 
@@ -23,5 +25,5 @@ pip install -r requirements.txt &&
 deactivate
 
 # Download API generator
-wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/4.2.3/openapi-generator-cli-4.2.3.jar -O openapi-generator-cli.jar
+wget "https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/${OPENAPI_GENERATOR_VERSION}/openapi-generator-cli-${OPENAPI_GENERATOR_VERSION}.jar" -O "openapi-generator-cli.jar"
 ./generate-api-client.sh
