@@ -30,4 +30,5 @@
     <dimen name="slideshow_padding">16dp</dimen>
     <dimen name="hello_message_width">200dp</dimen>
     <dimen name="hello_message_size">30sp</dimen>
+    <dimen name="linear_layout_margin_padding">16dp</dimen>
 </resources>

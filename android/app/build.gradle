@@ -26,6 +26,10 @@ android {
         }
     }
 
+// To inline the bytecode built with JVM target 1.8 into
+// bytecode that is being built with JVM target 1.6. (e.g. navArgs)
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -73,6 +77,15 @@ dependencies {
     implementation "com.google.code.gson:gson:2.8.6"
     implementation "com.squareup.okhttp3:okhttp:4.2.2"
     implementation "org.threeten:threetenbp:1.4.0"
+
+    /**
+     * Packages for plotting on android views by creating plots
+     * of lines and rectangles
+     */
+    implementation 'io.data2viz.d2v:scale:0.8.0-RC10'
+    implementation 'io.data2viz.d2v:core:0.8.0-RC10'
+    implementation 'io.data2viz.d2v:viz:0.8.0-RC10'
+    implementation 'io.data2viz.d2v:axis:0.8.0-RC10'
 
     testImplementation "junit:junit:4.12"
 

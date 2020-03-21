@@ -25,4 +25,6 @@
 
     <string name="food_image">food image</string>
     <string name="loading">Loading…</string>
+
+    <string name="no_gps_notification">Problem with GPS. It may be turned off.</string>
 </resources>
