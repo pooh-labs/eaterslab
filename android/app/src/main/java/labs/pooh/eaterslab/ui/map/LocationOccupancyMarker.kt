@@ -1,7 +1,7 @@
-package labs.pooh.mycanteen.ui.map
+package labs.pooh.eaterslab.ui.map
 
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
-import labs.pooh.mycanteen.R
+import labs.pooh.eaterslab.R
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker

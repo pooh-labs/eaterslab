@@ -1,4 +1,4 @@
-package labs.pooh.mycanteen.ui.gallery
+package labs.pooh.eaterslab.ui.gallery
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

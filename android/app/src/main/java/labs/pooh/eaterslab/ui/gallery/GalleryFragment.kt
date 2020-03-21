@@ -1,4 +1,4 @@
-package labs.pooh.mycanteen.ui.gallery
+package labs.pooh.eaterslab.ui.gallery
 
 import android.content.Context
 import android.content.Intent
@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_gallery.*
-import labs.pooh.mycanteen.R
+import labs.pooh.eaterslab.R
 
 class GalleryFragment : Fragment() {
 

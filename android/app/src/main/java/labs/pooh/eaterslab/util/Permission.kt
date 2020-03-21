@@ -1,4 +1,4 @@
-package labs.pooh.mycanteen.util
+package labs.pooh.eaterslab.util
 
 import android.Manifest
 import android.app.Activity

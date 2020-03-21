@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">MyCanteen</string>
+    <string name="app_name">EatersLab</string>
     <string name="search_map_title">Find your canteen</string>
     <string name="select_action_title">Select your action</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">MyCanteen System</string>
+    <string name="nav_header_title">EatersLab System</string>
     <string name="nav_header_subtitle">For better eating experience</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>

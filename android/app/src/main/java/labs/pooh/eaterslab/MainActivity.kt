@@ -1,4 +1,4 @@
-package labs.pooh.mycanteen
+package labs.pooh.eaterslab
 
 import android.os.Bundle
 import android.view.Menu

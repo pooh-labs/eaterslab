@@ -1,4 +1,4 @@
-package labs.pooh.mycanteen.util
+package labs.pooh.eaterslab.util
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

@@ -1,4 +1,4 @@
-package labs.pooh.mycanteen.ui.slideshow
+package labs.pooh.eaterslab.ui.slideshow
 
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -14,9 +14,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.toObservable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_slideshow.*
-import labs.pooh.mycanteen.R
-import labs.pooh.mycanteen.ui.view.RatedFoodView
-import labs.pooh.mycanteen.util.*
+import labs.pooh.eaterslab.R
+import labs.pooh.eaterslab.ui.view.RatedFoodView
+import labs.pooh.eaterslab.util.*
 
 class SlideshowFragment : Fragment() {
 

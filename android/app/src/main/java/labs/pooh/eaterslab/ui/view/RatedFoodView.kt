@@ -1,4 +1,4 @@
-package labs.pooh.mycanteen.ui.view
+package labs.pooh.eaterslab.ui.view
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -6,7 +6,7 @@ import android.graphics.drawable.Drawable
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.rated_food_view.view.*
-import labs.pooh.mycanteen.R
+import labs.pooh.eaterslab.R
 
 class RatedFoodView(context: Context) : ConstraintLayout(context) {
 

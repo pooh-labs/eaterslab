@@ -1,4 +1,4 @@
-package labs.pooh.mycanteen.ui.home
+package labs.pooh.eaterslab.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.fragment_home.*
-import labs.pooh.mycanteen.R
+import labs.pooh.eaterslab.R
 
 class HomeFragment : Fragment() {
 
