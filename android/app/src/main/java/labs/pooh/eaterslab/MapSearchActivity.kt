@@ -1,4 +1,4 @@
-package labs.pooh.mycanteen
+package labs.pooh.eaterslab
 
 import android.content.Context
 import android.os.Bundle
@@ -7,13 +7,13 @@ import android.view.View.GONE
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_map_search.*
-import labs.pooh.mycanteen.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_X
-import labs.pooh.mycanteen.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
-import labs.pooh.mycanteen.ui.map.LocationOccupancyMarker
-import labs.pooh.mycanteen.ui.map.SingleLocationInfo
-import labs.pooh.mycanteen.ui.map.TransparentListenerOverlay
-import labs.pooh.mycanteen.ui.view.*
-import labs.pooh.mycanteen.util.*
+import labs.pooh.eaterslab.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_X
+import labs.pooh.eaterslab.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
+import labs.pooh.eaterslab.ui.map.LocationOccupancyMarker
+import labs.pooh.eaterslab.ui.map.SingleLocationInfo
+import labs.pooh.eaterslab.ui.map.TransparentListenerOverlay
+import labs.pooh.eaterslab.ui.view.*
+import labs.pooh.eaterslab.util.*
 import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory

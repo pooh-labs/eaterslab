@@ -1,4 +1,4 @@
-package labs.pooh.mycanteen.ui.view
+package labs.pooh.eaterslab.ui.view
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter

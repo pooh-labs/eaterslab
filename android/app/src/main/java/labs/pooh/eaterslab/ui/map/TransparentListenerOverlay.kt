@@ -1,4 +1,4 @@
-package labs.pooh.mycanteen.ui.map
+package labs.pooh.eaterslab.ui.map
 
 import android.view.MotionEvent
 import org.osmdroid.views.MapView

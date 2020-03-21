@@ -1,4 +1,4 @@
-package labs.pooh.mycanteen
+package labs.pooh.eaterslab
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

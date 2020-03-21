@@ -1,4 +1,4 @@
-package labs.pooh.mycanteen.ui.slideshow
+package labs.pooh.eaterslab.ui.slideshow
 
 import androidx.lifecycle.ViewModel
 

@@ -1,7 +1,7 @@
-package labs.pooh.mycanteen.ui.map
+package labs.pooh.eaterslab.ui.map
 
 import kotlinx.android.synthetic.main.map_item_view.view.*
-import labs.pooh.mycanteen.R
+import labs.pooh.eaterslab.R
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow
 
@@ -14,7 +14,7 @@ class SingleLocationInfo(mapView: MapView, private val onCloseListener: (() -> U
     }
 
     init {
-        // mark it as it wouldn't be clicked so other markers under it can be clocked through it
+        // mark it as it wouldn't be clicked so other markers under it can be clicked through it
         this.mView.setOnTouchListener { _, _ -> false }
     }
 

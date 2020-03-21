@@ -1,6 +1,6 @@
-package labs.pooh.mycanteen
+package labs.pooh.eaterslab
 
-import labs.pooh.mycanteen.util.downloadImageFrom
+import labs.pooh.eaterslab.util.downloadImageFrom
 import org.junit.Test
 
 import org.junit.Assert.*
