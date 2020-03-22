@@ -1,2 +1,2 @@
-release: python manage.py migrate
+release: python manage.py migrate # run --no-input to clear the database
 web: gunicorn server.wsgi
