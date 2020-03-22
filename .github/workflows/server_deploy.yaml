@@ -16,8 +16,8 @@ jobs:
         run: |
           ls -la
           rm -rf .git
-          cd django-server
           git clone https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/eaterslab.git
-          ls -la
           cd eaterslab
+          shopt -s extglob
+          rm -- !(.git)
           ls -la
