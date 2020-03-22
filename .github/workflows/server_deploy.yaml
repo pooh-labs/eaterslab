@@ -10,14 +10,14 @@ jobs:
     steps:
       - uses: actions/checkout@master
         with:
-	  ref: ${{ github.ref }}
+          ref: ${{ github.ref }}
       - name: Deploy to Heroku
         if: job.status == 'success'
         run: |
-	  ls -la
-	  rm -rf .git
-	  cd django-server
-	  git init
-	  git add .
-	  git commit . -m "deploy commit"
-	  ls -la
+          ls -la
+          rm -rf .git
+          cd django-server
+          git init
+          git add .
+          git commit . -m "deploy commit"
+          ls -la
