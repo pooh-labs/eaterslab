@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'api.apps.ApiConfig',
 ]
 
 MIDDLEWARE = [
@@ -75,6 +77,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'server.wsgi.application'
 
+# Configuration for rest_framework to get only the json data
+# from the api calls to specified urls as default
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        # Uncomment to get the API renderer for browser view
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ]
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
