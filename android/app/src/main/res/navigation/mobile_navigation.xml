@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navHome"
-        android:name="labs.pooh.mycanteen.ui.home.HomeFragment"
+        android:name="labs.pooh.eaterslab.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_home_second"
-        android:name="labs.pooh.mycanteen.ui.home.HomeSecondFragment"
+        android:name="labs.pooh.eaterslab.ui.home.HomeSecondFragment"
         android:label="@string/home_second"
         tools:layout="@layout/fragment_home_second">
         <action
@@ -31,13 +31,13 @@
 
     <fragment
         android:id="@+id/navGallery"
-        android:name="labs.pooh.mycanteen.ui.gallery.GalleryFragment"
+        android:name="labs.pooh.eaterslab.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/navSlideshow"
-        android:name="labs.pooh.mycanteen.ui.slideshow.SlideshowFragment"
+        android:name="labs.pooh.eaterslab.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
 </navigation>
