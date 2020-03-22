@@ -18,7 +18,7 @@ jobs:
           git clone https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/eaterslab.git
           cd eaterslab
           find . -maxdepth 1 ! -path './.git' ! -path '.' -exec rm -rf {} +
-          cp -r ../django-server/* ./
+          cp -r ../django-server/server/* ./
           git config --global user.email "${{ secrets.HEROKU_DEPLOY_EMAIL }}"
           git config --global user.name "${{ secrets.HEROKU_DEPLOY_NAME }}"
           git add .
