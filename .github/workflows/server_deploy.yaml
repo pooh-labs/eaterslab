@@ -1,0 +1,16 @@
+name: Webserver deploy
+
+on: push
+
+jobs:
+  build:
+    name: Checkout and deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 'master'
+      - name: Deploy to Heroku
+        if: github.ref == 'refs/heads/master' && job.status == 'success'
+        run: ls -la
