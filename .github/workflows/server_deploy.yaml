@@ -19,5 +19,6 @@ jobs:
           git clone https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/eaterslab.git
           cd eaterslab
           shopt -s extglob
-          rm -- !(.git)
+          rm -- !(.git|..|.)
+          cp ../django-server/* ./
           ls -la
