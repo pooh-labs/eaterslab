@@ -23,4 +23,4 @@ jobs:
 #          git init
 #          git add .
 #          git commit . -m "deploy commit"
-#          ls -la
+          ls -la
