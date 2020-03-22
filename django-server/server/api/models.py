@@ -7,7 +7,7 @@ class Cafeteria(models.Model):
     sub_description = models.CharField(max_length=512)
     latitude = models.FloatField()
     longitude = models.FloatField()
-    capacity = models.IntegerField(default=10)
+    capacity = models.IntegerField()
 
     def __str__(self):
         return self.name
