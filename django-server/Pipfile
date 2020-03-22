@@ -13,5 +13,7 @@ python_version = "3.6"
 psycopg2-binary = "*"
 django-heroku = "*"
 gunicorn = "*"
+whitenoise = "*" # for static files management on Heroku
 django = "*"
+django-environ = "*"
 djangorestframework = "*"
