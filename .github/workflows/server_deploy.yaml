@@ -12,5 +12,5 @@ jobs:
         with:
           ref: 'master'
       - name: Deploy to Heroku
-        if: github.ref == 'refs/heads/master' && job.status == 'success'
+        if: job.status == 'success'
         run: ls -la
