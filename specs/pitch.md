@@ -1,4 +1,4 @@
-# MyCanteen
+# EatersLab
 
 ## Problem statement
 

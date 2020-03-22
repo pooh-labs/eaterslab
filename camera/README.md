@@ -11,10 +11,10 @@ This section assumes you have a fresh install of Raspbian on either VM or physic
 ```
 # Clone repository to home directory
 cd /home/pi
-git clone https://github.com/killer-geckos/ivory-beam.git
+git clone https://github.com/pooh-labs/eaterslab.git
 
 # Run setup script
-cd ivory-beam/camera/rpi-files
+cd eaterslab/camera/rpi-files
 sudo ./setup.sh
 ```
 
