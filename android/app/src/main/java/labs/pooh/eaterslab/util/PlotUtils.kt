@@ -15,7 +15,7 @@ import io.data2viz.viz.*
 
 data class PlotProportion(val x: Double, val y: Double)
 
-private fun GroupNode.moveRightTransform(padding: Double, width: Double, index: Int, height: Double, labelSize: Double, space: Double = 0.0) {
+private fun GroupNode.moveTransform(padding: Double, width: Double, index: Int, height: Double, labelSize: Double, space: Double = 0.0) {
     transform {
         translate(
             x = padding + index * (width + space),
@@ -27,7 +27,7 @@ private fun GroupNode.moveRightTransform(padding: Double, width: Double, index: 
 fun <T: Number> Context.horizontalBarPlot(data: List<T>, barColor: Int,
                                   lowValueFix: Double = 1.0, proportion: PlotProportion = PlotProportion(2.0, 1.0), plotLabels: Boolean = true,
                                   barWidth: Double = 10.0, labelColor: Int = Color.BLACK, padding: Double = 5.0, labelSize: Double = 9.0,
-                                  ticks: List<String> = listOf(), ticksIndexer: ((String) -> Int)? = null, ticksScale: Double = 4.0): View {
+                                  ticks: List<String> = listOf(), ticksIndexer: ((String) -> Int)? = null, ticksScale: Double = 4.0, ticksDistance: Double = 0.5): View {
 
     val doubleData = data.map(Number::toDouble)
     assert(doubleData.isNotEmpty()) // TODO: handle empty plot
@@ -38,12 +38,12 @@ fun <T: Number> Context.horizontalBarPlot(data: List<T>, barColor: Int,
     val h = proportion.y / proportion.x * w - 2 * padding - labelSize
 
     val wTicks = (ticks.size * (barWidth + padding) + padding) * ticksScale
-    val hTicks = wTicks * proportion.y  / proportion.x
+    val hTicks = (wTicks * proportion.y  / proportion.x)
     val paddingTicks = wTicks * (padding + barWidth / 2) / ((data.size * barWidth) + ((data.size + 1) * padding))
 
     val yScale = Scales.Continuous.linear {
         domain = listOf(doubleData.min()!! - lowValueFix, doubleData.max()!!)
-        range = listOf(0.0, proportion.y)
+        range = listOf(0.0, h)
     }
 
     val plotView = viz {
@@ -52,11 +52,11 @@ fun <T: Number> Context.horizontalBarPlot(data: List<T>, barColor: Int,
 
         doubleData.forEachIndexed { index, value ->
             group {
-                moveRightTransform(padding, barWidth, index, h, labelSize, padding)
+                moveTransform(padding, barWidth, index, h, labelSize, padding)
                 rect {
                     vAlign = TextVAlign.BASELINE
                     width = barWidth
-                    height = (-1.0) * (h * yScale(value))
+                    height = (-1.0) * (yScale(value))
                     fill = Colors.rgb(barColor)
                 }
             }
@@ -65,12 +65,12 @@ fun <T: Number> Context.horizontalBarPlot(data: List<T>, barColor: Int,
         if (plotLabels) {
             doubleData.forEachIndexed { index, value ->
                 group {
-                    moveRightTransform(padding, barWidth, index, h, labelSize, padding)
+                    moveTransform(padding, barWidth, index, h, labelSize, padding)
                     text {
                         textContent = String.format("%.0f", value)
                         fontSize = labelSize
                         x = barWidth / 2
-                        y = (-1.0) * (h * yScale(value)) - (labelSize / 2)
+                        y = (-1.0) * (yScale(value)) - (labelSize / 2)
                         vAlign = TextVAlign.BASELINE
                         hAlign = TextHAlign.MIDDLE
                         textColor = Colors.rgb(labelColor)
@@ -86,11 +86,11 @@ fun <T: Number> Context.horizontalBarPlot(data: List<T>, barColor: Int,
     }
 
     val ticksView = viz {
-        size = Size(wTicks, hTicks)
+        size = Size(wTicks, hTicks * (1 + ticksDistance))
 
         group {
             transform {
-                translate(y = hTicks / 2)
+                translate(y = hTicks)
             }
             axis(Orient.BOTTOM, FirstLastRangeTickable(ticks, wTicks, paddingTicks, ticksIndexer!!))
         }
@@ -121,7 +121,7 @@ fun <T: Number> Context.discreteLinePlot(data: List<T>, barColor: Int,
         size = Size(w, h)
         doubleData.zipWithNext().forEachIndexed { index, value ->
             group {
-                moveRightTransform(padding + barWidth / 4, barWidth, index, h, labelSize)
+                moveTransform(padding + barWidth / 4, barWidth, index, h, labelSize)
                 line {
                     x1 = 0.0
                     y1 = (-1.0) * (h * yScale(value.first))

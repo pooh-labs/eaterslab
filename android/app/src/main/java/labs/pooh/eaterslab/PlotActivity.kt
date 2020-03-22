@@ -51,7 +51,7 @@ class PlotActivity : AppCompatActivity() {
             val plotView = discreteLinePlot(dataSet, yellow)
             frame += barView
             frame += plotView
-            frame.layoutParams = FrameLayout.LayoutParams(1000, 500).apply {
+            frame.layoutParams = FrameLayout.LayoutParams(1000, 600).apply {
                 gravity = Gravity.CENTER_HORIZONTAL
             }
 
