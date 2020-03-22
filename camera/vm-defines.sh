@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Constants
-PROJECT_NAME=ivory-beam
+PROJECT_NAME=eaterslab
 VM_NAME="${PROJECT_NAME}-camera"
 
 # Default values for VMs
