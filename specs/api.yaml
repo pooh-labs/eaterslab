@@ -1,9 +1,9 @@
 openapi: "3.0.0"
 info:
   version: 0.0.0
-  title: ivory-beam API
+  title: EatersLab API
 servers:
-  - url: https://ivory-beam.example/beta
+  - url: https://eaterslab.example/beta
 paths:
   /cameras/{id}/events:
     post:
