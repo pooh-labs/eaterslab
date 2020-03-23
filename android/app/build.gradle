@@ -68,6 +68,23 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
+
+    /**
+     * Base of data to visualisation class that gaves the ability
+     * to print plots (for example as a set of rectangles or lines)
+     */
+    implementation 'io.data2viz.d2v:scale:0.8.0-RC10'
+    implementation 'io.data2viz.d2v:core:0.8.0-RC10'
+    implementation 'io.data2viz.d2v:viz:0.8.0-RC10'
+    implementation 'io.data2viz.d2v:axis:0.8.0-RC10'
+
+    /**
+     * Additional packages for REST api management in application
+     */
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.squareup.okhttp3:okhttp:4.2.2'
+    implementation 'org.threeten:threetenbp:1.4.0'
+
     testImplementation 'junit:junit:4.12'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'

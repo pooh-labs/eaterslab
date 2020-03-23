@@ -48,7 +48,7 @@ class SlideshowFragment : Fragment() {
         textSlideshow.text = getString(R.string.loading)
 
         val observables = toObservableBitmaps(imagesURLs.entries.toObservable())
-        val disposable = toDisposableSubscibe(observables, view)
+        val disposable = toDisposableSubscribe(observables, view)
 
         compositeDisposable.add(disposable)
     }
@@ -68,7 +68,7 @@ class SlideshowFragment : Fragment() {
                 }
 
 
-    private fun toDisposableSubscibe(data: Observable<Pair<String, Bitmap?>>, view: View)
+    private fun toDisposableSubscribe(data: Observable<Pair<String, Bitmap?>>, view: View)
             = data.subscribe { (name, image) ->
                 image?.let { bitmap ->
                     verticalReviewSlideShow.addView(
