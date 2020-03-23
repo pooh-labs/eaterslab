@@ -21,5 +21,5 @@ java -jar openapi-generator-cli.jar generate \
 rm openapi-generator-cli.jar &&
 rm -rf app/src/main/java/labs/pooh/eaterslab/client &&
 cp -r api/src/main/kotlin/labs/pooh/client app/src/main/java/labs/pooh/eaterslab/ &&
-rm -rf ./api &&
+rm -rf ./api
 
