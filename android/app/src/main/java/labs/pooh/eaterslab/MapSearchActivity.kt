@@ -60,7 +60,7 @@ class MapSearchActivity : AbstractRevealedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        API = CafeteriaApi(getString(R.string.api_url))
+        API = CafeteriaApi(BuildConfig.API_URL)
 
         Configuration.getInstance().load(applicationContext, PreferenceManager.getDefaultSharedPreferences(applicationContext))
         setContentView(R.layout.activity_map_search)

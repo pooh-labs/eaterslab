@@ -21,11 +21,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        buildTypes.each {
+            it.buildConfigField 'String', 'API_URL', API_URL
+        }
     }
-
-// To inline the bytecode built with JVM target 1.8 into
-// bytecode that is being built with JVM target 1.6. (e.g. navArgs)
-
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -38,26 +37,26 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    implementation 'androidx.navigation:navigation-fragment:2.2.1'
-    implementation 'androidx.navigation:navigation-ui:2.2.1'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.1'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.preference:preference-ktx:1.1.0'
-    implementation 'androidx.transition:transition:1.3.1'
+    implementation "androidx.appcompat:appcompat:1.1.0"
+    implementation "androidx.core:core-ktx:1.2.0"
+    implementation "androidx.legacy:legacy-support-v4:1.0.0"
+    implementation "com.google.android.material:material:1.1.0"
+    implementation "androidx.constraintlayout:constraintlayout:1.1.3"
+    implementation "androidx.navigation:navigation-fragment:2.2.1"
+    implementation "androidx.navigation:navigation-ui:2.2.1"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.navigation:navigation-fragment-ktx:2.2.1"
+    implementation "androidx.navigation:navigation-ui-ktx:2.2.1"
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation "androidx.preference:preference-ktx:1.1.0"
+    implementation "androidx.transition:transition:1.3.1"
 
     /**
      * libraries for map usage using OpenStreetMaps
      */
-    implementation 'org.osmdroid:osmdroid-android:6.1.6'
+    implementation "org.osmdroid:osmdroid-android:6.1.6"
 
     /**
      * libraries for multithreading operations with data for working
@@ -65,28 +64,18 @@ dependencies {
      * and to subscribe on received data just when the data is received
      * in a functional way
      */
-    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-
-
-    /**
-     * Base of data to visualisation class that gaves the ability
-     * to print plots (for example as a set of rectangles or lines)
-     */
-    implementation 'io.data2viz.d2v:scale:0.8.0-RC10'
-    implementation 'io.data2viz.d2v:core:0.8.0-RC10'
-    implementation 'io.data2viz.d2v:viz:0.8.0-RC10'
-    implementation 'io.data2viz.d2v:axis:0.8.0-RC10'
+    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
 
     /**
      * Additional packages for REST api management in application
      */
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.squareup.okhttp3:okhttp:4.2.2'
-    implementation 'org.threeten:threetenbp:1.4.0'
+    implementation "com.google.code.gson:gson:2.8.6"
+    implementation "com.squareup.okhttp3:okhttp:4.2.2"
+    implementation "org.threeten:threetenbp:1.4.0"
 
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:4.12"
 
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation "androidx.test.ext:junit:1.1.1"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
 }
