@@ -22,4 +22,4 @@ rm openapi-generator-cli.jar &&
 rm -rf app/src/main/java/labs/pooh/eaterslab/client &&
 cp -r api/src/main/kotlin/labs/pooh/client app/src/main/java/labs/pooh/eaterslab/ &&
 rm -rf ./api &&
-git add app/src/main/java/labs/pooh/eaterslab/client
+
