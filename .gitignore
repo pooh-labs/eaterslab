@@ -1,2 +1,9 @@
+# Python server
+__pycache__/
+.idea/
+django-server/server/db.sqlite3
+.env
+django-server/serverenv/*
+
 # IDEs
 .vscode
