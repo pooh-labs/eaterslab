@@ -1,6 +1,9 @@
 name: Webserver deploy
 
-on: push
+on:
+  push:
+    paths:
+    - 'django-server/**'
 
 jobs:
   build:
@@ -10,17 +13,17 @@ jobs:
     steps:
       - uses: actions/checkout@master
         with:
-          ref: ${{ github.ref }}
+          ref: ${{ github.ref }}                                                              # checkout to branch which was pushed
       - name: Deploy to Heroku
         if: job.status == 'success'
         run: |
-          rm -rf .git
-          git clone https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/eaterslab.git
-          cd eaterslab
-          find . -maxdepth 1 ! -path './.git' ! -path '.' -exec rm -rf {} +
-          cp -r ../django-server/server/* ./
-          git config --global user.email "${{ secrets.HEROKU_DEPLOY_EMAIL }}"
+          rm -rf .git                                                                         # mark current folder not as a git repo
+          git clone https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/eaterslab.git # clone repo from heroku server
+          cd eaterslab                                                                        # folder on deploy server
+          find . -maxdepth 1 ! -path './.git' ! -path '.' -exec rm -rf {} +                   # remove all files excluding git repo info and current path
+          cp -r ../django-server/server/* ./ # copy new version of server
+          git config --global user.email "${{ secrets.HEROKU_DEPLOY_EMAIL }}"                 # deploy as specified user
           git config --global user.name "${{ secrets.HEROKU_DEPLOY_NAME }}"
           git add .
-          git commit . -m "deploy full refresh from ${{ github.ref }}"
+          git commit . -m "deploy full refresh from ${{ github.ref }}"                        # commit and push all files
           git push
