@@ -91,12 +91,12 @@ REST_FRAMEWORK = {
     ]
 }
 
+
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-
 def select_database():
-    if env.bool('USE_POSTGRES', default=False):
+    if env.bool('DB_DEPLOY', default=False):
         return env.db()
     return {
         'ENGINE': 'django.db.backends.sqlite3',
