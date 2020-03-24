@@ -140,7 +140,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-
 # Heroku static files configuration to get it working on deploy
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
