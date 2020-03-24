@@ -1,8 +1,8 @@
 # Installation instructions:
 
 ### "The following apt commands will get you the packages you need:"
-sudo apt-get update
-sudo apt-get install python3-pip 
+#### sudo apt-get update
+#### sudo apt-get install python3-pip 
 
 #### and either 
 sudo apt-get install python3-venv
