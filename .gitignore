@@ -10,3 +10,4 @@ server/db.sqlite3
 .env
 django-server/serverenv/*
 
+/django-server/server/static/
