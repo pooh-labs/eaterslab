@@ -2,6 +2,7 @@
 android/build
 android/local.properties
 android/.gradle
+android/app/*.iml
 
 # Python server
 __pycache__/
@@ -10,3 +11,5 @@ django-server/server/db.sqlite3
 .env
 django-server/serverenv/*
 
+# IDEs
+.vscode
