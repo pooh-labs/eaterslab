@@ -1,9 +1,3 @@
-# Android
-android/build
-android/local.properties
-android/.gradle
-android/app/*.iml
-
 # Python server
 __pycache__/
 .idea/

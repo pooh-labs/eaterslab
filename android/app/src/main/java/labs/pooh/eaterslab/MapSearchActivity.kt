@@ -6,7 +6,13 @@ import android.view.View
 import android.view.View.GONE
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_map_search.*
+import labs.pooh.client.apis.CafeteriaApi
+import labs.pooh.client.models.Cafeteria
 import labs.pooh.eaterslab.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_X
 import labs.pooh.eaterslab.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
 import labs.pooh.eaterslab.ui.map.LocationOccupancyMarker
@@ -44,8 +50,17 @@ class MapSearchActivity : AbstractRevealedActivity() {
 
     private lateinit var gpsProvider: GpsMyLocationProvider
 
+    private lateinit var API: CafeteriaApi
+
+    /**
+     * Resources that should be disposed when the fragment is destroyed
+     */
+    private val compositeDisposable = CompositeDisposable()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        API = CafeteriaApi(BuildConfig.API_URL)
 
         Configuration.getInstance().load(applicationContext, PreferenceManager.getDefaultSharedPreferences(applicationContext))
         setContentView(R.layout.activity_map_search)
@@ -66,13 +81,13 @@ class MapSearchActivity : AbstractRevealedActivity() {
                 SingleLocationInfo.closeOpened()
                 buttonSelect.moveDownAndHide()
             }
-            addMapPlaces()
 
             controller.setCenter(DEFAULT_CENTER_LOCATION)
             controller.setZoom(DEFAULT_ZOOM)
         }
 
         fabGPS.setOnClickListener(this@MapSearchActivity::fabGPSListener)
+        map.addPlacesInBackground()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -172,26 +187,34 @@ class MapSearchActivity : AbstractRevealedActivity() {
         return true
     }
 
-    private fun MapView.addMapPlaces() {
+    private fun MapView.addPlacesInBackground() {
 
-        val mimMarker = LocationOccupancyMarker(
-            this,
-            title = "Kubuś MIMUW", id = 0,
-            description = "Szybko i smacznie",
-            latitude = 52.211903, longitude = 20.982224,
-            occupancy = (1..100).random(),
-            onMarkerClickListener = this@MapSearchActivity::onMarkerClickListener
-        )
-        val bioMarker = LocationOccupancyMarker(
-            this,
-            title = "Biologia UW", id = 1,
-            description = "Wejdź i wyjdź",
-            latitude = 52.213231, longitude = 20.986494,
-            occupancy = (1..100).random(),
-            onMarkerClickListener = this@MapSearchActivity::onMarkerClickListener
-        )
-
-        overlays += mimMarker
-        overlays += bioMarker
+        val disposable = Observable.defer { Observable.just(API.cafeteriaList()) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .forEach { array ->
+                array.forEach { cafeteria ->
+                    cafeteria.toMarker(map, this@MapSearchActivity::onMarkerClickListener)
+                        ?.let { overlays += it }
+                }
+            }
+        compositeDisposable.add(disposable)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+    }
+}
+
+
+fun Cafeteria.toMarker(mapView: MapView, listener: (LocationOccupancyMarker) -> Boolean) = id?.let { existingId ->
+    return@let LocationOccupancyMarker(
+        mapView,
+        title = name, id = existingId,
+        description = subDescription,
+        latitude = latitude.toDouble(), longitude = longitude.toDouble(),
+        occupancy = capacity,
+        onMarkerClickListener = listener
+    )
 }
