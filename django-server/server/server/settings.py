@@ -44,12 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'drf_yasg',                                             # for API documentation and generation
-    'api.apps.ApiConfig',
+    # External library for yaml generator (can be used but works only with OpenAPI 2.0)
+    # 'drf_yasg',                                           # for API documentation and generation
+    'api.apps.ApiConfig',                                   # API app
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',           # for static files handling
+    'whitenoise.middleware.WhiteNoiseMiddleware',           # for static files handling on deploy
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -78,8 +79,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'server.wsgi.application'
 
+
 # Configuration for rest_framework to get only the json data
 # from the api calls to specified urls as default
+
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
@@ -91,8 +94,18 @@ REST_FRAMEWORK = {
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
+
+def select_database():
+    if env.bool('USE_POSTGRES', default=False):
+        return env.db()
+    return {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+
+
 DATABASES = {
-    'default': env.db()
+    'default': select_database()
 }
 
 
@@ -129,7 +142,9 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Heroku static files configuration
+
+# Heroku static files configuration to get it working on deploy
+
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

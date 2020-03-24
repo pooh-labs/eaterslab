@@ -1,13 +1,10 @@
-# Android
-android/build
-android/local.properties
-android/.gradle
-
 # Python server
 __pycache__/
 .idea/
-server/db.sqlite3
+django-server/server/db.sqlite3
 .env
 django-server/serverenv/*
-
 /django-server/server/static/
+
+# IDEs
+.vscode

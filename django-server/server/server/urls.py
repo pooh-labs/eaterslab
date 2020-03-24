@@ -15,23 +15,26 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from drf_yasg.views import get_schema_view
-from drf_yasg import openapi
-from rest_framework import permissions
 
-schema_view = get_schema_view(
-   openapi.Info(
-      title="EatersLab API",
-      default_version='v1',
-   ),
-   public=True,
-   permission_classes=(permissions.AllowAny,),
-)
+# Code to generate beautiful API view
+# from drf_yasg.views import get_schema_view
+# from drf_yasg import openapi
+# from rest_framework import permissions
+#
+# schema_view = get_schema_view(
+#    openapi.Info(
+#       title="EatersLab API",
+#       default_version='v1',
+#    ),
+#    public=True,
+#    permission_classes=(permissions.AllowAny,),
+# )
 
 urlpatterns = [
     path('', include('home.urls')),
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    path(r'api.yaml', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    path(r'doc', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    # For documentation generation with drf_yasg
+    # path(r'api.yaml', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    # path(r'doc', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
 ]
