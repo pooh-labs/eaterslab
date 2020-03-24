@@ -6,7 +6,7 @@ name = "pypi"
 
 [requires]
 
-python_version = "3.6"
+python_version = "3"
 
 [packages]
 
@@ -17,4 +17,4 @@ django = "*"
 django-environ = "*"
 djangorestframework = "*"
 whitenoise = "*"
-drf_yasg = "*"
+# drf_yasg = "*"
