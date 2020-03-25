@@ -28,4 +28,4 @@ jobs:
           cp -r ../django-server/server/* ./                                                  # copy new version of server
           git add .
           git commit . -m "deploy full refresh from ${{ github.ref }}"                        # commit and push all files
-          git push heroku
+          git push
