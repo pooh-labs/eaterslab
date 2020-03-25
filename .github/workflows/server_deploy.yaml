@@ -17,8 +17,11 @@ jobs:
       - name: Deploy to Heroku
         if: job.status == 'success'
         run: |
+          ls -la
           rm -rf .git                                                                         # mark current folder not as a git repo
+          ls -la
           git clone https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/eaterslab.git # clone repo from heroku server
+          ls -la
           cd eaterslab                                                                        # folder on deploy server
           ls -la
           find . -maxdepth 1 ! -path './.git' ! -path '.' -exec rm -rf {} +                   # remove all files excluding git repo info and current path
