@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - 'django-server/**'
+    - '.github/workflows/server_deploy.yaml'
 
 jobs:
   build:
