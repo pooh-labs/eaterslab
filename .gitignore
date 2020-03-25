@@ -4,7 +4,7 @@ __pycache__/
 django-server/server/db.sqlite3
 .env
 django-server/serverenv/*
-/django-server/server/static/
+django-server/server/static/
 
 # IDEs
 .vscode
