@@ -1,0 +1,19 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[requires]
+
+python_version = "3"
+
+[packages]
+
+psycopg2-binary = "*"
+django-heroku = "*"
+gunicorn = "*"
+django = "*"
+django-environ = "*"
+djangorestframework = "*"
+whitenoise = "*"
