@@ -2,9 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="labs.pooh.eaterslab">
 
-    <uses-feature
-        android:name="android.hardware.camera2"
-        android:required="false" /> <!-- PERMISSIONS -->
+    <!-- PERMISSIONS -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
