@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener {
-            start<PlotActivity>()
+            Snackbar.make(it, "Hello from snackbar", Snackbar.LENGTH_SHORT).show()
         }
         val navController = findNavController(R.id.navHostFragment)
 
