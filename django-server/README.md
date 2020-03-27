@@ -5,13 +5,9 @@ The following apt commands will get you the packages you need:
 sudo apt-get update
 sudo apt-get install python3-pip
 ```
-and either
+and 
 ```
-sudo apt-get install python3-venv
-```
-or
-```
-python3 -m pip install --user virtualenv
+python3 -m pip install --user pipenv
 ```
 Now you should be able to run the server-env-setup.sh script successfully.
 
