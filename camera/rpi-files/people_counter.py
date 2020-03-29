@@ -29,7 +29,8 @@ class PeopleCounter(object):
             timestamp: Current time
         """
         # Generate random patterns
-        for _ in range(10):   # noqa: WPS112
+        repeats = 10
+        while repeats > 0:
             random = os.urandom(1)[0]
 
             if random > FIRST_PERSON_THRESHOLD:
@@ -43,6 +44,8 @@ class PeopleCounter(object):
             elif self._counter > 0 and random > LEAVING_PERSON_THRESHOLD:
                 self.leave_times.append(timestamp)
                 self._counter -= 1
+
+            repeats -= 1
 
     def get_entering_list(self):
         """Get list of enter times.
