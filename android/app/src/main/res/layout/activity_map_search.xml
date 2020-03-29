@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="#FFFFFF"
+        app:backgroundTint="?foregroundColor"
         app:layout_constraintBottom_toBottomOf="@+id/map"
         app:layout_constraintEnd_toEndOf="@+id/map"
         app:srcCompat="@drawable/ic_add" />
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="#FFFFFF"
+        app:backgroundTint="?foregroundColor"
         app:layout_constraintBottom_toTopOf="@+id/plus"
         app:layout_constraintEnd_toEndOf="@+id/map"
         app:srcCompat="@drawable/ic_subtract" />

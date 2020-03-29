@@ -14,7 +14,7 @@ fun createDarkThemeMatrix(context: Context): ColorMatrixColorFilter {
             0.0f, -1.0f, 0.0f, 0.0f, 255f,
             0.0f, 0.0f, -1.0f, 0.0f, 255f,
             0.0f, 0.0f, 0.0f, 1.0f, 0.0f))
-    val destinationColor = ContextCompat.getColor(context, R.color.mapDark)
+    val destinationColor = ContextCompat.getColor(context, R.color.colorMapDark)
     val lr: Float = (255.0f - Color.red(destinationColor)) / 255.0f
     val lg: Float = (255.0f - Color.green(destinationColor)) / 255.0f
     val lb: Float = (255.0f - Color.blue(destinationColor)) / 255.0f

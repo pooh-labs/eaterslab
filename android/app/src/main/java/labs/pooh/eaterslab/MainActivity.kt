@@ -32,6 +32,13 @@ class MainActivity : AbstractThemedActivity() {
         }
         val navController = findNavController(R.id.navHostFragment)
 
+        if (isDarkModeEnabled()) {
+            toolbar.popupTheme = R.style.AppTheme_Dark_PopupOverlay
+        }
+        else {
+            toolbar.popupTheme = R.style.AppTheme_PopupOverlay
+        }
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
