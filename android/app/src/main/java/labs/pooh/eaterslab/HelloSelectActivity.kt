@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_hello_select.*
 
-class HelloSelectActivity : AppCompatActivity() {
+class HelloSelectActivity : AbstractThemedActivity() {
 
     companion object {
         const val BUTTON_MAP_POSITION_X = "BUTTON_MAP_POSITION_X"
@@ -14,6 +14,8 @@ class HelloSelectActivity : AppCompatActivity() {
         const val BUTTON_SEARCH_POSITION_X = "BUTTON_SEARCH_POSITION_X"
         const val BUTTON_SEARCH_POSITION_Y = "BUTTON_SEARCH_POSITION_Y"
     }
+
+    override val showActionBar = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

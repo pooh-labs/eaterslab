@@ -25,4 +25,15 @@
 
     <string name="food_image">food image</string>
     <string name="loading">Loading…</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="main_prefs">main_preferences</string>
+    <string name="style_prefs">style_preferences</string>
+    <string name="main_header">Main</string>
+    <string name="theme_header">Interface</string>
+    <string name="language_title">Application interface language</string>
+    <string name="theme_title">Use dark app theme</string>
+    <string name="lang">lang</string>
+    <string name="dark_theme">theme</string>
 </resources>

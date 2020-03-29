@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
-import androidx.appcompat.app.AppCompatActivity
 import kotlin.math.max
 
-abstract class AbstractRevealedActivity : AppCompatActivity() {
+abstract class AbstractRevealedActivity : AbstractThemedActivity() {
 
     abstract val revealedLayout: Lazy<View>
 

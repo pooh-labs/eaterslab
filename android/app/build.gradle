@@ -23,6 +23,8 @@ android {
         }
         buildTypes.each {
             it.buildConfigField 'String', 'API_URL', API_URL
+            it.buildConfigField 'String', 'DEFAULT_LANG', DEFAULT_LANG
+            it.resValue 'string', 'default_lang', DEFAULT_LANG
         }
     }
 
@@ -33,7 +35,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+}
 
+repositories {
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -74,6 +79,12 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:4.2.2"
     implementation "org.threeten:threetenbp:1.4.0"
 
+    /**
+     * Easily manage application locales light library
+     */
+    implementation "com.github.YarikSOffice:lingver:1.2.1"
+
+    implementation 'androidx.preference:preference:1.1.0'
     testImplementation "junit:junit:4.12"
 
     androidTestImplementation "androidx.test.ext:junit:1.1.1"

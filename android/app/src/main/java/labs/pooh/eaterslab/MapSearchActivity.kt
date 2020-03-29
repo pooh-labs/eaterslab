@@ -1,6 +1,9 @@
 package labs.pooh.eaterslab
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
@@ -18,7 +21,10 @@ import labs.pooh.eaterslab.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
 import labs.pooh.eaterslab.ui.map.LocationOccupancyMarker
 import labs.pooh.eaterslab.ui.map.SingleLocationInfo
 import labs.pooh.eaterslab.ui.map.TransparentListenerOverlay
-import labs.pooh.eaterslab.ui.view.*
+import labs.pooh.eaterslab.ui.map.createDarkThemeMatrix
+import labs.pooh.eaterslab.ui.view.moveDownAndHide
+import labs.pooh.eaterslab.ui.view.moveUpAndShow
+import labs.pooh.eaterslab.ui.view.rotateAnimation
 import labs.pooh.eaterslab.util.*
 import org.osmdroid.api.IMapController
 import org.osmdroid.config.Configuration
@@ -26,6 +32,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.TilesOverlay
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider
@@ -44,6 +51,8 @@ class MapSearchActivity : AbstractRevealedActivity() {
 
         private const val REQUEST_LOCATION_ON_BUTTON_CODE = 1001
     }
+
+    override val showActionBar = false
 
     private lateinit var rotationGestureOverlay: RotationGestureOverlay
     private lateinit var myLocationOverlay: MyLocationNewOverlay
@@ -64,6 +73,10 @@ class MapSearchActivity : AbstractRevealedActivity() {
 
         Configuration.getInstance().load(applicationContext, PreferenceManager.getDefaultSharedPreferences(applicationContext))
         setContentView(R.layout.activity_map_search)
+
+        if (isDarkModeEnabled()) {
+            map.enableDarkMode()
+        }
 
         buttonSelect.moveDownAndHide()
         gpsProvider = GpsMyLocationProvider(applicationContext)
@@ -174,6 +187,11 @@ class MapSearchActivity : AbstractRevealedActivity() {
 
         overlays += myLocationOverlay
         return myLocationOverlay
+    }
+
+    private fun MapView.enableDarkMode() {
+        val filter = createDarkThemeMatrix(this@MapSearchActivity)
+        overlayManager.tilesOverlay.setColorFilter(filter)
     }
 
     private fun onSelectPlaceButtonClick(marker: LocationOccupancyMarker, view: View) {
