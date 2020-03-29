@@ -29,7 +29,7 @@ class PeopleCounter(object):
             timestamp: Current time
         """
         # Generate random patterns
-        for _iter in range(0, 10):
+        for _ in range(0, 10):
             random = os.urandom(1)[0]
 
             if random > FIRST_PERSON_THRESHOLD:
