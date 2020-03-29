@@ -7,6 +7,7 @@ import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
+import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import io.reactivex.Observable
@@ -190,7 +191,8 @@ class MapSearchActivity : AbstractRevealedActivity() {
     }
 
     private fun MapView.enableDarkMode() {
-        val filter = createDarkThemeMatrix(this@MapSearchActivity)
+        val destinationColor = ContextCompat.getColor(context, R.color.colorMapDark)
+        val filter = createDarkThemeMatrix(destinationColor)
         overlayManager.tilesOverlay.setColorFilter(filter)
     }
 

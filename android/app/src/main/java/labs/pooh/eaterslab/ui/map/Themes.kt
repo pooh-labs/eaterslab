@@ -7,14 +7,13 @@ import android.graphics.ColorMatrixColorFilter
 import androidx.core.content.ContextCompat
 import labs.pooh.eaterslab.R
 
-fun createDarkThemeMatrix(context: Context): ColorMatrixColorFilter {
+fun createDarkThemeMatrix(destinationColor: Int): ColorMatrixColorFilter {
     val inverseMatrix = ColorMatrix(
         floatArrayOf(
             -1.0f, 0.0f, 0.0f, 0.0f, 255f,
             0.0f, -1.0f, 0.0f, 0.0f, 255f,
             0.0f, 0.0f, -1.0f, 0.0f, 255f,
             0.0f, 0.0f, 0.0f, 1.0f, 0.0f))
-    val destinationColor = ContextCompat.getColor(context, R.color.colorMapDark)
     val lr: Float = (255.0f - Color.red(destinationColor)) / 255.0f
     val lg: Float = (255.0f - Color.green(destinationColor)) / 255.0f
     val lb: Float = (255.0f - Color.blue(destinationColor)) / 255.0f
