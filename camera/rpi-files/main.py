@@ -13,7 +13,7 @@ import time
 
 import openapi_client
 from dotenv import load_dotenv
-from openapi_client.rest import ApiException
+from people_counter import PeopleCounter
 
 
 class Main(object):
@@ -22,6 +22,7 @@ class Main(object):
     def __init__(self):
         """Initialize signal handlers, API client and run."""
         self.should_close = False
+        self.counter = PeopleCounter()
 
         # Add signal handlers
         signal.signal(signal.SIGINT, self.handle_signals)
@@ -42,20 +43,23 @@ class Main(object):
         """Start the system."""
         logging.info('System starts')
 
-        try:
-            logging.info(self.api.cafeterias_get())
-        except ApiException as api_exception:
-            msg = 'ApiException when calling DefaultApi->cafeterias_get: {0}'
-            logging.error(msg.format(api_exception))
-            self.should_close = True
-        except Exception as exception:
-            msg = 'Exception when calling DefaultApi->cafeterias_get: {0}'
-            logging.error(msg.format(exception))
-            self.should_close = True
-
+        iteration = 0
         while not self.should_close:
+            # Sleep to simulate computations
             time.sleep(1)
-            logging.debug('Loop')
+
+            # Update counter
+            self.counter.update(time.time())
+
+            # Log data
+            entering_count = len(self.counter.get_entered_list())
+            leaving_count = len(self.counter.get_left_list())
+            logging.debug('People entering: {0}'.format(entering_count))
+            logging.debug('People leaving: {0}'.format(leaving_count))
+
+            iteration += 1
+            if iteration == 10:
+                self.should_close = True
 
         logging.info('System shutting down...')
 

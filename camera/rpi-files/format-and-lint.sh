@@ -1,6 +1,6 @@
 #!/bin/sh
 
-SRC="main.py"
+SRC="main.py people_counter.py"
 
 isort ${SRC}
 black -t py37 -S -l 79 ${SRC}
