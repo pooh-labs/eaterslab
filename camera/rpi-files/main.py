@@ -12,8 +12,11 @@ import signal
 import time
 
 import openapi_client
+from data_batcher import DataBatcher
 from dotenv import load_dotenv
 from people_counter import PeopleCounter
+
+BATCH_SECONDS = 3
 
 
 class Main(object):
@@ -23,6 +26,7 @@ class Main(object):
         """Initialize signal handlers, API client and run."""
         self.should_close = False
         self.counter = PeopleCounter()
+        self.batcher = DataBatcher()
 
         # Add signal handlers
         signal.signal(signal.SIGINT, self.handle_signals)
@@ -43,6 +47,7 @@ class Main(object):
         """Start the system."""
         logging.info('System starts')
 
+        last_batch_time = time.time()
         iteration = 0
         while not self.should_close:
             # Sleep to simulate computations
@@ -50,13 +55,22 @@ class Main(object):
 
             # Update counter
             self.counter.update(time.time())
+            self.batcher.update(
+                self.counter.get_entering_list(),
+                self.counter.get_leaving_list(),
+            )
 
-            # Log data
-            entering_count = len(self.counter.get_entered_list())
-            leaving_count = len(self.counter.get_left_list())
-            logging.debug('People entering: {0}'.format(entering_count))
-            logging.debug('People leaving: {0}'.format(leaving_count))
+            # Run batching
+            current_time = time.time()
+            if current_time > last_batch_time + BATCH_SECONDS:
+                last_batch_time = current_time
 
+                # Log data
+                batch = self.batcher.batch()
+                logging.debug('People in: {0}'.format(len(batch.entering)))
+                logging.debug('People out: {0}'.format(len(batch.leaving)))
+
+            # Count iterations for demo purposes
             iteration += 1
             if iteration == 10:
                 self.should_close = True

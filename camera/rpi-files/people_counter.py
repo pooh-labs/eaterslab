@@ -8,8 +8,9 @@ People counter will connect to imaging device and detect people.
 
 import os
 
-FIRST_PERSON_THRESHOLD = 180
+FIRST_PERSON_THRESHOLD = 190
 SECOND_PERSON_THRESHOLD = 230
+LEAVING_PERSON_THRESHOLD = 30
 
 
 class PeopleCounter(object):
@@ -28,22 +29,22 @@ class PeopleCounter(object):
             timestamp: Current time
         """
         # Generate random patterns
-        for _iter in range(0, 5):
-            random_variable = os.urandom(1)[0]
+        for _iter in range(0, 10):
+            random = os.urandom(1)[0]
 
-            if random_variable > FIRST_PERSON_THRESHOLD:
+            if random > FIRST_PERSON_THRESHOLD:
                 self.enter_times.append(timestamp)
                 self._counter += 1
 
-                if random_variable > SECOND_PERSON_THRESHOLD:
+                if random > SECOND_PERSON_THRESHOLD:
                     self.enter_times.append(timestamp)
                     self._counter += 1
 
-            elif self._counter > 0:
+            elif self._counter > 0 and random > LEAVING_PERSON_THRESHOLD:
                 self.leave_times.append(timestamp)
                 self._counter -= 1
 
-    def get_entered_list(self):
+    def get_entering_list(self):
         """Get list of enter times.
 
         Returns:
@@ -54,7 +55,7 @@ class PeopleCounter(object):
         self.enter_times.clear()
         return to_return
 
-    def get_left_list(self):
+    def get_leaving_list(self):
         """Get list of leave times.
 
         Returns:
