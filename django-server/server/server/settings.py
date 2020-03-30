@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     # External library for yaml generator (can be used but works only with OpenAPI 2.0)
-    # 'drf_yasg',                                           # for API documentation and generation
+    'drf_yasg',                                           # for API documentation and generation
     'api.apps.ApiConfig',                                   # API app
 ]
 
