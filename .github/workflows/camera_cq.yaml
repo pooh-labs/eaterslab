@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: wemake-python-styleguide
-      uses: wemake-services/wemake-python-styleguide@master
+      uses: wemake-services/wemake-python-styleguide@0.13.4
       with:
         path: 'camera/'
         reporter: 'github-pr-review'
