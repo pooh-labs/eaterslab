@@ -7,6 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="foregroundColor">@color/colorWhite</item>
         <item name="foregroundColorText">@color/colorForegroundDark</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -26,6 +27,7 @@
         <item name="foregroundColor">@color/colorForegroundDark</item>
         <item name="foregroundColorText">@color/colorWhite</item>
         <item name="android:windowBackground">@color/colorBackgroundDark</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <style name="AppTheme.Dark.NoActionBar">

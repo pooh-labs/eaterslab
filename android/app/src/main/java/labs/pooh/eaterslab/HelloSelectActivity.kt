@@ -3,8 +3,16 @@ package labs.pooh.eaterslab
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.PersistableBundle
+import android.view.MotionEvent
 import android.view.View
+import androidx.dynamicanimation.animation.DynamicAnimation
+import androidx.dynamicanimation.animation.SpringAnimation
+import androidx.dynamicanimation.animation.SpringForce
 import kotlinx.android.synthetic.main.activity_hello_select.*
+import kotlinx.coroutines.delay
+import labs.pooh.eaterslab.ui.view.bounceAndScaleDelayed
 
 class HelloSelectActivity : AbstractThemedActivity() {
 
@@ -40,6 +48,8 @@ class HelloSelectActivity : AbstractThemedActivity() {
                 }
             })
         }
+
+        imageViewHeader.bounceAndScaleDelayed(this)
     }
 
     override fun onResume() {
