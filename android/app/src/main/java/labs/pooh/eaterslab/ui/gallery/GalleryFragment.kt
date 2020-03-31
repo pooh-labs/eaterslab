@@ -51,12 +51,24 @@ class GalleryFragment : Fragment() {
             with(requireContext()) {
                 val frame = FrameLayout(this)
                 val barView = when(dataSet.size) {
-                    24 -> horizontalBarPlot(dataSet, red, ticks = getOrderedHours(), ticksIndexer = ::hoursIndexer, ticksScale = 2.0)
-                    30 -> horizontalBarPlot(dataSet, red, ticks = getOrderedMonthDays(4), ticksIndexer = ::monthDaysIndexer, ticksScale = 1.5)
-                    7 -> horizontalBarPlot(dataSet, red, ticks = getOrderedWeekDays(), ticksIndexer = this::weekDaysIndexer)
-                    else -> horizontalBarPlot(dataSet, red)
+                    24 -> HorizontalBarPlot(this).apply {
+                        ticks = getOrderedHours()
+                        ticksIndexer = ::hoursIndexer
+                        ticksScale = 2.0
+                    }.plot(dataSet, red)
+                    30 -> HorizontalBarPlot(this).apply {
+                        ticks = getOrderedMonthDays(4)
+                        ticksIndexer = ::monthDaysIndexer
+                        ticksScale = 1.5
+                    }.plot(dataSet, red)
+                    7 -> HorizontalBarPlot(this).apply {
+                        ticks = getOrderedWeekDays()
+                        ticksIndexer = ::weekDaysIndexer
+                    }.plot(dataSet, red)
+                    else -> HorizontalBarPlot(this).plot(dataSet, red)
                 }
-                val plotView = discreteLinePlot(dataSet, yellow)
+                val plotView = DiscreteLinePlot(this).plot(dataSet, yellow)
+
                 frame += barView
                 frame += plotView
                 frame.layoutParams = FrameLayout.LayoutParams(1000, 600).apply {
