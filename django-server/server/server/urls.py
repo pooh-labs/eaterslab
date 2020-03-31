@@ -20,7 +20,7 @@ from drf_yasg import openapi
 from rest_framework import permissions
 
 
-# Code to generate beautiful API view
+# Code to generate API view
 schema_view = get_schema_view(
    openapi.Info(
       title="EatersLab API",
