@@ -134,7 +134,7 @@ class MapSearchActivity : AbstractRevealedActivity() {
         gpsProvider.lastKnownLocation?.let {
             val locationPoint = GeoPoint(it.latitude, it.longitude)
             mapController.animateTo(locationPoint)
-        }
+        } ?: run { sendNotification(getString(R.string.no_gps_notification)) }
     }
 
     private fun MapView.configureZoomOverlay(): RotationGestureOverlay {
