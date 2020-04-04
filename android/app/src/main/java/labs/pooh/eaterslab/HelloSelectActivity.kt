@@ -13,6 +13,7 @@ import androidx.dynamicanimation.animation.SpringForce
 import kotlinx.android.synthetic.main.activity_hello_select.*
 import kotlinx.coroutines.delay
 import labs.pooh.eaterslab.ui.view.bounceAndScaleDelayed
+import labs.pooh.eaterslab.util.start
 
 class HelloSelectActivity : AbstractThemedActivity() {
 
@@ -31,22 +32,22 @@ class HelloSelectActivity : AbstractThemedActivity() {
 
         fabSearch.setOnClickListener {
             markButtonsClickable(false)
-            startActivity(Intent(applicationContext, MainActivity::class.java).apply {
+            start<MainActivity> {
                 getCenterPositionOf(fabSearch).let { (x, y) ->
                     putExtra(BUTTON_SEARCH_POSITION_X, x)
                     putExtra(BUTTON_SEARCH_POSITION_Y, y)
                 }
-            })
+            }
         }
 
         fabMap.setOnClickListener {
             markButtonsClickable(false)
-            startActivity(Intent(applicationContext, MapSearchActivity::class.java).apply {
+            start<MapSearchActivity> {
                 getCenterPositionOf(fabMap).let { (x, y) ->
                     putExtra(BUTTON_MAP_POSITION_X, x)
                     putExtra(BUTTON_MAP_POSITION_Y, y)
                 }
-            })
+            }
         }
 
         imageViewHeader.bounceAndScaleDelayed(this)

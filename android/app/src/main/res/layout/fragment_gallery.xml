@@ -6,30 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".ui.gallery.GalleryFragment">
 
-    <TextView
-        android:id="@+id/textGallery"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/imageViewCamera"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.81" />
+        app:layout_constraintStart_toEndOf="parent">
 
-    <ImageView
-        android:id="@+id/imageViewCamera"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:contentDescription="@string/image_came_intent"
-        android:src="@drawable/ic_insert_photo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6" />
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingStart="@dimen/linear_layout_margin_padding"
+            android:paddingEnd="@dimen/linear_layout_margin_padding"
+            android:layout_marginTop="@dimen/linear_layout_margin_padding"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

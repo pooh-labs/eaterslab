@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import labs.pooh.eaterslab.util.start
 
 class MainActivity : AbstractThemedActivity() {
 
@@ -25,9 +26,8 @@ class MainActivity : AbstractThemedActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Hello from SnackBar", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+        fab.setOnClickListener {
+            Snackbar.make(it, "Hello from snackbar", Snackbar.LENGTH_SHORT).show()
         }
         val navController = findNavController(R.id.navHostFragment)
 

@@ -84,8 +84,16 @@ dependencies {
      * Easily manage application locales light library
      */
     implementation "com.github.YarikSOffice:lingver:1.2.1"
+    implementation "androidx.preference:preference:1.1.0"
+    
+     * Packages for plotting on android views by creating plots
+     * of lines and rectangles
+     */
+    implementation "io.data2viz.d2v:scale:0.8.0-RC10"
+    implementation "io.data2viz.d2v:core:0.8.0-RC10"
+    implementation "io.data2viz.d2v:viz:0.8.0-RC10"
+    implementation "io.data2viz.d2v:axis:0.8.0-RC10"
 
-    implementation 'androidx.preference:preference:1.1.0'
     testImplementation "junit:junit:4.12"
 
     androidTestImplementation "androidx.test.ext:junit:1.1.1"

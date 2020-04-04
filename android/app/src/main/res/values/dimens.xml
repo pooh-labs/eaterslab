@@ -35,4 +35,5 @@
     <dimen name="icon_big">130dp</dimen>
     <dimen name="icon_med">90dp</dimen>
     <dimen name="main_icon_padding">12dp</dimen>
+    <dimen name="linear_layout_margin_padding">16dp</dimen>
 </resources>

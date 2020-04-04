@@ -4,6 +4,9 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
+import android.widget.Toast.LENGTH_SHORT
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
@@ -17,3 +20,6 @@ fun Activity.requestListedPermission(requestCode: Int, vararg permissions: Strin
 
 fun allRequestedPermissionsGranted(grantResults: IntArray)
         = grantResults.none { it == PackageManager.PERMISSION_DENIED }
+
+fun Context.sendNotification(text: String, shortDuration: Boolean = true)
+        = Toast.makeText(this, text, if (shortDuration) LENGTH_SHORT else LENGTH_LONG).show()

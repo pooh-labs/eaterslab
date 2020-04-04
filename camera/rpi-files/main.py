@@ -12,8 +12,11 @@ import signal
 import time
 
 import openapi_client
+from data_batcher import DataBatcher
 from dotenv import load_dotenv
-from openapi_client.rest import ApiException
+from people_counter import PeopleCounter
+
+BATCH_SECONDS = 3
 
 
 class Main(object):
@@ -22,6 +25,8 @@ class Main(object):
     def __init__(self):
         """Initialize signal handlers, API client and run."""
         self.should_close = False
+        self.counter = PeopleCounter()
+        self.batcher = DataBatcher()
 
         # Add signal handlers
         signal.signal(signal.SIGINT, self.handle_signals)
@@ -42,20 +47,33 @@ class Main(object):
         """Start the system."""
         logging.info('System starts')
 
-        try:
-            logging.info(self.api.cafeterias_get())
-        except ApiException as api_exception:
-            msg = 'ApiException when calling DefaultApi->cafeterias_get: {0}'
-            logging.error(msg.format(api_exception))
-            self.should_close = True
-        except Exception as exception:
-            msg = 'Exception when calling DefaultApi->cafeterias_get: {0}'
-            logging.error(msg.format(exception))
-            self.should_close = True
-
+        last_batch_time = time.time()
+        iteration = 0
         while not self.should_close:
+            # Sleep to simulate computations
             time.sleep(1)
-            logging.debug('Loop')
+
+            # Update counter
+            self.counter.update(time.time())
+            self.batcher.update(
+                self.counter.get_entering_list(),
+                self.counter.get_leaving_list(),
+            )
+
+            # Run batching
+            current_time = time.time()
+            if current_time > last_batch_time + BATCH_SECONDS:
+                last_batch_time = current_time
+
+                # Log data
+                batch = self.batcher.batch()
+                logging.debug('People in: {0}'.format(len(batch.entering)))
+                logging.debug('People out: {0}'.format(len(batch.leaving)))
+
+            # Count iterations for demo purposes
+            iteration += 1
+            if iteration == 10:
+                self.should_close = True
 
         logging.info('System shutting down...')
 
