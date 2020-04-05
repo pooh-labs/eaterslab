@@ -67,12 +67,12 @@ class SettingsActivity : AbstractThemedActivity() {
         }
 
         private fun setNewLocale(lang: String?) {
-            Lingver.getInstance().setLocale(requireContext(), App.getLocale(lang))
+            Lingver.getInstance().setLocale(context!!, App.getLocale(lang))
             restartApplication()
         }
 
         private fun restartApplication() {
-            startActivity(Intent(requireContext(), HelloSelectActivity::class.java)
+            startActivity(Intent(context!!, HelloSelectActivity::class.java)
                 .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
         }
     }

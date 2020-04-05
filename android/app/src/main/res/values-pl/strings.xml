@@ -36,4 +36,12 @@
     <string name="theme_title">Włącz ciemny motyw</string>
     <string name="lang">lang</string>
     <string name="dark_theme">theme</string>
+    <string name="no_gps_notification">Problem z dostępem do GPS.</string>
+    <string name="monday">Poniedziałek</string>
+    <string name="tuesday">Wtorek</string>
+    <string name="wednesday">Środa</string>
+    <string name="thursday">Czwartek</string>
+    <string name="friday">Piątek</string>
+    <string name="saturday">Sobota</string>
+    <string name="sunday">Niedziela</string>
 </resources>

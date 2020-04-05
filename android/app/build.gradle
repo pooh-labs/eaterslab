@@ -85,7 +85,8 @@ dependencies {
      */
     implementation "com.github.YarikSOffice:lingver:1.2.1"
     implementation "androidx.preference:preference:1.1.0"
-    
+
+    /*
      * Packages for plotting on android views by creating plots
      * of lines and rectangles
      */
