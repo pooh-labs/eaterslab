@@ -32,7 +32,8 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".LoadingConnectionActivity"/>
+            android:name=".LoadingConnectionActivity"
+            android:launchMode="singleInstance"/>
     </application>
 
 </manifest>
