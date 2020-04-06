@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         fab.setOnClickListener {
             Snackbar.make(it, "Hello from snackbar", Snackbar.LENGTH_SHORT).show()
+            start<LoadingConnectionActivity>()
         }
         val navController = findNavController(R.id.navHostFragment)
 
