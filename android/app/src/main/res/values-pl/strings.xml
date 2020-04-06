@@ -44,4 +44,5 @@
     <string name="friday">Piątek</string>
     <string name="saturday">Sobota</string>
     <string name="sunday">Niedziela</string>
+    <string name="wait_connection">Oczekiwanie na połączenie</string>
 </resources>

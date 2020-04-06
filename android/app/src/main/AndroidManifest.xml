@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
-            android:name=".HelloSelectActivity"
+            android:name="labs.pooh.eaterslab.android.activity.HelloSelectActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,18 +26,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MapSearchActivity"
+            android:name="labs.pooh.eaterslab.android.activity.MapSearchActivity"
             android:label="@string/search_map_title"/>
         <activity
-            android:name=".MainActivity"
+            android:name="labs.pooh.eaterslab.android.activity.MainActivity"
             android:hardwareAccelerated="true"
             android:label="@string/app_name"/>
         <activity
-            android:name=".SettingsActivity"
+            android:name="labs.pooh.eaterslab.android.activity.SettingsActivity"
             android:label="@string/title_activity_settings"/>
         <activity
-            android:name=".LoadingConnectionActivity"
-            android:launchMode="singleInstance"/>
+            android:name="labs.pooh.eaterslab.android.activity.LoadingConnectionActivity"
+            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

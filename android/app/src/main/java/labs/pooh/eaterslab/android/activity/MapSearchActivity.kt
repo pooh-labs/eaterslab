@@ -1,9 +1,6 @@
-package labs.pooh.eaterslab
+package labs.pooh.eaterslab.android.activity
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
@@ -17,8 +14,11 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_map_search.*
 import labs.pooh.client.apis.CafeteriaApi
 import labs.pooh.client.models.Cafeteria
-import labs.pooh.eaterslab.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_X
-import labs.pooh.eaterslab.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
+import labs.pooh.eaterslab.android.activity.abstracts.AbstractRevealedActivity
+import labs.pooh.eaterslab.BuildConfig
+import labs.pooh.eaterslab.R
+import labs.pooh.eaterslab.android.activity.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_X
+import labs.pooh.eaterslab.android.activity.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
 import labs.pooh.eaterslab.ui.map.LocationOccupancyMarker
 import labs.pooh.eaterslab.ui.map.SingleLocationInfo
 import labs.pooh.eaterslab.ui.map.TransparentListenerOverlay
@@ -33,11 +33,12 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.TilesOverlay
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
+import java.lang.Exception
+import java.util.concurrent.locks.ReentrantLock
 
 
 class MapSearchActivity : AbstractRevealedActivity() {
@@ -51,6 +52,8 @@ class MapSearchActivity : AbstractRevealedActivity() {
         val DEFAULT_CENTER_LOCATION = GeoPoint(52.211903, 20.982224)
 
         private const val REQUEST_LOCATION_ON_BUTTON_CODE = 1001
+
+        private const val DELAY_PLACES_RETRY = 1000
     }
 
     override val showActionBar = false
@@ -61,6 +64,8 @@ class MapSearchActivity : AbstractRevealedActivity() {
     private lateinit var gpsProvider: GpsMyLocationProvider
 
     private lateinit var API: CafeteriaApi
+
+    private val overlaysMutex = ReentrantLock()
 
     /**
      * Resources that should be disposed when the fragment is destroyed
@@ -101,7 +106,6 @@ class MapSearchActivity : AbstractRevealedActivity() {
         }
 
         fabGPS.setOnClickListener(this@MapSearchActivity::fabGPSListener)
-        map.addPlacesInBackground()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -125,11 +129,13 @@ class MapSearchActivity : AbstractRevealedActivity() {
 
     override fun onResume() {
         super.onResume()
+        map.addPlacesInBackground()
         map.onResume()
     }
 
     override fun onPause() {
         super.onPause()
+        map.removePlaces()
         map.onPause()
     }
 
@@ -156,8 +162,10 @@ class MapSearchActivity : AbstractRevealedActivity() {
         rotationGestureOverlay.isEnabled = true
         setMultiTouchControls(true)
         zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
-        minZoomLevel = MIN_ZOOM
-        maxZoomLevel = MAX_ZOOM
+        minZoomLevel =
+            MIN_ZOOM
+        maxZoomLevel =
+            MAX_ZOOM
 
         plus.setOnClickListener {
             if (canZoomIn()) {
@@ -179,7 +187,9 @@ class MapSearchActivity : AbstractRevealedActivity() {
         val myLocationOverlay = MyLocationNewOverlay(gpsProvider, this)
         myLocationOverlay.enableMyLocation()
 
-        convertDrawableToBitmap(context, R.drawable.ic_current_location)?.let { icon ->
+        convertDrawableToBitmap(context,
+            R.drawable.ic_current_location
+        )?.let { icon ->
             myLocationOverlay.setPersonIcon(icon)
             myLocationOverlay.enableAutoStop = false
             myLocationOverlay.setPersonHotspot(icon.width / 2F, icon.height / 2F)
@@ -191,7 +201,9 @@ class MapSearchActivity : AbstractRevealedActivity() {
     }
 
     private fun MapView.enableDarkMode() {
-        val destinationColor = ContextCompat.getColor(context, R.color.colorMapDark)
+        val destinationColor = ContextCompat.getColor(context,
+            R.color.colorMapDark
+        )
         val filter = createDarkThemeMatrix(destinationColor)
         overlayManager.tilesOverlay.setColorFilter(filter)
     }
@@ -209,21 +221,53 @@ class MapSearchActivity : AbstractRevealedActivity() {
 
     private fun MapView.addPlacesInBackground() {
 
-        val disposable = Observable.defer { Observable.just(API.cafeteriaList()) }
+        val disposable = deferCafeteriasInBackground()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .forEach { array ->
-                array.forEach { cafeteria ->
-                    cafeteria.toMarker(map, this@MapSearchActivity::onMarkerClickListener)
-                        ?.let { overlays += it }
+                val overlays = array.map { it.toMarker(map, this@MapSearchActivity::onMarkerClickListener) }
+                withMutex(overlaysMutex) {
+                    this.overlays.addAll(overlays)
                 }
             }
         compositeDisposable.add(disposable)
     }
 
+    private fun deferCafeteriasInBackground() = Observable.defer {
+        var list: Array<Cafeteria>? = null
+        while (list == null) {
+            try {
+                list = API.cafeteriaList()
+            } catch (e: Exception) {
+                Thread.sleep(DELAY_PLACES_RETRY.toLong())
+            }
+        }
+        Observable.just(list)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         compositeDisposable.dispose()
+    }
+
+    private fun withMutex(mutex: ReentrantLock, action: () -> Unit) {
+        mutex.lock()
+        try {
+            action()
+        } finally {
+            mutex.unlock()
+        }
+    }
+
+    private fun MapView.removePlaces() {
+        withMutex(overlaysMutex) {
+            val copy = ArrayList(overlays)
+            copy.forEach { overlay ->
+                if (overlay is LocationOccupancyMarker) {
+                    this.overlays.remove(overlay)
+                }
+            }
+        }
     }
 }
 

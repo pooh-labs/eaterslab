@@ -1,8 +1,9 @@
-package labs.pooh.eaterslab
+package labs.pooh.eaterslab.android.activity.abstracts
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
+import labs.pooh.eaterslab.R
 
 abstract class AbstractThemedActivity : AppCompatActivity() {
 

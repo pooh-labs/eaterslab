@@ -1,14 +1,14 @@
-package labs.pooh.eaterslab
+package labs.pooh.eaterslab.android.activity
 
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 import com.yariksoffice.lingver.Lingver
-import java.util.*
+import labs.pooh.eaterslab.android.activity.abstracts.AbstractThemedActivity
+import labs.pooh.eaterslab.App
+import labs.pooh.eaterslab.R
 
 
 class SettingsActivity : AbstractThemedActivity() {
@@ -18,7 +18,10 @@ class SettingsActivity : AbstractThemedActivity() {
         setContentView(R.layout.settings_activity)
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.settings, SettingsFragment())
+            .replace(
+                R.id.settings,
+                SettingsFragment()
+            )
             .commit()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -60,14 +63,18 @@ class SettingsActivity : AbstractThemedActivity() {
                     restartApplication()
                 }
                 getString(R.string.lang) -> {
-                    val lang = preferenceScreen.sharedPreferences.getString(getString(R.string.lang), "")
+                    val lang = preferenceScreen.sharedPreferences.getString(getString(
+                        R.string.lang
+                    ), "")
                     setNewLocale(lang)
                 }
             }
         }
 
         private fun setNewLocale(lang: String?) {
-            Lingver.getInstance().setLocale(context!!, App.getLocale(lang))
+            Lingver.getInstance().setLocale(context!!,
+                App.getLocale(lang)
+            )
             restartApplication()
         }
 

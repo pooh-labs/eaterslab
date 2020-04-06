@@ -1,4 +1,4 @@
-package labs.pooh.eaterslab
+package labs.pooh.eaterslab.android.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,9 +12,12 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import labs.pooh.eaterslab.android.activity.abstracts.AbstractThemedActivity
+import labs.pooh.eaterslab.R
+import labs.pooh.eaterslab.android.activity.abstracts.AbstractNetworkCheckingActivity
 import labs.pooh.eaterslab.util.start
 
-class MainActivity : AbstractThemedActivity() {
+class MainActivity : AbstractNetworkCheckingActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -28,21 +31,26 @@ class MainActivity : AbstractThemedActivity() {
 
         fab.setOnClickListener {
             Snackbar.make(it, "Hello from snackbar", Snackbar.LENGTH_SHORT).show()
-            start<LoadingConnectionActivity>()
         }
         val navController = findNavController(R.id.navHostFragment)
 
         if (isDarkModeEnabled()) {
-            toolbar.popupTheme = R.style.AppTheme_Dark_PopupOverlay
+            toolbar.popupTheme =
+                R.style.AppTheme_Dark_PopupOverlay
         }
         else {
-            toolbar.popupTheme = R.style.AppTheme_PopupOverlay
+            toolbar.popupTheme =
+                R.style.AppTheme_PopupOverlay
         }
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.navHome, R.id.navGallery, R.id.navSlideshow),
+            setOf(
+                R.id.navHome,
+                R.id.navGallery,
+                R.id.navSlideshow
+            ),
             drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
