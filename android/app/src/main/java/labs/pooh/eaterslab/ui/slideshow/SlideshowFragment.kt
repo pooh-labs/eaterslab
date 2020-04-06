@@ -14,11 +14,13 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.toObservable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_slideshow.*
+import kotlinx.coroutines.CoroutineScope
 import labs.pooh.eaterslab.R
 import labs.pooh.eaterslab.ui.view.RatedFoodView
 import labs.pooh.eaterslab.util.*
+import kotlin.coroutines.CoroutineContext
 
-class SlideshowFragment : Fragment() {
+class SlideshowFragment : Fragment(), CoroutineScope {
 
     private val slideshowViewModel: SlideshowViewModel by viewModels()
 
@@ -82,5 +84,8 @@ class SlideshowFragment : Fragment() {
                     )
                 }
             }
+
+    override val coroutineContext: CoroutineContext
+        get() = TODO("Not yet implemented")
 
 }

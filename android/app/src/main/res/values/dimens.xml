@@ -2,12 +2,14 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_vertical_spacing">16dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="nav_header_font">20sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="small_font">12sp</dimen>
     <dimen name="tiny_font">9sp</dimen>
     <dimen name="button_radius">24dp</dimen>
+    <dimen name="hello_line_spacing">16dp</dimen>
     <dimen name="padding_button_image">10dp</dimen>
     <dimen name="map_item_info_description_margin">8dp</dimen>
     <dimen name="map_item_info_description_width">120dp</dimen>
@@ -30,6 +32,9 @@
     <dimen name="slideshow_padding">16dp</dimen>
     <dimen name="hello_message_width">200dp</dimen>
     <dimen name="hello_message_size">30sp</dimen>
+    <dimen name="icon_big">130dp</dimen>
+    <dimen name="icon_med">90dp</dimen>
+    <dimen name="main_icon_padding">12dp</dimen>
     <dimen name="linear_layout_margin_padding">16dp</dimen>
     <dimen name="loading_margin">64dp</dimen>
     <dimen name="loading_text_margin">16dp</dimen>
