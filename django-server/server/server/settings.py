@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     # External library for yaml generator (can be used but works only with OpenAPI 2.0)
     'drf_yasg',                                           # for API documentation and generation
     'api.apps.ApiConfig',                                   # API app
+    'home.apps.HomeConfig',                                 # Home app
 ]
 
 MIDDLEWARE = [
@@ -99,6 +100,10 @@ REST_FRAMEWORK = {
 def select_database():
     if env.bool('DB_DEPLOY', default=False):
         return env.db()
+    if env.bool('USE_POSTGRES', default=False):
+        print("Using postgres")
+        return env.db()
+    print("Using sqlite")
     return {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
