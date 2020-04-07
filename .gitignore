@@ -5,6 +5,7 @@ django-server/server/db.sqlite3
 .env
 django-server/serverenv/*
 django-server/server/static/
+django-server/server/Pipfile.lock
 
 # IDEs
 .vscode
