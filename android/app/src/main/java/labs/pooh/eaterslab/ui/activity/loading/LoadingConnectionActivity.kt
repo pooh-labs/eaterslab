@@ -1,10 +1,10 @@
-package labs.pooh.eaterslab.android.activity
+package labs.pooh.eaterslab.ui.activity.loading
 
 import android.net.ConnectivityManager
 import android.net.Network
 import android.os.Bundle
 import labs.pooh.eaterslab.R
-import labs.pooh.eaterslab.android.activity.abstracts.AbstractNetworkCheckingActivity
+import labs.pooh.eaterslab.ui.activity.abstracts.AbstractNetworkCheckingActivity
 
 class LoadingConnectionActivity : AbstractNetworkCheckingActivity() {
 
@@ -21,7 +21,10 @@ class LoadingConnectionActivity : AbstractNetworkCheckingActivity() {
 
     override val showActionBar = false
 
-    override fun defineNetworkChangeCallback() = RunConnectionRestoredCallback(this)
+    override fun defineNetworkChangeCallback() =
+        RunConnectionRestoredCallback(
+            this
+        )
 }
 
 class RunConnectionRestoredCallback(private val activity: LoadingConnectionActivity) : ConnectivityManager.NetworkCallback () {

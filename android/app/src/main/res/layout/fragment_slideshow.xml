@@ -6,7 +6,7 @@
     android:id="@+id/slideshowLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.slideshow.SlideshowFragment">
+    tools:context=".ui.fragment.slideshow.SlideshowFragment">
 
     <TextView
         android:id="@+id/textSlideshow"

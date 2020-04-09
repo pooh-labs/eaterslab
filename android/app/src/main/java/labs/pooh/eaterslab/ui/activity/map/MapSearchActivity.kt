@@ -1,24 +1,20 @@
-package labs.pooh.eaterslab.android.activity
+package labs.pooh.eaterslab.ui.activity.map
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_map_search.*
-import labs.pooh.client.apis.CafeteriaApi
 import labs.pooh.client.models.Cafeteria
-import labs.pooh.eaterslab.android.activity.abstracts.AbstractRevealedActivity
-import labs.pooh.eaterslab.BuildConfig
+import labs.pooh.eaterslab.ui.activity.abstracts.AbstractRevealedActivity
 import labs.pooh.eaterslab.R
-import labs.pooh.eaterslab.android.activity.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_X
-import labs.pooh.eaterslab.android.activity.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
+import labs.pooh.eaterslab.ui.activity.hello.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_X
+import labs.pooh.eaterslab.ui.activity.hello.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
 import labs.pooh.eaterslab.ui.map.LocationOccupancyMarker
 import labs.pooh.eaterslab.ui.map.SingleLocationInfo
 import labs.pooh.eaterslab.ui.map.TransparentListenerOverlay
@@ -43,6 +39,8 @@ import java.util.concurrent.locks.ReentrantLock
 
 class MapSearchActivity : AbstractRevealedActivity() {
 
+    private val mapViewModel by viewModels<MapVewModel>()
+
     companion object {
         const val DEFAULT_ZOOM = 16.0
         const val MIN_ZOOM = 7.0
@@ -63,19 +61,8 @@ class MapSearchActivity : AbstractRevealedActivity() {
 
     private lateinit var gpsProvider: GpsMyLocationProvider
 
-    private lateinit var API: CafeteriaApi
-
-    private val overlaysMutex = ReentrantLock()
-
-    /**
-     * Resources that should be disposed when the fragment is destroyed
-     */
-    private val compositeDisposable = CompositeDisposable()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        API = CafeteriaApi(BuildConfig.API_URL)
 
         Configuration.getInstance().load(applicationContext, PreferenceManager.getDefaultSharedPreferences(applicationContext))
         setContentView(R.layout.activity_map_search)
@@ -105,7 +92,11 @@ class MapSearchActivity : AbstractRevealedActivity() {
             controller.setZoom(DEFAULT_ZOOM)
         }
 
-        fabGPS.setOnClickListener(this@MapSearchActivity::fabGPSListener)
+        fabGPS.setOnClickListener(this::fabGPSListener)
+
+        mapViewModel.cafeteriaLiveData.observe(this, Observer { cafeteriaList ->
+            map.overlays += cafeteriaList.map { it.toMarker(map, this::onMarkerClickListener) }
+        })
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -129,13 +120,12 @@ class MapSearchActivity : AbstractRevealedActivity() {
 
     override fun onResume() {
         super.onResume()
-        map.addPlacesInBackground()
         map.onResume()
+        mapViewModel.updateMarkersData()
     }
 
     override fun onPause() {
         super.onPause()
-        map.removePlaces()
         map.onPause()
     }
 
@@ -162,10 +152,8 @@ class MapSearchActivity : AbstractRevealedActivity() {
         rotationGestureOverlay.isEnabled = true
         setMultiTouchControls(true)
         zoomController.setVisibility(CustomZoomButtonsController.Visibility.NEVER)
-        minZoomLevel =
-            MIN_ZOOM
-        maxZoomLevel =
-            MAX_ZOOM
+        minZoomLevel = MIN_ZOOM
+        maxZoomLevel = MAX_ZOOM
 
         plus.setOnClickListener {
             if (canZoomIn()) {
@@ -217,57 +205,6 @@ class MapSearchActivity : AbstractRevealedActivity() {
         buttonSelect.moveUpAndShow(yMove = 0)
         buttonSelect.setOnClickListener { onSelectPlaceButtonClick(marker, it) }
         return true
-    }
-
-    private fun MapView.addPlacesInBackground() {
-
-        val disposable = deferCafeteriasInBackground()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .forEach { array ->
-                val overlays = array.map { it.toMarker(map, this@MapSearchActivity::onMarkerClickListener) }
-                withMutex(overlaysMutex) {
-                    this.overlays.addAll(overlays)
-                }
-            }
-        compositeDisposable.add(disposable)
-    }
-
-    private fun deferCafeteriasInBackground() = Observable.defer {
-        var list: Array<Cafeteria>? = null
-        while (list == null) {
-            try {
-                list = API.cafeteriaList()
-            } catch (e: Exception) {
-                Thread.sleep(DELAY_PLACES_RETRY.toLong())
-            }
-        }
-        Observable.just(list)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.dispose()
-    }
-
-    private fun withMutex(mutex: ReentrantLock, action: () -> Unit) {
-        mutex.lock()
-        try {
-            action()
-        } finally {
-            mutex.unlock()
-        }
-    }
-
-    private fun MapView.removePlaces() {
-        withMutex(overlaysMutex) {
-            val copy = ArrayList(overlays)
-            copy.forEach { overlay ->
-                if (overlay is LocationOccupancyMarker) {
-                    this.overlays.remove(overlay)
-                }
-            }
-        }
     }
 }
 

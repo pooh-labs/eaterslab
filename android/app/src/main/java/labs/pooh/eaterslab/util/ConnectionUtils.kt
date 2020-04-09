@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package labs.pooh.eaterslab.util
 
 import android.content.Context

@@ -1,13 +1,12 @@
-package labs.pooh.eaterslab.android.activity.abstracts
+package labs.pooh.eaterslab.ui.activity.abstracts
 
 import android.content.Context
-import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Bundle
-import labs.pooh.eaterslab.android.activity.LoadingConnectionActivity
+import labs.pooh.eaterslab.ui.activity.loading.LoadingConnectionActivity
 import labs.pooh.eaterslab.util.isNetworkConnected
 import labs.pooh.eaterslab.util.start
 

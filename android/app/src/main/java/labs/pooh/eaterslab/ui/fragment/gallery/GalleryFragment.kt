@@ -1,4 +1,4 @@
-package labs.pooh.eaterslab.ui.gallery
+package labs.pooh.eaterslab.ui.fragment.gallery
 
 import android.graphics.Color
 import android.os.Bundle
@@ -13,7 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.plusAssign
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_gallery.*
-import labs.pooh.eaterslab.android.activity.abstracts.AbstractThemedActivity
+import labs.pooh.eaterslab.ui.activity.abstracts.AbstractThemedActivity
 import labs.pooh.eaterslab.R
 import labs.pooh.eaterslab.util.*
 import kotlin.math.abs

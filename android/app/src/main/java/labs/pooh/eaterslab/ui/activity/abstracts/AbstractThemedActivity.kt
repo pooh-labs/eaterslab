@@ -1,4 +1,4 @@
-package labs.pooh.eaterslab.android.activity.abstracts
+package labs.pooh.eaterslab.ui.activity.abstracts
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

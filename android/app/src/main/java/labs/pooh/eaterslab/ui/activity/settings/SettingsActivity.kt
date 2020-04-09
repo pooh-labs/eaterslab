@@ -1,4 +1,4 @@
-package labs.pooh.eaterslab.android.activity
+package labs.pooh.eaterslab.ui.activity.settings
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -6,9 +6,10 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.preference.PreferenceFragmentCompat
 import com.yariksoffice.lingver.Lingver
-import labs.pooh.eaterslab.android.activity.abstracts.AbstractThemedActivity
+import labs.pooh.eaterslab.ui.activity.abstracts.AbstractThemedActivity
 import labs.pooh.eaterslab.App
 import labs.pooh.eaterslab.R
+import labs.pooh.eaterslab.ui.activity.hello.HelloSelectActivity
 
 
 class SettingsActivity : AbstractThemedActivity() {
