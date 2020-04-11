@@ -35,7 +35,22 @@ For the RESTful API endpoints generation in Android app the [Kortlin code genera
 
 **TODO**: write about handling the diffenrsnt languages in app, maybe somthing else
 
-
-
-
 ## Camera devices
+
+Camera devices are Raspberry Pi 3B+ (or newer) boards running Raspbian Buster Lite February 2020 release. Each device is equipped with a 32GB SD card, WiFi card for internet connection and Camera Module or external USB webcam.  
+
+Device software consists of two parts:
+
+* setup flow for registering credentials in device memory,
+* main script for running analysis.
+
+Both elements are Python scripts.
+
+Setup flow saves user credentials in an .env configuration file and makes a test connection with the server to confirm their validity. Test call is handled by a Python API client generated from API definition. These credentials will be later used to communicate with the server.
+
+Main script starts automatically with the device and terminates if credentials are not set up. Its modules are as follows:
+
+* Image ingestor: stateless service, which collects frames from Camera device, USB webcam or input video file
+* Image analysis: performs image analysis to count people coming in and out. Prediction system uses OpenCV for people detection.
+* Data batcher: Batches datapoints in preset intervals
+* API client: automatically generated API client which uploads batches of events
