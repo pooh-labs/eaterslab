@@ -1,25 +1,36 @@
 # Architecture specification
 
-There is a single server app that manages the database data and admins panel. It servers separated API endpoints for camera based devices and client Android devices to handle all the data and serveneeded data for clients.
+System consists of four main elements:
+![System overview](architecture/system-overview.png)
+* Admin panel
+* API endpoint
+* Mobile clients
+* Camera devices
 
-**TODO:** System overview and how camera communicate with server
+## Admin panel
+
+**TODO**
+
+## API Endpoint
+Server and clients other than web application communicate via REST API. Methods definition (see /specs/api.yaml) conforms to [Open API 2.0 Specification](http://spec.openapis.org/oas/v2.0).
+
+Server exposes API endpoint using Django Rest Framework extension. API definition file is generated from this implementation.
+
+**TODO(Rhantolq):** Where to find generator?
+
+Clients leverage [OpenAPI generator](https://github.com/OpenAPITools/openapi-generator) to generate the API handlers. Generated classes are not included in the repository. Please see client readme for generation instructions.
+
+**TODO(kantoniak):** Generation instructions for cameras
+
+**TODO(avan1235):** Generation instructions for Android
 
 ### Server and Android app communication
-Communication between server and android app is handled via RESTful API which is built based on server data model and served as the public api.yaml file with the whole public api specification.
-
-With the given API specification the [OpenAPI generator](https://github.com/OpenAPITools/openapi-generator) is used to generate the API handlers. (The generated classes are not included in the repository.)
 
 App loads the data from server in the background asking only for data needed to rpesent on current app screen. The data is refreshed on every screen change in app.
 
 When the connection with internet is lost by the device, app is suspended and waiting screen shows while waiting for active internet connection. The possible connections type supported by app are WiFi, cellular data and VPN connections.
 
 **TODO**: write about user sending data to server from client app
-
-## Management panel architecture
-
-## API endpoint architecture 
-
-**TODO:** Should it be as the separate paragraph in doc?
 
 ## Mobile client architecture
 
