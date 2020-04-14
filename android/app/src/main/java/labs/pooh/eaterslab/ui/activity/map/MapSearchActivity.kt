@@ -1,6 +1,9 @@
 package labs.pooh.eaterslab.ui.activity.map
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
@@ -29,6 +32,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.TilesOverlay
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider
@@ -189,9 +193,7 @@ class MapSearchActivity : AbstractRevealedActivity() {
     }
 
     private fun MapView.enableDarkMode() {
-        val destinationColor = ContextCompat.getColor(context,
-            R.color.colorMapDark
-        )
+        val destinationColor = ContextCompat.getColor(context, R.color.colorMapDark)
         val filter = createDarkThemeMatrix(destinationColor)
         overlayManager.tilesOverlay.setColorFilter(filter)
     }

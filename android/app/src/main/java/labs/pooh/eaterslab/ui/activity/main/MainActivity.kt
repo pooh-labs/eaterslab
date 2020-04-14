@@ -34,12 +34,10 @@ class MainActivity : AbstractNetworkCheckingActivity() {
         val navController = findNavController(R.id.navHostFragment)
 
         if (isDarkModeEnabled()) {
-            toolbar.popupTheme =
-                R.style.AppTheme_Dark_PopupOverlay
+            toolbar.popupTheme = R.style.AppTheme_Dark_PopupOverlay
         }
         else {
-            toolbar.popupTheme =
-                R.style.AppTheme_PopupOverlay
+            toolbar.popupTheme = R.style.AppTheme_PopupOverlay
         }
 
         // Passing each menu ID as a set of Ids because each
