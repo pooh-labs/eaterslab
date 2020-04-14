@@ -65,15 +65,6 @@ dependencies {
     implementation "org.osmdroid:osmdroid-android:6.1.6"
 
     /**
-     * libraries for multithreading operations with data for working
-     * mainly with internet connections in order to get data in background
-     * and to subscribe on received data just when the data is received
-     * in a functional way
-     */
-    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
-    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
-
-    /**
      * Additional packages for REST api management in application
      */
     implementation "com.google.code.gson:gson:2.8.6"

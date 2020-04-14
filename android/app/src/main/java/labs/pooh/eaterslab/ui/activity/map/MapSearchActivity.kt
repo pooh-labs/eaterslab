@@ -1,4 +1,4 @@
-package labs.pooh.eaterslab
+package labs.pooh.eaterslab.ui.activity.map
 
 import android.content.Context
 import android.graphics.Color
@@ -7,18 +7,17 @@ import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_map_search.*
-import labs.pooh.client.apis.CafeteriaApi
 import labs.pooh.client.models.Cafeteria
-import labs.pooh.eaterslab.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_X
-import labs.pooh.eaterslab.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
+import labs.pooh.eaterslab.ui.activity.abstracts.AbstractRevealedActivity
+import labs.pooh.eaterslab.R
+import labs.pooh.eaterslab.ui.activity.hello.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_X
+import labs.pooh.eaterslab.ui.activity.hello.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
 import labs.pooh.eaterslab.ui.map.LocationOccupancyMarker
 import labs.pooh.eaterslab.ui.map.SingleLocationInfo
 import labs.pooh.eaterslab.ui.map.TransparentListenerOverlay
@@ -38,9 +37,13 @@ import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
+import java.lang.Exception
+import java.util.concurrent.locks.ReentrantLock
 
 
 class MapSearchActivity : AbstractRevealedActivity() {
+
+    private val mapViewModel by viewModels<MapVewModel>()
 
     companion object {
         const val DEFAULT_ZOOM = 16.0
@@ -51,6 +54,8 @@ class MapSearchActivity : AbstractRevealedActivity() {
         val DEFAULT_CENTER_LOCATION = GeoPoint(52.211903, 20.982224)
 
         private const val REQUEST_LOCATION_ON_BUTTON_CODE = 1001
+
+        private const val DELAY_PLACES_RETRY = 1000
     }
 
     override val showActionBar = false
@@ -60,17 +65,8 @@ class MapSearchActivity : AbstractRevealedActivity() {
 
     private lateinit var gpsProvider: GpsMyLocationProvider
 
-    private lateinit var API: CafeteriaApi
-
-    /**
-     * Resources that should be disposed when the fragment is destroyed
-     */
-    private val compositeDisposable = CompositeDisposable()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        API = CafeteriaApi(BuildConfig.API_URL)
 
         Configuration.getInstance().load(applicationContext, PreferenceManager.getDefaultSharedPreferences(applicationContext))
         setContentView(R.layout.activity_map_search)
@@ -100,8 +96,11 @@ class MapSearchActivity : AbstractRevealedActivity() {
             controller.setZoom(DEFAULT_ZOOM)
         }
 
-        fabGPS.setOnClickListener(this@MapSearchActivity::fabGPSListener)
-        map.addPlacesInBackground()
+        fabGPS.setOnClickListener(this::fabGPSListener)
+
+        mapViewModel.cafeteriaLiveData.observe(this, Observer { cafeteriaList ->
+            map.overlays += cafeteriaList.map { it.toMarker(map, this::onMarkerClickListener) }
+        })
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -126,6 +125,7 @@ class MapSearchActivity : AbstractRevealedActivity() {
     override fun onResume() {
         super.onResume()
         map.onResume()
+        mapViewModel.updateMarkersData()
     }
 
     override fun onPause() {
@@ -179,7 +179,9 @@ class MapSearchActivity : AbstractRevealedActivity() {
         val myLocationOverlay = MyLocationNewOverlay(gpsProvider, this)
         myLocationOverlay.enableMyLocation()
 
-        convertDrawableToBitmap(context, R.drawable.ic_current_location)?.let { icon ->
+        convertDrawableToBitmap(context,
+            R.drawable.ic_current_location
+        )?.let { icon ->
             myLocationOverlay.setPersonIcon(icon)
             myLocationOverlay.enableAutoStop = false
             myLocationOverlay.setPersonHotspot(icon.width / 2F, icon.height / 2F)
@@ -205,25 +207,6 @@ class MapSearchActivity : AbstractRevealedActivity() {
         buttonSelect.moveUpAndShow(yMove = 0)
         buttonSelect.setOnClickListener { onSelectPlaceButtonClick(marker, it) }
         return true
-    }
-
-    private fun MapView.addPlacesInBackground() {
-
-        val disposable = Observable.defer { Observable.just(API.cafeteriaList()) }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .forEach { array ->
-                array.forEach { cafeteria ->
-                    cafeteria.toMarker(map, this@MapSearchActivity::onMarkerClickListener)
-                        ?.let { overlays += it }
-                }
-            }
-        compositeDisposable.add(disposable)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        compositeDisposable.dispose()
     }
 }
 

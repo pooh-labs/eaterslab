@@ -1,4 +1,4 @@
-package labs.pooh.eaterslab
+package labs.pooh.eaterslab.ui.activity.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,9 +12,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import labs.pooh.eaterslab.util.start
+import labs.pooh.eaterslab.R
+import labs.pooh.eaterslab.ui.activity.settings.SettingsActivity
+import labs.pooh.eaterslab.ui.activity.abstracts.AbstractNetworkCheckingActivity
 
-class MainActivity : AbstractThemedActivity() {
+class MainActivity : AbstractNetworkCheckingActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -41,7 +43,11 @@ class MainActivity : AbstractThemedActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.navHome, R.id.navGallery, R.id.navSlideshow),
+            setOf(
+                R.id.navHome,
+                R.id.navGallery,
+                R.id.navSlideshow
+            ),
             drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

@@ -36,4 +36,7 @@
     <dimen name="icon_med">90dp</dimen>
     <dimen name="main_icon_padding">12dp</dimen>
     <dimen name="linear_layout_margin_padding">16dp</dimen>
+    <dimen name="loading_margin">64dp</dimen>
+    <dimen name="loading_text_margin">16dp</dimen>
+    <dimen name="loading_text_size">24sp</dimen>
 </resources>

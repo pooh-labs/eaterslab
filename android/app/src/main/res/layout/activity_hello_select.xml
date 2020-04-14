@@ -6,7 +6,21 @@
     android:id="@+id/mainHelloLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HelloSelectActivity">
+    tools:context=".ui.activity.hello.HelloSelectActivity">
+
+    <ImageView
+        android:id="@+id/imageViewHeader"
+        android:layout_width="@dimen/icon_big"
+        android:layout_height="@dimen/icon_big"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/main_icon_padding"
+        android:contentDescription="@string/nav_header_desc"
+        app:layout_constraintBottom_toTopOf="@id/textViewQuestion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@mipmap/ic_launcher_round"
+        android:visibility="visible"/>
 
     <ImageView
         android:id="@+id/imageViewHeader"
