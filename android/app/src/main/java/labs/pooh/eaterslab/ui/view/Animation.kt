@@ -2,10 +2,17 @@ package labs.pooh.eaterslab.ui.view
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.Activity
+import android.os.Handler
 import android.view.View
 import android.view.View.GONE
 import android.view.View.INVISIBLE
+import androidx.dynamicanimation.animation.DynamicAnimation
+import androidx.dynamicanimation.animation.SpringAnimation
+import androidx.dynamicanimation.animation.SpringForce
+import kotlinx.android.synthetic.main.activity_hello_select.*
 import kotlin.math.abs
+import kotlin.time.Duration
 
 
 fun View.rotateAnimation(rotateBy: Int = 360, duration: Int = 700) {
@@ -50,3 +57,20 @@ internal fun View.moveYAndShow(yMove: Int? = null, duration: Int) {
 
 fun View.moveUpAndShow(yMove: Int? = null, duration: Int = 400)
         = moveYAndShow(yMove?.let { abs(it) }, duration)
+
+fun View.bounceAndScaleDelayed(activity: Activity, delay: Long = 500, startScale: Float = 0.3f) {
+    val finishY = y
+    animate().y(- 2 * y).scaleX(startScale).scaleY(startScale).start()
+
+    Handler().postDelayed({
+        val firstYAnim = SpringAnimation(this, DynamicAnimation.TRANSLATION_Y, 0f).apply {
+            spring.dampingRatio = SpringForce.DAMPING_RATIO_HIGH_BOUNCY
+            spring.stiffness = SpringForce.STIFFNESS_LOW
+        }
+
+        activity.runOnUiThread {
+            firstYAnim.animateToFinalPosition(finishY)
+            animate().scaleX(1.0f).scaleY(1.0f).start()
+        }
+    }, delay)
+}

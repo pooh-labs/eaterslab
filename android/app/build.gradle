@@ -23,6 +23,8 @@ android {
         }
         buildTypes.each {
             it.buildConfigField 'String', 'API_URL', API_URL
+            it.buildConfigField 'String', 'DEFAULT_LANG', DEFAULT_LANG
+            it.resValue 'string', 'default_lang', DEFAULT_LANG
         }
     }
 
@@ -33,7 +35,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+}
 
+repositories {
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -46,6 +51,7 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
     implementation "androidx.navigation:navigation-fragment:2.2.1"
     implementation "androidx.navigation:navigation-ui:2.2.1"
+    implementation "androidx.dynamicanimation:dynamicanimation:1.0.0"
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.navigation:navigation-fragment-ktx:2.2.1"
     implementation "androidx.navigation:navigation-ui-ktx:2.2.1"
@@ -75,13 +81,19 @@ dependencies {
     implementation "org.threeten:threetenbp:1.4.0"
 
     /**
+     * Easily manage application locales light library
+     */
+    implementation "com.github.YarikSOffice:lingver:1.2.1"
+    implementation "androidx.preference:preference:1.1.0"
+
+    /*
      * Packages for plotting on android views by creating plots
      * of lines and rectangles
      */
-    implementation 'io.data2viz.d2v:scale:0.8.0-RC10'
-    implementation 'io.data2viz.d2v:core:0.8.0-RC10'
-    implementation 'io.data2viz.d2v:viz:0.8.0-RC10'
-    implementation 'io.data2viz.d2v:axis:0.8.0-RC10'
+    implementation "io.data2viz.d2v:scale:0.8.0-RC10"
+    implementation "io.data2viz.d2v:core:0.8.0-RC10"
+    implementation "io.data2viz.d2v:viz:0.8.0-RC10"
+    implementation "io.data2viz.d2v:axis:0.8.0-RC10"
 
     testImplementation "junit:junit:4.12"
 
