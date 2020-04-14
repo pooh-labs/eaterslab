@@ -30,7 +30,7 @@
     <!-- Preference Titles -->
     <string name="main_prefs">main_preferences</string>
     <string name="style_prefs">style_preferences</string>
-    <string name="main_header">GŁówne</string>
+    <string name="main_header">Główne</string>
     <string name="theme_header">Interfejs użytkownika</string>
     <string name="language_title">Język aplikacji</string>
     <string name="theme_title">Włącz ciemny motyw</string>
