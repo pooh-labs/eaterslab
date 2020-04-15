@@ -18,15 +18,15 @@ Server exposes API endpoint using Django Rest Framework extension. API definitio
 
 **TODO(Rhantolq):** Where to find generator?
 
-Clients leverage [OpenAPI generator](https://github.com/OpenAPITools/openapi-generator) to generate the API handlers. Generated classes are not included in the repository. Please see client readme for its client generation instructions.
+Clients leverage [OpenAPI generator](https://github.com/OpenAPITools/openapi-generator) to generate the API handlers. Generated classes are not included in the repository. Please see client readme for generation instructions.
 
-#### Generation instructions for Android
+**TODO(kantoniak):** Generation instructions for cameras
 
-Using the generated API definition file the model and API access classes can be generated. The ready to use script can be found in /android/api_generate_kotlin.sh. The script is configured to generate classes usable for Kotlin Android project so [threetenbp date library](https://github.com/ThreeTen/threetenbp) is used for date objects handling in model. Script gets single parameter as API definition yaml file so can be run with 
-```bash
-./api_generate_kotlin.sh api.yaml
-```
-The generated classes are automatically moved to client model folder in /android/app/src/main/java/labs/pooh/eaterslab/client. If needed the script can be easily modified to generate for example Java model as the standard OpenAPI generator is used in this project.
+#### Generation instructions for clients apps (Android app)
+
+Using the generated API definition file the model and API access classes can be generated. The ready to use script can be found in /android/api_generate_kotlin.sh with its usage in `README.md` file. 
+
+If any other app is going to use designed API endpoint for clients then the given script can be reconfigured for other programming languages.
 
 ### Server and Android app communication
 
