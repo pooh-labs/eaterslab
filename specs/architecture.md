@@ -22,21 +22,27 @@ Clients leverage [OpenAPI generator](https://github.com/OpenAPITools/openapi-gen
 
 **TODO(kantoniak):** Generation instructions for cameras
 
-**TODO(avan1235):** Generation instructions for Android
+#### Generation instructions for Android
+
+Using the generated API definition file the model and API access classes can be generated. The ready to use script can be found in /android/api_generate_kotlin.sh. The script is configured to generate classes usable for Kotlin Android project so [threetenbp date library](https://github.com/ThreeTen/threetenbp) is used for date objects handling in model. Script gets single parameter as API definition yaml file so can be run with 
+```bash
+./api_generate_kotlin.sh api.yaml
+```
+The generated classes are automatically moved to client model folder in /android/app/src/main/java/labs/pooh/eaterslab/client. If needed the script can be easily modified to generate for example Java model as the standard OpenAPI generator is used in this project.
 
 ### Server and Android app communication
 
-App loads the data from server in the background asking only for data needed to rpesent on current app screen. The data is refreshed on every screen change in app.
+App loads the data from server in the background asking only for data needed to present on current app screen. The data is refreshed on every screen change in app.
 
 When the connection with internet is lost by the device, app is suspended and waiting screen shows while waiting for active internet connection. The possible connections type supported by app are WiFi, cellular data and VPN connections.
 
-**TODO**: write about user sending data to server from client app
+The client app has little possibilieties to post data on public API endpoint. Client app can mainly send reviews for specified cafeterias.
 
 ## Mobile client architecture
 
 Client app designed for Android devices is developed in Android Studio in Kotlin and Java. Build process is managed by the Gradle build system. App uses [AndroidX support libraries](https://developer.android.com/jetpack/androidx) to handle android system libraries.
 
-For concurrenrcy purpose the [RxKotlin](https://github.com/ReactiveX/RxKotlin) as the bindings to [RxJava](https://github.com/ReactiveX/RxJava) with [Android extensions](https://github.com/ReactiveX/RxAndroid) is used in project alongsite the standard [Kotlin coroutines](https://kotlinlang.org/docs/reference/coroutines/coroutines-guide.html). In the feature all the asynchronous tasks are to be migrated to couroutines code. 
+For concurrenrcy purpose the standard [Kotlin coroutines](https://kotlinlang.org/docs/reference/coroutines/coroutines-guide.html) are used. The new approach allows to write cleaner code that does not look like the "full of callbacks code" but works as expected in background.
 
 The app uses the OpenStreet Maps with the MapView designed in [osmdroid library](https://github.com/osmdroid/osmdroid) allowing the developers to customize the map look and easily manage the map data caching.
 
@@ -44,7 +50,7 @@ User interface needs also some data visualizations of all the data so the [data2
 
 For the RESTful API endpoints generation in Android app the [Kortlin code generator](https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/kotlin.md) is used.
 
-**TODO**: write about handling the diffenrsnt languages in app, maybe somthing else
+The client app is designed to be multilanguage app  to provide access to occupancy data also for foreign people. All the translations are managed via resource files with maapings for application text views.
 
 ## Camera devices
 
