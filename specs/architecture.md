@@ -18,9 +18,7 @@ Server exposes API endpoint using Django Rest Framework extension. API definitio
 
 **TODO(Rhantolq):** Where to find generator?
 
-Clients leverage [OpenAPI generator](https://github.com/OpenAPITools/openapi-generator) to generate the API handlers. Generated classes are not included in the repository. Please see client readme for generation instructions.
-
-**TODO(kantoniak):** Generation instructions for cameras
+Clients leverage [OpenAPI generator](https://github.com/OpenAPITools/openapi-generator) to generate the API handlers. Generated classes are not included in the repository. Please see client readme for its client generation instructions.
 
 #### Generation instructions for Android
 
