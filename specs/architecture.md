@@ -1,6 +1,6 @@
 # Architecture specification
 
-System consists of four main elements:
+System consists of five main elements:
 ![System overview](architecture/system-overview.png)
 * Admin panel
 * Database
