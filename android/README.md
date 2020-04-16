@@ -7,7 +7,7 @@ App is designed for min SDK 21 version so Android Lollipop or newer devices are 
 
 App is developed in AndroidStudio and for development should be imported as standard Android app project. Before building the project and indexing files in IDE the generation process is needed.
 
-### Client model generation
+### Client API model generation
 All the client model classes need to be generated based on the API specification YAML file which is publicly available. 
 
 The generator script is available in the main android project directory. The script gets single parameter with API specification file location in filesystem.  The script is configured to generate classes usable for Kotlin Android project so [threetenbp date library](https://github.com/ThreeTen/threetenbp) is used for date objects handling in model.
