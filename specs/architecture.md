@@ -20,8 +20,6 @@ Server exposes API endpoint using Django Rest Framework extension. API definitio
 
 Clients leverage [OpenAPI generator](https://github.com/OpenAPITools/openapi-generator) to generate the API handlers. Generated classes are not included in the repository. Please see client readme for generation instructions.
 
-**TODO(kantoniak):** Generation instructions for cameras
-
 #### Generation instructions for clients apps (Android app)
 
 Using the generated API definition file the model and API access classes can be generated. The ready to use script can be found in /android/api_generate_kotlin.sh with its usage in `README.md` file. 
