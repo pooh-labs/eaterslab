@@ -23,7 +23,7 @@ Server and clients other than web application communicate via REST API. Methods 
 
 Server exposes API endpoint using Django Rest Framework extension. API definition file is generated from this implementation.
 
-**TODO(Rhantolq):** Where to find generator?
+For API definition file generation drf_yasg is used from the server side.
 
 Clients leverage [OpenAPI generator](https://github.com/OpenAPITools/openapi-generator) to generate the API handlers. Generated classes are not included in the repository. Please see client readme for generation instructions.
 
