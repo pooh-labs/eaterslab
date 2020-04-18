@@ -1,16 +1,13 @@
-package labs.pooh.eaterslab.ui.activity.hello
+package labs.pooh.eaterslab
 
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_hello_select.*
-import labs.pooh.eaterslab.ui.activity.abstracts.AbstractThemedActivity
-import labs.pooh.eaterslab.R
-import labs.pooh.eaterslab.ui.activity.main.MainActivity
-import labs.pooh.eaterslab.ui.activity.map.MapSearchActivity
-import labs.pooh.eaterslab.ui.view.bounceAndScaleDelayed
 import labs.pooh.eaterslab.util.start
 
-class HelloSelectActivity : AbstractThemedActivity() {
+class HelloSelectActivity : AppCompatActivity() {
 
     companion object {
         const val BUTTON_MAP_POSITION_X = "BUTTON_MAP_POSITION_X"
@@ -18,8 +15,6 @@ class HelloSelectActivity : AbstractThemedActivity() {
         const val BUTTON_SEARCH_POSITION_X = "BUTTON_SEARCH_POSITION_X"
         const val BUTTON_SEARCH_POSITION_Y = "BUTTON_SEARCH_POSITION_Y"
     }
-
-    override val showActionBar = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,8 +39,6 @@ class HelloSelectActivity : AbstractThemedActivity() {
                 }
             }
         }
-
-        imageViewHeader.bounceAndScaleDelayed(this)
     }
 
     override fun onResume() {

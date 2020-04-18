@@ -4,15 +4,6 @@ A quick overview of directory structure:
 * `rpi-files`: project files used on Raspberry Pi device
 * `vm-files`: ignored directory, default for virtual machines files if you didn't provide your own during setup
 
-## API generation
-
-To generate api, call script from camera directory:
-```
-cd /camera/rpi-files/ &&
-./generate-api-client.sh
-```
-Device setup performs this generation automatically.
-
 ## Device setup
 
 This section assumes you have a fresh install of Raspbian on either VM or physical device. You will need keyboard device to run setup commands. Enter terminal and run:

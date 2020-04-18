@@ -58,7 +58,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',        # for ssl handling in Django
 ]
 
 ROOT_URLCONF = 'server.urls'
@@ -146,14 +145,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
-# SSL enable configuration for server
-
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 
 # Heroku static files configuration to get it working on deploy

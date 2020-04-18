@@ -1,12 +1,13 @@
-package labs.pooh.eaterslab.ui.activity.abstracts
+package labs.pooh.eaterslab
 
 import android.os.Bundle
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewTreeObserver
+import androidx.appcompat.app.AppCompatActivity
 import kotlin.math.max
 
-abstract class AbstractRevealedActivity : AbstractNetworkCheckingActivity() {
+abstract class AbstractRevealedActivity : AppCompatActivity() {
 
     abstract val revealedLayout: Lazy<View>
 

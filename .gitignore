@@ -1,11 +1,9 @@
-# Python
+# Python server
 __pycache__/
-.env
 .idea/
-
-# Server
 django-server/server/db.sqlite3
-django-server/server/Pipfile.lock
+.env
+django-server/serverenv/*
 django-server/server/static/
 
 # IDEs

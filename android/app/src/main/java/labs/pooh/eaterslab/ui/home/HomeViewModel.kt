@@ -1,4 +1,4 @@
-package labs.pooh.eaterslab.ui.fragment.home
+package labs.pooh.eaterslab.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

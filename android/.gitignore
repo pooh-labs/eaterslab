@@ -3,4 +3,3 @@
 /.gradle
 /app/*.iml
 /app/src/main/java/labs/pooh/eaterslab/client/
-/app/build/*

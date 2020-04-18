@@ -1,4 +1,4 @@
-package labs.pooh.eaterslab.ui.fragment.home
+package labs.pooh.eaterslab.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

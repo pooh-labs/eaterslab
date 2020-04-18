@@ -2,12 +2,10 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="foregroundColor">@color/colorWhite</item>
-        <item name="foregroundColorText">@color/colorForegroundDark</item>
-        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -16,26 +14,7 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-
-    <!-- Dark application theme -->
-    <style name="AppTheme.Dark" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimaryDark</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarker</item>
-        <item name="colorAccent">@color/colorAccentDarker</item>
-        <item name="foregroundColor">@color/colorForegroundDark</item>
-        <item name="foregroundColorText">@color/colorWhite</item>
-        <item name="android:windowBackground">@color/colorBackgroundDark</item>
-        <item name="android:windowDisablePreview">true</item>
-    </style>
-
-    <style name="AppTheme.Dark.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="AppTheme.Dark.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-    <style name="AppTheme.Dark.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
 </resources>

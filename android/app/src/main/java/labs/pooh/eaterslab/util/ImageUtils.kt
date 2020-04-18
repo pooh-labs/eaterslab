@@ -2,15 +2,13 @@ package labs.pooh.eaterslab.util
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
 
-suspend fun downloadImageFrom(url: URL): Bitmap? = withContext(Dispatchers.IO) {
-    val connection = url.openConnection() as HttpURLConnection
-    return@withContext try {
+fun downloadImageFrom(url: URL): Bitmap? {
+    return try {
+        val connection = url.openConnection() as HttpURLConnection
         connection.doInput = true
         connection.connect()
         val inputStream = connection.inputStream
@@ -21,7 +19,7 @@ suspend fun downloadImageFrom(url: URL): Bitmap? = withContext(Dispatchers.IO) {
     }
 }
 
-suspend fun downloadImageFrom(urlString: String): Bitmap? {
+fun downloadImageFrom(urlString: String): Bitmap? {
     return try {
         val url = URL(urlString)
         downloadImageFrom(url)
