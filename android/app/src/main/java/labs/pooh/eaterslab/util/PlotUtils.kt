@@ -43,6 +43,7 @@ open class HorizontalBarPlot(context: Context) : AbstractStandardPlot(context) {
     var plotLabels = true
     var ticksIndexer: ((String) -> Int)? = null
     var ticks: List<String> = listOf()
+    var printTicks = true
 
     override fun <T : Number> plot(data: List<T>, mainColor: Int): View {
 
@@ -98,7 +99,7 @@ open class HorizontalBarPlot(context: Context) : AbstractStandardPlot(context) {
             }
         }.toView(context)
 
-        if (!printTicks) {
+        if (!printTicks || !this.printTicks) {
             return plotView
         }
 
