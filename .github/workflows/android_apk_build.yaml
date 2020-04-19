@@ -9,8 +9,8 @@ on:
 jobs:
   build:
     name: Checkout and package
-    runs-on: jangrewe/gitlab-ci-android
-
+    runs-on: ubuntu-latest
+    container: mingc/android-build-box:latest
     steps:
       - name: Checkout
         uses: actions/checkout@master
