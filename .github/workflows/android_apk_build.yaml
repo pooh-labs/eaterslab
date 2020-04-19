@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@master
         with:
           ref: ${{ github.ref }}                                                              # checkout to branch which was pushed
-      - name: Deploy to Heroku
+      - name: Build APK file
         if: job.status == 'success'
         run: |
           cd android
