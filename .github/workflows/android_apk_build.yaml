@@ -9,13 +9,18 @@ on:
 jobs:
   build:
     name: Checkout and package
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     container: mingc/android-build-box:latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@master
+      - uses: actions/checkout@master
         with:
           ref: ${{ github.ref }}                                                              # checkout to branch which was pushed
+      - uses: actions/cache@v1
+        with:
+          path: android/app/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
       - name: Build APK file
         if: job.status == 'success'
         run: |
