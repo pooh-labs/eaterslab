@@ -1,0 +1,32 @@
+name: Build Android APK debug file
+
+on:
+  push:
+    paths:
+    - 'android/**'
+    - '.github/workflows/android_apk_build.yaml'
+
+jobs:
+  build:
+    name: Checkout and package
+    runs-on: jangrewe/gitlab-ci-android
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          ref: ${{ github.ref }}                                                              # checkout to branch which was pushed
+      - name: Deploy to Heroku
+        if: job.status == 'success'
+        run: |
+	  cd android
+	  export GRADLE_USER_HOME=$(pwd)/.gradle
+          chmod +x ./gradlew
+	  ./gradlew assembleDebug
+	  mkdir export
+          mv app/build/outputs/apk/debug/app-debug.apk export/eaterslab.apk
+      - name: Upload
+        uses: actions/upload-artifact@v1
+	with:
+          name: EatersLabDebug.apk
+          path: android/export/eaterslab.apk
