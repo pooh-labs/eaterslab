@@ -13,7 +13,6 @@ import labs.pooh.client.infrastructure.ClientException
 import labs.pooh.eaterslab.BuildConfig
 import labs.pooh.eaterslab.ui.activity.main.MainActivity
 import labs.pooh.eaterslab.util.downloadImageFrom
-import okhttp3.internal.notify
 import java.lang.Exception
 import kotlin.math.exp
 import kotlin.math.pow
