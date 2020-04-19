@@ -4,19 +4,101 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragment.home.HomeFragment">
+    tools:context=".ui.fragment.home.CafeteriaFragment">
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/logo_vertical_margin"
+        android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
+        android:foregroundGravity="center"
+        android:src="@drawable/ic_location"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="@id/guideline_center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="centerCrop"
+        android:contentDescription="@string/cafeteria_logo" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.4" />
 
     <TextView
-        android:id="@+id/textHome"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
+        android:layout_marginTop="@dimen/logo_vertical_margin"
+        android:fontFamily="@font/caveat_bold"
+        android:gravity="bottom"
+        android:text="@string/enjoy_your_meal"
+        android:textAlignment="textStart"
+        android:textSize="@dimen/enjoy_font_size"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewLogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline_center"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlCompat" />
+
+    <labs.pooh.eaterslab.ui.view.KeyValueTextView
+        android:id="@+id/placeName"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
+        android:layout_marginTop="@dimen/logo_free_space"
+        android:text="@string/your_place"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewLogo"
+        app:key="@string/your_place"
+        app:value="@string/load_placeholder"/>
+
+    <labs.pooh.eaterslab.ui.view.KeyValueTextView
+        android:id="@+id/placeDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
+        android:layout_marginTop="@dimen/data_margin_top"
+        android:text="@string/your_place"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/placeName"
+        app:key="@string/description"
+        app:value="@string/load_placeholder"/>
+
+    <labs.pooh.eaterslab.ui.view.KeyValueTextView
+        android:id="@+id/placeSubDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
+        android:layout_marginTop="@dimen/data_margin_top"
+        android:text="@string/your_place"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/placeDescription"
+        app:key="@string/subdescription"
+        app:value="@string/load_placeholder"
+        app:expandable="true"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/placeSubDescription">
+
+        <LinearLayout
+            android:id="@+id/plotsLayout"
+            android:layout_marginTop="@dimen/logo_vertical_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

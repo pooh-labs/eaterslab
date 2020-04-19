@@ -18,6 +18,11 @@ import labs.pooh.eaterslab.ui.activity.abstracts.AbstractNetworkCheckingActivity
 
 class MainActivity : AbstractNetworkCheckingActivity() {
 
+    companion object {
+        const val ID_KEY = "CAFETERIA_KEY"
+        var lastSelectedCafeteriaId: Int = -1
+    }
+
     private lateinit var appBarConfiguration: AppBarConfiguration
 
     override val showActionBar = false
@@ -52,7 +57,7 @@ class MainActivity : AbstractNetworkCheckingActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-
+        lastSelectedCafeteriaId = intent.getIntExtra(ID_KEY, -1)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

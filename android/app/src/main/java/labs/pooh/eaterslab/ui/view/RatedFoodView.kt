@@ -3,12 +3,13 @@ package labs.pooh.eaterslab.ui.view
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.rated_food_view.view.*
 import labs.pooh.eaterslab.R
 
-class RatedFoodView(context: Context) : ConstraintLayout(context) {
+class RatedFoodView(context: Context) : CardView(context) {
 
     private var numStars: Float = 0F
         set(value) {
