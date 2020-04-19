@@ -19,14 +19,14 @@ jobs:
       - name: Deploy to Heroku
         if: job.status == 'success'
         run: |
-	  cd android
-	  export GRADLE_USER_HOME=$(pwd)/.gradle
+          cd android
+          export GRADLE_USER_HOME=$(pwd)/.gradle
           chmod +x ./gradlew
-	  ./gradlew assembleDebug
-	  mkdir export
+          ./gradlew assembleDebug
+          mkdir export
           mv app/build/outputs/apk/debug/app-debug.apk export/eaterslab.apk
       - name: Upload
         uses: actions/upload-artifact@v1
-	with:
+        with:
           name: EatersLabDebug.apk
           path: android/export/eaterslab.apk
