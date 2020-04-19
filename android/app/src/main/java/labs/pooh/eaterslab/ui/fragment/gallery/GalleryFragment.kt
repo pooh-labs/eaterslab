@@ -11,16 +11,16 @@ import android.widget.FrameLayout
 import android.widget.Space
 import androidx.core.content.ContextCompat
 import androidx.core.view.plusAssign
-import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.fragment_gallery.*
 import labs.pooh.eaterslab.ui.activity.abstracts.AbstractThemedActivity
 import labs.pooh.eaterslab.R
+import labs.pooh.eaterslab.ui.fragment.ThemedAbstractFragment
 import labs.pooh.eaterslab.util.*
 import kotlin.math.abs
 import kotlin.math.log
 import kotlin.math.sin
 
-class GalleryFragment : Fragment() {
+class GalleryFragment : ThemedAbstractFragment() {
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -91,16 +91,4 @@ class GalleryFragment : Fragment() {
             }
         }
     }
-
-    private fun getPlotFontColorForTheme(): Int {
-        val value = TypedValue()
-        if (activity?.theme?.resolveAttribute(R.attr.foregroundColorText, value, true) == true) {
-            return value.data
-        }
-        else {
-            return Color.BLACK
-        }
-    }
-
-    private fun printTicks() = !((activity as? AbstractThemedActivity)?.isDarkModeEnabled() ?: false)
 }
