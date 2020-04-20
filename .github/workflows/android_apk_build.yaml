@@ -24,7 +24,7 @@ jobs:
         run: |
           cd android
           wget https://eaterslab.herokuapp.com/api.yaml
-	  chmod +x ./api_generate_kotlin.sh
+          chmod +x ./api_generate_kotlin.sh
           ./api_generate_kotlin.sh api.yaml
           export GRADLE_USER_HOME=$(pwd)/.gradle
           chmod +x ./gradlew
