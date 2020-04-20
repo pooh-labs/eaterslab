@@ -41,7 +41,15 @@ class CafeteriaFragment : ThemedAbstractFragment() {
         model.cafeteriaCurrentDayData.observe(viewLifecycleOwner, Observer {
             managePlotViewData(it)
         })
+        model.cafeteriaLogo.observe(viewLifecycleOwner, Observer { it?.let { bitmap ->
+            imageViewLogo.setImageBitmap(bitmap)
+        } })
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        model.updateCafeteriaFullData()
     }
 
     override fun onResume() {
