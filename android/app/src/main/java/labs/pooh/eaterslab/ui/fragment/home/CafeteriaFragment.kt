@@ -68,7 +68,7 @@ class CafeteriaFragment : ThemedAbstractFragment() {
         }.plot(data, accentColor)
         frame += barView
         val width = (plotsLayout.width * 0.9).toInt()
-        frame.layoutParams = FrameLayout.LayoutParams(width, (0.6 * width).toInt()).apply {
+        frame.layoutParams = FrameLayout.LayoutParams(width, (0.7 * width).toInt()).apply {
             gravity = Gravity.CENTER_HORIZONTAL
         }
         plotsLayout.removeAllViews()
