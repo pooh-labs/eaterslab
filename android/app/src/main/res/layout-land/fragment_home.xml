@@ -37,8 +37,10 @@
         android:fontFamily="@font/caveat_bold"
         android:gravity="bottom"
         android:text="@string/enjoy_your_meal"
-        android:textAlignment="textStart"
+        android:textAlignment="textEnd"
         android:textSize="@dimen/enjoy_font_size"
+        android:paddingEnd="@dimen/logo_vertical_margin"
+        android:paddingStart="@dimen/logo_vertical_margin"
         android:layout_marginBottom="@dimen/logo_horizontal_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline_center"
@@ -85,13 +87,14 @@
         app:value="@string/load_placeholder"
         app:expandable="true"/>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="@id/guideline_center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/placeSubDescription">
+        app:layout_constraintTop_toBottomOf="@id/placeSubDescription"
+        android:overScrollMode="never">
 
         <LinearLayout
             android:id="@+id/plotsLayout"
@@ -100,7 +103,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center"/>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

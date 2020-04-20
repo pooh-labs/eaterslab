@@ -48,7 +48,7 @@
     <string name="sunday">Sunday</string>
     <string name="wait_connection">Waiting for connection</string>
     <string name="cafeteria_logo">Cafeteria logo</string>
-    <string name="enjoy_your_meal">Enjoy\nyour meal! </string>
+    <string name="enjoy_your_meal">Enjoy\u0020\nyour meal!\u0020</string>
     <string name="your_place">Your place:</string>
     <string name="description">Description</string>
     <string name="no_data">no data</string>
