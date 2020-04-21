@@ -9,6 +9,8 @@ on:
       - '*'
       - '*/*'
       - '!master'
+  repository_dispatch:
+  
 jobs:
   build:
     name: Checkout and package
