@@ -1,4 +1,4 @@
-from django.core.files.storage import default_storage, FileSystemStorage
+from django.core.files.storage import FileSystemStorage
 from rest_framework import viewsets
 from rest_framework import views
 from rest_framework.authentication import TokenAuthentication
