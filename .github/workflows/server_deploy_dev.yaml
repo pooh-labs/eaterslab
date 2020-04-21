@@ -6,7 +6,6 @@ on:
       - 'django-server/**'
       - '.github/workflows/server_deploy_dev.yaml'
     branches:
-      - *
       - '!master'
 
 jobs:
