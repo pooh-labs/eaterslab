@@ -30,7 +30,7 @@ jobs:
           export GRADLE_USER_HOME=$(pwd)/.gradle
           chmod +x ./gradlew
           ./gradlew assembleDebug                                                             # run gradle compilation process in android project directory
-      - name: Upload
+      - name: Upload artifact file to workflow run results
         uses: actions/upload-artifact@v1                                                      # upload built apk as artifact tobe downloaded from workflow results
         with:
           name: EatersLabDebug.apk
