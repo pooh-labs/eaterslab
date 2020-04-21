@@ -7,7 +7,7 @@ on:
     - '!master'
     paths:
     - 'django-server/**'
-    - '.github/workflows/server_deploy.yaml'
+    - '.github/workflows/server_deploy_dev.yaml'
 
 jobs:
   build:
