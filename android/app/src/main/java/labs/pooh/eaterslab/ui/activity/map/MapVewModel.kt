@@ -7,12 +7,12 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import labs.pooh.client.apis.CafeteriaApi
+import labs.pooh.client.apis.CafeteriasApi
 import labs.pooh.client.models.Cafeteria
 import labs.pooh.eaterslab.BuildConfig
 
 class MapVewModel : ViewModel() {
-    private var API = CafeteriaApi(BuildConfig.API_URL)
+    private var API = CafeteriasApi(BuildConfig.API_URL)
 
     private val _cafeteriasLiveData = MutableLiveData<List<Cafeteria>>().apply {
         listOf<Cafeteria>()
@@ -22,7 +22,7 @@ class MapVewModel : ViewModel() {
 
     fun updateMarkersData() {
         viewModelScope.launch {
-            val cafeterias = withContext(Dispatchers.IO) { API.cafeteriaList() }
+            val cafeterias = withContext(Dispatchers.IO) { API.cafeteriasList() }
             _cafeteriasLiveData.value = cafeterias.toList()
         }
     }
