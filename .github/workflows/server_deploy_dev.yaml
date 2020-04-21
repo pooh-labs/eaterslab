@@ -2,9 +2,6 @@ name: Webserver deploy dev
 
 on:
   push:
-    branches:
-    - '*'
-    - '!master'
     paths:
     - 'django-server/**'
     - '.github/workflows/server_deploy_dev.yaml'
