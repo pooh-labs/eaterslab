@@ -1,3 +1,4 @@
+from django.core.files.storage import FileSystemStorage
 from django.http import HttpResponse, FileResponse
 from os.path import join as path_join
 
@@ -9,10 +10,10 @@ def index(request):
 
 
 def artifact_response(response):
-    file = open(path_join(settings.ARTIFACTS_ROOT, settings.ARTIFACT_NAME), 'rb')
+    file = FileSystemStorage().open(path_join(settings.ARTIFACTS_ROOT, settings.ARTIFACT_NAME), 'rb')
     return FileResponse(file)
 
 
 def artifact_beta_response(response):
-    file = open(path_join(settings.ARTIFACTS_ROOT_BETA, settings.ARTIFACT_NAME), 'rb')
+    file = FileSystemStorage().open(path_join(settings.ARTIFACTS_ROOT_BETA, settings.ARTIFACT_NAME), 'rb')
     return FileResponse(file)
