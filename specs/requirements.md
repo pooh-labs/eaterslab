@@ -14,8 +14,9 @@ For each point prepended by priority:
 ### Functionality
 
 1. Camera devices
-    * Setup workflow
+    * Provide initialization interface
         * [1] Register API authorization key on device
+        * [1] Make test API call
         * [2] Enable/disable logging to device
         * [3] Provide setup GUI
     * [1] Read video stream from integrated camera or USB webcam
