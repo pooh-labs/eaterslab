@@ -65,7 +65,7 @@ For each point prepended by priority:
     * Manage menus
         * Create menu for day
             * [1] Add entries to the list
-                * [3] Add price
+                * [1] Add price
                 * [2] Tag as vegetarian
                 * [3] Add different tags (vegan, halaal, locally sourced etc.)
                     * [4] Support user-created tags
