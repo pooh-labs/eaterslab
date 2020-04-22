@@ -14,8 +14,9 @@ For each point prepended by priority:
 ### Functionality
 
 1. Camera devices
-    * Setup workflow
+    * Provide initialization interface
         * [1] Register API authorization key on device
+        * [1] Make test API call
         * [2] Enable/disable logging to device
         * [3] Provide setup GUI
     * [1] Read video stream from integrated camera or USB webcam
@@ -65,7 +66,7 @@ For each point prepended by priority:
     * Manage menus
         * Create menu for day
             * [1] Add entries to the list
-                * [3] Add price
+                * [1] Add price
                 * [2] Tag as vegetarian
                 * [3] Add different tags (vegan, halaal, locally sourced etc.)
                     * [4] Support user-created tags
@@ -122,10 +123,10 @@ For each point prepended by priority:
         * [4] Get nutrition values
     * View most of the statistic data
         * Plot relative cafeteria occupancy
-            * [1] Break by year/month/week/day/hour
+            * [1] Break by day/hour, show data from last week
             * [4] Correlate to specified menu options
         * [2] Plot different cafeterias occupancy comparison
-            * Break by year/month/week/day/hour
+            * Break by day/hour, show data from last week
         * [3] Plot menu options prices changes
     * [3] Provide English version
     * [4] Implement accessibility features
