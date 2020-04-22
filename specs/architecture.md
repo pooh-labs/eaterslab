@@ -53,7 +53,7 @@ User interface needs also some data visualizations of all the data so the [data2
 
 For the RESTful API endpoints generation in Android app the [Kotlin code generator](https://github.com/OpenAPITools/openapi-generator/blob/master/docs/generators/kotlin.md) is used.
 
-If needed custom widgets can be designed by developers team or used some open-source alternatives to standard Android widgets from web.
+Custom Android widgets are developed as the part of the project as well as used from open-source projects. 
 
 The client app is designed to be multilingual app  to provide access to occupancy data also for foreign people. All the translations are managed via resource files with mappings for application text views.
 
@@ -67,9 +67,7 @@ Android app is divided in a few activities that allows users to work with differ
 5. Main application screen with presented data [A] divided into:
 
     * Main canteen data such as name, logo, opening hours, base stats from day, descriptions [F]
-
     * More stats data with a place for predictions in future releases [F]
-
     * Menu options screen with internal fragments for rating menu options [F]
 
 
