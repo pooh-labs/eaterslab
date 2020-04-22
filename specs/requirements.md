@@ -122,10 +122,10 @@ For each point prepended by priority:
         * [4] Get nutrition values
     * View most of the statistic data
         * Plot relative cafeteria occupancy
-            * [1] Break by year/month/week/day/hour
+            * [1] Break by day/hour, show data from last week
             * [4] Correlate to specified menu options
         * [2] Plot different cafeterias occupancy comparison
-            * Break by year/month/week/day/hour
+            * Break by day/hour, show data from last week
         * [3] Plot menu options prices changes
     * [3] Provide English version
     * [4] Implement accessibility features
