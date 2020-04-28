@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
-from .models import Cafeterias
+from .models import Cafeteria
 
 
 class CafeteriaSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = Cafeterias
+        model = Cafeteria
         fields = ['id', 'name', 'description', 'sub_description', 'longitude', 'latitude', 'capacity']
