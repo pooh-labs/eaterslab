@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 
-class Cafeteria(models.Model):
+class Cafeterias(models.Model):
     name = models.CharField(max_length=128)
     description = models.CharField(max_length=256)
     sub_description = models.CharField(max_length=512)
