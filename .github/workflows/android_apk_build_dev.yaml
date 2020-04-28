@@ -9,7 +9,6 @@ on:
       - '*'
       - '*/*'
       - '!master'
-  repository_dispatch:
   
 jobs:
   build:
