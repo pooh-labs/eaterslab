@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import Cafeteria
+from .models import Cafeterias
 
-admin.site.register(Cafeteria)
+admin.site.register(Cafeterias)
