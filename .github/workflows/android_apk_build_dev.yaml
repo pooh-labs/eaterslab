@@ -35,7 +35,8 @@ jobs:
           export GRADLE_USER_HOME=$(pwd)/.gradle
           chmod +x ./gradlew
           ./gradlew assembleDebug                                                             # run gradle compilation process in android project directory
-          curl -H 'Authorization: Token ${{ secrets.TOKEN_ADMIN_DEV }}' -X PUT --data-binary @./app/build/outputs/apk/debug/app-debug.apk https://eaterslab-dev.herokuapp.com/api/beta/upload/artifacts/beta/file/ # send file to server
+          curl -H 'Authorization: Token ${{ secrets.TOKEN_ADMIN_DEV }}' -X PUT --data-binary @./app/build/outputs/apk/debug/app-debug.apk https://eaterslab-dev.herokuapp.com/api/beta/upload/artifacts/beta/file/ # send file to server dev
+          curl -H 'Authorization: Token ${{ secrets.TOKEN_ADMIN }}' -X PUT --data-binary @./app/build/outputs/apk/debug/app-debug.apk https://eaterslab.herokuapp.com/api/beta/upload/artifacts/beta/file/ # send file to server 
       - name: Upload artifact file to workflow run results
         uses: actions/upload-artifact@v1                                                      # upload built apk as artifact tobe downloaded from workflow results
         with:
