@@ -28,7 +28,7 @@ jobs:
         if: job.status == 'success'                                                           # wait until environment is ready
         run: |
           cd android
-          wget https://eaterslab.herokuapp.com/api.yaml                                       # get current api specification from server
+          wget https://eaterslab-dev.herokuapp.com/api.yaml                                       # get current api specification from server
           chmod +x ./api_generate_kotlin.sh
           ./api_generate_kotlin.sh api.yaml
           export GRADLE_USER_HOME=$(pwd)/.gradle
