@@ -1,7 +1,9 @@
-name: Webserver deploy
+name: Webserver deploy for production
 
 on:
   push:
+    branches:
+    - 'master'
     paths:
     - 'django-server/**'
     - '.github/workflows/server_deploy.yaml'
@@ -29,3 +31,4 @@ jobs:
           git add .
           git commit . -m "deploy full refresh from ${{ github.ref }}"                        # commit and push all files
           git push
+          curl -X POST https://api.github.com/repos/pooh-labs/eaterslab/dispatches -H 'Accept: application/vnd.github.everest-preview+json' -u ${{ secrets.DISPATCH_KEY }} --data '{"event_type": "ping"}' # run the android build with upload to server after server update

@@ -19,7 +19,6 @@ environ.Env.read_env()
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -43,21 +42,24 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'rest_framework',
+    'rest_framework.authtoken',  # token auth for artifacts upload
+
     # External library for yaml generator (can be used but works only with OpenAPI 2.0)
-    'drf_yasg',                                           # for API documentation and generation
-    'api.apps.ApiConfig',                                   # API app
+    'drf_yasg',  # for API documentation and generation
+    'api.apps.ApiConfig',  # API app
 ]
 
 MIDDLEWARE = [
-    'whitenoise.middleware.WhiteNoiseMiddleware',           # for static files handling on deploy
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # for static files handling on deploy
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',        # for ssl handling in Django
+    'django.middleware.security.SecurityMiddleware',  # for ssl handling in Django
 ]
 
 ROOT_URLCONF = 'server.urls'
@@ -80,7 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'server.wsgi.application'
 
-
 # Configuration for rest_framework to get only the json data
 # from the api calls to specified urls as default
 
@@ -89,7 +90,7 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         # Uncomment to get the API renderer for browser view
         # 'rest_framework.renderers.BrowsableAPIRenderer',
-    ]
+    ],
 }
 
 
@@ -102,13 +103,12 @@ def select_database():
     return {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
+    }
 
 
 DATABASES = {
     'default': select_database()
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -128,7 +128,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -141,7 +140,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # SSL enable configuration for server
 
@@ -157,3 +155,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 os.makedirs(STATIC_ROOT, exist_ok=True)
+
+# Configuration for artifacts of mobile client uploading
+
+ARTIFACT_NAME = 'EatersLab.apk'
+ARTIFACTS_ROOT = os.path.join(BASE_DIR, 'artifact')
+ARTIFACTS_ROOT_BETA = os.path.join(ARTIFACTS_ROOT, 'beta')
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760      # set max limit of uploaded file to 10 MB
