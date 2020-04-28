@@ -9,15 +9,15 @@ from rest_framework.response import Response
 from server import settings
 from .serializers import CafeteriaSerializer
 
-from .models import Cafeterias
+from .models import Cafeteria
 
 from os.path import join as path_join
 
 
 # TODO: handle different roles for API views
 
-class CafeteriasViewSet(viewsets.ModelViewSet):
-    queryset = Cafeterias.objects.all().order_by('id')
+class CafeteriaViewSet(viewsets.ModelViewSet):
+    queryset = Cafeteria.objects.all().order_by('id')
     serializer_class = CafeteriaSerializer
 
 
