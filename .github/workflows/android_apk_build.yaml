@@ -1,4 +1,4 @@
-name: Build Android APK debug file
+name: Build Android APK release unsigned file
 
 on:
   push:
