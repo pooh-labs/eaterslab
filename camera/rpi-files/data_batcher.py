@@ -27,14 +27,22 @@ class DataBatcher(object):
         """Initialize queues."""
         self.current_batch = Batch([], [])
 
-    def update(self, entering, leaving):
-        """Run updates.
+    def entered(self, entering):
+        """Append to lists of people entering.
 
         Args:
             entering: list of enter timestamps
+        """
+        self._assert_list_of_floats(entering, 'entering')
+        self.current_batch.entering.extend(entering)
+
+    def left(self, leaving):
+        """Append to lists of people leaving.
+
+        Args:
             leaving: list of leave timestamps
         """
-        self.current_batch.entering.extend(entering)
+        self._assert_list_of_floats(leaving, 'leaving')
         self.current_batch.leaving.extend(leaving)
 
     def batch(self):
@@ -48,3 +56,12 @@ class DataBatcher(object):
         (to_return, current) = (current, Batch([], []))  # noqa: WPS414
         self.current_batch = current
         return to_return
+
+    def _assert_list_of_floats(self, arg, argname):
+        if not isinstance(arg, list):
+            msg = 'Argument `{0}` should be a list'.format(argname)
+            raise TypeError(msg)
+        for elem in arg:
+            if not isinstance(elem, float):
+                msg = 'List `{0}` contains non-float element'.format(argname)
+                raise TypeError(msg)

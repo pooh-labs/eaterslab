@@ -55,10 +55,8 @@ class Main(object):
 
             # Update counter
             self.counter.update(time.time())
-            self.batcher.update(
-                self.counter.get_entering_list(),
-                self.counter.get_leaving_list(),
-            )
+            self.batcher.entered(self.counter.get_entering_list())
+            self.batcher.left(self.counter.get_leaving_list())
 
             # Run batching
             current_time = time.time()
