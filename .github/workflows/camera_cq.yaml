@@ -27,7 +27,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r "camera/rpi-files/requirements.txt"
+        pip install -r 'camera/rpi-files/requirements.txt'
      - name: Test with pytest
       run: |
-        pytest "camera/rpi-files/test_*.py"
+        pytest 'camera/rpi-files/test_*.py'
