@@ -13,10 +13,3 @@ Owners will benefit from analytics. Historical data and occupancy predictions he
 ## Architecture overview
 
 System of cameras counts visitors entering and leaving lunchroom space. Central endpoint aggregates occupancy reports for owners and customers using mobile or web clients which also serve as information/feedback loop.
-
-## Authors
-
-* Krzysztof Antoniak
-* Robert Michna
-* Maciej Procyk
-* Jakub Walendowski
