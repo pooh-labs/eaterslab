@@ -8,6 +8,7 @@ EatersLab is a system monitoring live occupation of cafeterias. System of camera
 2. [Requirements specification](specs/requirements.md)
 3. [Use cases list](specs/use-cases.md)
 4. [System architecture specification](specs/architecture.md)
+5. [Testing specification](specs/testing.md)
 
 ## Authors
 

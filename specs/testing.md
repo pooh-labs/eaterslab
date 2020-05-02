@@ -1,4 +1,4 @@
-# System tests specification
+# Testing specification
 
 This document provides testing strategy for all system components. Functional and non-functional tests are broken down by type in separate sections. Each component checks can be performed separately, except for integration testing.
 
