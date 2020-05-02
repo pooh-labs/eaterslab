@@ -46,7 +46,6 @@ packaging==20.3
 pathspec==0.7.0
 pbr==5.4.4
 pep8-naming==0.9.1
-pkg-resources==0.0.0
 pluggy==0.13.1
 py==1.8.1
 pycodestyle==2.5.0
