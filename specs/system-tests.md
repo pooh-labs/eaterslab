@@ -1,15 +1,16 @@
 # System tests specification
 
-Every part of the system can be tested separately as well as the integration tests are required in this project. 
-This document explains the ways of testing every part of EatersLab system and gives the detailed overview on the ways of testing software in complex software systems
+This document provides testing strategy for all system components. Functional and non-functional tests are broken down by type in separate sections. Each component checks can be performed separately, except for integration testing.
 
 ## Functional tests
 
 ### Unit testing
 
-#### Android application
+Django server: [unit testing](https://docs.djangoproject.com/en/3.0/topics/testing/overview/)?
 
-#### Django server
+Android application: [unit testing](https://developer.android.com/training/testing/unit-testing)?
+
+Camera devices: `pytest` unit testing?
 
 ### Integration testing
 
@@ -19,13 +20,19 @@ This document explains the ways of testing every part of EatersLab system and gi
 
 ### Smoke testing
 
-#### Django server
+Django server
 
-### Beta testing
+Camera device: (TODO) start up, connect to server, power down. Check that server received events.
+
+### Acceptance/Beta testing
 
 #### Android application
 
+* Automated [Espresso](https://developer.android.com/training/testing/ui-testing/espresso-testing)/Appium use-case testing?
+
 #### Django server
+
+* Automated Selenium use-case testing?
 
 ### Black-box testing
 
@@ -39,17 +46,32 @@ This document explains the ways of testing every part of EatersLab system and gi
 
 ### Performance testing
 
-#### RaspberryPi camera system
-
 #### Django server
+
+#### Camera devices?
 
 ### Stress testing
 
 #### Django server
 
-### Install testing
+### Maintainability testing
+
+Camera devices: GH workflow (`wemake-python-styleguide`) for testing PEP8 coding standard conformance
+
+### Installability testing
+
+#### Django server
+
+* Automated pushes to Heroku with DB setup? We need to confirm that website is up and running after the push. Can it be done from workflow (e.g. `wget` with HTTP code)? 
 
 #### Android application
 
-#### RaspberryPi camera system
+* Automated APK builds?
 
+#### Camera devices
+
+* Automated generation of .img card images (TBD).
+
+### Compliance testing
+
+* OpenAPI conformance testing
