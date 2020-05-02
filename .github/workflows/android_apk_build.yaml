@@ -1,14 +1,12 @@
-name: Build Android APK debug file
+name: Build Android APK release unsigned file
 
 on:
   push:
     paths:
       - 'android/**'
-      - '.github/workflows/android_apk_build_dev.yaml'
+      - '.github/workflows/android_apk_build.yaml'
     branches:
-      - '*'
-      - '*/*'
-      - '!master'
+      - 'master'
   
 jobs:
   build:
@@ -28,15 +26,15 @@ jobs:
         if: job.status == 'success'                                                           # wait until environment is ready
         run: |
           cd android
-          wget https://eaterslab-dev.herokuapp.com/api.yaml                                       # get current api specification from server
+          wget https://eaterslab.herokuapp.com/api.yaml                                       # get current api specification from server
           chmod +x ./api_generate_kotlin.sh
           ./api_generate_kotlin.sh api.yaml
           export GRADLE_USER_HOME=$(pwd)/.gradle
           chmod +x ./gradlew
-          ./gradlew assembleDebug                                                             # run gradle compilation process in android project directory
-          curl -H 'Authorization: Token ${{ secrets.TOKEN_ADMIN_DEV }}' -X PUT --data-binary @./app/build/outputs/apk/debug/app-debug.apk https://eaterslab-dev.herokuapp.com/api/beta/upload/artifacts/beta/file/ # send file to server dev
+          ./gradlew assemble                                                                  # run gradle compilation process in android project directory
+          curl -H 'Authorization: Token ${{ secrets.TOKEN_ADMIN }}' -X PUT --data-binary @./app/build/outputs/apk/release/app-release-unsigned.apk https://eaterslab.herokuapp.com/api/beta/upload/artifacts/file/ # send file to server 
       - name: Upload artifact file to workflow run results
         uses: actions/upload-artifact@v1                                                      # upload built apk as artifact tobe downloaded from workflow results
         with:
-          name: EatersLabDebug.apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: EatersLab.apk
+          path: android/app/build/outputs/apk/release/app-release-unsigned.apk
