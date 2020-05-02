@@ -25,9 +25,9 @@ class FixedMenuOption(models.Model):
     photo_url = models.CharField(max_length=2048, validators=[URLValidator])
 
 
-class FixedMenuTag(models.Model):
+class MenuOptionTag(models.Model):
     name = models.CharField(max_length=32, editable=False)
-    option = models.ManyToManyField(FixedMenuOption)
+    option = models.ManyToManyField(FixedMenuOption, related_name='tags')
 
 
 class FixedMenuOptionReview(models.Model):
