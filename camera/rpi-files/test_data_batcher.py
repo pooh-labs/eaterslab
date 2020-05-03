@@ -16,8 +16,7 @@ def float_range(start, end):
     Returns:
         list of floats.
     """
-    floats = [float(x) for x in range(start, end + 1, 1)]
-    return floats
+    return [float(elem) for elem in range(start, end + 1, 1)]
 
 
 @pytest.fixture
