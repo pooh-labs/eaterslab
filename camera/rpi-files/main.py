@@ -65,8 +65,8 @@ class Main(object):
             self._execute_loop()
 
             # Get camera frame
-            frame = self._frame_ingestor.get_frame()
             if self._display_frame:
+                frame = self._frame_ingestor.get_frame()
                 cv2.imshow('Frame', frame)
                 cv2.waitKey(1)
 
