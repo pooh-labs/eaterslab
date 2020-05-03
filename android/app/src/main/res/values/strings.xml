@@ -47,4 +47,7 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
     <string name="wait_connection">Waiting for connection</string>
+    <string name="connection_lost">Connection lost…</string>
+    <string name="data_fetch_error">Error when fetching data from server!</string>
+    <string name="connection_restored">Connection restored</string>
 </resources>

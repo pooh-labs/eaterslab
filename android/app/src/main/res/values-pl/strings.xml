@@ -45,4 +45,7 @@
     <string name="saturday">Sobota</string>
     <string name="sunday">Niedziela</string>
     <string name="wait_connection">Oczekiwanie na połączenie</string>
+    <string name="connection_lost">Utracono połączenie…</string>
+    <string name="data_fetch_error">Błąd podczas pobierania danych z serwera!</string>
+    <string name="connection_restored">Przywrócono połączenie</string>
 </resources>
