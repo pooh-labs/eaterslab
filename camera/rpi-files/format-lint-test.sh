@@ -15,12 +15,14 @@ SOURCES=(
 )
 
 TESTS=(
-    "test_data_batcher.py"
+    "test_data_batcher.py" \
+    "test_frame_ingestor.py"
 )
 
 ALL_FILES=$(IFS=$' '; echo "${SOURCES[*]} ${TESTS[*]}")
+ALL_TESTS=$(IFS=$' '; echo "${TESTS[*]}")
 
 isort ${ALL_FILES} &&
 black -t py37 -S -l 79 ${ALL_FILES} &&
-flake8 --config=setup.cfg ${ALL_FILES} &&
-pytest ${TESTS}
+flake8 --config=setup.cfg ${ALL_FILES}
+pytest ${ALL_TESTS}

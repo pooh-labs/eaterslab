@@ -41,7 +41,9 @@ class WebcamIngestorSource(FrameIngestorSource):
 
     def start(self):
         """Open the source.
-        
+
+        Raises:
+            RuntimeError: when could not open stream.
         """
         self.vs = WebcamVideoStream(src=self.source_num)
         if not self.vs.stream.isOpened():
@@ -77,9 +79,17 @@ class FrameIngestor(object):
         Args:
             source: source to read from
         """
-        self.source = None
+        self._source = None
         if source:
             self.register_source(source)
+
+    def __enter__(self):
+        """Enter `with` block.
+
+        Returns:
+            itself
+        """
+        return self
 
     def __exit__(self, exc_type, exc_value, traceback):
         """Finalize `with` block.
@@ -92,7 +102,7 @@ class FrameIngestor(object):
         Returns:
             true if there were no exceptions
         """
-        if self.source:
+        if self._source:
             self.release_source()
         return traceback is None
 
@@ -110,11 +120,11 @@ class FrameIngestor(object):
         if not isinstance(source, FrameIngestorSource):
             raise TypeError('`source` is not a FrameIngestorSource')
 
-        if self.source:
-            self.source.stop()
+        if self._source:
+            self._source.stop()
 
-        self.source = source
-        self.source.start()
+        self._source = source
+        self._source.start()
 
     def release_source(self):
         """Release registered source.
@@ -122,15 +132,20 @@ class FrameIngestor(object):
         Raises:
             RuntimeError: when no source registered
         """
-        if not self.source:
+        if not self._source:
             raise RuntimeError('No source to release.')
-        self.source.stop()
-        self.source = None
+        self._source.stop()
+        self._source = None
 
     def get_frame(self):
         """Fetch single frame from source.
 
+        Raises:
+            RuntimeError: when no source registered
+
         Returns:
             fetched frame.
         """
-        return self.source.get_frame()
+        if not self._source:
+            raise RuntimeError('No source to get frame from.')
+        return self._source.get_frame()
