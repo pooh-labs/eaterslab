@@ -43,6 +43,8 @@ lazy-object-proxy==1.4.3
 mando==0.6.4
 mccabe==0.6.1
 more-itertools==8.2.0
+numpy==1.18.3
+opencv-contrib-python==4.2.0.34
 packaging==20.3
 pathspec==0.7.0
 pbr==5.4.4
@@ -56,6 +58,7 @@ Pygments==2.6.1
 pylint==2.4.4
 pyparsing==2.4.7
 pytest==5.4.1
+pytest-mock==3.1.0
 python-dateutil==2.8.1
 python-dotenv==0.12.0
 PyYAML==5.3
