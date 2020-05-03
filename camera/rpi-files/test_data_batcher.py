@@ -16,10 +16,7 @@ def float_range(start, end):
     Returns:
         list of floats.
     """
-    floats = []
-    for elem in range(start, end, 1):
-        floats.append(float(elem))
-    floats.append(float(end))
+    floats = [float(x) for x in range(start, end + 1, 1)]
     return floats
 
 
