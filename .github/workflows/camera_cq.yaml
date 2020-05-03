@@ -12,8 +12,22 @@ jobs:
     - name: wemake-python-styleguide
       uses: wemake-services/wemake-python-styleguide@0.13.4
       with:
-        path: 'camera/'
+        path: 'camera/rpi-files/'
         reporter: 'github-pr-review'
       env:
         GITHUB_TOKEN: ${{ secrets.github_token }}
-
+  pytest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r "camera/rpi-files/requirements.txt"
+    - name: Test with pytest
+      run: |
+        pytest "camera/rpi-files/"
