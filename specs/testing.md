@@ -10,7 +10,7 @@ Django server: [unit testing](https://docs.djangoproject.com/en/3.0/topics/testi
 
 Android application: [unit testing](https://developer.android.com/training/testing/unit-testing)?
 
-Camera device code uses `pytest` for unit testing. All unit tests must pass to complete any pull request to master branch. (To be done, see [#90](https://github.com/pooh-labs/eaterslab/issues/90) for progress).
+Camera device code uses `pytest` for unit testing. All unit tests must pass to complete any pull request to master branch. For implementation details, see `camera_cq` workflow definition [here](https://github.com/pooh-labs/eaterslab/blob/master/.github/workflows/camera_cq.yaml).
 
 ### Integration testing
 
