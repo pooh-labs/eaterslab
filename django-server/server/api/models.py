@@ -27,7 +27,7 @@ class FixedMenuOption(models.Model):
 
 class MenuOptionTag(models.Model):
     name = models.CharField(max_length=32, editable=False)
-    option = models.ManyToManyField(FixedMenuOption, related_name='tags')
+    option = models.ManyToManyField(FixedMenuOption)
 
 
 class FixedMenuOptionReview(models.Model):

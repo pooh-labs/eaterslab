@@ -14,9 +14,7 @@ from .models import Cafeteria
 from os.path import join as path_join
 
 
-# TODO: handle different roles for API views
-
-class CafeteriaViewSet(viewsets.ModelViewSet):
+class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Cafeteria.objects.all().order_by('id')
     serializer_class = CafeteriaSerializer
 
