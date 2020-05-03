@@ -7,6 +7,7 @@ FrameIngestor provides frames from currently registered source.
 
 from abc import ABC
 
+from cv2 import VideoCapture
 from imutils.video import WebcamVideoStream
 
 
@@ -34,10 +35,15 @@ class WebcamIngestorSource(FrameIngestorSource):
     def __init__(self, source_num=0):
         """Initialize object.
 
+        Raises:
+            TypeError: when source_num is not an int
+
         Args:
             source_num: video stream number
         """
-        self.source_num = source_num
+        if not isinstance(source_num, int):
+            raise TypeError('`source_num` is not an int')
+        self._source_num = source_num
 
     def start(self):
         """Open the source.
@@ -45,9 +51,9 @@ class WebcamIngestorSource(FrameIngestorSource):
         Raises:
             RuntimeError: when could not open stream.
         """
-        self.vs = WebcamVideoStream(src=self.source_num)
+        self.vs = WebcamVideoStream(src=self._source_num)
         if not self.vs.stream.isOpened():
-            msg = 'Could not open webcam stream {0}'.format(self.source_num)
+            msg = 'Could not open webcam stream {0}'.format(self._source_num)
             raise RuntimeError(msg)
         self.vs.start()
         self.initialized = True
@@ -68,6 +74,47 @@ class WebcamIngestorSource(FrameIngestorSource):
     def stop(self):
         """Stop the source and free all allocated resources."""
         self.vs.stop()
+
+
+class FileIngestorSource(FrameIngestorSource):
+    """Returns frames from a file source."""
+
+    def __init__(self, path):
+        """Initialize object.
+
+        Args:
+            path: input path
+        """
+        self._path = path
+
+    def start(self):
+        """Open the source.
+
+        Raises:
+            RuntimeError: when could not open stream.
+        """
+        self.vs = VideoCapture(self._path)
+        if not self.vs.isOpened():
+            msg = 'Could not open file stream {0}'.format(self._path)
+            raise RuntimeError(msg)
+        self.initialized = True
+
+    def get_frame(self):
+        """Fetch single frame from source.
+
+        Returns:
+            fetched frame.
+
+        Raises:
+            RuntimeError: if source is not initialized.
+        """
+        if not self.initialized:
+            raise RuntimeError('Source not initialized.')
+        return self.vs.read()[1]
+
+    def stop(self):
+        """Stop the source and free all allocated resources."""
+        self.vs.release()
 
 
 class FrameIngestor(object):
@@ -149,3 +196,11 @@ class FrameIngestor(object):
         if not self._source:
             raise RuntimeError('No source to get frame from.')
         return self._source.get_frame()
+
+    def has_source(self) -> bool:
+        """Say whether there is a registered source.
+
+        Returns:
+            true when source is registered.
+        """
+        return self._source is not None

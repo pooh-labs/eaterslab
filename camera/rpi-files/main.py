@@ -15,7 +15,11 @@ import cv2
 import openapi_client
 from data_batcher import DataBatcher
 from dotenv import load_dotenv
-from frame_ingestor import FrameIngestor, WebcamIngestorSource
+from frame_ingestor import (
+    FileIngestorSource,
+    FrameIngestor,
+    WebcamIngestorSource,
+)
 from people_counter import PeopleCounter
 
 BATCH_SECONDS = 3
@@ -41,6 +45,9 @@ class Main(object):
         configuration.api_key['X-DEVICE-ID'] = os.getenv('DEVICE_ID')
         configuration.api_key['X-API-KEY'] = os.getenv('API_KEY')
 
+        # Extra configuration
+        self._display_frame = self._read_int_from_env('DISPLAY_FRAME', 0) > 0
+
         # Start client
         with openapi_client.ApiClient(configuration) as api_client:
             self._api = openapi_client.CafeteriaApi(api_client)
@@ -59,7 +66,7 @@ class Main(object):
 
             # Get camera frame
             frame = self._frame_ingestor.get_frame()
-            if os.getenv('DISPLAY_FRAME') != '0':
+            if self._display_frame:
                 cv2.imshow('Frame', frame)
                 cv2.waitKey(1)
 
@@ -74,20 +81,35 @@ class Main(object):
     def _init_ingestion_stream(self):
         """Init ingestion stream."""
         logging.info('Opening camera stream...')
-        stream_num = int(os.getenv('WEBCAM_STREAM_NUM', 0))
-        source = WebcamIngestorSource(stream_num)
+
+        stream_type = self._read_int_from_env('FRAME_SOURCE')
+        if stream_type is None:
+            self._should_close = True
+            return
+
+        if stream_type == 0:  # File
+            path = os.getenv('SOURCE_FILE_PATH', None)
+            source = FileIngestorSource(path)
+        elif stream_type == 1:  # Webcam
+            stream_num = self._read_int_from_env('WEBCAM_STREAM_NUM')
+            if stream_num is None:
+                self._should_close = True
+                return
+            source = WebcamIngestorSource(stream_num)
+
         try:
             self._frame_ingestor.register_source(source)
         except RuntimeError as ex:
-            msg = 'Could not initialize stream: {0}'.format(ex)
+            msg = 'Could not register_source: {0}'.format(ex)
             logging.error(msg)
             self._should_close = True
 
     def _finish_ingestion_stream(self):
-        if os.getenv('DISPLAY_FRAME'):
+        if self._display_frame:
             cv2.destroyAllWindows()
-        logging.info('Closing camera stream...')
-        self._frame_ingestor.release_source()
+        if self._frame_ingestor.has_source():
+            logging.info('Closing ingestor source...')
+            self._frame_ingestor.release_source()
 
     def _execute_loop(self):
         """Execute main program loop."""
@@ -117,6 +139,23 @@ class Main(object):
             _frame: Current stack frame
         """
         self._should_close = True
+
+    def _read_int_from_env(self, name, default=None):
+        """Read integer from environment.
+
+        Args:
+            name: variable name
+            default: variable default value
+
+        Returns:
+            Value or None on parsing error
+        """
+        try:
+            return int(os.getenv(name, default))
+        except TypeError as ex:
+            msg = 'Could not parse {0}: {1}'.format(name, ex)
+            logging.error(msg)
+            return None
 
 
 if __name__ == '__main__':
