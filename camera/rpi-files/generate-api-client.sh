@@ -7,6 +7,4 @@ java -jar openapi-generator-cli.jar generate \
    -g python \
    -o api-client/
 
-cd api-client &&
-python3 setup.py install &&
-cd -
+pipenv install -e api-client
