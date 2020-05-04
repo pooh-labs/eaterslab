@@ -17,12 +17,8 @@ sudo apt-get update &&
 sudo apt-get install python3.7 openjdk-11-jdk &&
 
 # Set up virtual environment
-python3 -m venv env &&
-
-# Install requirements
-source env/bin/activate &&
-pip install -r requirements.txt &&
-deactivate
+pip install pipenv &&
+pipenv install &&
 
 # Download API generator
 wget "https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/${OPENAPI_GENERATOR_VERSION}/openapi-generator-cli-${OPENAPI_GENERATOR_VERSION}.jar" -O "openapi-generator-cli.jar"

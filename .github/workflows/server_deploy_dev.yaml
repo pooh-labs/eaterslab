@@ -1,12 +1,14 @@
-name: Webserver deploy for production
+name: Webserver deploy dev
 
 on:
   push:
-    branches:
-    - 'master'
     paths:
-    - 'django-server/**'
-    - '.github/workflows/server_deploy.yaml'
+      - 'django-server/**'
+      - '.github/workflows/server_deploy_dev.yaml'
+    branches:
+      - '*'
+      - '*/*'
+      - '!master'
 
 jobs:
   build:
@@ -21,10 +23,10 @@ jobs:
         if: job.status == 'success'
         run: |
           rm -rf .git
-          git clone https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/eaterslab.git # clone repo from heroku server
-          cd eaterslab                                                                        # folder on deploy server
-          find . -maxdepth 1 ! -path './.git' ! -path '.' -exec rm -rf {} +                   # remove all files excluding git repo info and current path
-          git config --global user.email "${{ secrets.HEROKU_DEPLOY_EMAIL }}"                 # deploy as specified user
+          git clone https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/eaterslab-dev.git # clone repo from heroku server
+          cd eaterslab-dev                                                                        # folder on deploy server
+          find . -maxdepth 1 ! -path './.git' ! -path '.' -exec rm -rf {} +                       # remove all files excluding git repo info and current path
+          git config --global user.email "${{ secrets.HEROKU_DEPLOY_EMAIL }}"                     # deploy as specified user
           git config --global user.name "${{ secrets.HEROKU_DEPLOY_NAME }}"
           git commit . -m "cleaned local repo"                                                # commit and push all files
           cp -r ../django-server/server/* ./                                                  # copy new version of server
