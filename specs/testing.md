@@ -37,7 +37,7 @@ The  integration tests in Android development process are
 
 Django server: [django-smoke-tests](https://pypi.org/project/django-smoke-tests/).
 
-These tests can be run by the user to check against any possible unwanted outcomes from http requests. 
+Smoke tests can be run by the user to check against any possible unwanted outcomes from http requests. 
 This app identifies all possible endpoints by looking into django url files, runs the http requests and reports any unexpected responses. These tests enchance security of our server app.
 
 #### Camera devices
