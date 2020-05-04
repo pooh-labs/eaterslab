@@ -7,7 +7,8 @@ This document provides testing strategy for all system components. Functional an
 ### Unit testing
 
 ### Django server
-Django server: [unit testing](https://docs.djangoproject.com/en/3.0/topics/testing/overview/)
+Django server: [unit testing](https://docs.djangoproject.com/en/3.0/topics/testing/overview/).
+
 Django unit tests allow us to test many aspects of the server:
 * Database tests, assuring that the database follows the designed model, works well under load and is properly configured. Also some rollback emulation testing
 * Normal unit tests for testing the server app against code bugs.
@@ -34,7 +35,8 @@ The  integration tests in Android development process are
 
 ### Smoke testing
 
-Django server: [this package](https://pypi.org/project/django-smoke-tests/)
+Django server: [django-smoke-tests](https://pypi.org/project/django-smoke-tests/).
+
 These tests can be run by the user to check against any possible unwanted outcomes from http requests. 
 This app identifies all possible endpoints by looking into django url files, runs the http requests and reports any unexpected responses. These tests enchance security of our server app.
 
@@ -55,7 +57,8 @@ Please note these steps are also part of the installability test.
 
 #### Django server
 
-* Automated Selenium use-case testing
+* Automated Selenium use-case testing.
+
 Selenium allows for recording website-user interactions for later use in form of testing.
 Selenium offers a quick way to check against any problems related to user interaction with the server, giving us the perfect way to test the admin part of the django app.
 
