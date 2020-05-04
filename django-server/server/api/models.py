@@ -21,7 +21,7 @@ class Cafeteria(models.Model):
 class FixedMenuOption(models.Model):
     name = models.CharField(max_length=128)
     price = models.FloatField(validators=[MinValueValidator(0.0)])
-    cafeteria = models.ForeignKey(Cafeteria, on_delete=models.CASCADE)
+    cafeteria = models.ForeignKey(Cafeteria, on_delete=models.CASCADE, related_name='fixed_menu_options')
     photo_url = models.CharField(max_length=2048, validators=[URLValidator])
 
     def __str__(self):
@@ -30,14 +30,14 @@ class FixedMenuOption(models.Model):
 
 class MenuOptionTag(models.Model):
     name = models.CharField(max_length=32, editable=False)
-    option = models.ManyToManyField(FixedMenuOption)
+    option = models.ManyToManyField(FixedMenuOption, related_name='menu_option_tags')
 
     def __str__(self):
         return self.name
 
 
 class FixedMenuOptionReview(models.Model):
-    option = models.ForeignKey(FixedMenuOption, on_delete=models.CASCADE)
+    option = models.ForeignKey(FixedMenuOption, on_delete=models.CASCADE, related_name='fixed_menu_option_reviews')
     stars = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
     author_nick = models.CharField(max_length=64)
     review_time = models.DateTimeField()
