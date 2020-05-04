@@ -6,30 +6,26 @@ This document provides testing strategy for all system components. Functional an
 
 ### Unit testing
 
-Django server: [unit testing](https://docs.djangoproject.com/en/3.0/topics/testing/overview/)?
+Django server: [unit testing](https://docs.djangoproject.com/en/3.0/topics/testing/overview/)
+Django unit tests allow us to test many aspects of the server:
+* Database tests, assuring that the database follows the designed model, works well under load and is properly configured. Also some rollback emulation testing
+* Normal unit tests for testing the server app against code bugs.
 
-### Android application
-Android application can be tested using local tests running on developer computer as well as the instrumented tests which run on Android device (or its emulator in automated environment).
-* **Local tests** are compiled to bytecode and run on JVM. They should test the logic of every individual part of Android app in order to easily catch software regressions introduced by new changes to code.
- The [Roboelectric](http://robolectric.org/) library is designed to emulate Android framework part in such tests and should be used in tests writing process.
-*  **Instrumented tests** are to be run on Android emulator  because they need access ro real device resources. They are useful in testing functionalities which cannot be easily mocked by frameworks. Good example is a test that validates a good implementation of *Parcelable* interface.
+Android application: [unit testing](https://developer.android.com/training/testing/unit-testing)?
 
-These types of tests are to be defined as a part of Android project in separate directories and can be run on single developer workstation. There should be also definitions of testing parts in github workflows that makes the releases of debug and offical versions of application.
-They would run as the Gradle tasks as a pre-build process that give an access to release part (when successfully completed).
-
-#### Camera device
 Camera device code uses `pytest` for unit testing. All unit tests must pass to complete any pull request to master branch. For implementation details, see `camera_cq` workflow definition [here](https://github.com/pooh-labs/eaterslab/blob/master/.github/workflows/camera_cq.yaml).
 
 ### Integration testing
 
 #### Android application
-The  integration tests in Android development process are 
 
 #### Django server
 
 ### Smoke testing
 
-Django server: [this package](https://pypi.org/project/django-smoke-tests/)?
+Django server: [this package](https://pypi.org/project/django-smoke-tests/)
+These tests can be run by the user to check against any possible unwanted outcomes from http requests. 
+This app identifies all possible endpoints by looking into django url files, runs the http requests and reports any unexpected responses. These tests enchance security of our server app.
 
 #### Camera devices
 
@@ -48,7 +44,9 @@ Please note these steps are also part of the installability test.
 
 #### Django server
 
-* Automated Selenium use-case testing?
+* Automated Selenium use-case testing
+Selenium allows for recording website-user interactions for later use in form of testing.
+Selenium offers a quick way to check against any problems related to user interaction with the server, giving us the perfect way to test the admin part of the django app.
 
 ### Black-box testing
 
@@ -64,11 +62,15 @@ Please note these steps are also part of the installability test.
 
 #### Django server
 
+In addition to manual testing, running unit tests for both server and camera devices gives enough insight into performance of the server app.
+
 #### Camera devices?
 
 ### Stress testing
 
 #### Django server
+
+Stress tests can be simulated by running multiple request to the server at the same time via camera devices. As for now, no further testing is required.
 
 ### Maintainability testing
 
