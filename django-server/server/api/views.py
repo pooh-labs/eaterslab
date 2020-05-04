@@ -29,7 +29,7 @@ class MenuOptionTagViewSet(GetPutViewSet):
 
 
 class FixedMenuOptionReviewViewSet(GetPutViewSet):
-    queryset = FixedMenuOptionReview.objects.all().order_by('name')
+    queryset = FixedMenuOptionReview.objects.all().order_by('id')
     serializer_class = FixedMenuOptionReviewSerializer
 
 

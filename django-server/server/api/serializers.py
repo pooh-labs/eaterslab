@@ -4,11 +4,11 @@ from .models import Cafeteria, FixedMenuOption, FixedMenuOptionReview, MenuOptio
 
 
 class FixedMenuOptionReviewSerializer(serializers.ModelSerializer):
-    fixed_menu_option = serializers.PrimaryKeyRelatedField(queryset=FixedMenuOption.objects.all(), many=False)
+    option = serializers.PrimaryKeyRelatedField(queryset=FixedMenuOption.objects.all(), many=False)
 
     class Meta:
         model = FixedMenuOptionReview
-        fields = ['stars', 'author_nick', 'review_time', 'fixed_menu_option']
+        fields = ['stars', 'author_nick', 'review_time', 'option']
 
 
 class MenuOptionTagSerializer(serializers.ModelSerializer):
