@@ -1,0 +1,23 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+isort = "*"
+black = "==19.10b0"
+pytest = "*"
+flake8 = "*"
+opencv-contrib-python = "*"
+imutils = "*"
+setuptools = "*"
+python-dotenv = "*"
+
+[requires]
+python_version = "3.7"
+
+[packages.fccb275]
+path = "./api-client"
+editable = true

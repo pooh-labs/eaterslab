@@ -50,7 +50,7 @@ class Main(object):
 
         # Start client
         with openapi_client.ApiClient(configuration) as api_client:
-            self._api = openapi_client.CafeteriaApi(api_client)
+            self._api = openapi_client.DefaultApi(api_client)
             self._start()
 
     def _start(self):
