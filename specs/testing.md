@@ -6,14 +6,14 @@ This document provides testing strategy for all system components. Functional an
 
 ### Unit testing
 
-### Django server
+#### Django server
 Django server: [unit testing](https://docs.djangoproject.com/en/3.0/topics/testing/overview/).
 
 Django unit tests allow us to test many aspects of the server:
 * Database tests, assuring that the database follows the designed model, works well under load and is properly configured. Also some rollback emulation testing
 * Normal unit tests for testing the server app against code bugs.
 
-### Android application
+#### Android application
 Android application can be tested using local tests running on developer computer as well as the instrumented tests which run on Android device (or its emulator in automated environment).
 * **Local tests** are compiled to bytecode and run on JVM. They should test the logic of every individual part of Android app in order to easily catch software regressions introduced by new changes to code.
  The [Roboelectric](http://robolectric.org/) library is designed to emulate Android framework part in such tests and should be used in tests writing process.
@@ -24,7 +24,10 @@ They would run as the Gradle tasks as a pre-build process that give an access to
 
 #### Camera device
 
-Camera device code uses `pytest` for unit testing. All unit tests must pass to complete any pull request to master branch. For implementation details, see `camera_cq` workflow definition [here](https://github.com/pooh-labs/eaterslab/blob/master/.github/workflows/camera_cq.yaml).
+Camera device code is covered by `pytest` unit tests. These tests can be run twofold:
+
+* **Local environment**: Call `pytest /camera/rpi-files/` or `./camera/rpi-files/format-lint-test.sh` for all checks.
+* **Automated GitHub workflow**: All tests are run automatically when you try to merge code into `master` branch. If any test fails, GitHub prevents PR merging. For implementation details, see `camera_cq` workflow [here](https://github.com/pooh-labs/eaterslab/blob/master/.github/workflows/camera_cq.yaml).
 
 ### Integration testing
 The  integration tests in Android development process are 
@@ -78,8 +81,6 @@ Selenium offers a quick way to check against any problems related to user intera
 
 In addition to manual testing, running unit tests for both server and camera devices gives enough insight into performance of the server app.
 
-#### Camera devices?
-
 ### Stress testing
 
 #### Django server
@@ -88,9 +89,9 @@ Stress tests can be simulated by running multiple request to the server at the s
 
 ### Maintainability testing
 
-#### Camera device
+#### Camera devices
 
-Python code can be checked to `master` branch only if it adheres to Wemake Python Styleguide. Wemake is an overset of [PEP8](https://www.python.org/dev/peps/pep-0008/) coding standard. For implementation details, see `camera_cq` workflow definition [here](https://github.com/pooh-labs/eaterslab/blob/master/.github/workflows/camera_cq.yaml).
+* **Code quality checks**: Python code can be checked to `master` branch only if it adheres to Wemake Python Styleguide. Wemake is an overset of [PEP8](https://www.python.org/dev/peps/pep-0008/) coding standard. For implementation details, see `camera_cq` workflow definition [here](https://github.com/pooh-labs/eaterslab/blob/master/.github/workflows/camera_cq.yaml).
 
 ### Installability testing
 
@@ -121,4 +122,4 @@ Installation script is a planned feature, see [#91](https://github.com/pooh-labs
 
 ### Compliance testing
 
-API definition file, `/specs/api.yaml`, must conform to OpenAPI 2.0 schema. Workflow [`api_checks`](https://github.com/pooh-labs/eaterslab/blob/master/.github/workflows/api_checks.yaml) enforces this requirement for each PR to branch `master`.
+* **OpenAPI 2.0 schema checker**: API definition file, `/specs/api.yaml`, must conform to OpenAPI 2.0 schema. Workflow [`api_checks`](https://github.com/pooh-labs/eaterslab/blob/master/.github/workflows/api_checks.yaml) enforces this requirement for each PR to branch `master`.
