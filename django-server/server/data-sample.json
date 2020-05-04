@@ -1,0 +1,168 @@
+[
+{
+    "model": "api.cafeteria",
+    "pk": 1,
+    "fields": {
+        "name": "Kubu\u015b MIM",
+        "description": "Zjedz szybko i wygodnie",
+        "sub_description": "Sto\u0142\u00f3wka na 3. pi\u0119trze",
+        "latitude": 52.211903,
+        "longitude": 20.982224,
+        "capacity": 50,
+        "logo_url": "http://eaterslab.herokuapp.com/logo.url",
+        "address": "Stefana Banacha 2, 02-097 Warszawa",
+        "opened_from": "09:00:00",
+        "opened_to": "16:00:00"
+    }
+},
+{
+    "model": "api.cafeteria",
+    "pk": 2,
+    "fields": {
+        "name": "Biologia UW",
+        "description": "Bogata karta sta\u0142a",
+        "sub_description": "Na prawo od g\u0142\u00f3wnego wej\u015bcia",
+        "latitude": 52.213231,
+        "longitude": 20.986494,
+        "capacity": 70,
+        "logo_url": "https://eaterslab.herokuapp.com/second_logo.url",
+        "address": "Ilii, Miecznikowa 1, 02-096 Warszawa",
+        "opened_from": "08:00:00",
+        "opened_to": "17:00:00"
+    }
+},
+{
+    "model": "api.fixedmenuoption",
+    "pk": 1,
+    "fields": {
+        "name": "Kotlet schabowy",
+        "price": 15.0,
+        "cafeteria": 1,
+        "photo_url": "https://eaterslab.herokuapp.com/photo1.jpg"
+    }
+},
+{
+    "model": "api.fixedmenuoption",
+    "pk": 2,
+    "fields": {
+        "name": "Dorsz w jajku",
+        "price": 15.5,
+        "cafeteria": 1,
+        "photo_url": "https://eaterslab.herokuapp.com/photo2.jpg"
+    }
+},
+{
+    "model": "api.fixedmenuoption",
+    "pk": 3,
+    "fields": {
+        "name": "Burger drobiowy",
+        "price": 16.0,
+        "cafeteria": 1,
+        "photo_url": "https://eaterslab.herokuapp.com/photo3.jpg"
+    }
+},
+{
+    "model": "api.fixedmenuoption",
+    "pk": 4,
+    "fields": {
+        "name": "Grochowa z w\u0119dzonk\u0105",
+        "price": 5.5,
+        "cafeteria": 2,
+        "photo_url": "https://eaterslab.herokuapp.com/photo4.jpg"
+    }
+},
+{
+    "model": "api.fixedmenuoption",
+    "pk": 5,
+    "fields": {
+        "name": "Jarzynowa z makaronem",
+        "price": 5.0,
+        "cafeteria": 2,
+        "photo_url": "https://eaterslab.herokuapp.com/photo5.jpg"
+    }
+},
+{
+    "model": "api.fixedmenuoption",
+    "pk": 6,
+    "fields": {
+        "name": "Cukinia faszerowana ry\u017cem",
+        "price": 15.0,
+        "cafeteria": 2,
+        "photo_url": "https://eaterslab.herokuapp.com/photo6.jpg"
+    }
+},
+{
+    "model": "api.fixedmenuoption",
+    "pk": 7,
+    "fields": {
+        "name": "Go\u0142\u0105bki mi\u0119sne z sosem pomidorowym",
+        "price": 15.0,
+        "cafeteria": 2,
+        "photo_url": "https://eaterslab.herokuapp.com/photo7.jpg"
+    }
+},
+{
+    "model": "api.menuoptiontag",
+    "pk": 1,
+    "fields": {
+        "name": "mi\u0119sne",
+        "option": [
+            1,
+            3,
+            7
+        ]
+    }
+},
+{
+    "model": "api.menuoptiontag",
+    "pk": 2,
+    "fields": {
+        "name": "wege",
+        "option": [
+            2,
+            5
+        ]
+    }
+},
+{
+    "model": "api.menuoptiontag",
+    "pk": 3,
+    "fields": {
+        "name": "tanio",
+        "option": [
+            4,
+            5
+        ]
+    }
+},
+{
+    "model": "api.fixedmenuoptionreview",
+    "pk": 1,
+    "fields": {
+        "option": 1,
+        "stars": 5,
+        "author_nick": "seba",
+        "review_time": "2020-05-04T10:38:04Z"
+    }
+},
+{
+    "model": "api.fixedmenuoptionreview",
+    "pk": 2,
+    "fields": {
+        "option": 2,
+        "stars": 2,
+        "author_nick": "grzyb",
+        "review_time": "2020-05-01T10:00:00Z"
+    }
+},
+{
+    "model": "api.fixedmenuoptionreview",
+    "pk": 3,
+    "fields": {
+        "option": 3,
+        "stars": 5,
+        "author_nick": "karolek332",
+        "review_time": "2020-04-13T08:38:45Z"
+    }
+}
+]
