@@ -4,6 +4,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'cafeterias', views.CafeteriaViewSet)
+router.register(r'menu_option_tags', views.MenuOptionTagViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

@@ -7,9 +7,9 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
 from server import settings
-from .serializers import CafeteriaSerializer
+from .serializers import CafeteriaSerializer, MenuOptionTagSerializer
 
-from .models import Cafeteria
+from .models import Cafeteria, MenuOptionTag
 
 from os.path import join as path_join
 
@@ -17,6 +17,11 @@ from os.path import join as path_join
 class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Cafeteria.objects.all().order_by('id')
     serializer_class = CafeteriaSerializer
+
+
+class MenuOptionTagViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = MenuOptionTag.objects.all().order_by('name')
+    serializer_class = MenuOptionTagSerializer
 
 
 # Admin authenticated with token uploads can inherit from this class
