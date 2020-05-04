@@ -22,7 +22,7 @@ Android application can be tested using local tests running on developer compute
 These types of tests are to be defined as a part of Android project in separate directories and can be run on single developer workstation. There should be also definitions of testing parts in github workflows that makes the releases of debug and offical versions of application.
 They would run as the Gradle tasks as a pre-build process that give an access to release part (when successfully completed).
 
-#### Camera device
+#### Camera devices
 
 Camera device code is covered by `pytest` unit tests. These tests can be run twofold:
 
