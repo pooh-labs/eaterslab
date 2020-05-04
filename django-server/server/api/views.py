@@ -7,18 +7,30 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
 from server import settings
-from .serializers import CafeteriaSerializer
+from .serializers import CafeteriaSerializer, MenuOptionTagSerializer, FixedMenuOptionReviewSerializer
 
-from .models import Cafeteria
+from .models import Cafeteria, MenuOptionTag, FixedMenuOptionReview
 
 from os.path import join as path_join
 
 
-# TODO: handle different roles for API views
+class GetPutViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get', 'put']
 
-class CafeteriaViewSet(viewsets.ModelViewSet):
+
+class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Cafeteria.objects.all().order_by('id')
     serializer_class = CafeteriaSerializer
+
+
+class MenuOptionTagViewSet(GetPutViewSet):
+    queryset = MenuOptionTag.objects.all().order_by('name')
+    serializer_class = MenuOptionTagSerializer
+
+
+class FixedMenuOptionReviewViewSet(GetPutViewSet):
+    queryset = FixedMenuOptionReview.objects.all().order_by('id')
+    serializer_class = FixedMenuOptionReviewSerializer
 
 
 # Admin authenticated with token uploads can inherit from this class
