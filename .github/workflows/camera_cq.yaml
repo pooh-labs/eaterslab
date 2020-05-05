@@ -33,5 +33,6 @@ jobs:
         pipenv --version &&
         pipenv --where &&
         pipenv --venv &&
+        pipenv graph &&
         python3 -m pipenv run pytest &&
         cd -
