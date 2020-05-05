@@ -30,10 +30,16 @@ Camera device code is covered by `pytest` unit tests. These tests can be run two
 * **Automated GitHub workflow**: All tests are run automatically when you try to merge code into `master` branch. If any test fails, GitHub prevents PR merging. For implementation details, see `camera_cq` workflow [here](https://github.com/pooh-labs/eaterslab/blob/master/.github/workflows/camera_cq.yaml).
 
 ### Integration testing
-The  integration tests in Android development process are 
-
+The  integration tests should allow to check the work of the groups of units. They should test the interactions between integrated components or even parts of system.
+ 
 #### Android application
 
+In android projects integrations tests shoukd validate the app's behaviour from the module level. They  can test:
+* the cached repository layer that interacts with external sources of data as well as caches some data internally
+* interactions between Views and ViewModels can be tested by validating the layout XML
+
+To carry out these type of tests the Espresso Intents library can be used. It allows to validate intents sent by the application under tests. It's like the standard Mockito library but created specially for Android Intents.
+These tests are also to be run as the repository workflow that validates as the second step of Android build process the ability of the parts to be released.
 #### Django server
 
 ### Smoke testing
@@ -56,8 +62,7 @@ Please note these steps are also part of the installability test.
 
 #### Android application
 
-* Automated [Espresso](https://developer.android.com/training/testing/ui-testing/espresso-testing)/Appium use-case testing?
-
+Android application should be tested manually done before releasing. All the business requirements are checked during this testing phrase. 
 #### Django server
 
 * Automated Selenium use-case testing.
@@ -97,11 +102,15 @@ Stress tests can be simulated by running multiple request to the server at the s
 
 #### Django server
 
-* Automated pushes to Heroku with DB setup? We need to confirm that website is up and running after the push. Can it be done from workflow (e.g. `wget` with HTTP code)? 
+Django server app is deployed to production as well as the development environment which are located at the external servers. There are workflows which firstly deploy the application merged to production server and any other branch commits are deployed to development environment.
+
+The workflow is realized using single API key from server which allows to deploy the whole application using standard bash commands. After deploying phase servers are pinged by the workflow if they are set up correctly.  
 
 #### Android application
 
-* Automated APK builds?
+Android application is build as the repository workflow which builds the release and debug versions of application usgin gradle *assemble* and *assembleDebug* tasks in special docker image which allows to build the application
+
+At the end of the process app is send to the production (after release) and development (after any successful build) server and are tested on different devices of project members by just downloading the standard APK files from server.
 
 #### Camera devices
 
