@@ -11,7 +11,7 @@ fi
 
 # Install Python, OpenJDK and wget
 sudo apt-get update &&
-sudo apt-get install python3-dev python3-pip python3-setuptools python3-wheel openjdk-11-jre wget &&
+sudo apt-get install python3.7 python3-pip python3-setuptools python3-wheel openjdk-11-jre wget &&
 
 # Set up virtual environment
 pip3 install --user pipenv &&
