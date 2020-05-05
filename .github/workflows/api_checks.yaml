@@ -10,7 +10,7 @@ on:
     - master
 
 jobs:
-  validate_openapi_schema:
+  validate-openapi-schema:
     runs-on: ubuntu-latest
     steps:
     - name: Spectral Linting
