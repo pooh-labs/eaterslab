@@ -57,7 +57,7 @@ for all checks.
 `camera_cq` workflow [here](https://github.com/pooh-labs/eaterslab/blob/master/.github/workflows/camera_cq.yaml).
 
 ### Integration testing
-The  integration tests should allow to check the work of the groups of units. They should test 
+The integration tests should allow to check the work of the groups of units. They should test 
 the interactions between integrated components or even parts of system.
  
 #### Android application
@@ -106,7 +106,7 @@ Android application should be tested manually done before releasing. All the bus
 are checked during this testing phrase. 
 
 These tests should check if none of the unknown errors are thrown to user interface with the exception. 
-The should also check if app is designed in accordance with Meterial Design standards which 
+They should also check if app is designed in accordance with Meterial Design standards which 
 make it easy to use the base app features with a simplicity.
 
 After the app crashes the standard logcat is available in Android devices with the url of the 
