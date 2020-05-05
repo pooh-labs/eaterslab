@@ -25,7 +25,4 @@ rm -rf "${API_GENERATION_PATH}" &&
 java -jar openapi-generator-cli.jar generate -i "${API_PATH}" -g python -o "${API_GENERATION_PATH}" &&
 
 # Set up virtual environment
-pipenv install &&
-cat "Pipfile.lock" &&
-pipenv graph &&
-cat "Pipfile"
+pipenv install
