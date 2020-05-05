@@ -1,12 +1,13 @@
 # Testing specification
 
-Version number: 1.0
+Version number: 1.1
 
 Authors: Krzysztof Antoniak, Robert Michna, Maciej Procyk
 
 ### Changelog
 
 * v1.0: Initial revision
+* v1.1: Spelling and wording improvements
 
 ### Overview
 
