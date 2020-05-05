@@ -1,10 +1,12 @@
 # EatersLab
 
-# System Requirements
-
 Version number: 1.0
 
 Authors: Krzysztof Antoniak
+
+### Changelog
+
+* v1.0 (2020-03-09): Initial revision
 
 ## Problem statement
 

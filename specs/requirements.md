@@ -6,7 +6,7 @@ Authors: Krzysztof Antoniak, Jakub Walendowski
 
 ### Changelog
 
-* v1.0: Initial revision
+* v1.0 (2020-03-17): Initial revision
 
 ## Functional requirements
 
