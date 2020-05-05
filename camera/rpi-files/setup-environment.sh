@@ -1,8 +1,9 @@
 #!/bin/sh
 
 OPENAPI_GENERATOR_VERSION="4.2.3"
-PIPENV_PATH="~/.local/bin/pipenv"
 API_PATH="../../specs/api.yaml"
+
+PIPENV="~/.local/bin/pipenv"
 
 # Force running from the same directory
 SCRIPT_PATH="$(dirname "$(realpath "$0")")"
@@ -23,7 +24,6 @@ wget "https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/${OP
 # Generate api-client for the first time
 rm -rf ./api-client/ &&
 java -jar openapi-generator-cli.jar generate -i "${API_PATH}" -g python -o api-client/ &&
-pipenv install -e api-client &&
 
 # Set up virtual environment
-pipenv install
+${PIPENV} install
