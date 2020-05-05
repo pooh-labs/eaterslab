@@ -3,6 +3,9 @@ name: Camera CQ
 on:
   pull_request:
     paths: ['camera/**.py']
+  push:
+    branches:
+    - master
 
 jobs:
   enforce_style_guide:
