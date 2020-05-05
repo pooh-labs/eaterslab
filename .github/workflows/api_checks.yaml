@@ -2,7 +2,12 @@ name: API checks
 
 on:
   pull_request:
-    paths: ['specs/api.yaml']
+    paths:
+    - '.github/workflows/api_checks.yaml'
+    - 'specs/api.yaml'
+  push:
+    branches:
+    - master
 
 jobs:
   validate_openapi_schema:
