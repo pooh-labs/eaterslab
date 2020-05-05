@@ -21,8 +21,7 @@ component checks can be performed separately, except for integration testing.
 
 #### Django server
 
-Django [unit
-tests](https://docs.djangoproject.com/en/3.0/topics/testing/overview/) allow us
+Django [unit tests](https://docs.djangoproject.com/en/3.0/topics/testing/overview/) allow us
 to test many aspects of the server:
 * Database tests, assuring that the database follows the designed model, works
   well under load and is properly configured. Database tests execute some
