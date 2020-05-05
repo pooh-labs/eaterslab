@@ -1,5 +1,15 @@
 # Architecture specification
 
+Version number: 1.0
+
+Authors: Krzysztof Antoniak, Robert Michna, Maciej Procyk
+
+### Changelog
+
+* v1.0: Initial revision
+
+### Overview
+
 System consists of five main elements:
 ![System overview](architecture/system-overview.png)
 

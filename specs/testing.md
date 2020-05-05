@@ -1,5 +1,15 @@
 # Testing specification
 
+Version number: 1.0
+
+Authors: Krzysztof Antoniak, Robert Michna, Maciej Procyk
+
+### Changelog
+
+* v1.0: Initial revision
+
+### Overview
+
 This document provides testing strategy for all system components. Functional and non-functional 
 tests are broken down by type in separate sections. Each component checks can be performed separately, 
 except for integration testing.
