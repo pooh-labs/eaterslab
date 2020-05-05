@@ -13,8 +13,10 @@ fi
 sudo apt-get update &&
 sudo apt-get install python3-dev python3-pip python3-setuptools python3-wheel openjdk-11-jdk wget &&
 
+pip3 --version &&
+
 # Set up virtual environment
-pip install pipenv &&
+pip3 install pipenv &&
 pipenv install &&
 
 # Download API generator
