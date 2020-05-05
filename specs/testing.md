@@ -9,9 +9,8 @@ except for integration testing.
 ### Unit testing
 
 #### Django server
-Django server: [unit testing](https://docs.djangoproject.com/en/3.0/topics/testing/overview/).
 
-Django unit tests allow us to test many aspects of the server:
+Django [unit tests](https://docs.djangoproject.com/en/3.0/topics/testing/overview/) allow us to test many aspects of the server:
 * Database tests, assuring that the database follows the designed model, works well under load and is 
 properly configured. Also some rollback emulation testing
 * Normal unit tests for testing the server app against code bugs.
@@ -68,6 +67,8 @@ These tests are also to be run as the repository workflow that validates as the 
 Android build process the ability of the parts to be released.
 
 ### Smoke testing
+
+#### Django server
 
 The standard framework [django-smoke-tests](https://pypi.org/project/django-smoke-tests/) can be
  used in this part of tests to easily integrate them with Django system.
@@ -190,7 +191,8 @@ At the end of the process app is send to the production (after release) and deve
 successful build) server and are tested on different devices of project members by just downloading 
 the standard APK files from server.
 The app is tested on different size devices with different specs to gain certainty that it will run 
-on most of the clients devices. 
+on most of the clients devices.
+
 #### Camera devices
 
 Camera installability test is a half-manual process. For the test to pass, all steps below must 
