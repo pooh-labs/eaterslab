@@ -1,5 +1,13 @@
 # System Requirements
 
+Version number: 1.0
+
+Authors: Krzysztof Antoniak, Jakub Walendowski
+
+### Changelog
+
+* v1.0: Initial revision
+
 ## Functional requirements
 
 ### Priorities
