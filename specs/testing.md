@@ -36,12 +36,12 @@ changes to code.
  The [Roboelectric](http://robolectric.org/) library is designed to emulate Android framework 
  part in such tests and should be used in tests writing process.
 *  **Instrumented tests** are to be run on Android emulator  because they need access to real 
-device resources. They are useful in testing functionalities which cannot be easily mocked by 
+device resources. They are useful in testing functionality which cannot be easily mocked by 
 frameworks. Good example is a test that validates a good implementation of *Parcelable* interface.
 
 These types of tests are to be defined as a part of Android project in separate directories and 
 can be run on single developer workstation. There should be also definitions of testing parts in 
-github workflows that makes the releases of debug and offical versions of application.
+github workflows that makes the releases of debug and official versions of application.
 They would run as the Gradle tasks as a pre-build process that give an access to release part 
 (when successfully completed).
 
@@ -62,7 +62,7 @@ the interactions between integrated components or even parts of system.
  
 #### Android application
 
-In android projects integration tests shoukd validate the app's behaviour from the module level. 
+In android projects integration tests should validate the app's behaviour from the module level. 
 They  can test:
 * the cached repository layer that interacts with external sources of data as well as caches some
  data internally
@@ -106,8 +106,8 @@ Android application should be tested manually done before releasing. All the bus
 are checked during this testing phrase. 
 
 These tests should check if none of the unknown errors are thrown to user interface with the exception. 
-The should also check the aesthetic and minimalist design of the application which makes it easy to 
-use the base app features with a few taps on screen.
+The should also check if app is designed in accordance with Meterial Design standards which 
+make it easy to use the base app features with a simplicity.
 
 After the app crashes the standard logcat is available in Android devices with the url of the 
 exception stacktrace. Thanks to this part Android environment the app doesn't have to be run plugged 
@@ -119,11 +119,11 @@ These tests can give the feedback to UI designers of the application about some 
 
 #### Django server
 
-Django provides a set of tools that come in handy when writing tests. usign the evry specified part of the model 
-on the server is checked by writing standard requests to server run cocally as well as on the development environment.
+Django provides a set of tools that come in handy when writing tests. Using the every specified part of the model 
+on the server is checked by writing standard requests to server run locally as well as on the development environment.
 
 These test would check if the API definitions are available on server and if requests to some basic 
-API objects are done correctly. Special set of data is prepared to be loaded on such testing enviroment
+API objects are done correctly. Special set of data is prepared to be loaded on such testing environment
 using the JSON file which contains some human readable data for the database. Thanks to this mechanism the
 received data from the API endpoint can be compared with the specified in this JSON file.
 
