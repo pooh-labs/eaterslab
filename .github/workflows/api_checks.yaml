@@ -3,6 +3,9 @@ name: API checks
 on:
   pull_request:
     paths: ['specs/api.yaml']
+  push:
+    branches:
+    - master
 
 jobs:
   validate_openapi_schema:
