@@ -6,8 +6,8 @@ Authors: Krzysztof Antoniak, Robert Michna, Maciej Procyk
 
 ### Changelog
 
-* v1.0: Initial revision
-* v1.1: Spelling and wording improvements
+* v1.0 (2020-05-04): Initial revision
+* v1.1 (2020-05-05): Spelling and wording improvements
 
 ### Overview
 
