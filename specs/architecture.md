@@ -6,9 +6,9 @@ Authors: Krzysztof Antoniak, Robert Michna, Maciej Procyk
 
 ### Changelog
 
-* v1.0: Initial revision
+* v1.0 (2020-04-22): Initial revision
 
-### Overview
+## Overview
 
 System consists of five main elements:
 ![System overview](architecture/system-overview.png)
