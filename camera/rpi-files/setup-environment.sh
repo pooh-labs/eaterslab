@@ -11,7 +11,7 @@ fi
 
 # Install Python, OpenJDK and wget
 sudo apt-get update &&
-sudo apt-get install python3.7 openjdk-11-jdk wget &&
+sudo apt-get install python3.7 python3-wheel openjdk-11-jdk wget &&
 
 # Set up virtual environment
 pip install pipenv &&
