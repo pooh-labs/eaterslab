@@ -111,7 +111,7 @@ use the base app features with a few taps on screen.
 
 After the app crashes the standard logcat is available in Android devices with the url of the 
 exception stacktrace. Thanks to this part Android environment the app doesn't have to be run plugged 
-to cmoputer with Debugging enabled because all the needed data of exception reason can be obtained 
+to computer with Debugging enabled because all the needed data of exception reason can be obtained 
 with described system of crash reports.
 
 These tests can give the feedback to UI designers of the application about some unserviceable parts
@@ -119,7 +119,7 @@ These tests can give the feedback to UI designers of the application about some 
 
 #### Django server
 
-Django provides a set of tools that come in candy when writing tests. usign the evry specified part of the model 
+Django provides a set of tools that come in handy when writing tests. usign the evry specified part of the model 
 on the server is checked by writing standard requests to server run cocally as well as on the development environment.
 
 These test would check if the API definitions are available on server and if requests to some basic 
@@ -148,20 +148,19 @@ through the app interface which could cause the user getting lost.
 
 #### Django server
 
-In addition to manual testing, running unit tests for both server and camera devices gives enough 
-insight into performance of the server app.
-
-### Stress testing
-
-#### Django server
-
-Stress tests can be simulated by running multiple request to the server at the same time via 
+Performance tests can be simulated by running multiple request to the server at the same time via 
 camera devices. As for now, no further testing is required.
 
 In the future the tests done by automated environments can be done. In order to do so the mocked 
 clients of app can be written to simulate the usage of the system by many clients.
 In this way most of the bottlenecks at the server side can by found by checking the server 
 performance manually when mocked tests are evaluated.
+
+### Stress testing
+
+#### Django server
+
+Stress tests can be performed in similar manner as the performance tests but with higher load.
 
 ### Maintainability testing
 
