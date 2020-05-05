@@ -28,6 +28,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.github_token }}
     - name: Test with pytest
       run: |
-        cd "camera/rpi-files/" &&
-        pipenv shell &&
-        pytest "."
+        pytest "camera/rpi-files/"
