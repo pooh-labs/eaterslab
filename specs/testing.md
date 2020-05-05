@@ -191,6 +191,8 @@ with higher load.
 
 **Code quality checks**
 
+![Camera CQ](https://github.com/pooh-labs/eaterslab/workflows/Camera%20CQ/badge.svg)
+
 Python code can be checked to `master` branch only if it adheres to Wemake
 Python Styleguide. Wemake is an overset of
 [PEP8](https://www.python.org/dev/peps/pep-0008/) coding standard. For
