@@ -14,7 +14,7 @@ fi
 
 # Install Python, OpenJDK and wget
 sudo apt-get update &&
-sudo apt-get install python3.7 python3-pip openjdk-11-jre wget &&
+sudo apt-get install python3.7 python3-pip python3-setuptools openjdk-11-jre wget &&
 sudo pip3 install pipenv &&
 
 # Download API generator
