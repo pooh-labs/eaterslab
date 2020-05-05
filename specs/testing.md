@@ -55,8 +55,8 @@ completed.
 
 #### Camera devices
 
-Camera device code is covered by `pytest` unit tests. These tests can be run
-twofold:
+Parts of the camera code can be run and tested in any environment. This part is
+covered by `pytest` unit tests. These tests can be run twofold:
 
 * **Local environment**: Call `pytest /camera/rpi-files/` or
   `./camera/rpi-files/format-lint-test.sh` for all checks.
@@ -64,6 +64,8 @@ twofold:
   merge code into `master` branch. If any test fails, GitHub prevents PR
   merging. For implementation details, see `camera_cq` workflow
   [here](https://github.com/pooh-labs/eaterslab/blob/master/.github/workflows/camera_cq.yaml).
+
+Functionality not covered by unit tests (like accessing device I/O channels) is covered by other tests.
 
 ### Integration testing
 
