@@ -6,7 +6,7 @@ Authors: Krzysztof Antoniak, Jakub Walendowski
 
 ### Changelog
 
-* v1.0: Initial revision
+* v1.0 (2020-03-17): Initial revision
 
 ## Functional requirements
 
@@ -146,9 +146,9 @@ For each point prepended by priority:
 ## Non-functional requirements
 
 1. Access security
-    * Canteen owner must change the initially assigned login authentication information (password) immediately after the first
+    * Canteen owners must change the initially assigned login authentication information (password) immediately after the first
       successful login. The initial password may never be reused.
-    * Employees shall be forced to change their password the next time they log in if they have not changed it within the
+    * Canteen owners shall be forced to change their password the next time they log in if they have not changed it within the
       length of time established as “password expiration duration.”
     * The canteen owner account can only be created by an administrator.
     * User passwords are never displayed and are masked in input fields.
@@ -164,12 +164,12 @@ For each point prepended by priority:
     * Public API should respond under 500 ms in 99 percentile under 100 QPS.
     * Camera ingestion system should handle 100 single event API calls per second.
     * Any user interface should present results under 2 seconds in 99 percentile.
+    * System should handle video streams without locking effect, frame freezing, and frame skipping, when there are at most 500 streams.
 4. Integrity
     * The actual number of people in the canteen may differ from the figures provided by the applications by 20 percent.
 5. Usability
     * Client app shall be easy to use with only one hand free.
-    * Owner panel shall be intuitive and easy to use by adult members (age 18 to 70) without training.
-    * User should be able to read occupation from the mobile widget standing 1 meter from the device.
+    * Owner panel shall be intuitive and easy to use by adult members (age 18 to 70) without training.locking effect, frame freezing, and frame skipping.
 6. Flexibility
     * No piece of text that might be displayed to a user shall reside in program source code. Every piece of text that a
       user might see must be modifiable without changing source code. That is, no user ‐ visible text will be “hard‐coded.”
@@ -177,5 +177,5 @@ For each point prepended by priority:
     * It shall be possible for the mobile application to be installed by a typical customer who has no special expertise.
       The client application shall be downloaded from the service’s Web site or Google Play.
 8. Interoperability
-    * Web application must be able to interface with any HTML (HyperText Markup Language) browser.
+    * Web application must be able to interface with any HTML (HyperText Markup Language) modern browser.
     * All public information should be accessible via API.
