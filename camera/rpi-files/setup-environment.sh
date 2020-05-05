@@ -1,6 +1,8 @@
 #!/bin/sh
 
 OPENAPI_GENERATOR_VERSION="4.2.3"
+PIPENV_PATH="~/.local/bin/pipenv"
+API_PATH="../../specs/api.yaml"
 
 # Force running from the same directory
 SCRIPT_PATH="$(dirname "$(realpath "$0")")"
@@ -12,11 +14,16 @@ fi
 # Install Python, OpenJDK and wget
 sudo apt-get update &&
 sudo apt-get install python3.7 python3-pip python3-setuptools python3-wheel openjdk-11-jre wget &&
-
-# Set up virtual environment
 pip3 install --user pipenv &&
-~/.local/bin/pipenv install &&
+alias pipenv="${PIPENV_PATH}" &&
 
 # Download API generator
 wget "https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/${OPENAPI_GENERATOR_VERSION}/openapi-generator-cli-${OPENAPI_GENERATOR_VERSION}.jar" -O "openapi-generator-cli.jar" &&
-./generate-api-client.sh
+
+# Generate api-client for the first time
+rm -rf ./api-client/ &&
+java -jar openapi-generator-cli.jar generate -i "${API_PATH}" -g python -o api-client/ &&
+pipenv install -e api-client &&
+
+# Set up virtual environment
+pipenv install
