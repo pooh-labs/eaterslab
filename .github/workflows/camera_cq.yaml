@@ -33,5 +33,5 @@ jobs:
         pipenv --version &&
         pipenv --where &&
         pipenv --venv &&
-        pipenv run pytest &&
+        python3 -m pipenv run pytest &&
         cd -
