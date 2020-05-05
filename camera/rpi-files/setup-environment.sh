@@ -28,4 +28,4 @@ java -jar openapi-generator-cli.jar generate -i "${API_PATH}" -g python -o "${AP
 pipenv install &&
 cat "Pipfile.lock" &&
 pipenv graph &&
-cat "Pipfile" &&
+cat "Pipfile"
