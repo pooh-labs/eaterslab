@@ -11,10 +11,10 @@ fi
 
 # Install Python, OpenJDK and wget
 sudo apt-get update &&
-sudo apt-get install python3-dev python3-pip python3-distutils python3-wheel openjdk-11-jdk wget &&
+sudo apt-get install python3-dev python3-pip python3-setuptools python3-wheel openjdk-11-jdk wget &&
 
 # Set up virtual environment
-pip install wheel setuptools pipenv &&
+pip install pipenv &&
 pipenv install &&
 
 # Download API generator
