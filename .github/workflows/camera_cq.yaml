@@ -33,8 +33,10 @@ jobs:
       run: |
         pip install pipenv &&
         cd "camera/rpi-files/" &&
-        pipenv install --system && # Install dependencies globally
+        pipenv install &&
         cd -
     - name: Test with pytest
       run: |
-        pytest "camera/rpi-files/"
+        cd "camera/rpi-files/" &&
+        pipenv shell &&
+        pytest "."
