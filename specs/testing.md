@@ -67,8 +67,6 @@ specially for Android Intents.
 These tests are also to be run as the repository workflow that validates as the second step of 
 Android build process the ability of the parts to be released.
 
-#### Django server
-
 ### Smoke testing
 
 The standard framework [django-smoke-tests](https://pypi.org/project/django-smoke-tests/) can be
@@ -110,7 +108,13 @@ These tests can give the feedback to UI designers of the application about some 
 
 #### Django server
 
-Django provides a set of tools that come in candy when writing tests.
+Django provides a set of tools that come in candy when writing tests. usign the evry specified part of the model 
+on the server is checked by writing standard requests to server run cocally as well as on the development environment.
+
+These test would check if the API definitions are available on server and if requests to some basic 
+API objects are done correctly. Special set of data is prepared to be loaded on such testing enviroment
+using the JSON file which contains some human readable data for the database. Thanks to this mechanism the
+received data from the API endpoint can be compared with the specified in this JSON file.
 
 ##### Automated Selenium use-case testing
 
@@ -123,8 +127,9 @@ server, giving us the perfect way to test the admin part of the django app.
 #### Android application
 
 Usability tests should be done by external testers who are not familiar with the technologies used 
-in project to get the feedback on the app usability in basic use-cases.
-
+in project to get the feedback on the app usability in basic use-cases. They should check if every part 
+of the defined use-cases is usable for standard users and if there are no strange parts in user navigation
+through the app interface which could cause the user getting lost.
 
 ## Non-functional tests
 
