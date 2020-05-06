@@ -9,6 +9,7 @@ function join {
 
 SOURCES=(
     "main.py" \
+    "data_archiver.py" \
     "data_batcher.py" \
     "frame_ingestor.py" \
     "people_counter.py"

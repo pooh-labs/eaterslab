@@ -6,5 +6,6 @@ env
 openapi-generator-cli.jar
 api-client/
 
-# Ignore app logs
+# Ignore app logs and archives
 app.log
+archives/
