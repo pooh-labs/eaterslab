@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, URLValidator
 
 
 class Cafeteria(models.Model):
@@ -10,6 +10,10 @@ class Cafeteria(models.Model):
     latitude = models.FloatField(validators=[MinValueValidator(-90.0), MaxValueValidator(90.0)])
     longitude = models.FloatField(validators=[MinValueValidator(-180.0), MaxValueValidator(180.0)])
     capacity = models.IntegerField(validators=[MinValueValidator(1)])
+    logo_url = models.CharField(max_length=2048, validators=[URLValidator])
+    address = models.CharField(max_length=256)
+    opened_from = models.TimeField()
+    opened_to = models.TimeField()
 
     def __str__(self):
         return self.name
@@ -31,3 +35,31 @@ class CameraEvent(models.Model):
 
     def __str__(self):
         return "{} {} {}".format(self.camera_id, self.event_type, self.timestamp)
+
+
+class FixedMenuOption(models.Model):
+    name = models.CharField(max_length=128)
+    price = models.FloatField(validators=[MinValueValidator(0.0)])
+    cafeteria = models.ForeignKey(Cafeteria, on_delete=models.CASCADE, related_name='fixed_menu_options')
+    photo_url = models.CharField(max_length=2048, validators=[URLValidator])
+
+    def __str__(self):
+        return self.name
+
+
+class MenuOptionTag(models.Model):
+    name = models.CharField(max_length=32, editable=False)
+    option = models.ManyToManyField(FixedMenuOption, related_name='menu_option_tags')
+
+    def __str__(self):
+        return self.name
+
+
+class FixedMenuOptionReview(models.Model):
+    option = models.ForeignKey(FixedMenuOption, on_delete=models.CASCADE, related_name='fixed_menu_option_reviews')
+    stars = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
+    author_nick = models.CharField(max_length=64)
+    review_time = models.DateTimeField()
+
+    def __str__(self):
+        return f'{self.option} by {self.author_nick} with {self.stars}'

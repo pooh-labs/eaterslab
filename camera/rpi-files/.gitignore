@@ -1,11 +1,11 @@
 # Ignore Python environment
 .env
 env
-Pipfile.lock
 
 # Ignore generated API client
 openapi-generator-cli.jar
 api-client/
 
-# Ignore app logs
+# Ignore app logs and archives
 app.log
+archives/

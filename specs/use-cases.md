@@ -1,5 +1,17 @@
 # Use cases
 
+Version number: 1.0
+
+Authors: Krzysztof Antoniak, Robert Michna, Maciej Procyk
+
+### Changelog
+
+* v1.0 (2020-03-17): Initial revision
+
+## Overview
+
+This documents lists use cases for functional testing.
+
 There are three user roles in the system:
 * Admin: Manages canteen owners
 * Canteen owner: Third-party business owner, manages canteens and owns devices
