@@ -12,6 +12,7 @@ opencv-contrib-python = "*"
 imutils = "*"
 setuptools = "*"
 python-dotenv = "*"
+wemake-python-styleguide = "*"
 
 [dev-packages]
 
