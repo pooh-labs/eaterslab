@@ -26,3 +26,6 @@ java -jar openapi-generator-cli.jar generate -i "${API_PATH}" -g python -o "${AP
 
 # Set up virtual environment
 pipenv install
+
+# Set up paths
+mkdir archives
