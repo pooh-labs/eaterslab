@@ -95,8 +95,8 @@ class CsvArchiver(DataArchiver):
             'timestamp',
             EventType.monitoring_started.name,
             EventType.monitoring_ended.name,
-            EventType.people_entered.name,
-            EventType.people_left.name,
+            EventType.person_entered.name,
+            EventType.person_left.name,
         ]
         try:
             self._writer = csv.DictWriter(
