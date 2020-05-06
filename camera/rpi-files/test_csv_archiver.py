@@ -2,27 +2,17 @@
 
 """CsvArchiver tests."""
 
-from unittest.mock import Mock
-
 import pytest
 from data_archiver import CsvArchiver, EventType
 from data_batcher import Batch
 
-SAMPLE_PATH = "archives/example.csv"
+LABEL_TIMESTAMP = 'timestamp'
+
+SAMPLE_PATH = 'archives/example.csv'
 SAMPLE_TIMESTAMP = 1588761927.234
 SAMPLE_TIMESTAMP_SECONDS = 1588761927
 SAMPLE_TIMESTAMP2 = 1588761929.234
 SAMPLE_TIMESTAMP2_SECONDS = 1588761929
-
-
-@pytest.fixture
-def MockCsvArchiver():
-    """Create a mock CsvArchiver.
-
-    Returns:
-        a mock CsvArchiver
-    """
-    return Mock(spec=CsvArchiver)
 
 
 def test_init():
@@ -49,9 +39,9 @@ def test_append_event():
     archiver = CsvArchiver(SAMPLE_PATH)
     archiver.append_event(SAMPLE_TIMESTAMP, event)
 
-    entry_actual = archiver._data[SAMPLE_TIMESTAMP_SECONDS]
+    entry_actual = archiver._entries[SAMPLE_TIMESTAMP_SECONDS]
     entry_expected = {
-        'timestamp': SAMPLE_TIMESTAMP_SECONDS,
+        LABEL_TIMESTAMP: SAMPLE_TIMESTAMP_SECONDS,
         EventType.monitoring_started.name: 1,
         EventType.monitoring_ended.name: 0,
         EventType.person_entered.name: 0,
@@ -67,9 +57,9 @@ def test_append_event_twice():
     archiver.append_event(SAMPLE_TIMESTAMP, event)
     archiver.append_event(SAMPLE_TIMESTAMP, event)
 
-    entry_actual = archiver._data[SAMPLE_TIMESTAMP_SECONDS]
+    entry_actual = archiver._entries[SAMPLE_TIMESTAMP_SECONDS]
     entry_expected = {
-        'timestamp': SAMPLE_TIMESTAMP_SECONDS,
+        LABEL_TIMESTAMP: SAMPLE_TIMESTAMP_SECONDS,
         EventType.monitoring_started.name: 2,
         EventType.monitoring_ended.name: 0,
         EventType.person_entered.name: 0,
@@ -86,9 +76,9 @@ def test_append_event_multiple_types():
     archiver.append_event(SAMPLE_TIMESTAMP, event1)
     archiver.append_event(SAMPLE_TIMESTAMP, event2)
 
-    entry_actual = archiver._data[SAMPLE_TIMESTAMP_SECONDS]
+    entry_actual = archiver._entries[SAMPLE_TIMESTAMP_SECONDS]
     entry_expected = {
-        'timestamp': SAMPLE_TIMESTAMP_SECONDS,
+        LABEL_TIMESTAMP: SAMPLE_TIMESTAMP_SECONDS,
         EventType.monitoring_started.name: 1,
         EventType.monitoring_ended.name: 0,
         EventType.person_entered.name: 1,
@@ -102,7 +92,7 @@ def test_append_empty_batch():
     archiver = CsvArchiver(SAMPLE_PATH)
     batch = Batch([], [])
     archiver.append(batch)
-    assert archiver._data == {}
+    assert not archiver._entries
 
 
 def test_append_batch_entered():
@@ -111,9 +101,9 @@ def test_append_batch_entered():
     batch = Batch([SAMPLE_TIMESTAMP], [])
     archiver.append(batch)
 
-    entry_actual = archiver._data[SAMPLE_TIMESTAMP_SECONDS]
+    entry_actual = archiver._entries[SAMPLE_TIMESTAMP_SECONDS]
     entry_expected = {
-        'timestamp': SAMPLE_TIMESTAMP_SECONDS,
+        LABEL_TIMESTAMP: SAMPLE_TIMESTAMP_SECONDS,
         EventType.monitoring_started.name: 0,
         EventType.monitoring_ended.name: 0,
         EventType.person_entered.name: 1,
@@ -128,9 +118,9 @@ def test_append_batch_left():
     batch = Batch([], [SAMPLE_TIMESTAMP])
     archiver.append(batch)
 
-    entry_actual = archiver._data[SAMPLE_TIMESTAMP_SECONDS]
+    entry_actual = archiver._entries[SAMPLE_TIMESTAMP_SECONDS]
     entry_expected = {
-        'timestamp': SAMPLE_TIMESTAMP_SECONDS,
+        LABEL_TIMESTAMP: SAMPLE_TIMESTAMP_SECONDS,
         EventType.monitoring_started.name: 0,
         EventType.monitoring_ended.name: 0,
         EventType.person_entered.name: 0,
@@ -145,9 +135,9 @@ def test_append_batch_both_same():
     batch = Batch([SAMPLE_TIMESTAMP], [SAMPLE_TIMESTAMP])
     archiver.append(batch)
 
-    entry_actual = archiver._data[SAMPLE_TIMESTAMP_SECONDS]
+    entry_actual = archiver._entries[SAMPLE_TIMESTAMP_SECONDS]
     entry_expected = {
-        'timestamp': SAMPLE_TIMESTAMP_SECONDS,
+        LABEL_TIMESTAMP: SAMPLE_TIMESTAMP_SECONDS,
         EventType.monitoring_started.name: 0,
         EventType.monitoring_ended.name: 0,
         EventType.person_entered.name: 1,
@@ -164,18 +154,18 @@ def test_append_batch_both_different():
 
     data_expected = {
         SAMPLE_TIMESTAMP_SECONDS: {
-            'timestamp': SAMPLE_TIMESTAMP_SECONDS,
+            LABEL_TIMESTAMP: SAMPLE_TIMESTAMP_SECONDS,
             EventType.monitoring_started.name: 0,
             EventType.monitoring_ended.name: 0,
             EventType.person_entered.name: 1,
             EventType.person_left.name: 0,
         },
         SAMPLE_TIMESTAMP2_SECONDS: {
-            'timestamp': SAMPLE_TIMESTAMP2_SECONDS,
+            LABEL_TIMESTAMP: SAMPLE_TIMESTAMP2_SECONDS,
             EventType.monitoring_started.name: 0,
             EventType.monitoring_ended.name: 0,
             EventType.person_entered.name: 0,
             EventType.person_left.name: 1,
         },
     }
-    assert archiver._data == data_expected
+    assert archiver._entries == data_expected

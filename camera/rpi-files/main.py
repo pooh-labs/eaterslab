@@ -30,13 +30,13 @@ BATCH_SECONDS = 3
 def read_int_from_env(name, default=None):
     """Read integer from environment.
 
-        Args:
-            name: variable name
-            default: variable default value
+    Args:
+        name: variable name
+        default: variable default value
 
-        Returns:
-            Value or None on parsing error
-        """
+    Returns:
+        Value or None on parsing error
+    """
     try:
         return int(os.getenv(name, default))
     except TypeError as ex:
@@ -86,11 +86,19 @@ class Main(object):
         archive_path = '{0}/{1}.csv'.format(archives_dir, datetime_string)
 
         logging.info('Opening archive...')
+
         try:
             self._archiver = CsvArchiver(archive_path)
+        except RuntimeError as ex1:
+            msg = 'Could not setup archive: {0}'.format(ex1)
+            logging.error(msg)
+            self._archiver = None
+            self._should_close = True
+
+        try:
             self._archiver.init()
-        except RuntimeError as ex:
-            msg = 'Could not init archive: {0}'.format(ex)
+        except RuntimeError as ex2:
+            msg = 'Could not init archive: {0}'.format(ex2)
             logging.error(msg)
             self._archiver = None
             self._should_close = True
@@ -150,12 +158,17 @@ class Main(object):
         """Close the system."""
         logging.info('System shutting down...')
 
-        self._finish_ingestion_stream()
+        # Finish ingestion stream
+        if self._display_frame:
+            cv2.destroyAllWindows()
+        if self._frame_ingestor.has_source():
+            logging.info('Closing ingestor source...')
+            self._frame_ingestor.release_source()
 
         if self._archiver:
             logging.info('Closing archive...')
             self._archiver.append_event(
-                time.time(), EventType.monitoring_ended
+                time.time(), EventType.monitoring_ended,
             )
             self._archiver.finalize()
 
@@ -184,13 +197,6 @@ class Main(object):
             msg = 'Could not register_source: {0}'.format(ex)
             logging.error(msg)
             self._should_close = True
-
-    def _finish_ingestion_stream(self):
-        if self._display_frame:
-            cv2.destroyAllWindows()
-        if self._frame_ingestor.has_source():
-            logging.info('Closing ingestor source...')
-            self._frame_ingestor.release_source()
 
     def _handle_signals(self, _signum, _frame):
         """Handle interruption events.

@@ -6,7 +6,7 @@ DataArchiver saves batches in a selected format.
 """
 
 import csv
-import os.path
+import os
 from abc import ABC
 from enum import Enum
 
@@ -26,7 +26,7 @@ class DataArchiver(ABC):
     """Archives batches of data."""
 
     def init(self):
-        """Initializes the archive if not initialized."""
+        """Initialize the archive if not initialized."""
 
     def append_event(self, timestamp: float, event_type: Enum):
         """Includes single event in the archive. May not flush archive yet.
@@ -37,24 +37,24 @@ class DataArchiver(ABC):
         """
 
     def append(self, batch: Batch):
-        """Includes batch in the archive. May not flush archive yet.
+        """Include batch in the archive. May not flush archive yet.
 
         Args:
             batch: new data batch to include
         """
 
     def flush(self):
-        """Forces flushing the archive."""
+        """Force flushing the archive."""
 
     def finalize(self):
-        """Finalizes the archive. No more data can be saved."""
+        """Finalize the archive. No more data can be saved."""
 
 
 class CsvArchiver(DataArchiver):
-    """Archives batches of data to a file."""
+    """Archive batches of data to a file."""
 
     def __init__(self, path):
-        """Saves path for writing.
+        """Save path for writing.
 
         Raises:
             TypeError: if path is not a string
@@ -66,12 +66,12 @@ class CsvArchiver(DataArchiver):
             msg = 'Path `{0}` is not a string'.format(path)
             raise TypeError(msg)
         self._path = path
-        self._file = None
+        self._archive_file = None
         self._writer = None
-        self._data = {}
+        self._entries = {}
 
     def init(self, force_overwrite=False):
-        """Creates file for writing.
+        """Create file for writing.
 
         Args:
             force_overwrite: force overwriting file
@@ -84,31 +84,38 @@ class CsvArchiver(DataArchiver):
             raise RuntimeError(msg)
 
         try:
-            self._file = open(self._path, 'w+')
-        except OSError as ex:
+            self._archive_file = open(self._path, 'w+')  # noqa: WPS515
+        except OSError as ex1:
             msg = 'Could not open path `{0}` for writing: {1}'.format(
-                self._path, ex
+                self._path, ex1,
             )
             raise RuntimeError(msg)
 
-        field_names = ['timestamp']
-        field_names.extend(EventType._member_names_)
+        field_names = [
+            'timestamp',
+            EventType.monitoring_started.name,
+            EventType.monitoring_ended.name,
+            EventType.people_entered.name,
+            EventType.people_left.name,
+        ]
         try:
-            self._writer = csv.DictWriter(self._file, fieldnames=field_names)
-        except csv.Error as ex:
-            msg = "Error creating csv.writer: {0}".format(ex)
+            self._writer = csv.DictWriter(
+                self._archive_file, fieldnames=field_names,
+            )
+        except csv.Error as ex2:
+            msg = 'Error creating csv.writer: {0}'.format(ex2)
             raise RuntimeError(msg)
 
     def append_event(self, timestamp: float, event_type: EventType):
-        """Includes single event in the archive. May not flush archive yet.
+        """Include single event in the archive. May not flush archive yet.
 
         Args:
             timestamp: event timestamp
             event_type: event type
         """
         timestamp_as_int = int(timestamp)
-        if timestamp_as_int not in self._data:
-            self._data[timestamp_as_int] = {
+        if timestamp_as_int not in self._entries:
+            self._entries[timestamp_as_int] = {
                 'timestamp': int(timestamp),
                 EventType.monitoring_started.name: 0,
                 EventType.monitoring_ended.name: 0,
@@ -116,34 +123,22 @@ class CsvArchiver(DataArchiver):
                 EventType.person_left.name: 0,
             }
 
-        self._data[timestamp_as_int][event_type.name] += 1
+        self._entries[timestamp_as_int][event_type.name] += 1
 
     def append(self, batch: Batch):
-        """Includes batch in the archive. May not flush archive yet.
+        """Include batch in the archive. May not flush archive yet.
 
         Args:
             batch: new data batch to include
         """
-        for timestamp in batch.entering:
-            self.append_event(timestamp, EventType.person_entered)
+        for timestamp1 in batch.entering:
+            self.append_event(timestamp1, EventType.person_entered)
 
-        for timestamp in batch.leaving:
-            self.append_event(timestamp, EventType.person_left)
-
-    def _reset_file(self):
-        """Close and open file for writing to replace content. This action is
-        required because file.truncate(0) adds NULL bytes to contents.
-
-        Raises:
-            RuntimeError: if could not reinit archive.
-        """
-
-        self._writer = None
-        self._file.close()
-        self.init(force_overwrite=True)
+        for timestamp2 in batch.leaving:
+            self.append_event(timestamp2, EventType.person_left)
 
     def flush(self):
-        """Forces flushing the archive.
+        """Force flushing the archive.
 
         Raises:
             RuntimeError: if archive is not opened.
@@ -152,16 +147,26 @@ class CsvArchiver(DataArchiver):
             raise RuntimeError('Archive not opened')
 
         # Reinit file
-        self._reset_file()
+        self._reset_archive_file()
         self._writer.writeheader()
 
         # Write data timestamp by timestamp
-        for timestamp in self._data:
-            self._writer.writerow(self._data[timestamp])
+        for timestamp in self._entries.items():
+            self._writer.writerow(self._entries[timestamp])
 
     def finalize(self):
-        """Finalizes the archive. No more data can be saved."""
+        """Finalize the archive. No more data can be saved."""
         if self._writer:
             self.flush()
-        if self._file:
-            self._file.close()
+        if self._archive_file:
+            self._archive_file.close()
+
+    def _reset_archive_file(self):
+        """Close and open file for writing to replace content.
+
+        This action is required because file.truncate(0) adds NULL bytes to
+        contents.
+        """
+        self._writer = None
+        self._archive_file.close()
+        self.init(force_overwrite=True)
