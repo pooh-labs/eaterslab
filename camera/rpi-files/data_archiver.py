@@ -70,7 +70,7 @@ class CsvArchiver(DataArchiver):
         self._writer = None
         self._data = {}
 
-    def init(self, force_overwrite=True):
+    def init(self, force_overwrite=False):
         """Creates file for writing.
 
         Args:

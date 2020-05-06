@@ -16,6 +16,7 @@ SOURCES=(
 )
 
 TESTS=(
+    "test_csv_archiver.py" \
     "test_data_batcher.py" \
     "test_frame_ingestor.py"
 )
