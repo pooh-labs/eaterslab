@@ -47,8 +47,12 @@ def events_batch(request):
 
 
 @csrf_exempt
-@api_view(['POST'])
+@api_view(['POST', 'GET'])
 def event(request, camera_id):
+    if request.method == 'GET':
+        all_events = CameraEvent.objects.all()
+        events = CameraEventSerializer(all_events, many=True)
+        return Response(events.data)
     if request.method == 'POST':
         request.data['camera_id'] = camera_id  # insert camera id from the url
         serializer = CameraEventSerializer(data=request.data)
@@ -56,6 +60,7 @@ def event(request, camera_id):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class MenuOptionTagViewSet(GetPutViewSet):
@@ -66,7 +71,6 @@ class MenuOptionTagViewSet(GetPutViewSet):
 class FixedMenuOptionReviewViewSet(GetPutViewSet):
     queryset = FixedMenuOptionReview.objects.all().order_by('id')
     serializer_class = FixedMenuOptionReviewSerializer
-
 
 
 # Admin authenticated with token uploads can inherit from this class

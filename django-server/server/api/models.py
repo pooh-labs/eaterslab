@@ -24,13 +24,14 @@ class Camera(models.Model):
 
 
 class CameraEvent(models.Model):
-    class EventType(models.TextChoices):
-        MONITORING_STARTED = 'MS', _('monitoring_started')
-        MONITORING_ENDED = 'ME', _('monitoring_ended')
-        PERSON_ENTERED = 'PE', _('person_entered')
-        PERSON_LEFT = 'PL', _('person_left')
+    class EventType(models.IntegerChoices):
+        MONITORING_STARTED = 0, _('monitoring_started')
+        MONITORING_ENDED = 1, _('monitoring_ended')
+        PERSON_ENTERED = 2, _('person_entered')
+        PERSON_LEFT = 3, _('person_left')
+
     timestamp = models.DateTimeField()
-    event_type = models.CharField(max_length=2, choices=EventType.choices)
+    event_type = models.IntegerField(choices=EventType.choices)
     camera_id = models.ForeignKey(Camera, on_delete=models.CASCADE)
 
     def __str__(self):

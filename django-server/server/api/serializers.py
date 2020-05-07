@@ -1,6 +1,8 @@
 from rest_framework import serializers
+from django.utils.translation import gettext_lazy as _
 
 from .models import *
+
 
 class FixedMenuOptionReviewSerializer(serializers.ModelSerializer):
     option = serializers.PrimaryKeyRelatedField(queryset=FixedMenuOption.objects.all(), many=False)
@@ -38,3 +40,27 @@ class CameraEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = CameraEvent
         fields = ['camera_id', 'event_type', 'timestamp']
+
+    def to_representation(self, instance):
+        ret = super().to_representation(instance)
+        print(ret)
+        print(instance)
+        print(CameraEvent.EventType.choices)
+        num = 0
+        while num != ret["event_type"]:
+            print("loop")
+            num += 1
+        blank, ret["event_type"] = CameraEvent.EventType.choices[num]
+        return ret
+
+    def to_internal_value(self, data):
+        print(data)
+        print([i[1] for i in CameraEvent.EventType.choices])
+        if data.get("event_type") in [i[1] for i in CameraEvent.EventType.choices]:
+            num = 0
+            while CameraEvent.EventType.choices[num][1] != data.get("event_type"):
+                num += 1
+            data["event_type"] = num
+            print(data)
+            return super().to_internal_value(data)
+        raise serializers.ValidationError({"event_type": ["Incorrect event_type"]})
