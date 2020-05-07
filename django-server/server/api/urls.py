@@ -9,8 +9,8 @@ router.register(r'fixed_menu_reviews', views.FixedMenuOptionReviewViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('cameras', views.events_batch),  # temporary
-    path('cameras/<int:camera_id>/events', views.event),
+    #path('cameras', views.events_batch),  # temporary
+    path('cameras/<int:camera_id>/events', views.CameraEventsView.as_view()),
     path('upload/artifacts/<str:filename>/', views.UploadArtifactsView.as_view()),
     path('upload/artifacts/beta/<str:filename>/', views.UploadArtifactsBetaView.as_view()),
 ]

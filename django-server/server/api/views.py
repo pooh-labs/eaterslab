@@ -1,17 +1,18 @@
 from django.core.files.storage import FileSystemStorage
+from django.shortcuts import get_object_or_404
+
 from rest_framework import viewsets
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import views
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
+from rest_framework import status
+
+from .serializers import *
+from .models import *
 
 from server import settings
-from .serializers import CafeteriaSerializer, MenuOptionTagSerializer, FixedMenuOptionReviewSerializer
-
-from .models import Cafeteria, MenuOptionTag, FixedMenuOptionReview
-
 from os.path import join as path_join
 
 
@@ -24,43 +25,19 @@ class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CafeteriaSerializer
 
 
-from rest_framework import status
-from rest_framework.decorators import api_view
-from .models import CameraEvent
-from .serializers import CameraEventSerializer
+class CameraEventsView(views.APIView):
+    def get(self, request, camera_id, format=None):
+        queryset = CameraEvent.objects.all().order_by('timestamp')
+        serializer = CameraEventSerializer(queryset, many=True)
+        return Response(serializer.data)
 
-
-# this code is left for testing
-@csrf_exempt
-@api_view(['POST'])
-def events_batch(request):
-    print(request.get_full_path())
-    print(request.data)
-    print("yo")
-    if request.method == 'POST':
-        print(request)
-        serializer = CameraEventSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@csrf_exempt
-@api_view(['POST', 'GET'])
-def event(request, camera_id):
-    if request.method == 'GET':
-        all_events = CameraEvent.objects.all()
-        events = CameraEventSerializer(all_events, many=True)
-        return Response(events.data)
-    if request.method == 'POST':
+    def post(self, request, camera_id, format=None):
         request.data['camera_id'] = camera_id  # insert camera id from the url
         serializer = CameraEventSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class MenuOptionTagViewSet(GetPutViewSet):
