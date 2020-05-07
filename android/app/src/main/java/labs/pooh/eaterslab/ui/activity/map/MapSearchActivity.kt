@@ -1,21 +1,19 @@
 package labs.pooh.eaterslab.ui.activity.map
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.ColorMatrix
-import android.graphics.ColorMatrixColorFilter
 import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_map_search.*
-import labs.pooh.client.models.Cafeteria
 import labs.pooh.eaterslab.ui.activity.abstracts.AbstractRevealedActivity
 import labs.pooh.eaterslab.R
+import labs.pooh.eaterslab.repository.dao.CafeteriaBaseDao
+import labs.pooh.eaterslab.ui.activity.abstracts.viewModelFactory
 import labs.pooh.eaterslab.ui.activity.hello.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_X
 import labs.pooh.eaterslab.ui.activity.hello.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
 import labs.pooh.eaterslab.ui.map.LocationOccupancyMarker
@@ -32,18 +30,15 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.CustomZoomButtonsController
 import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.TilesOverlay
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.IMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
-import java.lang.Exception
-import java.util.concurrent.locks.ReentrantLock
 
 
 class MapSearchActivity : AbstractRevealedActivity() {
 
-    private val mapViewModel by viewModels<MapVewModel>()
+    private val mapViewModel by lazy { ViewModelProvider(this, viewModelFactory { MapViewModel(this) }).get(MapViewModel::class.java) }
 
     companion object {
         const val DEFAULT_ZOOM = 16.0
@@ -54,8 +49,6 @@ class MapSearchActivity : AbstractRevealedActivity() {
         val DEFAULT_CENTER_LOCATION = GeoPoint(52.211903, 20.982224)
 
         private const val REQUEST_LOCATION_ON_BUTTON_CODE = 1001
-
-        private const val DELAY_PLACES_RETRY = 1000
     }
 
     override val showActionBar = false
@@ -181,7 +174,7 @@ class MapSearchActivity : AbstractRevealedActivity() {
 
         convertDrawableToBitmap(context,
             R.drawable.ic_current_location
-        )?.let { icon ->
+        ).let { icon ->
             myLocationOverlay.setPersonIcon(icon)
             myLocationOverlay.enableAutoStop = false
             myLocationOverlay.setPersonHotspot(icon.width / 2F, icon.height / 2F)
@@ -211,13 +204,13 @@ class MapSearchActivity : AbstractRevealedActivity() {
 }
 
 
-fun Cafeteria.toMarker(mapView: MapView, listener: (LocationOccupancyMarker) -> Boolean) = id?.let { existingId ->
-    return@let LocationOccupancyMarker(
+fun CafeteriaBaseDao.toMarker(mapView: MapView, listener: (LocationOccupancyMarker) -> Boolean) = if (id != -1) {
+    LocationOccupancyMarker(
         mapView,
-        title = name, id = existingId,
+        title = name, id = id,
         description = subDescription,
-        latitude = latitude.toDouble(), longitude = longitude.toDouble(),
-        occupancy = capacity,
+        latitude = latitude, longitude = longitude,
+        occupancy = 50, // TODO fill in with occupancy when ready in model
         onMarkerClickListener = listener
     )
-}
+} else null

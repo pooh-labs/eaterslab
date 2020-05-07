@@ -1,6 +1,10 @@
 package labs.pooh.eaterslab.repository.dao
 
+import android.graphics.Bitmap
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import labs.pooh.client.models.Cafeteria
+import labs.pooh.eaterslab.util.downloadImageFrom
 
 data class CafeteriaDao (
     val name: String,
@@ -8,7 +12,7 @@ data class CafeteriaDao (
     val subDescription: String,
     val longitude: Double,
     val latitude: Double,
-    val logoUrl: String,
+    val logo: Bitmap?,
     val address: String,
     val openedFrom: String,
     val openedTo: String,
@@ -16,10 +20,11 @@ data class CafeteriaDao (
     val fixedMenuOptions: List<FixedMenuOptionDao>
 )
 
-fun Cafeteria.toDao()
-        = CafeteriaDao(name, description, subDescription, longitude.toDouble(), latitude.toDouble(),
-                    logoUrl, address, openedFrom, openedTo, id ?: -1,
-    fixedMenuOptions?.map { it.toDao() } ?: listOf())
+suspend fun Cafeteria.toDao() = withContext(Dispatchers.IO) {
+    CafeteriaDao(name, description, subDescription, longitude.toDouble(), latitude.toDouble(),
+        downloadImageFrom(logoUrl), address, openedFrom, openedTo, id ?: -1,
+        fixedMenuOptions?.map { it.toDao() } ?: listOf())
+}
 
 
 

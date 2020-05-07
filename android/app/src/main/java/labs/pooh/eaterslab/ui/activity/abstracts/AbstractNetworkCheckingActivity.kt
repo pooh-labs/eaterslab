@@ -24,13 +24,6 @@ abstract class AbstractNetworkCheckingActivity : AbstractThemedActivity(), Conne
 
     private var networkCallback: ConnectivityManager.NetworkCallback? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        unregisterNetworkChecking()
-        registerNetworkChecking()
-    }
-
     override fun onResume() {
         super.onResume()
 
