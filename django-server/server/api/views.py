@@ -5,30 +5,44 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
+from rest_framework.decorators import action
 
 from server import settings
-from .serializers import CafeteriaSerializer, MenuOptionTagSerializer, FixedMenuOptionReviewSerializer
+from .serializers import CafeteriaSerializer, CafeteriaBaseSerializer, MenuOptionTagSerializer, \
+    FixedMenuOptionReviewSerializer, FixedMenuOptionSerializer
 
-from .models import Cafeteria, MenuOptionTag, FixedMenuOptionReview
+from .models import Cafeteria, MenuOptionTag, FixedMenuOptionReview, FixedMenuOption
 
 from os.path import join as path_join
 
 
-class GetPutViewSet(viewsets.ModelViewSet):
-    http_method_names = ['get', 'put']
+class GetPostViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get', 'post']
 
 
 class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Cafeteria.objects.all().order_by('id')
     serializer_class = CafeteriaSerializer
 
+    @action(detail=True)
+    def fixed_menu_options(self, request, pk=None):
+        cafeteria = self.get_object()
+        menu_options = FixedMenuOption.objects.all().filter(cafeteria=cafeteria).distinct()
+        menu_options_json = FixedMenuOptionSerializer(menu_options, many=True)
+        return Response(menu_options_json.data)
 
-class MenuOptionTagViewSet(GetPutViewSet):
+
+class CafeteriaBaseViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Cafeteria.objects.all().order_by('id')
+    serializer_class = CafeteriaBaseSerializer
+
+
+class MenuOptionTagViewSet(GetPostViewSet):
     queryset = MenuOptionTag.objects.all().order_by('name')
     serializer_class = MenuOptionTagSerializer
 
 
-class FixedMenuOptionReviewViewSet(GetPutViewSet):
+class FixedMenuOptionReviewViewSet(GetPostViewSet):
     queryset = FixedMenuOptionReview.objects.all().order_by('id')
     serializer_class = FixedMenuOptionReviewSerializer
 

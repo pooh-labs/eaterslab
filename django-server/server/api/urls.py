@@ -4,6 +4,7 @@ from . import views
 
 router = routers.DefaultRouter()
 router.register(r'cafeterias', views.CafeteriaViewSet)
+router.register(r'base_cafeterias', views.CafeteriaBaseViewSet)
 router.register(r'menu_option_tags', views.MenuOptionTagViewSet)
 router.register(r'fixed_menu_reviews', views.FixedMenuOptionReviewViewSet)
 
