@@ -18,23 +18,13 @@ class MenuOptionTagSerializer(serializers.ModelSerializer):
 
 
 class FixedMenuOptionSerializer(serializers.ModelSerializer):
-    menu_option_tags = MenuOptionTagSerializer(many=True, read_only=True)
-
     class Meta:
         model = FixedMenuOption
-        fields = ['name', 'price', 'photo_url', 'menu_option_tags', 'avg_review_stars']
-
-
-class CafeteriaBaseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Cafeteria
-        fields = ['id', 'name', 'description', 'sub_description', 'longitude', 'latitude', 'opened_from', 'opened_to']
+        fields = ['name', 'price', 'photo_url', 'avg_review_stars']
 
 
 class CafeteriaSerializer(serializers.ModelSerializer):
-    fixed_menu_options = FixedMenuOptionSerializer(many=True, read_only=True)
-
     class Meta:
         model = Cafeteria
         fields = ['id', 'name', 'description', 'sub_description', 'longitude', 'latitude',
-                  'logo_url', 'address', 'opened_from', 'opened_to', 'fixed_menu_options']
+                  'logo_url', 'address', 'opened_from', 'opened_to']

@@ -8,10 +8,17 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 
 from server import settings
-from .serializers import CafeteriaSerializer, CafeteriaBaseSerializer, MenuOptionTagSerializer, \
-    FixedMenuOptionReviewSerializer, FixedMenuOptionSerializer
+from .serializers import (
+    CafeteriaSerializer,
+    MenuOptionTagSerializer,
+    FixedMenuOptionReviewSerializer,
+    FixedMenuOptionSerializer)
 
-from .models import Cafeteria, MenuOptionTag, FixedMenuOptionReview, FixedMenuOption
+from .models import (
+    Cafeteria,
+    MenuOptionTag,
+    FixedMenuOptionReview,
+    FixedMenuOption)
 
 from os.path import join as path_join
 
@@ -20,21 +27,20 @@ class GetPostViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'post']
 
 
+class PostViewSet(viewsets.ModelViewSet):
+    http_method_names = ['post']
+
+
 class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Cafeteria.objects.all().order_by('id')
     serializer_class = CafeteriaSerializer
 
-    @action(detail=True)
-    def fixed_menu_options(self, request, pk=None):
-        cafeteria = self.get_object()
-        menu_options = FixedMenuOption.objects.all().filter(cafeteria=cafeteria).distinct()
-        menu_options_json = FixedMenuOptionSerializer(menu_options, many=True)
-        return Response(menu_options_json.data)
 
+class FixedMenuOptionViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = FixedMenuOptionSerializer
 
-class CafeteriaBaseViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Cafeteria.objects.all().order_by('id')
-    serializer_class = CafeteriaBaseSerializer
+    def get_queryset(self):
+        return FixedMenuOption.objects.all().filter(cafeteria=self.kwargs['cafeteria_pk']).order_by('id')
 
 
 class MenuOptionTagViewSet(GetPostViewSet):
@@ -42,9 +48,16 @@ class MenuOptionTagViewSet(GetPostViewSet):
     serializer_class = MenuOptionTagSerializer
 
 
-class FixedMenuOptionReviewViewSet(GetPostViewSet):
+class FixedMenuOptionReviewViewSet(PostViewSet):
     queryset = FixedMenuOptionReview.objects.all().order_by('id')
     serializer_class = FixedMenuOptionReviewSerializer
+
+
+class CafeteriaFixedMenuOptionReviewViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = FixedMenuOptionReviewSerializer
+
+    def get_queryset(self):
+        return FixedMenuOptionReview.objects.all().filter(option=self.kwargs['option_pk']).order_by('id')
 
 
 # Admin authenticated with token uploads can inherit from this class
