@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from .models import Cafeteria, FixedMenuOption, FixedMenuOptionReview, MenuOptionTag
+from .models import (Cafeteria, FixedMenuOption, FixedMenuOptionReview,
+                     MenuOptionTag)
 
 
 class FixedMenuOptionReviewSerializer(serializers.ModelSerializer):
@@ -8,28 +9,23 @@ class FixedMenuOptionReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FixedMenuOptionReview
-        fields = ['stars', 'author_nick', 'review_time', 'option']
+        fields = ['id', 'stars', 'author_nick', 'review_time', 'option']
 
 
 class MenuOptionTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuOptionTag
-        fields = ['name']
+        fields = ['id', 'name']
 
 
 class FixedMenuOptionSerializer(serializers.ModelSerializer):
-    menu_option_tags = MenuOptionTagSerializer(many=True, read_only=True)
-    fixed_menu_option_reviews = FixedMenuOptionReviewSerializer(many=True, read_only=True)
-
     class Meta:
         model = FixedMenuOption
-        fields = ['name', 'price', 'photo_url', 'menu_option_tags', 'fixed_menu_option_reviews']
+        fields = ['id', 'name', 'price', 'photo_url', 'avg_review_stars']
 
 
 class CafeteriaSerializer(serializers.ModelSerializer):
-    fixed_menu_options = FixedMenuOptionSerializer(many=True, read_only=True)
-
     class Meta:
         model = Cafeteria
         fields = ['id', 'name', 'description', 'sub_description', 'longitude', 'latitude',
-                  'logo_url', 'address', 'opened_from', 'opened_to', 'fixed_menu_options']
+                  'logo_url', 'address', 'opened_from', 'opened_to']

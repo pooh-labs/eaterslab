@@ -1,5 +1,7 @@
+from django.core.validators import (MaxValueValidator, MinValueValidator,
+                                    URLValidator)
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator, URLValidator
+from django.db.models import F
 
 
 class Cafeteria(models.Model):
@@ -23,6 +25,8 @@ class FixedMenuOption(models.Model):
     price = models.FloatField(validators=[MinValueValidator(0.0)])
     cafeteria = models.ForeignKey(Cafeteria, on_delete=models.CASCADE, related_name='fixed_menu_options')
     photo_url = models.CharField(max_length=2048, validators=[URLValidator])
+    avg_review_stars = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5)],
+                                         default=0, editable=False)
 
     def __str__(self):
         return self.name
@@ -44,3 +48,13 @@ class FixedMenuOptionReview(models.Model):
 
     def __str__(self):
         return f'{self.option} by {self.author_nick} with {self.stars}'
+
+    def save(self, *args, **kwargs):
+        curr_reviews = FixedMenuOptionReview.objects.count()
+        if not self.pk:
+            FixedMenuOption.objects.filter(pk=self.option.pk).update(avg_review_stars=self.calculate_new_avg_review(F('avg_review_stars'), curr_reviews))
+        super().save(*args, **kwargs)
+
+    def calculate_new_avg_review(self, old_review_stars, number_of_reviews):
+        current_sum = old_review_stars * number_of_reviews + self.stars
+        return current_sum / (number_of_reviews + 1)

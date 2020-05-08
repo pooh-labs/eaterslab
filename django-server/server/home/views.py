@@ -1,6 +1,7 @@
-from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponse, FileResponse
 from os.path import join as path_join
+
+from django.core.files.storage import FileSystemStorage
+from django.http import FileResponse, HttpResponse
 
 from server import settings
 
@@ -23,4 +24,3 @@ def existing__binary_file_response(path):
         return FileResponse(file, as_attachment=True)
     except FileNotFoundError:
         return HttpResponse("No file on server")
-
