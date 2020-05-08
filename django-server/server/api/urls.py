@@ -3,7 +3,7 @@ from rest_framework_nested.routers import DefaultRouter, NestedSimpleRouter
 
 from .views import (CafeteriaFixedMenuOptionReviewViewSet, CafeteriaViewSet,
                     FixedMenuOptionReviewViewSet, FixedMenuOptionViewSet,
-                    UploadArtifactsBetaView, UploadArtifactsView)
+                    MenuOptionTagViewSet, UploadArtifactsBetaView, UploadArtifactsView)
 
 router = DefaultRouter()
 router.register(r'cafeterias', CafeteriaViewSet)

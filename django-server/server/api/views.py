@@ -3,7 +3,6 @@ from os.path import join as path_join
 from django.core.files.storage import FileSystemStorage
 from rest_framework import views, viewsets
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import action
 from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
@@ -50,7 +49,7 @@ class CafeteriaFixedMenuOptionReviewViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = FixedMenuOptionReviewSerializer
 
     def get_queryset(self):
-        return FixedMenuOptionReview.objects.all().filter(option=self.kwargs['option_pk']).order_by('id')
+        return FixedMenuOptionReview.objects.all().filter(option_pk=self.kwargs['option_pk']).order_by('id')
 
 
 # Admin authenticated with token uploads can inherit from this class
