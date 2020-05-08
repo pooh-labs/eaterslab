@@ -1,21 +1,26 @@
+from os.path import join as path_join
+
 from django.core.files.storage import FileSystemStorage
-from rest_framework import viewsets
-from rest_framework import views
+from rest_framework import views, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
 from server import settings
-from .serializers import CafeteriaSerializer, MenuOptionTagSerializer, FixedMenuOptionReviewSerializer
 
-from .models import Cafeteria, MenuOptionTag, FixedMenuOptionReview
+from .models import (Cafeteria, FixedMenuOption, FixedMenuOptionReview,
+                     MenuOptionTag)
+from .serializers import (CafeteriaSerializer, FixedMenuOptionReviewSerializer,
+                          FixedMenuOptionSerializer, MenuOptionTagSerializer)
 
-from os.path import join as path_join
+
+class GetPostViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get', 'post']
 
 
-class GetPutViewSet(viewsets.ModelViewSet):
-    http_method_names = ['get', 'put']
+class PostViewSet(viewsets.ModelViewSet):
+    http_method_names = ['post']
 
 
 class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
@@ -23,14 +28,34 @@ class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CafeteriaSerializer
 
 
-class MenuOptionTagViewSet(GetPutViewSet):
+class FixedMenuOptionViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = FixedMenuOptionSerializer
+
+    def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            # queryset just for schema generation metadata
+            return FixedMenuOption.objects.none()
+        return FixedMenuOption.objects.all().filter(cafeteria=self.kwargs['cafeteria_pk']).order_by('id')
+
+
+class MenuOptionTagViewSet(GetPostViewSet):
     queryset = MenuOptionTag.objects.all().order_by('name')
     serializer_class = MenuOptionTagSerializer
 
 
-class FixedMenuOptionReviewViewSet(GetPutViewSet):
+class FixedMenuOptionReviewViewSet(PostViewSet):
     queryset = FixedMenuOptionReview.objects.all().order_by('id')
     serializer_class = FixedMenuOptionReviewSerializer
+
+
+class CafeteriaFixedMenuOptionReviewViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = FixedMenuOptionReviewSerializer
+
+    def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            # queryset just for schema generation metadata
+            return FixedMenuOptionReview.objects.none()
+        return FixedMenuOptionReview.objects.all().filter(option_pk=self.kwargs['option_pk']).order_by('id')
 
 
 # Admin authenticated with token uploads can inherit from this class
