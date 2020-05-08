@@ -21,7 +21,7 @@ fixed_menu_options_router.register(r'reviews',
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('cameras/<int:camera_id>/events', views.CameraEventsView.as_view()),
+    path('cameras/<int:camera_id>/events', CameraEventsView.as_view()),
     path('', include(cafeterias_router.urls)),
     path('', include(fixed_menu_options_router.urls)),
     path('upload/artifacts/<str:filename>/', UploadArtifactsView.as_view()),
