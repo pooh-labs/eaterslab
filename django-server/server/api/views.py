@@ -2,8 +2,6 @@ from os.path import join as path_join
 
 from django.core.files.storage import FileSystemStorage
 
-from django.shortcuts import get_object_or_404
-
 from rest_framework import views, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.parsers import FileUploadParser
@@ -14,7 +12,6 @@ from rest_framework import status
 from .serializers import *
 from .models import *
 
-from server import settings
 from os.path import join as path_join
 from server import settings
 
