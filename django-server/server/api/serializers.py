@@ -32,6 +32,12 @@ class CafeteriaSerializer(serializers.ModelSerializer):
                   'logo_url', 'address', 'opened_from', 'opened_to', 'fixed_menu_options']
 
 
+class CameraSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Camera
+        fields = ['description']
+
+
 class CameraEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = CameraEvent
@@ -43,7 +49,7 @@ class CameraEventSerializer(serializers.ModelSerializer):
         print(instance)
         print(CameraEvent.EventType.choices)
         num = 0
-        while num != ret["event_type"]:
+        while num != ret["event_type"]:  # TODO test this loop
             print("loop")
             num += 1
         blank, ret["event_type"] = CameraEvent.EventType.choices[num]
@@ -52,11 +58,13 @@ class CameraEventSerializer(serializers.ModelSerializer):
     def to_internal_value(self, data):
         print(data)
         print([i[1] for i in CameraEvent.EventType.choices])
-        if data.get("event_type") in [i[1] for i in CameraEvent.EventType.choices]:
-            num = 0
-            while CameraEvent.EventType.choices[num][1] != data.get("event_type"):
-                num += 1
-            data["event_type"] = num
-            print(data)
-            return super().to_internal_value(data)
-        raise serializers.ValidationError({"event_type": ["Incorrect event_type"]})
+
+        if not data.get("event_type") in [i[1] for i in CameraEvent.EventType.choices]:
+            raise serializers.ValidationError({"event_type": ["Incorrect event_type"]})
+
+        num = 0
+        while CameraEvent.EventType.choices[num][1] != data.get("event_type"):
+            num += 1
+        data["event_type"] = num
+        print(data)
+        return super().to_internal_value(data)

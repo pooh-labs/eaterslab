@@ -29,9 +29,18 @@ class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CafeteriaSerializer
 
 
-class CameraEventsView(viewsets.ModelViewSet):
-    queryset = CameraEvent.objects.all().order_by('timestamp')
+class CameraViewSet(viewsets.ModelViewSet):
+    http_method_names = []
+    queryset = Camera.objects.all()
+    serializer_class = CameraSerializer
+
+
+class CameraEventsViewSet(viewsets.ModelViewSet):
     serializer_class = CameraEventSerializer
+
+    def get_queryset(self):
+        return CameraEvent.objects.filter(camera_id=self.kwargs['camera_pk'])
+
     # def get(self, request, camera_id, format=None):
     #     queryset = CameraEvent.objects.all().order_by('timestamp')
     #     serializer = CameraEventSerializer(queryset, many=True)
