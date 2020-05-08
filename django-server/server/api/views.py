@@ -30,11 +30,18 @@ class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class CameraEventsView(views.APIView):
-    def get(self, request, camera_id, format=None):
-        queryset = CameraEvent.objects.all().order_by('timestamp')
-        serializer = CameraEventSerializer(queryset, many=True)
-        return Response(serializer.data)
+    # def get(self, request, camera_id, format=None):
+    #     queryset = CameraEvent.objects.all().order_by('timestamp')
+    #     serializer = CameraEventSerializer(queryset, many=True)
+    #     return Response(serializer.data)
+    #
 
+    """
+    Post to camera's events.
+    Required fields:
+    timestamp
+    event_type
+    """
     def post(self, request, camera_id, format=None):
         request.data['camera_id'] = camera_id  # insert camera id from the url
         serializer = CameraEventSerializer(data=request.data)
