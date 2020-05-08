@@ -29,7 +29,9 @@ class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CafeteriaSerializer
 
 
-class CameraEventsView(views.APIView):
+class CameraEventsView(viewsets.ModelViewSet):
+    queryset = CameraEvent.objects.all().order_by('timestamp')
+    serializer_class = CameraEventSerializer
     # def get(self, request, camera_id, format=None):
     #     queryset = CameraEvent.objects.all().order_by('timestamp')
     #     serializer = CameraEventSerializer(queryset, many=True)
@@ -42,13 +44,13 @@ class CameraEventsView(views.APIView):
     timestamp
     event_type
     """
-    def post(self, request, camera_id, format=None):
-        request.data['camera_id'] = camera_id  # insert camera id from the url
-        serializer = CameraEventSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # def post(self, request, camera_id, format=None):
+    #     request.data['camera_id'] = camera_id  # insert camera id from the url
+    #     serializer = CameraEventSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class FixedMenuOptionViewSet(viewsets.ReadOnlyModelViewSet):

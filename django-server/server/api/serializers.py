@@ -35,7 +35,7 @@ class CafeteriaSerializer(serializers.ModelSerializer):
 class CameraEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = CameraEvent
-        fields = ['camera_id', 'event_type', 'timestamp']
+        fields = ['event_type', 'timestamp']
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
