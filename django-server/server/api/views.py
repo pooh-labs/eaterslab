@@ -32,6 +32,9 @@ class FixedMenuOptionViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = FixedMenuOptionSerializer
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            # queryset just for schema generation metadata
+            return FixedMenuOption.objects.none()
         return FixedMenuOption.objects.all().filter(cafeteria=self.kwargs['cafeteria_pk']).order_by('id')
 
 
@@ -49,6 +52,9 @@ class CafeteriaFixedMenuOptionReviewViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = FixedMenuOptionReviewSerializer
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            # queryset just for schema generation metadata
+            return FixedMenuOptionReview.objects.none()
         return FixedMenuOptionReview.objects.all().filter(option_pk=self.kwargs['option_pk']).order_by('id')
 
 
