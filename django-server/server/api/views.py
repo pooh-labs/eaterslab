@@ -1,26 +1,19 @@
+from os.path import join as path_join
+
 from django.core.files.storage import FileSystemStorage
-from rest_framework import viewsets
-from rest_framework import views
+from rest_framework import views, viewsets
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import action
 from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
-from rest_framework.decorators import action
 
 from server import settings
-from .serializers import (
-    CafeteriaSerializer,
-    MenuOptionTagSerializer,
-    FixedMenuOptionReviewSerializer,
-    FixedMenuOptionSerializer)
 
-from .models import (
-    Cafeteria,
-    MenuOptionTag,
-    FixedMenuOptionReview,
-    FixedMenuOption)
-
-from os.path import join as path_join
+from .models import (Cafeteria, FixedMenuOption, FixedMenuOptionReview,
+                     MenuOptionTag)
+from .serializers import (CafeteriaSerializer, FixedMenuOptionReviewSerializer,
+                          FixedMenuOptionSerializer, MenuOptionTagSerializer)
 
 
 class GetPostViewSet(viewsets.ModelViewSet):

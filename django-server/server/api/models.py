@@ -1,5 +1,6 @@
+from django.core.validators import (MaxValueValidator, MinValueValidator,
+                                    URLValidator)
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator, URLValidator
 from django.db.models import F
 
 

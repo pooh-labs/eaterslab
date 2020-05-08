@@ -1,13 +1,9 @@
 from django.urls import include, path
 from rest_framework_nested.routers import DefaultRouter, NestedSimpleRouter
-from .views import (
-    CafeteriaViewSet,
-    FixedMenuOptionViewSet,
-    FixedMenuOptionReviewViewSet,
-    CafeteriaFixedMenuOptionReviewViewSet,
-    MenuOptionTagViewSet,
-    UploadArtifactsBetaView,
-    UploadArtifactsView)
+
+from .views import (CafeteriaFixedMenuOptionReviewViewSet, CafeteriaViewSet,
+                    FixedMenuOptionReviewViewSet, FixedMenuOptionViewSet,
+                    UploadArtifactsBetaView, UploadArtifactsView)
 
 router = DefaultRouter()
 router.register(r'cafeterias', CafeteriaViewSet)

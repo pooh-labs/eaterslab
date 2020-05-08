@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from .models import Cafeteria, FixedMenuOption, FixedMenuOptionReview, MenuOptionTag
+from .models import (Cafeteria, FixedMenuOption, FixedMenuOptionReview,
+                     MenuOptionTag)
 
 
 class FixedMenuOptionReviewSerializer(serializers.ModelSerializer):

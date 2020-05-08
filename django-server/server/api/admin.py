@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import MenuOptionTag, Cafeteria, FixedMenuOption, FixedMenuOptionReview
+
+from .models import (Cafeteria, FixedMenuOption, FixedMenuOptionReview,
+                     MenuOptionTag)
 
 admin.site.register(Cafeteria)
 admin.site.register(FixedMenuOption)
