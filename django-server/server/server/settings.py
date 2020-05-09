@@ -16,8 +16,6 @@ import environ
 import sys
 import logging
 
-logging.basicConfig(stream=sys.stderr, level=logging.INFO)
-
 env = environ.Env()
 environ.Env.read_env()
 
@@ -32,6 +30,9 @@ SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
+
+if DEBUG:
+    logging.basicConfig(stream=sys.stderr, level=logging.INFO)
 
 ALLOWED_HOSTS = []
 
