@@ -10,13 +10,13 @@ import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
 import org.threeten.bp.OffsetDateTime
 import java.lang.Exception
 
-class CafeteriasRepository(private  val connectionStatusNotifier: ConnectionStatusNotifier) {
+class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatusNotifier) {
 
     private val cafeteriasApi by lazy { CafeteriasApi() }
     private val reviewsApi by lazy { FixedMenuReviewsApi() }
 
     private val cachedCafeterias = mutableMapOf<Int, CafeteriaDao>()
-    private val cachedMenuOptions = mutableMapOf<Int, Set<FixedMenuOptionDao>>()
+    private val cachedMenuOptions = mutableMapOf<Int, List<FixedMenuOptionDao>>()
 
     suspend fun cafeteriasList(): List<CafeteriaDao>? {
         val refreshed = tryApiConnect {
@@ -62,11 +62,11 @@ class CafeteriasRepository(private  val connectionStatusNotifier: ConnectionStat
         }
 
         refreshed?.let {
-            cachedMenuOptions[cafeteriaDao.id ?: 0] = it.toSet()
+            cachedMenuOptions[cafeteriaDao.id ?: 0] = it
         }
-        val currentMenuOptionData = cafeteriaDao.id?.let { cachedMenuOptions[it] } ?: setOf()
+        val currentMenuOptionData = cafeteriaDao.id?.let { cachedMenuOptions[it] } ?: listOf()
 
-        return if (currentMenuOptionData.isNotEmpty()) currentMenuOptionData.toList() else null
+        return if (currentMenuOptionData.isNotEmpty()) currentMenuOptionData else null
     }
 
     private suspend fun <T> tryApiConnect(get: suspend () -> T): T? {
