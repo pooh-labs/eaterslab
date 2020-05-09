@@ -6,8 +6,10 @@ from django.http import FileResponse, HttpResponse
 
 from server import settings
 
+
 def index(request):
     return render(request, 'home/home.html')
+
 
 def artifact_response(response):
     return existing__binary_file_response(path_join(settings.ARTIFACTS_ROOT, settings.ARTIFACT_NAME))
