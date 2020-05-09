@@ -12,19 +12,17 @@ data class CafeteriaDao (
     val subDescription: String,
     val longitude: Double,
     val latitude: Double,
-    val logo: Bitmap?,
+    val logoUrl: String,
     val address: String,
     val openedFrom: String,
     val openedTo: String,
-    val id: Int,
-    val fixedMenuOptions: List<FixedMenuOptionDao>
-)
+    val id: Int?
+) : ImageContentDao(logoUrl)
 
-suspend fun Cafeteria.toDao() = withContext(Dispatchers.IO) {
+fun Cafeteria.toDao() =
     CafeteriaDao(name, description, subDescription, longitude.toDouble(), latitude.toDouble(),
-        downloadImageFrom(logoUrl), address, openedFrom, openedTo, id ?: -1,
-        fixedMenuOptions?.map { it.toDao() } ?: listOf())
-}
+        logoUrl, address, openedFrom, openedTo, id)
+
 
 
 

@@ -4,17 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import labs.pooh.eaterslab.repository.CafeteriasRepository
+import labs.pooh.eaterslab.repository.dao.CafeteriaDao
 import labs.pooh.eaterslab.repository.dao.FixedMenuOptionDao
 import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
 
 class MenuViewModel(connectionStatusNotifier: ConnectionStatusNotifier) : ViewModel() {
-
-    companion object {
-        const val SLEEP_LOAD_IMAGE_ANIMATION_MS = 300L
-    }
 
     private val repository = CafeteriasRepository(connectionStatusNotifier)
 
@@ -43,9 +39,10 @@ class MenuViewModel(connectionStatusNotifier: ConnectionStatusNotifier) : ViewMo
 
     fun updateMenuOptionsData() {
         viewModelScope.launch {
-            repository.cafeteriasRead(1)?.fixedMenuOptions?.forEach {
+            val options = repository.getMenuOptionsOfCafeteria(CafeteriaDao("sample id important", "", "", 0.0, 0.0, "", "", "", "", 1))
+            options?.forEach {
+                it.downloadContent()
                 addMenuOption(it)
-                delay(SLEEP_LOAD_IMAGE_ANIMATION_MS)
             }
         }
     }

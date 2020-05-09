@@ -1,22 +1,14 @@
 package labs.pooh.eaterslab.repository.dao
 
-import android.graphics.Bitmap
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import labs.pooh.client.models.FixedMenuOption
-import labs.pooh.eaterslab.util.downloadImageFrom
 
 data class FixedMenuOptionDao(
     val name: String,
     val price: Double,
-    val photo: Bitmap?,
-    val menuOptionTags: List<MenuOptionTagDao>,
-    val fixedMenuOptionReviews: List<FixedMenuOptionReviewDao>
-)
+    val photoUrl: String,
+    val avgReviewStars: Double,
+    val id: Int?
+) : ImageContentDao(photoUrl)
 
-suspend fun FixedMenuOption.toDao() = withContext(Dispatchers.IO) {
-    FixedMenuOptionDao(name, price.toDouble(), downloadImageFrom(photoUrl),
-        menuOptionTags?.mapNotNull { it.toDao() } ?: listOf(),
-        fixedMenuOptionReviews?.map { it.toDao() } ?: listOf()
-    )
-}
+fun FixedMenuOption.toDao() =
+    FixedMenuOptionDao(name, price.toDouble(), photoUrl, avgReviewStars?.toDouble() ?: 0.0, id)

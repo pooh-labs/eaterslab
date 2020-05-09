@@ -58,8 +58,9 @@ class MenuFragment : Fragment() {
 
     private fun addMenuOptionToView(menuOption: FixedMenuOptionDao) {
         verticalReviewSlideShow.addView(
-            RatedFoodView(context!!, (1..5).random().toFloat(), menuOption.photo
-                ?: convertDrawableToBitmap(context!!, R.drawable.no_food_image), menuOption.name, menuOption.price)
+            RatedFoodView(context!!, (1..5).random().toFloat(),
+                menuOption.downloadedImage ?: convertDrawableToBitmap(context!!, R.drawable.no_food_image),
+                menuOption.name, menuOption.price)
         )
     }
 

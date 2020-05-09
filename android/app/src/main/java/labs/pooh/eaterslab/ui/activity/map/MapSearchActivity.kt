@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_map_search.*
 import labs.pooh.eaterslab.ui.activity.abstracts.AbstractRevealedActivity
 import labs.pooh.eaterslab.R
-import labs.pooh.eaterslab.repository.dao.CafeteriaBaseDao
+import labs.pooh.eaterslab.repository.dao.CafeteriaDao
 import labs.pooh.eaterslab.ui.activity.abstracts.viewModelFactory
 import labs.pooh.eaterslab.ui.activity.hello.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_X
 import labs.pooh.eaterslab.ui.activity.hello.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
@@ -204,7 +204,7 @@ class MapSearchActivity : AbstractRevealedActivity() {
 }
 
 
-fun CafeteriaBaseDao.toMarker(mapView: MapView, listener: (LocationOccupancyMarker) -> Boolean) = if (id != -1) {
+fun CafeteriaDao.toMarker(mapView: MapView, listener: (LocationOccupancyMarker) -> Boolean) = if (id != null) {
     LocationOccupancyMarker(
         mapView,
         title = name, id = id,

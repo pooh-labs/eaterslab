@@ -5,7 +5,6 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
-import android.os.Bundle
 import labs.pooh.eaterslab.R
 import labs.pooh.eaterslab.util.isNetworkConnected
 import labs.pooh.eaterslab.util.snack
@@ -73,6 +72,8 @@ abstract class AbstractNetworkCheckingActivity : AbstractThemedActivity(), Conne
 
     inner class RunConnectionActivityCallback() : ConnectivityManager.NetworkCallback () {
 
+        private var entryNotificationDone = false
+
         override fun onLost(network: Network) {
             super.onLost(network)
             notifyNoConnection()
@@ -80,7 +81,12 @@ abstract class AbstractNetworkCheckingActivity : AbstractThemedActivity(), Conne
 
         override fun onAvailable(network: Network) {
             super.onAvailable(network)
-            notifyInternetConnectionRestored()
+            if (entryNotificationDone) {
+                notifyInternetConnectionRestored()
+            }
+            else {
+                entryNotificationDone = true
+            }
         }
     }
 }

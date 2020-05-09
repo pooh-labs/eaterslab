@@ -6,7 +6,8 @@ data class FixedMenuOptionReviewDao(
     val stars: Int,
     val authorNick: String,
     val reviewTime: org.threeten.bp.OffsetDateTime,
-    val optionId: Int
+    val optionId: Int,
+    val id: Int?
 )
 
-fun FixedMenuOptionReview.toDao() = FixedMenuOptionReviewDao(stars, authorNick, reviewTime, option)
+fun FixedMenuOptionReview.toDao() = FixedMenuOptionReviewDao(stars, authorNick, reviewTime, option, id)
