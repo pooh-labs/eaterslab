@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 import environ
+import sys
+import logging
+
+logging.basicConfig(stream=sys.stderr, level=logging.INFO)
 
 env = environ.Env()
 environ.Env.read_env()
@@ -104,10 +108,10 @@ def select_database():
         return env.db()
     if env.bool('USE_POSTGRES', default=False):
         if DEBUG:
-            print("Using postgres")
+            logging.info("Using postgres")
         return env.db()
     if DEBUG:
-        print("Using sqlite")
+        logging.info("Using sqlite")
     return {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
