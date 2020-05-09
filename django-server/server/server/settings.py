@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 
 import environ
+import sys
+import logging
 
 env = environ.Env()
 environ.Env.read_env()
@@ -28,6 +30,9 @@ SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
+
+if DEBUG:
+    logging.basicConfig(stream=sys.stderr, level=logging.INFO)
 
 ALLOWED_HOSTS = []
 
@@ -48,6 +53,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',  # token auth for artifacts upload
 
     # External library for yaml generator (can be used but works only with OpenAPI 2.0)
+    'home.apps.HomeConfig',                                 # Home app
     'drf_yasg',  # for API documentation and generation
     'api.apps.ApiConfig',  # API app
 ]
@@ -101,6 +107,12 @@ REST_FRAMEWORK = {
 def select_database():
     if env.bool('DB_DEPLOY', default=False):
         return env.db()
+    if env.bool('USE_POSTGRES', default=False):
+        if DEBUG:
+            logging.info("Using postgres")
+        return env.db()
+    if DEBUG:
+        logging.info("Using sqlite")
     return {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),

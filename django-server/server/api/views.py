@@ -1,18 +1,18 @@
 from os.path import join as path_join
 
 from django.core.files.storage import FileSystemStorage
+
 from rest_framework import views, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
-from server import settings
+from .serializers import *
+from .models import *
 
-from .models import (Cafeteria, FixedMenuOption, FixedMenuOptionReview,
-                     MenuOptionTag)
-from .serializers import (CafeteriaSerializer, FixedMenuOptionReviewSerializer,
-                          FixedMenuOptionSerializer, MenuOptionTagSerializer)
+from os.path import join as path_join
+from server import settings
 
 
 class GetPostViewSet(viewsets.ModelViewSet):
@@ -26,6 +26,23 @@ class PostViewSet(viewsets.ModelViewSet):
 class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Cafeteria.objects.all().order_by('id')
     serializer_class = CafeteriaSerializer
+
+
+class CameraViewSet(viewsets.ModelViewSet):
+    http_method_names = []
+    queryset = Camera.objects.all()
+    serializer_class = CameraSerializer
+
+
+class CameraEventsViewSet(viewsets.ModelViewSet):
+    http_method_names = ['post']
+    serializer_class = CameraEventSerializer
+
+    def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            # queryset just for schema generation metadata
+            return CameraEvent.objects.none()
+        return CameraEvent.objects.filter(camera_id=self.kwargs['camera_pk'])
 
 
 class FixedMenuOptionViewSet(viewsets.ReadOnlyModelViewSet):
