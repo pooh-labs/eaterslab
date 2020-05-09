@@ -21,7 +21,7 @@ fixed_menu_options_router.register(r'reviews',
                                    basename='cafeteria-fixed_menu_options-review')
 
 cameras_router = NestedSimpleRouter(router, r'cameras', lookup='camera')
-cameras_router.register(r'events', CameraEventsViewSet, basename='is_this_even_used?')
+cameras_router.register(r'events', CameraEventsViewSet, basename='camera_events')
 
 urlpatterns = [
     path('', include(router.urls)),

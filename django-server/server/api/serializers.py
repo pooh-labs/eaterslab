@@ -28,7 +28,7 @@ class CafeteriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cafeteria
         fields = ['id', 'name', 'description', 'sub_description', 'longitude', 'latitude',
-                  'logo_url', 'address', 'opened_from', 'opened_to', 'fixed_menu_options']
+                  'logo_url', 'address', 'opened_from', 'opened_to']
 
 
 class CameraSerializer(serializers.ModelSerializer):

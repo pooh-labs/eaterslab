@@ -103,9 +103,11 @@ def select_database():
     if env.bool('DB_DEPLOY', default=False):
         return env.db()
     if env.bool('USE_POSTGRES', default=False):
-        print("Using postgres")
+        if DEBUG:
+            print("Using postgres")
         return env.db()
-    print("Using sqlite")
+    if DEBUG:
+        print("Using sqlite")
     return {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
