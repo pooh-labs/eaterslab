@@ -7,7 +7,6 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
-from rest_framework import status
 
 from .serializers import *
 from .models import *
@@ -36,30 +35,14 @@ class CameraViewSet(viewsets.ModelViewSet):
 
 
 class CameraEventsViewSet(viewsets.ModelViewSet):
+    http_method_names = ['post']
     serializer_class = CameraEventSerializer
 
     def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            # queryset just for schema generation metadata
+            return CameraEvent.objects.none()
         return CameraEvent.objects.filter(camera_id=self.kwargs['camera_pk'])
-
-    # def get(self, request, camera_id, format=None):
-    #     queryset = CameraEvent.objects.all().order_by('timestamp')
-    #     serializer = CameraEventSerializer(queryset, many=True)
-    #     return Response(serializer.data)
-    #
-
-    """
-    Post to camera's events.
-    Required fields:
-    timestamp
-    event_type
-    """
-    # def post(self, request, camera_id, format=None):
-    #     request.data['camera_id'] = camera_id  # insert camera id from the url
-    #     serializer = CameraEventSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class FixedMenuOptionViewSet(viewsets.ReadOnlyModelViewSet):

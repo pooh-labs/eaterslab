@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from django.utils.translation import gettext_lazy as _
 
 
 from .models import *
@@ -43,28 +42,7 @@ class CameraEventSerializer(serializers.ModelSerializer):
         model = CameraEvent
         fields = ['event_type', 'timestamp']
 
-    def to_representation(self, instance):
-        ret = super().to_representation(instance)
-        print(ret)
-        print(instance)
-        print(CameraEvent.EventType.choices)
-        num = 0
-        while num != ret["event_type"]:  # TODO test this loop
-            print("loop")
-            num += 1
-        blank, ret["event_type"] = CameraEvent.EventType.choices[num]
-        return ret
-
-    def to_internal_value(self, data):
-        print(data)
-        print([i[1] for i in CameraEvent.EventType.choices])
-
-        if not data.get("event_type") in [i[1] for i in CameraEvent.EventType.choices]:
-            raise serializers.ValidationError({"event_type": ["Incorrect event_type"]})
-
-        num = 0
-        while CameraEvent.EventType.choices[num][1] != data.get("event_type"):
-            num += 1
-        data["event_type"] = num
-        print(data)
-        return super().to_internal_value(data)
+    def create(self, validated_data):
+        camera_id = Camera.objects.get(pk=self.context["view"].kwargs["camera_pk"])
+        validated_data["camera_id"] = camera_id
+        return CameraEvent.objects.create(**validated_data)

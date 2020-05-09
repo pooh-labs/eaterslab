@@ -71,7 +71,8 @@ class FixedMenuOptionReview(models.Model):
     def save(self, *args, **kwargs):
         curr_reviews = FixedMenuOptionReview.objects.count()
         if not self.pk:
-            FixedMenuOption.objects.filter(pk=self.option.pk).update(avg_review_stars=self.calculate_new_avg_review(F('avg_review_stars'), curr_reviews))
+            FixedMenuOption.objects.filter(pk=self.option.pk)\
+                .update(avg_review_stars=self.calculate_new_avg_review(F('avg_review_stars'), curr_reviews))
         super().save(*args, **kwargs)
 
     def calculate_new_avg_review(self, old_review_stars, number_of_reviews):
