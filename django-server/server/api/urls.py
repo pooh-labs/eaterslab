@@ -1,11 +1,11 @@
 from django.urls import include, path
 from rest_framework_nested.routers import DefaultRouter, NestedSimpleRouter
 
-from .views import (CafeteriaFixedMenuOptionReviewViewSet, CafeteriaViewSet,
-                    FixedMenuOptionReviewViewSet, FixedMenuOptionViewSet,
-                    MenuOptionTagViewSet, UploadArtifactsBetaView, UploadArtifactsView)
+from .views import *
+
 
 router = DefaultRouter()
+router.register(r'cameras', CameraViewSet)
 router.register(r'cafeterias', CafeteriaViewSet)
 router.register(r'menu_option_tags', MenuOptionTagViewSet)
 router.register(r'fixed_menu_reviews', FixedMenuOptionReviewViewSet)
@@ -20,10 +20,14 @@ fixed_menu_options_router.register(r'reviews',
                                    CafeteriaFixedMenuOptionReviewViewSet,
                                    basename='cafeteria-fixed_menu_options-review')
 
+cameras_router = NestedSimpleRouter(router, r'cameras', lookup='camera')
+cameras_router.register(r'events', CameraEventsViewSet, basename='camera_events')
+
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(cafeterias_router.urls)),
     path('', include(fixed_menu_options_router.urls)),
+    path('', include(cameras_router.urls)),
     path('upload/artifacts/<str:filename>/', UploadArtifactsView.as_view()),
     path('upload/artifacts/beta/<str:filename>/', UploadArtifactsBetaView.as_view()),
 ]

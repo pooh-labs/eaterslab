@@ -1,6 +1,6 @@
-from django.core.validators import (MaxValueValidator, MinValueValidator,
-                                    URLValidator)
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+from django.core.validators import MinValueValidator, MaxValueValidator, URLValidator
 from django.db.models import F
 
 
@@ -18,6 +18,25 @@ class Cafeteria(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Camera(models.Model):
+    description = models.CharField(max_length=200)
+
+
+class CameraEvent(models.Model):
+    class EventType(models.IntegerChoices):
+        MONITORING_STARTED = 0, _('monitoring_started')
+        MONITORING_ENDED = 1, _('monitoring_ended')
+        PERSON_ENTERED = 2, _('person_entered')
+        PERSON_LEFT = 3, _('person_left')
+
+    timestamp = models.DateTimeField()
+    event_type = models.IntegerField(choices=EventType.choices)
+    camera_id = models.ForeignKey(Camera, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} {} {}".format(self.camera_id, self.event_type, self.timestamp)
 
 
 class FixedMenuOption(models.Model):
@@ -52,7 +71,8 @@ class FixedMenuOptionReview(models.Model):
     def save(self, *args, **kwargs):
         curr_reviews = FixedMenuOptionReview.objects.count()
         if not self.pk:
-            FixedMenuOption.objects.filter(pk=self.option.pk).update(avg_review_stars=self.calculate_new_avg_review(F('avg_review_stars'), curr_reviews))
+            FixedMenuOption.objects.filter(pk=self.option.pk)\
+                .update(avg_review_stars=self.calculate_new_avg_review(F('avg_review_stars'), curr_reviews))
         super().save(*args, **kwargs)
 
     def calculate_new_avg_review(self, old_review_stars, number_of_reviews):

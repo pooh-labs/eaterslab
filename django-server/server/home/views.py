@@ -1,4 +1,5 @@
 from os.path import join as path_join
+from django.shortcuts import render
 
 from django.core.files.storage import FileSystemStorage
 from django.http import FileResponse, HttpResponse
@@ -7,7 +8,7 @@ from server import settings
 
 
 def index(request):
-    return HttpResponse("Welcome to EatersLab made by PoohLab.")
+    return render(request, 'home/home.html')
 
 
 def artifact_response(response):

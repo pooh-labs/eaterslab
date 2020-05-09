@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from .models import (Cafeteria, FixedMenuOption, FixedMenuOptionReview,
-                     MenuOptionTag)
+
+from .models import *
 
 
 class FixedMenuOptionReviewSerializer(serializers.ModelSerializer):
@@ -29,3 +29,20 @@ class CafeteriaSerializer(serializers.ModelSerializer):
         model = Cafeteria
         fields = ['id', 'name', 'description', 'sub_description', 'longitude', 'latitude',
                   'logo_url', 'address', 'opened_from', 'opened_to']
+
+
+class CameraSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Camera
+        fields = ['description']
+
+
+class CameraEventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CameraEvent
+        fields = ['event_type', 'timestamp']
+
+    def create(self, validated_data):
+        camera_id = Camera.objects.get(pk=self.context["view"].kwargs["camera_pk"])
+        validated_data["camera_id"] = camera_id
+        return CameraEvent.objects.create(**validated_data)
