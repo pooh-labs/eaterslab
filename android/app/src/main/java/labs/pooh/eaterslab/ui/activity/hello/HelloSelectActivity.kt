@@ -7,6 +7,7 @@ import labs.pooh.eaterslab.ui.activity.abstracts.AbstractThemedActivity
 import labs.pooh.eaterslab.R
 import labs.pooh.eaterslab.ui.activity.main.MainActivity
 import labs.pooh.eaterslab.ui.activity.map.MapSearchActivity
+import labs.pooh.eaterslab.ui.activity.search.SearchActivity
 import labs.pooh.eaterslab.ui.view.bounceAndScaleDelayed
 import labs.pooh.eaterslab.util.start
 
@@ -27,7 +28,7 @@ class HelloSelectActivity : AbstractThemedActivity() {
 
         fabSearch.setOnClickListener {
             markButtonsClickable(false)
-            start<MainActivity> {
+            start<SearchActivity> {
                 getCenterPositionOf(fabSearch).let { (x, y) ->
                     putExtra(BUTTON_SEARCH_POSITION_X, x)
                     putExtra(BUTTON_SEARCH_POSITION_Y, y)
