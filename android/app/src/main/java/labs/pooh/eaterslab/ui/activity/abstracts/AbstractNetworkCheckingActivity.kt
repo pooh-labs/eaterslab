@@ -5,13 +5,12 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
-import android.os.Bundle
-import labs.pooh.eaterslab.ui.activity.loading.LoadingConnectionActivity
+import labs.pooh.eaterslab.R
 import labs.pooh.eaterslab.util.isNetworkConnected
-import labs.pooh.eaterslab.util.start
+import labs.pooh.eaterslab.util.snack
 
 
-abstract class AbstractNetworkCheckingActivity : AbstractThemedActivity() {
+abstract class AbstractNetworkCheckingActivity : AbstractThemedActivity(), ConnectionStatusNotifier {
 
     companion object {
         private val networkRequest = NetworkRequest.Builder().apply {
@@ -23,13 +22,6 @@ abstract class AbstractNetworkCheckingActivity : AbstractThemedActivity() {
     }
 
     private var networkCallback: ConnectivityManager.NetworkCallback? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        unregisterNetworkChecking()
-        registerNetworkChecking()
-    }
 
     override fun onResume() {
         super.onResume()
@@ -43,9 +35,21 @@ abstract class AbstractNetworkCheckingActivity : AbstractThemedActivity() {
         unregisterNetworkChecking()
     }
 
+    override fun notifyInternetConnectionRestored() {
+        snack(getString(R.string.connection_restored))
+    }
+
+    override fun notifyNoConnection() {
+        snack(getString(R.string.connection_lost))
+    }
+
+    override fun notifyDataFetchError() {
+        snack(getString(R.string.data_fetch_error))
+    }
+
     private fun registerNetworkChecking() {
-        if (!isNetworkConnected(baseContext) && this !is LoadingConnectionActivity) {
-            start<LoadingConnectionActivity>()
+        if (!isNetworkConnected(baseContext)) {
+            notifyNoConnection()
         }
 
         val cm = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -64,13 +68,25 @@ abstract class AbstractNetworkCheckingActivity : AbstractThemedActivity() {
     }
 
     protected open fun defineNetworkChangeCallback(): ConnectivityManager.NetworkCallback
-            = RunNoConnectionActivityCallback()
+            = RunConnectionActivityCallback()
 
-    inner class RunNoConnectionActivityCallback() : ConnectivityManager.NetworkCallback () {
+    inner class RunConnectionActivityCallback() : ConnectivityManager.NetworkCallback () {
+
+        private var entryNotificationDone = false
 
         override fun onLost(network: Network) {
             super.onLost(network)
-            start<LoadingConnectionActivity>()
+            notifyNoConnection()
+        }
+
+        override fun onAvailable(network: Network) {
+            super.onAvailable(network)
+            if (entryNotificationDone) {
+                notifyInternetConnectionRestored()
+            }
+            else {
+                entryNotificationDone = true
+            }
         }
     }
 }

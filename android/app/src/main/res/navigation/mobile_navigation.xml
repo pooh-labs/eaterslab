@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/navSlideshow"
-        android:name="labs.pooh.eaterslab.ui.fragment.slideshow.SlideshowFragment"
+        android:name="labs.pooh.eaterslab.ui.fragment.menu.MenuFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
 </navigation>

@@ -35,9 +35,6 @@
         <activity
             android:name="labs.pooh.eaterslab.ui.activity.settings.SettingsActivity"
             android:label="@string/title_activity_settings"/>
-        <activity
-            android:name="labs.pooh.eaterslab.ui.activity.loading.LoadingConnectionActivity"
-            android:launchMode="singleTop"/>
     </application>
 
 </manifest>

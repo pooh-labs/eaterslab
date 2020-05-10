@@ -45,14 +45,7 @@
     <string name="saturday">Sobota</string>
     <string name="sunday">Niedziela</string>
     <string name="wait_connection">Oczekiwanie na połączenie</string>
-    <string name="cafeteria_logo">Logo cafeterii</string>
-    <string name="enjoy_your_meal">"Smacznego! "</string>
-    <string name="your_place">Twoje miejsce</string>
-    <string name="no_data">brak danych</string>
-    <string name="key">klucz</string>
-    <string name="value">wartość</string>
-    <string name="load_placeholder">ładowanie…</string>
-    <string name="description">Opis</string>
-    <string name="subdescription">Coś więcej</string>
-    <string name="expand">rozwiń</string>
+    <string name="connection_lost">Utracono połączenie…</string>
+    <string name="data_fetch_error">Błąd podczas pobierania danych z serwera!</string>
+    <string name="connection_restored">Przywrócono połączenie</string>
 </resources>
