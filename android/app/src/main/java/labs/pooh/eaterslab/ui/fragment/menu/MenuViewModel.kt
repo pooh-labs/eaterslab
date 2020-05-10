@@ -9,6 +9,7 @@ import labs.pooh.eaterslab.repository.CafeteriasRepository
 import labs.pooh.eaterslab.repository.dao.CafeteriaDao
 import labs.pooh.eaterslab.repository.dao.FixedMenuOptionDao
 import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
+import labs.pooh.eaterslab.ui.activity.main.MainActivity
 
 class MenuViewModel(connectionStatusNotifier: ConnectionStatusNotifier) : ViewModel() {
 
@@ -39,7 +40,8 @@ class MenuViewModel(connectionStatusNotifier: ConnectionStatusNotifier) : ViewMo
 
     fun updateMenuOptionsData() {
         viewModelScope.launch {
-            val options = repository.getMenuOptionsOfCafeteria(CafeteriaDao("sample id important", "", "", 0.0, 0.0, "", "", "", "", 1))
+            val cafeteriaId = MainActivity.lastSelectedCafeteriaId
+            val options = repository.getMenuOptionsOfCafeteria(cafeteriaId)
             options?.forEach {
                 it.downloadContent()
                 addMenuOption(it)

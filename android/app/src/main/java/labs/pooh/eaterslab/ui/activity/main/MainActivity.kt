@@ -33,9 +33,6 @@ class MainActivity : AbstractNetworkCheckingActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener {
-            Snackbar.make(it, "Hello from snackbar", Snackbar.LENGTH_SHORT).show()
-        }
         val navController = findNavController(R.id.navHostFragment)
 
         if (isDarkModeEnabled()) {
@@ -50,8 +47,8 @@ class MainActivity : AbstractNetworkCheckingActivity() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navHome,
-                R.id.navGallery,
-                R.id.navSlideshow
+                R.id.navStats,
+                R.id.navMenu
             ),
             drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)

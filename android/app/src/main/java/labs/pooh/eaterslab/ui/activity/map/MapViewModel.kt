@@ -8,10 +8,9 @@ import kotlinx.coroutines.launch
 import labs.pooh.eaterslab.repository.CafeteriasRepository
 import labs.pooh.eaterslab.repository.dao.CafeteriaDao
 import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
+import labs.pooh.eaterslab.ui.activity.abstracts.RepositoryAccessViewModel
 
-class MapViewModel(notifier: ConnectionStatusNotifier) : ViewModel() {
-
-    private val repository = CafeteriasRepository(notifier)
+class MapViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessViewModel(notifier) {
 
     private val _cafeteriasLiveData = MutableLiveData<List<CafeteriaDao>>().apply {
         value = listOf()

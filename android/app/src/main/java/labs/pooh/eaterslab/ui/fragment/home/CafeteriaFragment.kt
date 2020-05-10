@@ -9,18 +9,22 @@ import android.widget.FrameLayout
 import androidx.core.view.plusAssign
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_home.*
 import labs.pooh.eaterslab.R
 import labs.pooh.eaterslab.ui.activity.abstracts.AbstractThemedActivity
+import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
+import labs.pooh.eaterslab.ui.activity.abstracts.viewModelFactory
 import labs.pooh.eaterslab.ui.fragment.ThemedAbstractFragment
-import labs.pooh.eaterslab.util.HorizontalBarPlot
-import labs.pooh.eaterslab.util.getOpenOrderedHours
-import labs.pooh.eaterslab.util.hoursIndexer
-import labs.pooh.eaterslab.util.workingHoursIndexer
+import labs.pooh.eaterslab.util.*
 
 class CafeteriaFragment : ThemedAbstractFragment() {
 
-    private val model: CafeteriaViewModel by viewModels()
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory {
+            CafeteriaViewModel(activity as ConnectionStatusNotifier)
+        }).get(CafeteriaViewModel::class.java)
+    }
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -29,49 +33,38 @@ class CafeteriaFragment : ThemedAbstractFragment() {
     ): View? {
 
         val root = inflater.inflate(R.layout.fragment_home, container, false)
-        model.cafeteriaName.observe(viewLifecycleOwner, Observer {
-            placeName.text = it
-        })
-        model.cafeteriaDescription.observe(viewLifecycleOwner, Observer {
-            placeDescription.text = it
-        })
-        model.cafeteriaSubDescription.observe(viewLifecycleOwner, Observer {
-            placeSubDescription.text = it
-        })
-        model.cafeteriaCurrentDayData.observe(viewLifecycleOwner, Observer {
-            managePlotViewData(it)
-        })
-        model.cafeteriaLogo.observe(viewLifecycleOwner, Observer { it?.let { bitmap ->
-            imageViewLogo.setImageBitmap(bitmap)
-        } })
+        with(viewModel) {
+            cafeteriaName.observe(viewLifecycleOwner, Observer {
+                placeName.text = it
+            })
+            cafeteriaDescription.observe(viewLifecycleOwner, Observer {
+                placeDescription.text = it
+            })
+            cafeteriaSubDescription.observe(viewLifecycleOwner, Observer {
+                placeSubDescription.text = it
+            })
+            cafeteriaLogo.observe(viewLifecycleOwner, Observer {
+                if (it != null) {
+                    imageViewLogo.setImageBitmap(it)
+                }
+                else {
+                    imageViewLogo.setImageResource(R.drawable.ic_location)
+                }
+            })
+            cafeteriaOccupancy.observe(viewLifecycleOwner, Observer {
+                occupancyBar.progress = it
+            })
+        }
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        model.updateCafeteriaFullData()
+        viewModel.updateCafeteriaFullData()
     }
 
     override fun onResume() {
         super.onResume()
-        model.updateCafeteriaTextInfo()
-    }
-
-    private fun managePlotViewData(data: List<Double>) {
-        val frame = FrameLayout(context!!)
-        val barView = HorizontalBarPlot(context!!).apply {
-            ticks = getOpenOrderedHours()
-            ticksIndexer = ::workingHoursIndexer
-            ticksScale = 2.3
-            labelColor = getPlotFontColorForTheme()
-            printTicks = printTicks()
-        }.plot(data, accentColor)
-        frame += barView
-        val width = (plotsLayout.width * 0.9).toInt()
-        frame.layoutParams = FrameLayout.LayoutParams(width, (0.7 * width).toInt()).apply {
-            gravity = Gravity.CENTER_HORIZONTAL
-        }
-        plotsLayout.removeAllViews()
-        plotsLayout += frame
+        viewModel.updateCafeteriaTextInfo()
     }
 }

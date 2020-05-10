@@ -1,8 +1,6 @@
-package labs.pooh.eaterslab.ui.fragment.gallery
+package labs.pooh.eaterslab.ui.fragment.stats
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -11,8 +9,7 @@ import android.widget.FrameLayout
 import android.widget.Space
 import androidx.core.content.ContextCompat
 import androidx.core.view.plusAssign
-import kotlinx.android.synthetic.main.fragment_gallery.*
-import labs.pooh.eaterslab.ui.activity.abstracts.AbstractThemedActivity
+import kotlinx.android.synthetic.main.fragment_stats.*
 import labs.pooh.eaterslab.R
 import labs.pooh.eaterslab.ui.fragment.ThemedAbstractFragment
 import labs.pooh.eaterslab.util.*
@@ -20,14 +17,14 @@ import kotlin.math.abs
 import kotlin.math.log
 import kotlin.math.sin
 
-class GalleryFragment : ThemedAbstractFragment() {
+class StatsFragment : ThemedAbstractFragment() {
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_gallery, container, false)
+        return inflater.inflate(R.layout.fragment_stats, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

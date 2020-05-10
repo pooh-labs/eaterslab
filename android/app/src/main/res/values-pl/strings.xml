@@ -10,8 +10,8 @@
     <string name="action_settings">Ustawienia</string>
 
     <string name="menu_home">Ekran główny</string>
-    <string name="menu_gallery">Galeria</string>
-    <string name="menu_slideshow">Pokaz slajdów</string>
+    <string name="menu_gallery">Statystyki</string>
+    <string name="menu_slideshow">Menu</string>
 
     <string name="home_second">Drugi ekran</string>
     <string name="image_came_intent">Przechwycony obraz</string>
@@ -28,13 +28,10 @@
     <string name="title_activity_settings">Ustawienia</string>
 
     <!-- Preference Titles -->
-    <string name="main_prefs">main_preferences</string>
-    <string name="style_prefs">style_preferences</string>
     <string name="main_header">Główne</string>
     <string name="theme_header">Interfejs użytkownika</string>
     <string name="language_title">Język aplikacji</string>
     <string name="theme_title">Włącz ciemny motyw</string>
-    <string name="lang">lang</string>
     <string name="dark_theme">theme</string>
     <string name="no_gps_notification">Problem z dostępem do GPS.</string>
     <string name="monday">Poniedziałek</string>
@@ -58,4 +55,6 @@
     <string name="connection_lost">Utracono połączenie…</string>
     <string name="data_fetch_error">Błąd podczas pobierania danych z serwera!</string>
     <string name="connection_restored">Przywrócono połączenie</string>
+    <string name="version_header">Wersja aplikacji</string>
+    <string name="relative_occupancy">Względne zapełnienie</string>
 </resources>

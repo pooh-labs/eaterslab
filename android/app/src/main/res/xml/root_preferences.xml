@@ -1,4 +1,4 @@
-<PreferenceScreen
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory
@@ -26,6 +26,16 @@
             app:iconSpaceReserved="false"
             app:key="@string/dark_theme"
             app:title="@string/theme_title"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/version_header"
+        app:iconSpaceReserved="false"
+        app:key="@string/version_prefs">
+
+        <Preference
+            android:title="@string/versionName"
+            app:iconSpaceReserved="false"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

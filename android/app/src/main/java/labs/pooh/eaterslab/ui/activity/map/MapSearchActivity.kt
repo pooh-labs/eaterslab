@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_map_search.*
 import labs.pooh.eaterslab.ui.activity.abstracts.AbstractRevealedActivity
 import labs.pooh.eaterslab.R
@@ -192,13 +191,13 @@ class MapSearchActivity : AbstractRevealedActivity() {
         overlayManager.tilesOverlay.setColorFilter(filter)
     }
 
-    private fun onSelectPlaceButtonClick(marker: LocationOccupancyMarker, view: View) {
+    private fun onSelectPlaceButtonClick(marker: LocationOccupancyMarker) {
         start<MainActivity> { putExtra(MainActivity.ID_KEY, marker.id) }
     }
 
     private fun onMarkerClickListener(marker: LocationOccupancyMarker): Boolean {
         buttonSelect.moveUpAndShow(yMove = 0)
-        buttonSelect.setOnClickListener { onSelectPlaceButtonClick(marker, it) }
+        buttonSelect.setOnClickListener { onSelectPlaceButtonClick(marker) }
         return true
     }
 }

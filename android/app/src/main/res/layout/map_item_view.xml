@@ -55,7 +55,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/bubble_title"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_insert_photo"
+            app:srcCompat="@drawable/ic_location"
             android:contentDescription="@string/info_image" />
 
         <ProgressBar

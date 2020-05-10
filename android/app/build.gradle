@@ -22,7 +22,6 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         buildTypes.each {
-            it.buildConfigField 'String', 'API_URL', API_URL
             it.buildConfigField 'String', 'DEFAULT_LANG', DEFAULT_LANG
             it.resValue 'string', 'default_lang', DEFAULT_LANG
         }
@@ -34,6 +33,10 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    applicationVariants.all { variant ->
+        variant.resValue  'string', 'versionName', variant.versionName
     }
 }
 

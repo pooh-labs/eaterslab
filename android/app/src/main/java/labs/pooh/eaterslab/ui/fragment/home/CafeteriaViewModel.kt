@@ -11,18 +11,23 @@ import kotlinx.coroutines.withContext
 import labs.pooh.client.apis.CafeteriasApi
 import labs.pooh.client.infrastructure.ClientException
 import labs.pooh.eaterslab.BuildConfig
+import labs.pooh.eaterslab.repository.dao.CafeteriaDao
+import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
+import labs.pooh.eaterslab.ui.activity.abstracts.RepositoryAccessViewModel
 import labs.pooh.eaterslab.ui.activity.main.MainActivity
+import labs.pooh.eaterslab.util.convertDrawableToBitmap
 import labs.pooh.eaterslab.util.downloadImageFrom
 import java.lang.Exception
 import kotlin.math.exp
 import kotlin.math.pow
 
-class CafeteriaViewModel : ViewModel() {
-
-    private val API = CafeteriasApi(BuildConfig.API_URL)
+class CafeteriaViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessViewModel(notifier) {
 
     private val _cafeteriaName = MutableLiveData<String>()
     val cafeteriaName: LiveData<String> = _cafeteriaName
+
+    private val _cafeteriaOccupancy = MutableLiveData<Int>()
+    val cafeteriaOccupancy: LiveData<Int> = _cafeteriaOccupancy
 
     private val _cafeteriaDescription = MutableLiveData<String>()
     val cafeteriaDescription: LiveData<String> = _cafeteriaDescription
@@ -30,45 +35,35 @@ class CafeteriaViewModel : ViewModel() {
     private val _cafeteriaSubDescription = MutableLiveData<String>()
     val cafeteriaSubDescription: LiveData<String> = _cafeteriaSubDescription
 
-    private val _cafeteriaCurrentDayData = MutableLiveData<List<Double>>()
-    val cafeteriaCurrentDayData: LiveData<List<Double>> = _cafeteriaCurrentDayData
 
     private val _cafeteriaLogo = MutableLiveData<Bitmap?>()
     val cafeteriaLogo: LiveData<Bitmap?> = _cafeteriaLogo
 
-    fun updateCafeteriaTextInfo() {
-        viewModelScope.launch {
-            // TODO create repository for data management and use it here
-           try {
-               val cafeteria = withContext(Dispatchers.IO) { API.cafeteriasRead(MainActivity.lastSelectedCafeteriaId) }
-               _cafeteriaName.value = cafeteria.name
-               _cafeteriaDescription.value = cafeteria.description
-               _cafeteriaSubDescription.value = cafeteria.subDescription
+    private var latestCafeteriaDao: CafeteriaDao? = null
 
-               // for tests generate data
-               _cafeteriaCurrentDayData.value = generateRandomHoursData()
-           } catch (e: ClientException) {
-               // TODO handle errors in common way
-           }
+    fun updateCafeteriaTextInfo() = viewModelScope.launch {
+        updateTextCafeteriaData()
+    }
+
+    fun updateCafeteriaFullData() = viewModelScope.launch {
+        updateTextCafeteriaData()
+        latestCafeteriaDao?.run {
+            downloadContent()
+            _cafeteriaLogo.value = downloadedImage
         }
     }
 
-    fun updateCafeteriaFullData() {
-        updateCafeteriaTextInfo()
-
-        viewModelScope.launch {
-            // TODO create repository for data management and use it here
-            try {
-                // TODO change to model data when ready
-                val urlFromModelData = "https://scontent-vie1-1.xx.fbcdn.net/v/t1.0-9/81886122_868050633623837_983310879560826880_o.jpg?_nc_cat=100&_nc_sid=09cbfe&_nc_oc=AQkNUbuv_hCwJpyAF4NIi9IKR2T3Veyw8q-5lKsYE24CZB0TTrj-J9ypIyuPvDPtd5E&_nc_ht=scontent-vie1-1.xx&oh=4fba692698fdafa5138ab373edea8c36&oe=5EC2C2CC"
-                _cafeteriaLogo.value = withContext(Dispatchers.IO) { downloadImageFrom(urlFromModelData) }
-            } catch (e: Exception) {
-                // TODO handle errors in common way
-            }
+    private suspend fun updateTextCafeteriaData() {
+        val cafeteriaId = MainActivity.lastSelectedCafeteriaId
+        val cafeteria = repository.cafeteriasRead(cafeteriaId)
+        latestCafeteriaDao = cafeteria
+        latestCafeteriaDao?.run {
+            _cafeteriaName.value = name
+            _cafeteriaDescription.value = description
+            _cafeteriaSubDescription.value = subDescription
         }
-    }
 
-    private fun generateRandomHoursData() = List(9) {
-        exp(-((4 - it) / 2.0).pow(2))
-    }.map { it * 10.0 }.toList()
+        // for tests generate data
+        _cafeteriaOccupancy.value = (0..100).random()
+    }
 }

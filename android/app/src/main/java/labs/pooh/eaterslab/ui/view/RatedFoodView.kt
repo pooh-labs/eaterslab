@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.rated_food_view.view.*
 import labs.pooh.eaterslab.R
@@ -43,6 +42,10 @@ class RatedFoodView(context: Context) : CardView(context) {
         initConstructorFields(stars, img, text, price, stepSize)
     }
 
+    constructor(context: Context, stars: Float, resId: Int, text: String, price: Double?, stepSize: Float = 1F) : this(context) {
+        initConstructorFields(stars, resId, text, price, stepSize)
+    }
+
     private fun initConstructorFields(stars: Float, img: Any, text: String, price: Double?, stepSize: Float) {
 
         this.ratingBarStars.stepSize = stepSize
@@ -52,10 +55,13 @@ class RatedFoodView(context: Context) : CardView(context) {
         when (img) {
             is Bitmap -> setImageBitmap(img)
             is Drawable -> setImageDrawable(img)
+            is Int -> setImageResource(img)
         }
     }
 
     private fun setImageDrawable(img: Drawable) = ratedImage.setImageDrawable(img)
 
     private fun setImageBitmap(img: Bitmap) = ratedImage.setImageBitmap(img)
+
+    private fun setImageResource(resId: Int) = ratedImage.setImageResource(resId)
 }
