@@ -6,7 +6,7 @@ import android.graphics.Canvas
 import androidx.core.content.ContextCompat
 
 
-fun convertDrawableToBitmap(context: Context, drawableId: Int): Bitmap? {
+fun convertDrawableToBitmap(context: Context, drawableId: Int): Bitmap {
     return ContextCompat.getDrawable(context, drawableId)?.let { drawable ->
         val bitmap = Bitmap.createBitmap(
             drawable.intrinsicWidth,
@@ -16,5 +16,5 @@ fun convertDrawableToBitmap(context: Context, drawableId: Int): Bitmap? {
         drawable.setBounds(0, 0, canvas.width, canvas.height)
         drawable.draw(canvas)
         bitmap
-    }
+    }!!
 }
