@@ -22,7 +22,7 @@
     <dimen name="map_item_subdescription_margin_top">4dp</dimen>
     <dimen name="card_view_price_size">20sp</dimen>
     <dimen name="card_view_text_size">23sp</dimen>
-    <dimen name="menu_item_image_height">140dp</dimen>
+    <dimen name="menu_item_image_height">150dp</dimen>
     <dimen name="menu_item_bottom_margin">8dp</dimen>
     <dimen name="rating_bar_margin">8dp</dimen>
     <dimen name="menu_item_price_margin">8dp</dimen>

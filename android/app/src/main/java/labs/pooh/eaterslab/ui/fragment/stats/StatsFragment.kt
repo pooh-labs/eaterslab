@@ -30,8 +30,8 @@ class StatsFragment : ThemedAbstractFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val red = ContextCompat.getColor(context!!, R.color.colorAccent)
-        val yellow = ContextCompat.getColor(context!!, R.color.colorPrimaryDark)
+        val red = ContextCompat.getColor(requireContext(), R.color.colorAccent)
+        val yellow = ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark)
 
         val exampleData = listOf(
             List(30) { it + sin(it.toDouble()) },

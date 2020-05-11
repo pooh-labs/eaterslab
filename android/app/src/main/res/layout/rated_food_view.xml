@@ -9,9 +9,8 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:cardCornerRadius="@dimen/menu_card_radius"
-    app:cardUseCompatPadding="true"
-    app:cardElevation="@dimen/menu_card_radius"
-    android:background="?foregroundColor"
+    android:layout_margin="@dimen/menu_card_radius"
+    app:cardBackgroundColor="?foregroundColor"
     tools:context=".ui.view.RatedFoodView">
 
     <androidx.constraintlayout.widget.ConstraintLayout

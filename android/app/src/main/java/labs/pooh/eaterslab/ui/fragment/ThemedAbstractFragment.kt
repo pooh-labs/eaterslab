@@ -19,8 +19,8 @@ abstract class ThemedAbstractFragment : Fragment() {
         }
     }
 
-    val accentColor by lazy { ContextCompat.getColor(context!!, R.color.colorAccent) }
-    val themeColor by lazy { ContextCompat.getColor(context!!, R.color.colorPrimaryDark) }
+    val accentColor by lazy { ContextCompat.getColor(requireContext(), R.color.colorAccent) }
+    val themeColor by lazy { ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark) }
 
     protected fun printTicks() = !((activity as? AbstractThemedActivity)?.isDarkModeEnabled() ?: false)
 }

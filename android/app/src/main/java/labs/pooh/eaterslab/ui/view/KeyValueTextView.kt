@@ -58,9 +58,8 @@ class KeyValueTextView(context: Context, attrs: AttributeSet?, defStyleAttr: Int
         if (expandable) {
             expandButton.setImageResource(R.drawable.ic_expand_more)
             expandButton.visibility = View.VISIBLE
-            expandButton.setOnClickListener {
-                manageExpandableText()
-            }
+            expandButton.setOnClickListener { manageExpandableText() }
+            keyValueRoot.setOnClickListener { manageExpandableText() }
             valueText.visibility = View.GONE
         }
     }

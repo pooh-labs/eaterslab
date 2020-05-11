@@ -45,6 +45,7 @@ class MenuFragment : Fragment() {
     }
 
     override fun onResume() {
+        menuOptionsGridLayout.removeAllViews()
         super.onResume()
         slideshowViewModel.updateMenuOptionsData()
     }
@@ -52,7 +53,6 @@ class MenuFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         slideshowViewModel.clearMenuOptionsData()
-        menuOptionsGridLayout.removeAllViews()
     }
 
     private fun addMenuOptionToView(menuOption: FixedMenuOptionDao) {
@@ -63,10 +63,10 @@ class MenuFragment : Fragment() {
         layoutParams.width = 0
         val option = with(menuOption.downloadedImage) {
             if (this != null) {
-                RatedFoodView(context!!, (1..5).random().toFloat(), this, menuOption.name, menuOption.price)
+                RatedFoodView(requireContext(), (1..5).random().toFloat(), this, menuOption.name, menuOption.price)
             }
             else {
-                RatedFoodView(context!!, (1..5).random().toFloat(), R.drawable.ic_no_food_image, menuOption.name, menuOption.price)
+                RatedFoodView(requireContext(), (1..5).random().toFloat(), R.drawable.ic_no_food_image, menuOption.name, menuOption.price)
             }
         }
         option.layoutParams = layoutParams
