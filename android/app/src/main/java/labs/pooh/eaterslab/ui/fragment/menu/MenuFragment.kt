@@ -4,16 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.fragment_menu.*
+import kotlinx.android.synthetic.main.fragment_slideshow.*
 import labs.pooh.eaterslab.R
 import labs.pooh.eaterslab.repository.dao.FixedMenuOptionDao
 import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
 import labs.pooh.eaterslab.ui.activity.abstracts.viewModelFactory
 import labs.pooh.eaterslab.ui.view.RatedFoodView
+import labs.pooh.eaterslab.util.convertDrawableToBitmap
 
 class MenuFragment : Fragment() {
 
@@ -24,11 +25,11 @@ class MenuFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_menu, container, false)
+        return inflater.inflate(R.layout.fragment_slideshow, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,7 +46,6 @@ class MenuFragment : Fragment() {
     }
 
     override fun onResume() {
-        menuOptionsGridLayout.removeAllViews()
         super.onResume()
         slideshowViewModel.updateMenuOptionsData()
     }
@@ -53,24 +53,15 @@ class MenuFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         slideshowViewModel.clearMenuOptionsData()
+        verticalReviewSlideShow.removeAllViews()
     }
 
     private fun addMenuOptionToView(menuOption: FixedMenuOptionDao) {
-        val layoutParams: GridLayout.LayoutParams = GridLayout.LayoutParams(
-            GridLayout.spec(GridLayout.UNDEFINED, 1f),
-            GridLayout.spec(GridLayout.UNDEFINED, 1f)
+        verticalReviewSlideShow.addView(
+            RatedFoodView(context!!, (1..5).random().toFloat(),
+                menuOption.downloadedImage ?: convertDrawableToBitmap(context!!, R.drawable.no_food_image),
+                menuOption.name, menuOption.price)
         )
-        layoutParams.width = 0
-        val option = with(menuOption.downloadedImage) {
-            if (this != null) {
-                RatedFoodView(requireContext(), (1..5).random().toFloat(), this, menuOption.name, menuOption.price)
-            }
-            else {
-                RatedFoodView(requireContext(), (1..5).random().toFloat(), R.drawable.ic_no_food_image, menuOption.name, menuOption.price)
-            }
-        }
-        option.layoutParams = layoutParams
-        menuOptionsGridLayout.addView(option)
     }
 
 }

@@ -10,6 +10,7 @@ import labs.pooh.eaterslab.repository.dao.CafeteriaDao
 import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
 import labs.pooh.eaterslab.ui.activity.abstracts.RepositoryAccessViewModel
 
+
 class MapViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessViewModel(notifier) {
 
     private val _cafeteriasLiveData = MutableLiveData<List<CafeteriaDao>>().apply {

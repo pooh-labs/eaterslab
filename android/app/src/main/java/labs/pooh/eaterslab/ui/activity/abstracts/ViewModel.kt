@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import labs.pooh.eaterslab.repository.CafeteriasRepository
 
+
 @Suppress("UNCHECKED_CAST")
 inline fun <VM : ViewModel> viewModelFactory(crossinline construct: () -> VM) =
     object : ViewModelProvider.Factory {
