@@ -68,7 +68,4 @@
     <string name="opening_hours">Opening hours</string>
     <string name="open_from">From</string>
     <string name="open_to">To</string>
-    <string name="connection_lost">Connection lost…</string>
-    <string name="data_fetch_error">Error when fetching data from server!</string>
-    <string name="connection_restored">Connection restored</string>
 </resources>

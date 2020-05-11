@@ -61,7 +61,4 @@
     <string name="open_from">Od</string>
     <string name="open_to">Do</string>
     <string name="address">Adres</string>
-    <string name="connection_lost">Utracono połączenie…</string>
-    <string name="data_fetch_error">Błąd podczas pobierania danych z serwera!</string>
-    <string name="connection_restored">Przywrócono połączenie</string>
 </resources>
