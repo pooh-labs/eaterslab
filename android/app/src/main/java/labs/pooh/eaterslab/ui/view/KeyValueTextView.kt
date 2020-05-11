@@ -83,5 +83,4 @@ class KeyValueTextView(context: Context, attrs: AttributeSet?, defStyleAttr: Int
             valueText.text = value
             valueTextExpanded.text = value
         }
-
 }
