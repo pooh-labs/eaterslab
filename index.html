@@ -559,9 +559,28 @@ template: inverse
 
 ** Co robi serwer? **
 
-* Udostępnia wygenerowany na podstawie modeli interfejs [admina](https://eaterslab.herokuapp.com/admin/).
+* Udostępnia wygenerowany na podstawie modeli interfejs [admina](https://eaterslab.herokuapp.com/admin/) w którym można zarządzać danymi.
 
 * Udostępnia automatycznie wygenerowany na podstawie kodu dokument [API](https://eaterslab.herokuapp.com/doc).
+
+* Komunikuje się z bazą danych oraz posiada własny, intuicyjny dla programisty sposób modelowania bazy.
+
+Przykład: 
+
+```python
+class Cafeteria(models.Model):
+    name = models.CharField(max_length=128)
+    description = models.CharField(max_length=256)
+    sub_description = models.CharField(max_length=512)
+    latitude = models.FloatField(validators=[MinValueValidator(-90.0), MaxValueValidator(90.0)])
+    longitude = models.FloatField(validators=[MinValueValidator(-180.0), MaxValueValidator(180.0)])
+    capacity = models.IntegerField(validators=[MinValueValidator(1)])
+    logo_url = models.CharField(max_length=2048, validators=[URLValidator])
+    address = models.CharField(max_length=256)
+    opened_from = models.TimeField()
+    opened_to = models.TimeField()
+
+```
 
 ]
 
@@ -605,15 +624,16 @@ Pobawić się na /doc odbieraniem danych o przykładowych stołówkach i wysła�
 
 ** Baza danych: PostgreSQL **
 
-* Szybka i rozbudowana.
-
 * Obsługuje duży i asynchroniczny dostęp do danych.
+
+* W pełni wspierana i zalecana przez Django.
 
 ]
 
 ???
 
 Różne kamery mogą naraz wysyłać eventy, stołówki mogą w tym czasie pobierać dane...
+Django obsługuje to wszystko asynchronicznie i wymaga do tego asynchronicznego dostępu do bazy danych.
 
 ---
 
@@ -653,7 +673,7 @@ widoki oraz autentykację.
   ### API
   ### Baza Danych
   ### Dodatki
-  #### Heroku
+  ### - Heroku
 ]
 .right-column[
 
@@ -663,11 +683,13 @@ widoki oraz autentykację.
 
 [build](https://eaterslab.herokuapp.com/) &ndash; [dev](https://eaterslab-dev.herokuapp.com/)
 
-* Buduje serwer przy każdym commit'cie.
+* Skonfigurowana jako workflow &ndash; przy każdym push'u na repozytorium:
 
-* Wykonuje automatyczne testy.
+  - Buduje na nowo serwer.
 
-* Hostuje bazę danych.
+  - Wykonuje automatyczne testy.
+
+* Możliwość łączenia się z bazą danych PostgreSQL hostowaną na chmurze.
 
 * Posiada certyfikat SSL &ndash; transport danych po HTTPS.
 
