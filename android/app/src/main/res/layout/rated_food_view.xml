@@ -11,7 +11,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:cardBackgroundColor="?foregroundColor"
+        app:cardBackgroundColor="?backgroundColor"
         app:cardElevation="@dimen/menu_card_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,7 +29,7 @@
                 android:layout_height="@dimen/menu_item_image_height"
                 android:layout_marginBottom="@dimen/menu_item_bottom_margin"
                 android:adjustViewBounds="true"
-                android:background="?foregroundColor"
+                android:background="?backgroundColor"
                 android:contentDescription="@string/food_image"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
