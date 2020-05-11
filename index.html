@@ -751,7 +751,7 @@ template: inverse
 ]
 .right-column[
 
-Celem aplikacji jest zapenienie użytkownikom dostępu do danych udostępnianych przez publiczne API.
+Celem aplikacji jest zapewnienie użytkownikom dostępu do danych udostępnianych przez publiczne API.
 
 
 Aplikacja składa się z kilku podstawowych funkcjonalności:
@@ -762,35 +762,37 @@ Aplikacja składa się z kilku podstawowych funkcjonalności:
 
 - wyszukiwania miejsc tekstem (**WIP**)
 
-- podstawowego widoku wybranego miejsca
+- dostępu do danych miejsca
 
-- statystyk miejsca (**WIP**)
+  * podstawowego widoku wybranego miejsca
 
-- menu wybranego miejsca
+  * statystyk miejsca (**WIP**)
+
+  * menu wybranego miejsca
 
 - ustawień
 
-Każda z nich została zaimplementowana jako osobna aktyność, dzięki czemu możliwe jest uruchomienie ich spoza naszej aplikacji. 
+Implemetacja funkcjonalności jako osobnych aktyności, co umożliwia uruchomianie konkretnych funkcjonalności spoza naszej aplikacji. 
 
 ]
 
 ---
 .left-column[
   ## Podstawowe składniki
-  ## - Zarządza-nie danymi
+  ## Zarządzanie danymi
 ]
 .right-column[
 Zarządzanie danymi w aplikacji
 
 - mapowanie na specyficzny dla aplikacji format
 
-- trzymanie cache'owane dane dopowiednich obiektów
+- trzymanie cache'owane dane odpowiednich obiektów
 
 - informowanie użytkownika o błędach
 
 Sposób komunikacji z serwerem:
 
-- wykorzystanie generowanego kodu na podstawie definicji API
+- wykorzystanie kodu generowanego na podstawie definicji API
 
 - asynchroniczne zapytania do API w ramach zakresu widoków
 
@@ -798,7 +800,7 @@ Sposób komunikacji z serwerem:
 ]
 ---
 .left-column[
-  ## - Powitanie
+  ## Powitanie
 ]
 .right-column[
 
@@ -818,8 +820,8 @@ Dwie podstawowe ścieżki wykorzystania aplikacji:
 ]
 ---
 .left-column[
-  ## - Powitanie
-  ## - Mapa
+  ## Powitanie
+  ## Mapa
 ]
 .right-column[
 
@@ -841,9 +843,9 @@ Możwliwość wyszukiwania na mapie:
 ]
 ---
 .left-column[
-  ## - Powitanie
-  ## - Mapa
-  ## - Widok podstawowy
+  ## Powitanie
+  ## Mapa
+  ## Widok podstawowy
 ]
 .right-column[
 
@@ -865,10 +867,10 @@ Prezentacja danych dostarczonych z serwera:
 ]
 ---
 .left-column[
-  ## - Powitanie
-  ## - Mapa
-  ## - Widok podstawowy
-  ## - Statystyki
+  ## Powitanie
+  ## Mapa
+  ## Widok podstawowy
+  ## Statystyki
 ]
 .right-column[
 
@@ -890,11 +892,11 @@ Przygotowanie narzędzi do prezentacji statystyk:
 ]
 ---
 .left-column[
-  ## - Powitanie
-  ## - Mapa
-  ## - Widok podstawowy
-  ## - Statystyki
-  ## - Menu
+  ## Powitanie
+  ## Mapa
+  ## Widok podstawowy
+  ## Statystyki
+  ## Menu
 ]
 .right-column[
 
@@ -914,12 +916,12 @@ Prezentacja stałego menu danego miejsca:
 ]
 ---
 .left-column[
-  ## - Powitanie
-  ## - Mapa
-  ## - Widok podstawowy
-  ## - Statystyki
-  ## - Menu
-  ## - Ustawie-nia
+  ## Powitanie
+  ## Mapa
+  ## Widok podstawowy
+  ## Statystyki
+  ## Menu
+  ## Ustawienia
 ]
 .right-column[
 
@@ -943,7 +945,7 @@ Możliwość zmiany preferencji aplikacji w perzystentny sposób:
 ]
 ---
 .left-column[
-  ## - Ciemny motyw aplikacji
+  ## Ciemny motyw aplikacji
 ]
 .right-column[
 <img src="./img/hello_dark.jpg" alt="stats" height="300px"/>
