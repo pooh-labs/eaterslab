@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/menuOptionsGridLayout"
-            android:padding="@dimen/slideshow_padding"
+            android:padding="@dimen/menu_padding"
             android:columnCount="2"/>
 
     </ScrollView>

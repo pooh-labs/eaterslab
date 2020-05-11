@@ -30,7 +30,7 @@
     <dimen name="slideshow_margin">8dp</dimen>
     <dimen name="menu_item_card_height">220dp</dimen>
     <dimen name="menu_card_radius">4dp</dimen>
-    <dimen name="slideshow_padding">16dp</dimen>
+    <dimen name="menu_padding">16dp</dimen>
     <dimen name="hello_message_width">200dp</dimen>
     <dimen name="hello_message_size">30sp</dimen>
     <dimen name="icon_big">130dp</dimen>

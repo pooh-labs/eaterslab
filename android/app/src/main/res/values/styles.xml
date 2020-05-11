@@ -9,6 +9,9 @@
         <item name="foregroundSecondColor">@color/colorLightGray</item>
         <item name="foregroundColorText">@color/colorForegroundDark</item>
         <item name="android:windowDisablePreview">true</item>
+        <item name="android:textColor">@color/colorForegroundDark</item>
+        <item name="android:textColorPrimary">@color/colorForegroundDark</item>
+        <item name="android:textColorSecondary">@color/colorForegroundDark</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -30,6 +33,9 @@
         <item name="foregroundColorText">@color/colorWhite</item>
         <item name="android:windowBackground">@color/colorBackgroundDark</item>
         <item name="android:windowDisablePreview">true</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textColorPrimary">@color/colorWhite</item>
+        <item name="android:textColorSecondary">@color/colorWhite</item>
     </style>
 
     <style name="AppTheme.Dark.NoActionBar">
