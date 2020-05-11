@@ -35,6 +35,14 @@ class CafeteriaViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessV
     private val _cafeteriaSubDescription = MutableLiveData<String>()
     val cafeteriaSubDescription: LiveData<String> = _cafeteriaSubDescription
 
+    private val _cafeteriaOpenFrom = MutableLiveData<String>()
+    val cafeteriaOpenFrom: LiveData<String> = _cafeteriaOpenFrom
+
+    private val _cafeteriaOpenTo = MutableLiveData<String>()
+    val cafeteriaOpenTo: LiveData<String> = _cafeteriaOpenTo
+
+    private val _cafeteriaAddress = MutableLiveData<String>()
+    val cafeteriaAddress: LiveData<String> = _cafeteriaAddress
 
     private val _cafeteriaLogo = MutableLiveData<Bitmap?>()
     val cafeteriaLogo: LiveData<Bitmap?> = _cafeteriaLogo
@@ -61,6 +69,9 @@ class CafeteriaViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessV
             _cafeteriaName.value = name
             _cafeteriaDescription.value = description
             _cafeteriaSubDescription.value = subDescription
+            _cafeteriaOpenFrom.value = openedFrom
+            _cafeteriaOpenTo.value = openedTo
+            _cafeteriaAddress.value = address
         }
 
         // for tests generate data

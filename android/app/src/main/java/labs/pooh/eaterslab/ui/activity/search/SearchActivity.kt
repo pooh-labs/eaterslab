@@ -1,7 +1,6 @@
 package labs.pooh.eaterslab.ui.activity.search
 
 import android.os.Bundle
-import android.view.View
 import kotlinx.android.synthetic.main.activity_search.*
 import labs.pooh.eaterslab.R
 import labs.pooh.eaterslab.ui.activity.abstracts.AbstractRevealedActivity

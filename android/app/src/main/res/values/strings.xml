@@ -52,6 +52,7 @@
     <string name="cafeteria_logo">Cafeteria logo</string>
     <string name="enjoy_your_meal">Enjoy\nyour meal! </string>
     <string name="your_place">Your place</string>
+    <string name="address">Address</string>
     <string name="description">Description</string>
     <string name="no_data">no data</string>
     <string name="key">key</string>
@@ -64,4 +65,7 @@
     <string name="data_fetch_error">Error when fetching data from server!</string>
     <string name="connection_restored">Connection restored</string>
     <string name="relative_occupancy">Relative occupancy</string>
+    <string name="opening_hours">Opening hours</string>
+    <string name="open_from">From</string>
+    <string name="open_to">To</string>
 </resources>

@@ -40,13 +40,15 @@
     <dimen name="loading_margin">64dp</dimen>
     <dimen name="loading_text_margin">16dp</dimen>
     <dimen name="loading_text_size">24sp</dimen>
+    <dimen name="occupancy_title_text_size">24sp</dimen>
     <dimen name="logo_vertical_margin">32dp</dimen>
     <dimen name="logo_horizontal_margin">16dp</dimen>
-    <dimen name="occupancy_horizontal_margin">32dp</dimen>
+    <dimen name="occupancy_horizontal_margin">48dp</dimen>
     <dimen name="enjoy_font_size">45sp</dimen>
     <dimen name="logo_free_space">32dp</dimen>
     <dimen name="hello_data_font">24sp</dimen>
     <dimen name="data_margin_top">16dp</dimen>
     <dimen name="key_value_margin">8dp</dimen>
     <dimen name="expanded_margin">16dp</dimen>
+    <dimen name="occupancy_top_margin">8dp</dimen>
 </resources>

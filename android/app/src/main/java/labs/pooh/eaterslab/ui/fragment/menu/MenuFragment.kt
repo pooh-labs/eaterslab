@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -51,20 +52,25 @@ class MenuFragment : Fragment() {
     override fun onPause() {
         super.onPause()
         slideshowViewModel.clearMenuOptionsData()
-        verticalReviewSlideShow.removeAllViews()
+        menuOptionsGridLayout.removeAllViews()
     }
 
     private fun addMenuOptionToView(menuOption: FixedMenuOptionDao) {
-        verticalReviewSlideShow.addView(
-            with(menuOption.downloadedImage) {
-                if (this != null) {
-                    RatedFoodView(context!!, (1..5).random().toFloat(), this, menuOption.name, menuOption.price)
-                }
-                else {
-                    RatedFoodView(context!!, (1..5).random().toFloat(), R.drawable.ic_no_food_image, menuOption.name, menuOption.price)
-                }
-            }
+        val layoutParams: GridLayout.LayoutParams = GridLayout.LayoutParams(
+            GridLayout.spec(GridLayout.UNDEFINED, 1f),
+            GridLayout.spec(GridLayout.UNDEFINED, 1f)
         )
+        layoutParams.width = 0
+        val option = with(menuOption.downloadedImage) {
+            if (this != null) {
+                RatedFoodView(context!!, (1..5).random().toFloat(), this, menuOption.name, menuOption.price)
+            }
+            else {
+                RatedFoodView(context!!, (1..5).random().toFloat(), R.drawable.ic_no_food_image, menuOption.name, menuOption.price)
+            }
+        }
+        option.layoutParams = layoutParams
+        menuOptionsGridLayout.addView(option)
     }
 
 }

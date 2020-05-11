@@ -6,6 +6,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="foregroundColor">@color/colorWhite</item>
+        <item name="foregroundSecondColor">@color/colorLightGray</item>
         <item name="foregroundColorText">@color/colorForegroundDark</item>
         <item name="android:windowDisablePreview">true</item>
     </style>
@@ -25,6 +26,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDarker</item>
         <item name="colorAccent">@color/colorAccentDarker</item>
         <item name="foregroundColor">@color/colorForegroundDark</item>
+        <item name="foregroundSecondColor">@color/colorMidGray</item>
         <item name="foregroundColorText">@color/colorWhite</item>
         <item name="android:windowBackground">@color/colorBackgroundDark</item>
         <item name="android:windowDisablePreview">true</item>

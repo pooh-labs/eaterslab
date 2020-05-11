@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.4" />
+        app:layout_constraintGuide_percent="0.45" />
 
     <TextView
         android:id="@+id/textViewEnjoy"
@@ -61,76 +61,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <include
+                layout="@layout/base_cafeteria_data"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <labs.pooh.eaterslab.ui.view.KeyValueTextView
-                    android:id="@+id/placeName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
-                    android:layout_marginTop="@dimen/logo_horizontal_margin"
-                    android:text="@string/your_place"
-                    app:key="@string/your_place"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:value="@string/load_placeholder" />
-
-                <labs.pooh.eaterslab.ui.view.KeyValueTextView
-                    android:id="@+id/placeDescription"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
-                    android:layout_marginTop="@dimen/data_margin_top"
-                    android:text="@string/your_place"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/placeName"
-                    app:key="@string/description"
-                    app:value="@string/load_placeholder"/>
-
-                <labs.pooh.eaterslab.ui.view.KeyValueTextView
-                    android:id="@+id/placeSubDescription"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
-                    android:layout_marginTop="@dimen/data_margin_top"
-                    android:text="@string/your_place"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/placeDescription"
-                    app:key="@string/subdescription"
-                    app:value="@string/load_placeholder"
-                    app:expandable="true"/>
-
-                <TextView
-                    android:id="@+id/occupancyTitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/placeSubDescription"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="@dimen/data_margin_top"
-                    android:fontFamily="@font/alegreya_sc_bold"
-                    android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
-                    android:textSize="@dimen/loading_text_size"
-                    android:text="@string/relative_occupancy"/>
-
-                <ProgressBar
-                    android:id="@+id/occupancyBar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="0dp"
-                    android:layout_height="@dimen/item_progress_height"
-                    android:layout_marginHorizontal="@dimen/occupancy_horizontal_margin"
-                    android:layout_marginVertical="@dimen/data_margin_top"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/occupancyTitle" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

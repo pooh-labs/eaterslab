@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/menuOptionsGridLayout"
             android:padding="@dimen/slideshow_padding"
-            android:columnCount="1"/>
+            android:columnCount="2"/>
 
     </ScrollView>
 
