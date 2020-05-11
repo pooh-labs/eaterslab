@@ -5,18 +5,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/menu_item_card_height"
-    android:background="?android:windowBackground"
-    android:padding="@dimen/menu_card_radius">
+    android:background="?android:windowBackground">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:cardBackgroundColor="?backgroundColor"
         app:cardElevation="@dimen/menu_card_radius"
+        app:cardUseCompatPadding="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:cardMaxElevation="@dimen/menu_card_radius"
+        android:padding="@dimen/menu_card_radius"
+        android:background="?android:windowBackground"
         tools:context=".ui.view.RatedFoodView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
