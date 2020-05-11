@@ -320,7 +320,7 @@ Tutaj wrzucamy notatki co miałoby być powiedziane do tego slajdu o kamerach.
 
 Tutaj wrzucamy notatki co miałoby być powiedziane do tego slajdu o serwerze.
 
-... bla bla bla
+Mhm.
 
 ---
 
@@ -550,6 +550,160 @@ browser window.
 template: inverse
 
 ## Serwer danych **Django**
+---
+.left-column[
+  ## Django
+  ### Co robi
+]
+.right-column[
+
+** Co robi serwer? **
+
+* Udostępnia wygenerowany na podstawie modeli interfejs [admina](https://eaterslab.herokuapp.com/admin/) w którym można zarządzać danymi.
+
+* Udostępnia automatycznie wygenerowany na podstawie kodu dokument z definicją [API](https://eaterslab.herokuapp.com/doc).
+
+* Komunikuje się z bazą danych oraz posiada własny, intuicyjny dla programisty sposób modelowania bazy.
+
+Przykład: 
+
+```python
+class Cafeteria(models.Model):
+    name = models.CharField(max_length=128)
+    description = models.CharField(max_length=256)
+    sub_description = models.CharField(max_length=512)
+    latitude = models.FloatField(validators=[MinValueValidator(-90.0), MaxValueValidator(90.0)])
+    longitude = models.FloatField(validators=[MinValueValidator(-180.0), MaxValueValidator(180.0)])
+    capacity = models.IntegerField(validators=[MinValueValidator(1)])
+    logo_url = models.CharField(max_length=2048, validators=[URLValidator])
+    address = models.CharField(max_length=256)
+    opened_from = models.TimeField()
+    opened_to = models.TimeField()
+
+```
+
+]
+
+???
+
+W interfejsie admina mamy dostęp do różnych elementów naszej bazy danych, takich jak 
+użytkownicy, kamery, stołówki ...
+
+API jest generowane automatycznie jednym z zainstalowanych dodatków do Django REST framework.
+
+---
+
+.left-column[
+  ## Django
+  ### Co robi
+  ### API
+]
+.right-column[
+
+** [API](https://eaterslab.herokuapp.com/doc) &ndash; między innymi: **
+
+* Odbiór przez aplikacje mobilne przeróżnych danych &ndash; przede wszystkim dane o stołówkach.
+
+* Wysyłanie przez kamery danych o zajętości stołówki.
+
+]
+
+???
+
+Pobawić się na /doc odbieraniem danych o przykładowych stołówkach i wysłać losowy camera event.
+
+---
+
+.left-column[
+  ## Django
+  ### Co robi
+  ### API
+  ### Baza Danych
+]
+.right-column[
+
+** Baza danych: PostgreSQL **
+
+* Obsługuje duży i asynchroniczny dostęp do danych.
+
+* W pełni wspierana i zalecana przez Django.
+
+]
+
+???
+
+Różne kamery mogą naraz wysyłać eventy, stołówki mogą w tym czasie pobierać dane...
+Django obsługuje to wszystko asynchronicznie i wymaga do tego asynchronicznego dostępu do bazy danych.
+
+---
+
+.left-column[
+  ## Django
+  ### Co robi
+  ### API
+  ### Baza Danych
+  ### Dodatki
+]
+.right-column[
+
+** Dodatki **
+
+* [Django REST framework](https://www.django-rest-framework.org/)
+
+Budowanie API &ndash; serializacja danych, widoki API, autentykacja.
+
+* [drf-yasg](https://github.com/axnsan12/drf-yasg) &ndash; generacja dokumentu API.
+
+]
+
+???
+
+* Najważniejszym frameworkiem dodanym w naszym serwerze do Django jest Django REST framework.
+
+* Korzystając z natywnych modeli bazodanowych Django pozwala w prosty sposób tworzyć serializację a następnie
+widoki oraz autentykację. 
+
+* drf-yash tworzy /doc i .yaml
+
+---
+
+.left-column[
+  ## Django
+  ### Co robi
+  ### API
+  ### Baza Danych
+  ### Dodatki
+  ### - Heroku
+]
+.right-column[
+
+** Heroku **
+
+* Hostuje serwer na chmurze.
+
+[production](https://eaterslab.herokuapp.com/) &ndash; [dev](https://eaterslab-dev.herokuapp.com/)
+
+* Skonfigurowana jako workflow &ndash; przy każdym push'u na repozytorium:
+
+  - Buduje na nowo serwer.
+
+  - Wykonuje automatyczne testy.
+
+* Możliwość łączenia się z bazą danych PostgreSQL hostowaną na chmurze.
+
+* Posiada certyfikat SSL &ndash; transport danych po HTTPS.
+
+]
+
+???
+
+* Heroku to nasz workflow - ktoś commituje coś na repozytorium, wykonują się testy, strona jest budowana i hostowana w sieci, dzięki czemu można od razu testować.
+* Nasz plan jest w danym momencie w pełni darmowy - mimo ograniczeń jesteśmy w stanie zrobić aż tyle.
+* Pozwala na proste skalowanie środowiska.
+
+
+KONIECCC - Rhantolq
+
 ---
 .left-column[
   ## Markdown extensions
