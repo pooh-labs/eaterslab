@@ -385,6 +385,116 @@ template: inverse
 ## Urządzenia śledzące - **kamery z RaspberryPi**
 ---
 .left-column[
+  ## Kamera
+  ### Co robi
+]
+.right-column[
+
+** Co robią kamery? **
+
+* Wczytują obraz z jednego z dostępnych źródeł (kamerka USB, RPi Camera Module, plik wideo).
+
+* Rozpoznają pojedyncze osoby na obrazie.
+
+* Grupują i wysyłają dane do serwera.
+      * `person_entered`
+      * `person_left`
+      * `monitoring_started`
+      * `monitoring_ended`
+
+* Zapisują lokalne statystyki.
+]
+---
+
+.left-column[
+  ## Kamera
+  ### Co robi
+  ### Jak działa
+]
+.right-column[
+
+* Śledzi pozycje osób na obrazie.
+* Sprawdza, od której strony osoba przekracza linię.
+
+<img src="./img/opencv_people_counter_result01.gif" alt="people on GIF" style="height: 400px;" />
+]
+---
+
+.left-column[
+  ## Kamera
+  ### Co robi
+  ### Jak działa
+  ### Etap 1
+]
+.right-column[
+### Rozpoznawanie osób
+
+* Uruchamia gotową, wytrenowaną sieć neuronową na pojedynczej klatce (`cv2.dnn`)
+
+* Sieć zwraca wierzchołki prostokąta dla każdego obiektu (`(startX, startY, endX, endY)`)
+
+* Obliczamy środek prostokąta i zachowujemy dane
+
+Kosztowny etap, więc uruchamiany co np. 30 klatek.
+
+]
+---
+
+.left-column[
+  ## Kamera
+  ### Co robi
+  ### Jak działa
+  ### Etap 1
+  ### Etap 2
+]
+.right-column[
+### Śledzenie osób
+
+* Działa na każdym obiekcie oddzielnie
+
+* Uruchamia algorytm śledzenia z bibilioteki `dlib` podając dane prostokąta
+
+* Otrzymuje nowe pozycje obiektów
+
+* Dla każdej starej pozycji przyporządkowuje nową, najbliższą
+
+* Jeżeli obiekt przekroczył linię, to osoba weszła/wyszła
+
+]
+
+---
+
+.left-column[
+  ## Kamera
+  ### Co robi
+  ### Jak działa
+  ### Etap 1
+  ### Etap 2
+  ### Technologie
+]
+.right-column[
+
+* Python
+
+    * Używamy tego języka również na serwerze
+    
+    * Dobre wsparcie dla RaspberryPi
+
+    * Automatyczny generator dla klienta API
+
+    * Bogate wsparcie dla uczenia maszynowego
+
+* OpenCV, `dlib`
+
+    * Gotowe implementacje algorytmów oszczędzają pracy
+
+    * Jeden algorytm dokładny, drugi szybki
+
+]
+
+---
+
+.left-column[
   ## Markdown extensions
 ]
 .right-column[
