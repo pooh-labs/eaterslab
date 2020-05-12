@@ -13,7 +13,6 @@ if [ "$PWD" != "${SCRIPT_PATH}" ]; then
 fi
 
 # Install Python, OpenJDK and wget
-sudo apt-get update &&
 sudo apt-get install python3.7 python3-pip python3-setuptools openjdk-11-jre-headless wget &&
 sudo pip3 install pipenv &&
 
@@ -28,4 +27,4 @@ java -jar openapi-generator-cli.jar generate -i "${API_PATH}" -g python -o "${AP
 pipenv install
 
 # Set up paths
-mkdir archives
+mkdir -p archives

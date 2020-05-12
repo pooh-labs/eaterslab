@@ -1,206 +1,407 @@
-openapi: "3.0.0"
+swagger: '2.0'
 info:
-  version: 0.0.0
   title: EatersLab API
-servers:
-  - url: https://eaterslab.example/beta
+  version: v1
+host: eaterslab.herokuapp.com
+schemes:
+  - https
+basePath: /api/beta
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+  - Basic: []
 paths:
-  /cameras/{id}/events:
-    post:
-      summary: Capture single camera event from authenticated camera
-      security:
-        - deviceId: []
-          apikey: []
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            minimum: 1
-          description: Camera ID
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CameraEvent"
-      responses:
-        201:
-          description: Event saved.
-        401:
-          $ref: '#/components/responses/KeyUnauthorizedError'
-        500:
-          description: Internal server error. Event not saved.
-  /cameras/{id}/events/batch:
-    post:
-      summary: Log batch of camera events from authenticated camera
-      security:
-        - deviceId: []
-          apikey: []
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: integer
-            minimum: 1
-          description: Camera ID
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CameraEventArray"
-      responses:
-        201:
-          description: All log entries were created
-        401:
-          $ref: '#/components/responses/KeyUnauthorizedError'
-        500:
-          description: Internal server error. No events saved.
-  /cafeterias:
+  /cafeterias/:
     get:
-      summary: List all cafeterias
+      operationId: cafeterias_list
+      description: ''
+      parameters: []
       responses:
-        200:
-          description: Array of cafeterias
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CafeteriaPublicArray"
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-    post:
-      summary: Create new cafeteria
-      requestBody:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Cafeteria'
+      tags:
+        - cafeterias
+    parameters: []
+  /cafeterias/{cafeteria_pk}/fixed_menu_options/:
+    get:
+      operationId: cafeterias_fixed_menu_options_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FixedMenuOption'
+      tags:
+        - cafeterias
+    parameters:
+      - name: cafeteria_pk
+        in: path
         required: true
-        content:
-          application/json:
-            schema:
-              allOf:
-                - $ref: "#/components/schemas/CafeteriaPublicProperties"
-                - $ref: "#/components/schemas/CafeteriaPrivateProperties"
+        type: string
+  /cafeterias/{cafeteria_pk}/fixed_menu_options/{id}/:
+    get:
+      operationId: cafeterias_fixed_menu_options_read
+      description: ''
+      parameters: []
       responses:
-        201:
-          description: New cafeteria ID
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ObjectId"
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-components:
-  securitySchemes:
-    deviceId:
-      type: apiKey
-      in: header
-      name: X-DEVICE-ID
-    apiKey:
-      type: apiKey
-      in: header
-      name: X-API-KEY
-  schemas:
-    ObjectId:
-      required:
-        - id
-      properties:
-        id:
-          type: integer
-          format: int32
-          minimum: 1
-    Timestamp:
-      description: Timestamp with RFC 3339 datetime.
-      required:
-        - timestamp
-      properties:
-        timestamp:
-          type: string
-          format: date-time
-      example:
-        timestamp: "2017-07-21T17:32:28Z"
-    CameraEventType:
-      required:
-        - event_type
-      properties:
-        event_type:
-          type: string
-          enum:
-            - monitoring_started
-            - monitoring_ended
-            - person_entered
-            - person_left
-      example:
-        event_type: "person_entered"
-    CameraEvent:
-      allOf:
-          - $ref: "#/components/schemas/CameraEventType"
-          - $ref: "#/components/schemas/Timestamp"
-    CameraEventArray:
-      type: array
-      items:
-        $ref: "#/components/schemas/CameraEvent"
-      example:
-        - event_type: "monitoring_started"
-          timestamp: "2017-07-21T17:32:28Z"
-        - event_type: "person_entered"
-          timestamp: "2017-07-21T17:32:56Z"
-        - event_type: "person_entered"
-          timestamp: "2017-07-21T17:33:10Z"
-        - event_type: "person_left"
-          timestamp: "2017-07-21T17:33:40Z"
-    CafeteriaPublicProperties:
-      required:
-        - name
-      properties:
-        name:
-          type: string
-    CafeteriaPrivateProperties:
-      required:
-        - capacity
-      properties:
-        capacity:
-          type: integer
-          format: int32
-          minimum: 1
-    CafeteriaPublic:
-      allOf:
-        - $ref: "#/components/schemas/ObjectId"
-        - $ref: "#/components/schemas/CafeteriaPublicProperties"
-      example:
-        id: 1
-        name: "Kubuś"
-    CafeteriaPrivate:
-      allOf:
-        - $ref: "#/components/schemas/ObjectId"
-        - $ref: "#/components/schemas/CafeteriaPublicProperties"
-        - $ref: "#/components/schemas/CafeteriaPrivateProperties"
-      example:
-        id: 1
-        name: "Kubuś"
-        capacity: 50
-    CafeteriaPublicArray:
-      type: array
-      items:
-        $ref: "#/components/schemas/CafeteriaPublic"
-    Error:
-      required:
-        - code
-        - message
-      properties:
-        code:
-          type: integer
-          format: int32
-        message:
-          type: string
-  responses:
-    KeyUnauthorizedError:
-      description: API key is missing or invalid
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/FixedMenuOption'
+      tags:
+        - cafeterias
+    parameters:
+      - name: cafeteria_pk
+        in: path
+        required: true
+        type: string
+      - name: id
+        in: path
+        required: true
+        type: string
+  /cafeterias/{cafeteria_pk}/fixed_menu_options/{option_pk}/reviews/:
+    get:
+      operationId: cafeterias_fixed_menu_options_reviews_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FixedMenuOptionReview'
+      tags:
+        - cafeterias
+    parameters:
+      - name: cafeteria_pk
+        in: path
+        required: true
+        type: string
+      - name: option_pk
+        in: path
+        required: true
+        type: string
+  /cafeterias/{cafeteria_pk}/fixed_menu_options/{option_pk}/reviews/{id}/:
+    get:
+      operationId: cafeterias_fixed_menu_options_reviews_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/FixedMenuOptionReview'
+      tags:
+        - cafeterias
+    parameters:
+      - name: cafeteria_pk
+        in: path
+        required: true
+        type: string
+      - name: id
+        in: path
+        required: true
+        type: string
+      - name: option_pk
+        in: path
+        required: true
+        type: string
+  /cafeterias/{id}/:
+    get:
+      operationId: cafeterias_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Cafeteria'
+      tags:
+        - cafeterias
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this cafeteria.
+        required: true
+        type: integer
+  /cameras/{camera_pk}/events/:
+    post:
+      operationId: cameras_events_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/CameraEvent'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/CameraEvent'
+      tags:
+        - cameras
+    parameters:
+      - name: camera_pk
+        in: path
+        required: true
+        type: string
+  /fixed_menu_reviews/:
+    post:
+      operationId: fixed_menu_reviews_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/FixedMenuOptionReview'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/FixedMenuOptionReview'
+      tags:
+        - fixed_menu_reviews
+    parameters: []
+  /menu_option_tags/:
+    get:
+      operationId: menu_option_tags_list
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/MenuOptionTag'
+      tags:
+        - menu_option_tags
+    post:
+      operationId: menu_option_tags_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/MenuOptionTag'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/MenuOptionTag'
+      tags:
+        - menu_option_tags
+    parameters: []
+  /menu_option_tags/{id}/:
+    get:
+      operationId: menu_option_tags_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/MenuOptionTag'
+      tags:
+        - menu_option_tags
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this menu option tag.
+        required: true
+        type: integer
+  /upload/artifacts/beta/{filename}/:
+    put:
+      operationId: upload_artifacts_beta_update
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      consumes: []
+      tags:
+        - upload
+    parameters:
+      - name: filename
+        in: path
+        required: true
+        type: string
+  /upload/artifacts/{filename}/:
+    put:
+      operationId: upload_artifacts_update
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+      consumes: []
+      tags:
+        - upload
+    parameters:
+      - name: filename
+        in: path
+        required: true
+        type: string
+definitions:
+  Cafeteria:
+    required:
+      - name
+      - description
+      - sub_description
+      - longitude
+      - latitude
+      - logo_url
+      - address
+      - opened_from
+      - opened_to
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 128
+        minLength: 1
+      description:
+        title: Description
+        type: string
+        maxLength: 256
+        minLength: 1
+      sub_description:
+        title: Sub description
+        type: string
+        maxLength: 512
+        minLength: 1
+      longitude:
+        title: Longitude
+        type: number
+        maximum: 180.0
+        minimum: -180.0
+      latitude:
+        title: Latitude
+        type: number
+        maximum: 90.0
+        minimum: -90.0
+      logo_url:
+        title: Logo url
+        type: string
+        maxLength: 2048
+        minLength: 1
+      address:
+        title: Address
+        type: string
+        maxLength: 256
+        minLength: 1
+      opened_from:
+        title: Opened from
+        type: string
+      opened_to:
+        title: Opened to
+        type: string
+  FixedMenuOption:
+    required:
+      - name
+      - price
+      - photo_url
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 128
+        minLength: 1
+      price:
+        title: Price
+        type: number
+        minimum: 0.0
+      photo_url:
+        title: Photo url
+        type: string
+        maxLength: 2048
+        minLength: 1
+      avg_review_stars:
+        title: Avg review stars
+        type: number
+        readOnly: true
+  FixedMenuOptionReview:
+    required:
+      - stars
+      - author_nick
+      - review_time
+      - option
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      stars:
+        title: Stars
+        type: integer
+        maximum: 5
+        minimum: 0
+      author_nick:
+        title: Author nick
+        type: string
+        maxLength: 64
+        minLength: 1
+      review_time:
+        title: Review time
+        type: string
+        format: date-time
+      option:
+        title: Option
+        type: integer
+  CameraEvent:
+    required:
+      - event_type
+      - timestamp
+    type: object
+    properties:
+      event_type:
+        title: Event type
+        type: integer
+        enum:
+          - 0
+          - 1
+          - 2
+          - 3
+      timestamp:
+        title: Timestamp
+        type: string
+        format: date-time
+  MenuOptionTag:
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        readOnly: true
+        minLength: 1
