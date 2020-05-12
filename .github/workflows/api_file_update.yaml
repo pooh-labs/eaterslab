@@ -18,10 +18,10 @@ jobs:
         if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
       - name: Update API file
         run: |
-	  cd specs
-	  wget https://eaterslab.herokuapp.com/api.yaml -O api_update.yaml; then
-	  rm -rf api.yaml
-	  mv api_update.yaml api.yaml
+          cd specs
+          wget https://eaterslab.herokuapp.com/api.yaml -O api_update.yaml; then
+          rm -rf api.yaml
+          mv api_update.yaml api.yaml
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v2
@@ -36,4 +36,3 @@ jobs:
           reviewers: avan1235 kantoniak Rhantolq
           draft: false
           branch: workflow/api-update
-	  
