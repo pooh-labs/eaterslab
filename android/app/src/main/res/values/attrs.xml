@@ -10,5 +10,3 @@
         <attr name="expandable" format="boolean"/>
     </declare-styleable>
 </resources>
-
-
