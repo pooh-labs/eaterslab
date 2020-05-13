@@ -8,13 +8,13 @@ function join {
 }
 
 SOURCES=(
+    "api_connector.py" \
     "data_archiver.py" \
     "data_batcher.py" \
     "events.py" \
     "frame_ingestor.py" \
     "main.py" \
-    "people_counter.py" \
-    "uploader.py"
+    "people_counter.py"
 )
 
 TESTS=(

@@ -13,6 +13,7 @@ import time
 from datetime import datetime
 
 import cv2
+from api_connector import ApiConnector
 from data_archiver import CsvArchiver
 from data_batcher import DataBatcher
 from dotenv import load_dotenv
@@ -24,7 +25,6 @@ from frame_ingestor import (
 )
 from openapi_client import Configuration
 from people_counter import PeopleCounter
-from uploader import Uploader
 
 BATCH_SECONDS = 3
 
@@ -89,9 +89,9 @@ class Main(object):
         # Start client
         self._start()
 
-    def _init_archiver(self, start_time:datetime):
+    def _init_archiver(self, start_time: datetime):
         """Set up archiver and save initial message.
-        
+
         Args:
             start_time: monitoring start timestamp
         """
@@ -121,15 +121,15 @@ class Main(object):
             logging.error(msg)
             self._archiver = None
             self._should_close = True
-        
+
         # Save initial event
         self._archiver.append_event(
             self._last_batch_time, EventType.monitoring_started,
         )
 
-    def _init_uploader(self, start_time:datetime):
+    def _init_api_connector(self, start_time: datetime):
         """Set up uplink and send initial message.
-        
+
         Args:
             start_time: monitoring start timestamp
         """
@@ -143,13 +143,14 @@ class Main(object):
             return
         device_id = configuration.api_key['X-DEVICE-ID']
         logging.info('Setting up uplink...')
-        self._uploader = Uploader(device_id, configuration, start_time)
+        self._api_connector = ApiConnector(
+            device_id, configuration, start_time,
+        )
 
     def _start(self):
         """Start the system."""
         self._start_monitoring()
 
-        iteration = 0
         while not self._should_close:
             # Execute loop
             self._execute_loop()
@@ -170,8 +171,8 @@ class Main(object):
         logging.info('System starts')
 
         # Start monitoring
-        self._init_archiver(timestamp)   
-        self._init_uploader(timestamp)
+        self._init_archiver(timestamp)
+        self._init_api_connector(timestamp)
         self._init_ingestion_stream()
 
     def _execute_loop(self):
@@ -199,7 +200,7 @@ class Main(object):
             self._archiver.flush()
 
             # Send to API endpoint
-            if not self._uploader.send(batch):
+            if not self._api_connector.send(batch):
                 logging.warn('Could not uploat events')
 
     def _close(self):
@@ -225,9 +226,9 @@ class Main(object):
             self._archiver.finalize()
 
         # Finish monitoring
-        if self._uploader:
+        if self._api_connector:
             logging.info('Closing uplink...')
-            self._uploader.end(timestamp)
+            self._api_connector.close(timestamp)
 
     def _init_ingestion_stream(self):
         """Init ingestion stream."""
@@ -269,8 +270,8 @@ if __name__ == '__main__':
     logging.basicConfig(
         format='%(asctime)s [%(levelname)s] %(message)s',
         datefmt='%Y-%m-%dT%H:%M:%S%z',
-        #filename='app.log',
-        #filemode='w',
+        filename='app.log',
+        filemode='w',
         level=logging.DEBUG,
     )
     load_dotenv()

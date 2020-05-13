@@ -13,10 +13,15 @@ from openapi_client import ApiClient, CameraEvent, CamerasApi, Configuration
 from openapi_client.rest import ApiException
 
 
-class Uploader(object):
+class ApiConnector(object):
     """Uploads events to API endpoint."""
 
-    def __init__(self, device_id: int, configuration: Configuration, timestamp:datetime):
+    def __init__(
+        self,
+        device_id: int,
+        configuration: Configuration,
+        timestamp: datetime,
+    ):
         """Save path for writing.
 
         Args:
@@ -45,7 +50,7 @@ class Uploader(object):
             batch.entering, EventType.person_entered,
         ) and self._send_all_as(batch.leaving, EventType.person_left)
 
-    def end(self, timestamp):
+    def close(self, timestamp):
         """Notify endpoint that upload ends.
 
         Args:
@@ -65,7 +70,7 @@ class Uploader(object):
             RuntimeError: on upload failure
 
         Returns:
-            HTTP response object
+            true when upload finalizes
         """
         camera_pk = str(self._device_id)
         try:
