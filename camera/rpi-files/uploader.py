@@ -16,23 +16,19 @@ from openapi_client.rest import ApiException
 class Uploader(object):
     """Uploads events to API endpoint."""
 
-    def __init__(self, device_id: int, configuration: Configuration):
+    def __init__(self, device_id: int, configuration: Configuration, timestamp:datetime):
         """Save path for writing.
 
         Args:
             device_id: device ID for writing
             configuration: API client configuration
+            timestamp: start time
         """
         self._device_id = device_id
         self._api_client = ApiClient(configuration)
         self._api = CamerasApi(self._api_client)
 
-    def start(self, timestamp):
-        """Notify endpoint that upload starts.
-
-        Args:
-            timestamp: start time
-        """
+        # Send start event
         event = create_event(EventType.monitoring_started, timestamp)
         self._send_single_event(event)
 

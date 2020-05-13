@@ -83,33 +83,26 @@ class Main(object):
         signal.signal(signal.SIGINT, self._handle_signals)
         signal.signal(signal.SIGTERM, self._handle_signals)
 
-        # Set API configuration
-        try:
-            configuration = load_api_configuration()
-        except RuntimeError as ex:
-            msg = 'Could not load API settings: {0}'.format(ex)
-            logging.error(msg)
-            self._should_close = True
-            self._close()
-            return
-        self._device_id = configuration.api_key['X-DEVICE-ID']
-        self._uploader = Uploader(self._device_id, configuration)
-
         # Extra configuration
         self._display_frame = read_int_from_env('DISPLAY_FRAME', 0) > 0
 
         # Start client
         self._start()
 
-    def _init_archiver(self):
+    def _init_archiver(self, start_time:datetime):
+        """Set up archiver and save initial message.
+        
+        Args:
+            start_time: monitoring start timestamp
+        """
         archives_dir = os.getenv('ARCHIVES_DIR', None)
         if not archives_dir:
             logging.error('Missing ARCHIVES_DIR')
             self._should_close = True
             return
 
-        datetime_string = datetime.now().strftime('%Y-%m-%d_%H_%M_%S')
-        archive_path = '{0}/{1}.csv'.format(archives_dir, datetime_string)
+        start_time_string = start_time.strftime('%Y-%m-%d_%H_%M_%S')
+        archive_path = '{0}/{1}.csv'.format(archives_dir, start_time_string)
 
         logging.info('Opening archive...')
 
@@ -128,6 +121,29 @@ class Main(object):
             logging.error(msg)
             self._archiver = None
             self._should_close = True
+        
+        # Save initial event
+        self._archiver.append_event(
+            self._last_batch_time, EventType.monitoring_started,
+        )
+
+    def _init_uploader(self, start_time:datetime):
+        """Set up uplink and send initial message.
+        
+        Args:
+            start_time: monitoring start timestamp
+        """
+        try:
+            configuration = load_api_configuration()
+        except RuntimeError as ex:
+            msg = 'Could not load API settings: {0}'.format(ex)
+            logging.error(msg)
+            self._should_close = True
+            self._close()
+            return
+        device_id = configuration.api_key['X-DEVICE-ID']
+        logging.info('Setting up uplink...')
+        self._uploader = Uploader(device_id, configuration, start_time)
 
     def _start(self):
         """Start the system."""
@@ -154,12 +170,8 @@ class Main(object):
         logging.info('System starts')
 
         # Start monitoring
-        self._init_archiver()
-        logging.info('Uploading START event...')
-        self._archiver.append_event(
-            self._last_batch_time, EventType.monitoring_started,
-        )
-        self._uploader.start(timestamp)
+        self._init_archiver(timestamp)   
+        self._init_uploader(timestamp)
         self._init_ingestion_stream()
 
     def _execute_loop(self):
@@ -214,7 +226,7 @@ class Main(object):
 
         # Finish monitoring
         if self._uploader:
-            logging.info('Closing API client...')
+            logging.info('Closing uplink...')
             self._uploader.end(timestamp)
 
     def _init_ingestion_stream(self):
@@ -257,8 +269,8 @@ if __name__ == '__main__':
     logging.basicConfig(
         format='%(asctime)s [%(levelname)s] %(message)s',
         datefmt='%Y-%m-%dT%H:%M:%S%z',
-        filename='app.log',
-        filemode='w',
+        #filename='app.log',
+        #filemode='w',
         level=logging.DEBUG,
     )
     load_dotenv()
