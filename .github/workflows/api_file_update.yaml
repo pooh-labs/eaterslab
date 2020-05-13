@@ -1,5 +1,4 @@
-name: Webserver deploy for production
-
+name: Update API file in repository
 on:
   push:
     branches:
