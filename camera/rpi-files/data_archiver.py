@@ -8,18 +8,9 @@ DataArchiver saves batches in a selected format.
 import csv
 import os
 from abc import ABC
-from enum import Enum
 
 from data_batcher import Batch
-
-
-class EventType(Enum):
-    """Enum for event types."""
-
-    monitoring_started = 0
-    monitoring_ended = 1
-    person_entered = 2
-    person_left = 3
+from events import EventType
 
 
 class DataArchiver(ABC):
@@ -28,7 +19,7 @@ class DataArchiver(ABC):
     def init(self):
         """Initialize the archive if not initialized."""
 
-    def append_event(self, timestamp: float, event_type: Enum):
+    def append_event(self, timestamp: float, event_type: EventType):
         """Includes single event in the archive. May not flush archive yet.
 
         Args:
@@ -151,8 +142,8 @@ class CsvArchiver(DataArchiver):
         self._writer.writeheader()
 
         # Write data timestamp by timestamp
-        for timestamp in self._entries.items():
-            self._writer.writerow(self._entries[timestamp])
+        for _, entry in self._entries.items():
+            self._writer.writerow(entry)
 
     def finalize(self):
         """Finalize the archive. No more data can be saved."""

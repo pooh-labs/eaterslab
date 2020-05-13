@@ -13,15 +13,17 @@ import time
 from datetime import datetime
 
 import cv2
-import openapi_client
-from data_archiver import CsvArchiver, EventType
+from api_connector import ApiConnector
+from data_archiver import CsvArchiver
 from data_batcher import DataBatcher
 from dotenv import load_dotenv
+from events import EventType
 from frame_ingestor import (
     FileIngestorSource,
     FrameIngestor,
     WebcamIngestorSource,
 )
+from openapi_client import Configuration
 from people_counter import PeopleCounter
 
 BATCH_SECONDS = 3
@@ -45,6 +47,28 @@ def read_int_from_env(name, default=None):
         return None
 
 
+def load_api_configuration() -> Configuration:
+    """Load API configuration.
+
+    Raises:
+        RuntimeError: when required data missing or could not parse data.
+
+    Returns:
+        configuration object
+    """
+    try:
+        device_id = read_int_from_env('DEVICE_ID', None)
+    except TypeError as ex:
+        msg = 'Could not load device ID: {0}'.format(ex)
+        raise RuntimeError(msg)
+
+    configuration = Configuration()
+    configuration.host = os.getenv('API_HOST')
+    configuration.api_key['X-API-KEY'] = os.getenv('API_KEY')
+    configuration.api_key['X-DEVICE-ID'] = device_id
+    return configuration
+
+
 class Main(object):
     """Handle application lifecycle."""
 
@@ -59,31 +83,26 @@ class Main(object):
         signal.signal(signal.SIGINT, self._handle_signals)
         signal.signal(signal.SIGTERM, self._handle_signals)
 
-        # Set API configuration
-        configuration = openapi_client.Configuration()
-        configuration.host = os.getenv('API_HOST')
-        configuration.api_key['X-DEVICE-ID'] = os.getenv('DEVICE_ID')
-        configuration.api_key['X-API-KEY'] = os.getenv('API_KEY')
-
         # Extra configuration
         self._display_frame = read_int_from_env('DISPLAY_FRAME', 0) > 0
 
         # Start client
-        with openapi_client.ApiClient(configuration) as api_client:
-            self._api = openapi_client.DefaultApi(api_client)
-            self._init_archiver()
-            if not self._should_close:
-                self._start()
+        self._start()
 
-    def _init_archiver(self):
+    def _init_archiver(self, start_time: datetime):
+        """Set up archiver and save initial message.
+
+        Args:
+            start_time: monitoring start timestamp
+        """
         archives_dir = os.getenv('ARCHIVES_DIR', None)
         if not archives_dir:
             logging.error('Missing ARCHIVES_DIR')
             self._should_close = True
             return
 
-        datetime_string = datetime.now().strftime('%Y-%m-%d_%H_%M_%S')
-        archive_path = '{0}/{1}.csv'.format(archives_dir, datetime_string)
+        start_time_string = start_time.strftime('%Y-%m-%d_%H_%M_%S')
+        archive_path = '{0}/{1}.csv'.format(archives_dir, start_time_string)
 
         logging.info('Opening archive...')
 
@@ -103,16 +122,35 @@ class Main(object):
             self._archiver = None
             self._should_close = True
 
+        # Save initial event
+        self._archiver.append_event(
+            self._last_batch_time, EventType.monitoring_started,
+        )
+
+    def _init_api_connector(self, start_time: datetime):
+        """Set up uplink and send initial message.
+
+        Args:
+            start_time: monitoring start timestamp
+        """
+        try:
+            configuration = load_api_configuration()
+        except RuntimeError as ex:
+            msg = 'Could not load API settings: {0}'.format(ex)
+            logging.error(msg)
+            self._should_close = True
+            self._close()
+            return
+        device_id = configuration.api_key['X-DEVICE-ID']
+        logging.info('Setting up uplink...')
+        self._api_connector = ApiConnector(
+            device_id, configuration, start_time,
+        )
+
     def _start(self):
         """Start the system."""
-        logging.info('System starts')
+        self._start_monitoring()
 
-        # Start monitoring
-        self._archiver.append_event(time.time(), EventType.monitoring_started)
-        self._init_ingestion_stream()
-
-        self._last_batch_time = time.time()
-        iteration = 0
         while not self._should_close:
             # Execute loop
             self._execute_loop()
@@ -123,12 +161,19 @@ class Main(object):
                 cv2.imshow('Frame', frame)
                 cv2.waitKey(1)
 
-            # Count iterations for demo purposes
-            iteration += 1
-            if iteration == 10:
-                self._should_close = True
-
         self._close()
+
+    def _start_monitoring(self):
+        """Start monitoring coroutines."""
+        # Save start time
+        self._last_batch_time = time.time()
+        timestamp = datetime.fromtimestamp(self._last_batch_time).astimezone()
+        logging.info('System starts')
+
+        # Start monitoring
+        self._init_archiver(timestamp)
+        self._init_api_connector(timestamp)
+        self._init_ingestion_stream()
 
     def _execute_loop(self):
         """Execute main program loop."""
@@ -154,8 +199,15 @@ class Main(object):
             self._archiver.append(batch)
             self._archiver.flush()
 
+            # Send to API endpoint
+            if not self._api_connector.send(batch):
+                logging.warn('Could not uploat events')
+
     def _close(self):
         """Close the system."""
+        # Save start time
+        shutdown_time = time.time()
+        timestamp = datetime.fromtimestamp(shutdown_time).astimezone()
         logging.info('System shutting down...')
 
         # Finish ingestion stream
@@ -165,12 +217,18 @@ class Main(object):
             logging.info('Closing ingestor source...')
             self._frame_ingestor.release_source()
 
+        # Finish archiver
         if self._archiver:
             logging.info('Closing archive...')
             self._archiver.append_event(
-                time.time(), EventType.monitoring_ended,
+                shutdown_time, EventType.monitoring_ended,
             )
             self._archiver.finalize()
+
+        # Finish monitoring
+        if self._api_connector:
+            logging.info('Closing uplink...')
+            self._api_connector.close(timestamp)
 
     def _init_ingestion_stream(self):
         """Init ingestion stream."""
