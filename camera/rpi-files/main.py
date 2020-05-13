@@ -144,11 +144,6 @@ class Main(object):
                 cv2.imshow('Frame', frame)
                 cv2.waitKey(1)
 
-            # Count iterations for demo purposes
-            iteration += 1
-            if iteration == 6:
-                self._should_close = True
-
         self._close()
 
     def _start_monitoring(self):
