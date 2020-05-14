@@ -7,37 +7,19 @@
 
     <fragment
         android:id="@+id/navHome"
-        android:name="labs.pooh.eaterslab.ui.fragment.home.HomeFragment"
+        android:name="labs.pooh.eaterslab.ui.fragment.home.CafeteriaFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home">
-
-        <action
-            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-            app:destination="@id/nav_home_second" />
-    </fragment>
-    <fragment
-        android:id="@+id/nav_home_second"
-        android:name="labs.pooh.eaterslab.ui.fragment.home.HomeSecondFragment"
-        android:label="@string/home_second"
-        tools:layout="@layout/fragment_home_second">
-        <action
-            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
-            app:destination="@id/navHome" />
-
-        <argument
-            android:name="myArg"
-            app:argType="string" />
-    </fragment>
+        tools:layout="@layout/fragment_home"/>
 
     <fragment
-        android:id="@+id/navGallery"
-        android:name="labs.pooh.eaterslab.ui.fragment.gallery.GalleryFragment"
+        android:id="@+id/navStats"
+        android:name="labs.pooh.eaterslab.ui.fragment.stats.StatsFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_stats" />
 
     <fragment
-        android:id="@+id/navSlideshow"
+        android:id="@+id/navMenu"
         android:name="labs.pooh.eaterslab.ui.fragment.menu.MenuFragment"
         android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_menu" />
 </navigation>

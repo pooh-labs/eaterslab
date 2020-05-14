@@ -29,12 +29,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <LinearLayout
-            android:id="@+id/verticalReviewSlideShow"
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/slideshow_padding"
-            android:orientation="vertical"/>
+            android:id="@+id/menuOptionsGridLayout"
+            android:padding="@dimen/menu_padding"
+            android:columnCount="1"/>
 
     </ScrollView>
 

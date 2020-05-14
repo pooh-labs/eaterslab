@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:backgroundTint="?foregroundColor">
+    android:backgroundTint="?backgroundColor">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -55,7 +56,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/bubble_title"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_insert_photo"
+            app:srcCompat="@drawable/ic_location"
             android:contentDescription="@string/info_image" />
 
         <ProgressBar
@@ -69,8 +70,8 @@
             app:layout_constraintEnd_toEndOf="@+id/bubble_subdescription"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/bubble_subdescription"
-            app:layout_constraintTop_toBottomOf="@+id/bubble_subdescription" />
+            app:layout_constraintTop_toBottomOf="@+id/bubble_subdescription"
+            android:progressDrawable="@drawable/progress"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.cardview.widget.CardView>

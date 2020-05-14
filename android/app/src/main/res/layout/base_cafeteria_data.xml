@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <labs.pooh.eaterslab.ui.view.KeyValueTextView
+        android:id="@+id/placeName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
+        android:layout_marginTop="@dimen/logo_horizontal_margin"
+        android:text="@string/your_place"
+        app:key="@string/your_place"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:value="@string/load_placeholder" />
+
+    <labs.pooh.eaterslab.ui.view.KeyValueTextView
+        android:id="@+id/placeAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
+        android:layout_marginTop="@dimen/logo_horizontal_margin"
+        android:text="@string/your_place"
+        app:expandable="true"
+        app:key="@string/address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/placeName"
+        app:value="@string/load_placeholder" />
+
+    <labs.pooh.eaterslab.ui.view.KeyValueTextView
+        android:id="@+id/placeDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
+        android:layout_marginTop="@dimen/data_margin_top"
+        android:text="@string/your_place"
+        app:key="@string/description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/placeAddress"
+        app:value="@string/load_placeholder" />
+
+    <labs.pooh.eaterslab.ui.view.KeyValueTextView
+        android:id="@+id/placeSubDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
+        android:layout_marginTop="@dimen/data_margin_top"
+        android:text="@string/your_place"
+        app:expandable="true"
+        app:key="@string/subdescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/placeDescription"
+        app:value="@string/load_placeholder" />
+
+    <TextView
+        android:id="@+id/hoursTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
+        android:layout_marginTop="@dimen/data_margin_top"
+        android:fontFamily="@font/alegreya_sc_bold"
+        android:text="@string/opening_hours"
+        android:textAlignment="center"
+        android:textSize="@dimen/loading_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/placeSubDescription" />
+
+    <labs.pooh.eaterslab.ui.view.KeyValueTextView
+        android:id="@+id/hoursFrom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
+        android:text="@string/your_place"
+        android:layout_marginTop="@dimen/data_margin_top"
+        app:expandable="false"
+        app:key="@string/open_from"
+        app:layout_constraintEnd_toEndOf="@id/guideline_center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hoursTitle"
+        app:value="@string/load_placeholder" />
+
+    <labs.pooh.eaterslab.ui.view.KeyValueTextView
+        android:id="@+id/hoursTo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
+        android:text="@string/your_place"
+        android:layout_marginTop="@dimen/data_margin_top"
+        app:expandable="false"
+        app:key="@string/open_to"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guideline_center"
+        app:layout_constraintTop_toBottomOf="@+id/hoursTitle"
+        app:value="@string/load_placeholder" />
+
+    <TextView
+        android:id="@+id/occupancyTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/logo_horizontal_margin"
+        android:layout_marginTop="@dimen/data_margin_top"
+        android:fontFamily="@font/alegreya_sc_bold"
+        android:text="@string/relative_occupancy"
+        android:textAlignment="center"
+        android:textSize="@dimen/occupancy_title_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hoursTo" />
+
+    <ProgressBar
+        android:id="@+id/occupancyBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/item_progress_height"
+        android:layout_marginHorizontal="@dimen/occupancy_horizontal_margin"
+        android:layout_marginVertical="@dimen/key_value_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/occupancyTitle"
+        android:progressDrawable="@drawable/progress"/>
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/occupancyBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:minHeight="@dimen/key_value_margin"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

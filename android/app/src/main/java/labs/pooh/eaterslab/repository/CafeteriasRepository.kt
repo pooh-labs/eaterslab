@@ -69,6 +69,21 @@ class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatu
         return if (currentMenuOptionData.isNotEmpty()) currentMenuOptionData else null
     }
 
+    suspend fun getMenuOptionsOfCafeteria(cafeteriaId: Int): List<FixedMenuOptionDao>? {
+        val refreshed = tryApiConnect {
+            val models = cafeteriasApi.cafeteriasFixedMenuOptionsList(cafeteriaId.toString())
+            val daos = models.map { it.toDao() }
+            daos
+        }
+
+        refreshed?.let {
+            cachedMenuOptions[cafeteriaId] = it
+        }
+        val currentMenuOptionData = cachedMenuOptions[cafeteriaId]
+
+        return if (currentMenuOptionData?.isNotEmpty() == true) currentMenuOptionData else null
+    }
+
     private suspend fun <T> tryApiConnect(get: suspend () -> T): T? {
         try {
             return withContext(Dispatchers.IO) { get() }
@@ -79,4 +94,6 @@ class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatu
     }
 
     private fun reportDataFetchError() = connectionStatusNotifier.notifyDataFetchError()
+
+    fun isDevAPIVersion(): Boolean = cafeteriasApi.baseUrl.contains("dev", ignoreCase = true)
 }

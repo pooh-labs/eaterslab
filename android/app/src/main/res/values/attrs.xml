@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <attr name="foregroundColor" format="color" />
+    <attr name="backgroundColor" format="color" />
+    <attr name="backgroundLightColor" format="color" />
     <attr name="foregroundColorText" format="color" />
+    <declare-styleable name="KeyValueTextView">
+        <attr name="key" format="string"/>
+        <attr name="value" format="string"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="expandable" format="boolean"/>
+    </declare-styleable>
 </resources>

@@ -15,10 +15,14 @@ fun getOrderedMonthDays(month: Int, leapYear: Boolean = false) = when(month) {
     else -> (1..30)
 }.map(Int::toString)
 
-fun getOrderedHours() = (0..23).map { "$it:00" }
+fun getOrderedHours() = getOpenOrderedHours(0, 23)
+
+fun getOpenOrderedHours(from: Int = 8, to: Int = 16) = (from..to).map { "$it:00" }
 
 fun Context.weekDaysIndexer(day: String) = getOrderedWeekDays().indexOf(day)
 
 fun monthDaysIndexer(day: String) = day.toInt() - 1
 
 fun hoursIndexer(hour: String) = hour.takeWhile { it != ':' }.toInt()
+
+fun workingHoursIndexer(hour: String) = hoursIndexer(hour) - 8

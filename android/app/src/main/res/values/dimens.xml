@@ -16,12 +16,13 @@
     <dimen name="map_item_info_title_margin">8dp</dimen>
     <dimen name="map_item_info_image_margin">8dp</dimen>
     <dimen name="map_item_progress_height">6dp</dimen>
+    <dimen name="item_progress_height">10dp</dimen>
     <dimen name="map_item_progress_margin_top">2dp</dimen>
     <dimen name="map_item_progress_margin_bottom">8dp</dimen>
     <dimen name="map_item_subdescription_margin_top">4dp</dimen>
     <dimen name="card_view_price_size">20sp</dimen>
     <dimen name="card_view_text_size">23sp</dimen>
-    <dimen name="menu_item_image_height">140dp</dimen>
+    <dimen name="menu_item_image_height">150dp</dimen>
     <dimen name="menu_item_bottom_margin">8dp</dimen>
     <dimen name="rating_bar_margin">8dp</dimen>
     <dimen name="menu_item_price_margin">8dp</dimen>
@@ -29,7 +30,7 @@
     <dimen name="slideshow_margin">8dp</dimen>
     <dimen name="menu_item_card_height">220dp</dimen>
     <dimen name="menu_card_radius">4dp</dimen>
-    <dimen name="slideshow_padding">16dp</dimen>
+    <dimen name="menu_padding">16dp</dimen>
     <dimen name="hello_message_width">200dp</dimen>
     <dimen name="hello_message_size">30sp</dimen>
     <dimen name="icon_big">130dp</dimen>
@@ -39,4 +40,15 @@
     <dimen name="loading_margin">64dp</dimen>
     <dimen name="loading_text_margin">16dp</dimen>
     <dimen name="loading_text_size">24sp</dimen>
+    <dimen name="occupancy_title_text_size">24sp</dimen>
+    <dimen name="logo_vertical_margin">32dp</dimen>
+    <dimen name="logo_horizontal_margin">16dp</dimen>
+    <dimen name="occupancy_horizontal_margin">48dp</dimen>
+    <dimen name="enjoy_font_size">45sp</dimen>
+    <dimen name="logo_free_space">32dp</dimen>
+    <dimen name="hello_data_font">24sp</dimen>
+    <dimen name="data_margin_top">16dp</dimen>
+    <dimen name="key_value_margin">8dp</dimen>
+    <dimen name="expanded_margin">16dp</dimen>
+    <dimen name="occupancy_top_margin">8dp</dimen>
 </resources>

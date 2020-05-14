@@ -9,9 +9,9 @@
     <string name="nav_header_desc">Nagłówek nawigacji</string>
     <string name="action_settings">Ustawienia</string>
 
-    <string name="menu_home">Ekran główny</string>
-    <string name="menu_gallery">Galeria</string>
-    <string name="menu_slideshow">Pokaz slajdów</string>
+    <string name="menu_home">Wybrane miejsce</string>
+    <string name="menu_gallery">Statystyki</string>
+    <string name="menu_slideshow">Menu</string>
 
     <string name="home_second">Drugi ekran</string>
     <string name="image_came_intent">Przechwycony obraz</string>
@@ -28,13 +28,10 @@
     <string name="title_activity_settings">Ustawienia</string>
 
     <!-- Preference Titles -->
-    <string name="main_prefs">main_preferences</string>
-    <string name="style_prefs">style_preferences</string>
     <string name="main_header">Główne</string>
     <string name="theme_header">Interfejs użytkownika</string>
     <string name="language_title">Język aplikacji</string>
     <string name="theme_title">Włącz ciemny motyw</string>
-    <string name="lang">lang</string>
     <string name="dark_theme">theme</string>
     <string name="no_gps_notification">Problem z dostępem do GPS.</string>
     <string name="monday">Poniedziałek</string>
@@ -45,7 +42,23 @@
     <string name="saturday">Sobota</string>
     <string name="sunday">Niedziela</string>
     <string name="wait_connection">Oczekiwanie na połączenie</string>
+    <string name="cafeteria_logo">Logo cafeterii</string>
+    <string name="enjoy_your_meal">"Smacznego! "</string>
+    <string name="your_place">Twoje miejsce</string>
+    <string name="no_data">brak danych</string>
+    <string name="key">klucz</string>
+    <string name="value">wartość</string>
+    <string name="load_placeholder">ładowanie…</string>
+    <string name="description">Opis</string>
+    <string name="subdescription">Coś więcej</string>
+    <string name="expand">rozwiń</string>
     <string name="connection_lost">Utracono połączenie…</string>
     <string name="data_fetch_error">Błąd podczas pobierania danych z serwera!</string>
     <string name="connection_restored">Przywrócono połączenie</string>
+    <string name="version_header">Wersja aplikacji</string>
+    <string name="relative_occupancy">Względne zapełnienie</string>
+    <string name="opening_hours">Godziny otwarcia</string>
+    <string name="open_from">Od</string>
+    <string name="open_to">Do</string>
+    <string name="address">Adres</string>
 </resources>

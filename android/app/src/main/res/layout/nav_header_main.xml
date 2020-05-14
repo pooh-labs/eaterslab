@@ -32,6 +32,8 @@
         android:text="@string/nav_header_title"
         android:textSize="@dimen/nav_header_font"
         android:shadowColor="@color/colorBackgroundDark"
+
+        android:textColor="@color/colorWhite"
         android:shadowRadius="2"
         android:shadowDx="2"
         android:shadowDy="2"
@@ -45,7 +47,7 @@
         android:layout_height="wrap_content"
         android:text="@string/nav_header_subtitle"
         android:shadowColor="@color/colorBackgroundDark"
-        android:shadowRadius="2"
+        android:textColor="@color/colorWhite"
         android:shadowDx="2"
         android:shadowDy="2"
         app:layout_constraintBottom_toBottomOf="parent"

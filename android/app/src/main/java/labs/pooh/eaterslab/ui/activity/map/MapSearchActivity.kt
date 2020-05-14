@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_map_search.*
 import labs.pooh.eaterslab.ui.activity.abstracts.AbstractRevealedActivity
 import labs.pooh.eaterslab.R
@@ -16,6 +15,7 @@ import labs.pooh.eaterslab.repository.dao.CafeteriaDao
 import labs.pooh.eaterslab.ui.activity.abstracts.viewModelFactory
 import labs.pooh.eaterslab.ui.activity.hello.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_X
 import labs.pooh.eaterslab.ui.activity.hello.HelloSelectActivity.Companion.BUTTON_MAP_POSITION_Y
+import labs.pooh.eaterslab.ui.activity.main.MainActivity
 import labs.pooh.eaterslab.ui.map.LocationOccupancyMarker
 import labs.pooh.eaterslab.ui.map.SingleLocationInfo
 import labs.pooh.eaterslab.ui.map.TransparentListenerOverlay
@@ -191,14 +191,13 @@ class MapSearchActivity : AbstractRevealedActivity() {
         overlayManager.tilesOverlay.setColorFilter(filter)
     }
 
-    private fun onSelectPlaceButtonClick(marker: LocationOccupancyMarker, view: View) {
-        Snackbar.make(view, "You selected ${marker.id} id marker", Snackbar.LENGTH_LONG)
-            .setAction("Action", null).show()
+    private fun onSelectPlaceButtonClick(marker: LocationOccupancyMarker) {
+        start<MainActivity> { putExtra(MainActivity.ID_KEY, marker.id) }
     }
 
     private fun onMarkerClickListener(marker: LocationOccupancyMarker): Boolean {
         buttonSelect.moveUpAndShow(yMove = 0)
-        buttonSelect.setOnClickListener { onSelectPlaceButtonClick(marker, it) }
+        buttonSelect.setOnClickListener { onSelectPlaceButtonClick(marker) }
         return true
     }
 }
