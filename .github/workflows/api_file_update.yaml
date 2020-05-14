@@ -17,7 +17,6 @@ jobs:
 #        if: github.event_name == 'pull_request' && github.event.pull_request.merged == true
       - name: Update API file
         run: |
-          ls -R
           cd ./specs
           if wget https://eaterslab.herokuapp.com/api.yaml -O api_update.yaml; then
             rm -rf api.yaml

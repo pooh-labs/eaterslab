@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   title: EatersLab API
   version: v1
-host: eaterslab.herokuapp.com
+host: eaterslab-dev.herokuapp.com
 schemes:
   - https
 basePath: /api/beta
