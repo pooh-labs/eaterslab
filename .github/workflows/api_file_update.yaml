@@ -21,6 +21,7 @@ jobs:
           if wget https://eaterslab.herokuapp.com/api.yaml -O api_update.yaml; then
             rm -rf api.yaml
             mv api_update.yaml api.yaml
+            echo "New API definition downloaded from server"
           fi
       - name: Create Pull Request
         id: cpr
@@ -33,6 +34,7 @@ jobs:
             specs/api.yaml updated based on server newest version
           labels: django, automated, documentation
           assignees: avan1235
-          reviewers: avan1235 kantoniak Rhantolq
+          reviewers: avan1235, kantoniak, Rhantolq
           draft: false
           branch: workflow/api-update
+          project-name: EatersLab
