@@ -5,6 +5,8 @@
 DataBatcher prepares batches for sending.
 """
 
+from datetime import datetime
+
 
 class Batch(object):
     """Single batch of data."""
@@ -33,7 +35,7 @@ class DataBatcher(object):
         Args:
             entering: list of enter timestamps
         """
-        self._assert_list_of_floats(entering, 'entering')
+        self._assert_list_of_datetime(entering, 'entering')
         self.current_batch.entering.extend(entering)
 
     def left(self, leaving):
@@ -42,7 +44,7 @@ class DataBatcher(object):
         Args:
             leaving: list of leave timestamps
         """
-        self._assert_list_of_floats(leaving, 'leaving')
+        self._assert_list_of_datetime(leaving, 'leaving')
         self.current_batch.leaving.extend(leaving)
 
     def batch(self):
@@ -57,11 +59,13 @@ class DataBatcher(object):
         self.current_batch = current
         return to_return
 
-    def _assert_list_of_floats(self, arg, argname):
+    def _assert_list_of_datetime(self, arg, argname):
         if not isinstance(arg, list):
             msg = 'Argument `{0}` should be a list'.format(argname)
             raise TypeError(msg)
         for elem in arg:
-            if not isinstance(elem, float):
-                msg = 'List `{0}` contains non-float element'.format(argname)
+            if not isinstance(elem, datetime):
+                msg = 'List `{0}` contains non-datetime element'.format(
+                    argname,
+                )
                 raise TypeError(msg)

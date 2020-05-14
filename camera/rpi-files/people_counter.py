@@ -6,6 +6,7 @@ People counter will connect to imaging device and detect people.
 """
 
 import os
+from datetime import datetime
 
 FIRST_PERSON_THRESHOLD = 190
 SECOND_PERSON_THRESHOLD = 230
@@ -21,7 +22,7 @@ class PeopleCounter(object):
         self.leave_times = []
         self._counter = 0
 
-    def update(self, timestamp):
+    def update(self, timestamp: datetime):
         """Run updates.
 
         Args:

@@ -92,8 +92,7 @@ class ApiConnector(object):
             true when all uploads finalized
         """
         for timestamp in events:
-            datetimestamp = datetime.fromtimestamp(timestamp).astimezone()
-            event = create_event(event_type, datetimestamp)
+            event = create_event(event_type, timestamp)
             if not self._send_single_event(event):
                 return False
 

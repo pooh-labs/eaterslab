@@ -8,6 +8,7 @@ DataArchiver saves batches in a selected format.
 import csv
 import os
 from abc import ABC
+from datetime import datetime
 
 from data_batcher import Batch
 from events import EventType
@@ -19,7 +20,7 @@ class DataArchiver(ABC):
     def init(self):
         """Initialize the archive if not initialized."""
 
-    def append_event(self, timestamp: float, event_type: EventType):
+    def append_event(self, timestamp: datetime, event_type: EventType):
         """Includes single event in the archive. May not flush archive yet.
 
         Args:
@@ -97,24 +98,23 @@ class CsvArchiver(DataArchiver):
             msg = 'Error creating csv.writer: {0}'.format(ex2)
             raise RuntimeError(msg)
 
-    def append_event(self, timestamp: float, event_type: EventType):
+    def append_event(self, timestamp: datetime, event_type: EventType):
         """Include single event in the archive. May not flush archive yet.
 
         Args:
             timestamp: event timestamp
             event_type: event type
         """
-        timestamp_as_int = int(timestamp)
-        if timestamp_as_int not in self._entries:
-            self._entries[timestamp_as_int] = {
-                'timestamp': int(timestamp),
+        if timestamp not in self._entries:
+            self._entries[timestamp] = {
+                'timestamp': timestamp,
                 EventType.monitoring_started.name: 0,
                 EventType.monitoring_ended.name: 0,
                 EventType.person_entered.name: 0,
                 EventType.person_left.name: 0,
             }
 
-        self._entries[timestamp_as_int][event_type.name] += 1
+        self._entries[timestamp][event_type.name] += 1
 
     def append(self, batch: Batch):
         """Include batch in the archive. May not flush archive yet.

@@ -166,13 +166,13 @@ class Main(object):
     def _start_monitoring(self):
         """Start monitoring coroutines."""
         # Save start time
-        self._last_batch_time = time.time()
-        timestamp = datetime.fromtimestamp(self._last_batch_time).astimezone()
+        start_time = datetime.now().astimezone()
+        self._last_batch_time = start_time
         logging.info('System starts')
 
         # Start monitoring
-        self._init_archiver(timestamp)
-        self._init_api_connector(timestamp)
+        self._init_archiver(start_time)
+        self._init_api_connector(start_time)
         self._init_ingestion_stream()
 
     def _execute_loop(self):
@@ -181,13 +181,14 @@ class Main(object):
         time.sleep(1)
 
         # Update counter
-        self._counter.update(time.time())
+        current_time = datetime.now().astimezone()
+        self._counter.update(current_time)
         self._batcher.entered(self._counter.get_entering_list())
         self._batcher.left(self._counter.get_leaving_list())
 
         # Run batching
-        current_time = time.time()
-        if current_time > self._last_batch_time + BATCH_SECONDS:
+        delta = current_time-self._last_batch_time
+        if delta.total_seconds() > BATCH_SECONDS:
             self._last_batch_time = current_time
 
             # Log data
@@ -206,8 +207,7 @@ class Main(object):
     def _close(self):
         """Close the system."""
         # Save start time
-        shutdown_time = time.time()
-        timestamp = datetime.fromtimestamp(shutdown_time).astimezone()
+        shutdown_time = datetime.now().astimezone()
         logging.info('System shutting down...')
 
         # Finish ingestion stream
@@ -228,7 +228,7 @@ class Main(object):
         # Finish monitoring
         if self._api_connector:
             logging.info('Closing uplink...')
-            self._api_connector.close(timestamp)
+            self._api_connector.close(shutdown_time)
 
     def _init_ingestion_stream(self):
         """Init ingestion stream."""
