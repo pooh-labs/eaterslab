@@ -2,11 +2,13 @@
 
 """DataBatcher tests."""
 
+from datetime import datetime
+
 import pytest
 from data_batcher import DataBatcher
 
 
-def float_range(start, end):
+def datetime_range(start, end):
     """Create a list of floats from start to end, with step equal 1.
 
     Args:
@@ -16,7 +18,7 @@ def float_range(start, end):
     Returns:
         list of floats.
     """
-    return [float(elem) for elem in range(start, end + 1, 1)]
+    return [datetime.fromtimestamp(elem) for elem in range(start, end + 1, 1)]
 
 
 @pytest.fixture
@@ -26,7 +28,11 @@ def sample_timestamps():
     Returns:
         a list of 3 sample float timestamps.
     """
-    return [1588441493.5, 1588441693.34, 1589441493.1]
+    return [
+        datetime.fromtimestamp(1588441493.5),
+        datetime.fromtimestamp(1588441693.34),
+        datetime.fromtimestamp(1589441493.1),
+    ]
 
 
 def test_empty_batch():
@@ -53,22 +59,22 @@ def test_entered_empty_batcher(sample_timestamps):
 def test_entered_non_empty_batcher():
     """Test appending to a non-empty DataBatcher."""
     data_batcher = DataBatcher()
-    data_batcher.entered(float_range(1, 3))
-    data_batcher.entered(float_range(4, 6))
+    data_batcher.entered(datetime_range(1, 3))
+    data_batcher.entered(datetime_range(4, 6))
 
     batch = data_batcher.batch()
-    assert batch.entering == float_range(1, 6)
+    assert batch.entering == datetime_range(1, 6)
 
 
 def test_entered_batch_entered():
     """Test appending after a batch."""
     data_batcher = DataBatcher()
-    data_batcher.entered(float_range(1, 3))
+    data_batcher.entered(datetime_range(1, 3))
     data_batcher.batch()
-    data_batcher.entered(float_range(4, 6))
+    data_batcher.entered(datetime_range(4, 6))
 
     batch = data_batcher.batch()
-    assert batch.entering == float_range(4, 6)
+    assert batch.entering == datetime_range(4, 6)
 
 
 def test_entered_non_float():
@@ -111,22 +117,22 @@ def test_left_empty_batcher(sample_timestamps):
 def test_left_non_empty_batcher():
     """Test appending to a non-empty DataBatcher."""
     data_batcher = DataBatcher()
-    data_batcher.left(float_range(1, 3))
-    data_batcher.left(float_range(4, 6))
+    data_batcher.left(datetime_range(1, 3))
+    data_batcher.left(datetime_range(4, 6))
 
     batch = data_batcher.batch()
-    assert batch.leaving == float_range(1, 6)
+    assert batch.leaving == datetime_range(1, 6)
 
 
 def test_left_batch_entered():
     """Test appending after a batch."""
     data_batcher = DataBatcher()
-    data_batcher.left(float_range(1, 3))
+    data_batcher.left(datetime_range(1, 3))
     data_batcher.batch()
-    data_batcher.left(float_range(4, 6))
+    data_batcher.left(datetime_range(4, 6))
 
     batch = data_batcher.batch()
-    assert batch.leaving == float_range(4, 6)
+    assert batch.leaving == datetime_range(4, 6)
 
 
 def test_left_non_float():
