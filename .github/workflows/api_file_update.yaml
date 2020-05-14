@@ -19,9 +19,10 @@ jobs:
         run: |
           ls -R
           cd ./eaterslab/specs
-          wget https://eaterslab.herokuapp.com/api.yaml -O api_update.yaml; then
-          rm -rf api.yaml
-          mv api_update.yaml api.yaml
+          if wget https://eaterslab.herokuapp.com/api.yaml -O api_update.yaml; then
+            rm -rf api.yaml
+            mv api_update.yaml api.yaml
+          fi
       - name: Create Pull Request
         id: cpr
         uses: peter-evans/create-pull-request@v2
