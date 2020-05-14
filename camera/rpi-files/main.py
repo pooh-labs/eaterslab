@@ -187,7 +187,7 @@ class Main(object):
         self._batcher.left(self._counter.get_leaving_list())
 
         # Run batching
-        delta = current_time-self._last_batch_time
+        delta = current_time - self._last_batch_time
         if delta.total_seconds() > BATCH_SECONDS:
             self._last_batch_time = current_time
 
