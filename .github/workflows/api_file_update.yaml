@@ -1,8 +1,8 @@
 name: Update API file in repository
-on:
-  push:
-    branches:
-    - '!master'
+on: push
+#  push:
+#    branches:
+#    - '!master'
 #    paths:
 #    - 'django-server/**'
 #    - '.github/workflows/api_file_update.yaml'
