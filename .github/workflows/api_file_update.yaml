@@ -2,7 +2,7 @@ name: Update API file in repository
 on:
   push:
     branches:
-    - '!master'
+    - 'master'
     paths:
     - 'django-server/**'
     - '.github/workflows/api_file_update.yaml'
@@ -22,6 +22,8 @@ jobs:
             rm -rf api.yaml
             mv api_update.yaml api.yaml
             echo "New API definition downloaded from server"
+          else
+            exit 1
           fi
       - name: Create Pull Request
         id: cpr
