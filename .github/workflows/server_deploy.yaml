@@ -1,4 +1,4 @@
-name: Webserver deploy for production
+name: Webserver deploy for production and API update
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
     paths:
     - 'django-server/**'
     - '.github/workflows/server_deploy.yaml'
+    - '.github/workflows/api_file_update.yaml'
 
 jobs:
   build:
@@ -31,3 +32,33 @@ jobs:
           git add .
           git commit . -m "deploy full refresh from ${{ github.ref }}"                        # commit and push all files
           git push
+          cd ..
+          rm -rf ./eaterslab
+      - uses: actions/checkout@v2
+        if: ${{ success() }}
+      - name: Update API file
+        if: ${{ success() }}
+        run: |
+          cd ./specs
+          if wget https://eaterslab.herokuapp.com/api.yaml -O api_update.yaml; then
+            rm -rf api.yaml
+            mv api_update.yaml api.yaml
+            echo "New API definition downloaded from server"
+          else
+            exit 1
+          fi
+      - name: Create Pull Request
+        if: ${{ success() }}
+        id: cpr
+        uses: peter-evans/create-pull-request@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Update API file
+          title: 'Update API file'
+          body: |
+            specs/api.yaml updated based on server newest version
+          labels: django, automated, documentation
+          assignees: avan1235
+          reviewers: avan1235, kantoniak, Rhantolq
+          draft: false
+          branch: workflow/api-update
