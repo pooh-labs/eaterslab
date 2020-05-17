@@ -188,32 +188,32 @@ class: center, middle, inverse
 <img src="./img/eaters_icon_background.svg" alt="logo" height="200px"/>
 
 by PoohLabs
-.footnote[Zapraszamy na [stronę projektu](https://github.com/pooh-labs/eaterslab)]
+.footnote[Let's see at the [project page](https://github.com/pooh-labs/eaterslab)]
 ---
-## Co to właściwie i czemu właśnie Ty powinieneś tego używać?
+## What is it and why should you use it?
 ---
 layout: false
 .left-column[
-  ## Projekt
+  ## Project
   ### Problem
 ]
 .right-column[
 <img height="300px" src="img/cafeteria.jpg" />
 
-Klienci stołówki nie wiedzą nic:
+Cafeterias clients wonders:
 
-* Czy jest gdzie usiąść?
+* if there is aplace to sit and eat?
 
-* Co dzisiaj podają?
+* what is served today in their favourite place?
 
-* Czy dzisiejsze dania są dobre?
+* if today's meals are good or not?
 ]
 ---
 layout: false
 .left-column[
-  ## Projekt
+  ## Project
   ### Problem
-  ### Rozwiązanie
+  ### Solution
 ]
 .right-column[
 
@@ -222,21 +222,21 @@ layout: false
   <h2 style="margin-top: 0;">EatersLab</h2>
 </div>
 
-System automatycznego monitorowania zajętości stołówek
+Automatic monitoring system for cafeterias occupancy
 
-* Automatyczne rozpoznawanie liczby osób
+* Counting people inside
 
-* Zajętość live poprzez aplikację mobilną
+* Live data share by mobile client's app
 
-* Podgląd menu i ocen
+* Preview of fixed menu with prices and reviews
 
 ]
 ---
 layout: false
 .left-column[
-  ## Projekt
+  ## Project
   ### Problem
-  ### Rozwiązanie
+  ### Solution
   ### Korzyści
 ]
 .right-column[
@@ -306,6 +306,12 @@ name: how
 * zwolnienie centrum systemu z wykonywania wielu obliczeń 
 ]
 
+???
+
+Tutaj wrzucamy notatki co miałoby być powiedziane do tego slajdu o kamerach.
+
+... bla bla bla
+
 ---
 .left-column[
   ## Jak to działa?
@@ -334,6 +340,12 @@ name: how
 * przygotowanie systemu na duże obciążenia 
 ]
 
+???
+
+Tutaj wrzucamy notatki co miałoby być powiedziane do tego slajdu o serwerze.
+
+Mhm.
+
 ---
 
 .left-column[
@@ -361,6 +373,21 @@ name: how
 
 * prezentacja danych użytkownikowi w klarowny sposób 
 ]
+
+???
+
+Założyliśmy sobie stworzenie klienta na system operacyjny Android, który stanowi bardzo znaczący 
+udział na runku platform mobilnych. Ponadto cały proces tworzenia oprogramowania 
+ma odbywać się w stosunkowo niedawno powstałym języku Kotlin, który oficjalnie stał się językiem
+programowania na platformę Android. Chcąc jednak wykorzystać automatycznie generowany kod
+dostępu do API serwera postanowiliśmy nauczyć się nowego podejścia do programowania asynchronicznego
+wykorzystującego tak zwana koroutyny i storzyć w ramach proejktu nakładkę na wygenerowany kod
+zapewniającą nam wygdne korzystanie z asynchronicznych funkcji.
+
+Ponadto postanowiliśmy, że naszą aplikacji powinna być dostępna na większość oferowanych urządzeń, 
+co wiąże się ze wsparciem urządzeń z wersją Androida conajmniej 5.0. Oczywiście przy planowaniu 
+całej aplikacji naszym głównymcelem jest stworzenie aplikacji **dla użytkownika**, która w czytelny 
+sposób przedstawi mu niezbędne dane i pozwoli na łatwe nawigowanie po dostępnych informacjach. 
 
 ---
 template: inverse
@@ -540,6 +567,14 @@ class Cafeteria(models.Model):
 ```
 
 ]
+
+???
+
+W interfejsie admina mamy dostęp do różnych elementów naszej bazy danych, takich jak 
+użytkownicy, kamery, stołówki ...
+
+API jest generowane automatycznie jednym z zainstalowanych dodatków do Django REST framework.
+
 ---
 
 .left-column[
@@ -556,6 +591,10 @@ class Cafeteria(models.Model):
 * Wysyłanie przez kamery danych o zajętości stołówki.
 
 ]
+
+???
+
+Pobawić się na /doc odbieraniem danych o przykładowych stołówkach i wysłać losowy camera event.
 
 ---
 
@@ -574,6 +613,11 @@ class Cafeteria(models.Model):
 * W pełni wspierana i zalecana przez Django.
 
 ]
+
+???
+
+Różne kamery mogą naraz wysyłać eventy, stołówki mogą w tym czasie pobierać dane...
+Django obsługuje to wszystko asynchronicznie i wymaga do tego asynchronicznego dostępu do bazy danych.
 
 ---
 
@@ -595,6 +639,15 @@ Budowanie API &ndash; serializacja danych, widoki API, autentykacja.
 * [drf-yasg](https://github.com/axnsan12/drf-yasg) &ndash; generacja dokumentu API.
 
 ]
+
+???
+
+* Najważniejszym frameworkiem dodanym w naszym serwerze do Django jest Django REST framework.
+
+* Korzystając z natywnych modeli bazodanowych Django pozwala w prosty sposób tworzyć serializację a następnie
+widoki oraz autentykację. 
+
+* drf-yash tworzy /doc i .yaml
 
 ---
 
@@ -626,6 +679,14 @@ Budowanie API &ndash; serializacja danych, widoki API, autentykacja.
 
 ]
 
+???
+
+* Heroku to nasz workflow - ktoś commituje coś na repozytorium, wykonują się testy, strona jest budowana i hostowana w sieci, dzięki czemu można od razu testować.
+* Nasz plan jest w danym momencie w pełni darmowy - mimo ograniczeń jesteśmy w stanie zrobić aż tyle.
+* Pozwala na proste skalowanie środowiska.
+
+
+KONIECCC - Rhantolq
 ---
 template: inverse
 
