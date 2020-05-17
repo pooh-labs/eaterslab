@@ -30,7 +30,7 @@ jobs:
           git commit . -m "cleaned local repo"                                                # commit and push all files
           cp -r ../django-server/server/* ./                                                  # copy new version of server
           git add .
-          git commit . -m "deploy full refresh from ${{ github.ref }}"                        # commit and push all files
+          git commit . -m "Deploy full refresh from ${{ github.ref }}"                        # commit and push all files
           git push
           cd ..
           rm -rf ./eaterslab
@@ -56,7 +56,7 @@ jobs:
           commit-message: Update API file
           title: 'Update API file'
           body: |
-            specs/api.yaml updated based on server newest version
+            Update specs/api.yaml based on server newest version
           labels: django, automated, documentation
           assignees: avan1235
           reviewers: avan1235, kantoniak, Rhantolq
