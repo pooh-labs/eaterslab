@@ -188,7 +188,7 @@ class: center, middle, inverse
 <img src="./img/eaters_icon_background.svg" alt="logo" height="200px"/>
 
 by PoohLabs
-.footnote[Let's visit [the project site](https://github.com/pooh-labs/eaterslab)]
+.footnote[Visit [project site](https://github.com/pooh-labs/eaterslab)]
 ---
 ## What is it and why should you use it?
 ---
@@ -200,13 +200,13 @@ layout: false
 .right-column[
 <img height="300px" src="img/cafeteria.jpg" />
 
-Cafeterias clients wonder:
+Cafeterias customers wonder:
 
-* if there is a place to sit?
+* are there free seats?
 
 * what is served in their favourite place today?
 
-* if are today dishes tasty?
+* are today dishes tasty?
 ]
 ---
 layout: false
@@ -222,13 +222,13 @@ layout: false
   <h2 style="margin-top: 0;">EatersLab</h2>
 </div>
 
-System for automatic canteens occupancy data management
+System for automatic canteen occupancy data management
 
 * automatic counting of people inside
 
-* live data access via mobile client app
+* live data access via mobile app
 
-* fixed menu data access and reviewing possibility
+* menu listings and reviews
 
 ]
 ---
@@ -241,21 +241,21 @@ layout: false
 ]
 .right-column[
 
-For clients:
+For customers:
 
-* Data availability before visiting in place
+* Data available before visiting in person
 
-* Sharing the opinion about any dishes
+* Sharing the opinion about dishes
 
-* Data available also for foreign people
+* Data available also for foreigners
 
-For canteen's owners:
+For canteen owners:
 
-* System allows to manage the huge clients density in cafeterias
+* Help in managing traffic spikes
 
-* Availability of historical statistics data
+* Availability of historical statistics
 
-* Ability to export base data to social
+* Ability to export data to social channels
 
 ]
 ---
@@ -286,24 +286,24 @@ name: how
 ]
 .right-column[
 
-**Basic technical assumptions:**
+**Architecture goals:**
 
-* short size and compact design
+* compact design
 
 * reasonable computing power
 
-* easy availability and low price
+* hardware availability and low price
 
 
-**Set goals:**
+**Design goals:**
 
 * performing basic data analysis
 
 * sharing the analyzed data
 
-* ensuring anonymity for users of public places
+* ensuring anonymity of users
 
-* release of the central server of the system from performing many calculations
+* take part of the load from the server
 ]
 
 ---
@@ -364,7 +364,7 @@ name: how
 ---
 template: inverse
 
-## Urządzenia śledzące - **kamery z RaspberryPi**
+## RaspberryPi **camera devices**
 ---
 .left-column[
   ## Camera
@@ -374,17 +374,17 @@ template: inverse
 
 ** What is the role of cameras? **
 
-* Load video data from any type of source (USB camera, RPi Camera Module, video file).
+* Load video data from a source (USB camera, RPi Camera Module, video file).
 
 * Recognize single person on frames
 
-* Group and send data to server
+* Batch and send events to the server
       * `person_entered`
       * `person_left`
       * `monitoring_started`
       * `monitoring_ended`
 
-* Save local stats on device storage
+* Save local stats in device storage
 ]
 ---
 
@@ -395,7 +395,7 @@ template: inverse
 ]
 .right-column[
 
-* Follow people position on frames.
+* Track people in frames.
 
 * Check from which direction person crosses the line
 
@@ -407,18 +407,18 @@ template: inverse
    ## Camera
   ### What it does
   ### How it works
-  ### Step 1
+  #### Step 1
 ]
 .right-column[
 ### Step 1: People recognition
 
-* run ready neural network on single frame (`cv2.dnn`)
+* Run pre-trained neural network on a single frame (`cv2.dnn`)
 
-* neural network returns the rectangles as the position for people positions (`(startX, startY, endX, endY)`)
+* Neural network returns coordinates for each person (`(startX, startY, endX, endY)`)
 
-* Calculate the center of rectangle and mark it as the person position
+* Calculate the centroid and mark it as the person position
 
-These computation can be really heavy so it is done relatively rarely (every 30 frames).
+These computations can take a long time so it's done relatively rarely (every 30 frames).
 
 ]
 ---
@@ -427,19 +427,19 @@ These computation can be really heavy so it is done relatively rarely (every 30 
   ## Camera
   ### What it does
   ### How it works
-  ### Step 1
-  ### Step 2
+  #### Step 1
+  #### Step 2
 ]
 .right-column[
 ### Step 2: Following the people
 
 * Every object can be followed separately
 
-* Running following algorithm using the library `dlib` using the rectable coordinates
+* Passing centroids to another algorithm (from `dlib` library)
 
-* Gets new positions of objects
+* Algorithm returns new positions of objects
 
-* Assigns the nearest new position to old one
+* Assign the nearest new position to old one
 
 * When the object crosses the line - person enters/leaves the room
 ]
@@ -450,15 +450,15 @@ These computation can be really heavy so it is done relatively rarely (every 30 
   ## Camera
   ### What it does
   ### How it works
-  ### Step 1
-  ### Step 2
+  #### Step 1
+  #### Step 2
   ### Technologies
 ]
 .right-column[
 
 * Python
 
-    * Used also on the server side of system
+    * Used also on the server
 
     * Good support for RaspberryPi
 
@@ -468,40 +468,13 @@ These computation can be really heavy so it is done relatively rarely (every 30 
 
 * OpenCV, `dlib`
 
-    * ready implementations of algorithms saves developers time
+    * Pre-implementated algorithms save developer time
 
     * Using two different algorithms = one fast + one precise
 
 ]
 ---
 
-.left-column[
-  ## Camera
-  ### What it does
-  ### How it works
-  ### Step 1
-  ### Step 2
-  ### Technologies
-  ### Project status
-]
-.right-column[
-
-Done:
-
-* Loading images data from different sources
-* Grouping data and saving on the devices
-* Comunication with server
-
-Work in progress:
-* Połączenie symulacji z kodem urządzenia
-* aktualnie symulacja jest uruchamiana w innym miejscu
-* urządzenie tymczasowo używa losowych danych w dalszych etapach
-
-Todo:
-* Initialization script for devices
-
-]
----
 template: inverse
 
 ## Data server **Django**
@@ -623,31 +596,7 @@ Defining the API &ndash; data serialization, API views, authentification.
 * has the SSL certificate (HTTPS protocol is forced in the app)
 
 ]
----
-.left-column[
-  ## Django
-  ### Project status
-]
-.right-column[
 
-* API
-  - GET, POST for most of the models - ready
-  - there will be new models added to API
-  - Authentification - WIP
-
-* API documentation generation - gotowe
-
-* Admin - ready
-
-* Occupancy data - WIP
-
-* Web part of app
-  - statistics - WIP
-  - main page - ready
-
-* Workflow + Heroku - ready
-
-]
 ---
 template: inverse
 
