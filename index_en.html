@@ -506,23 +506,23 @@ Do zrobienia:
 ---
 template: inverse
 
-## Serwer danych **Django**
+## Data server **Django**
 ---
 .left-column[
   ## Django
-  ### Co robi
+  ### Tasks
 ]
 .right-column[
 
-** Co robi serwer? **
+** What's the role of the server **
 
-* Udostępnia wygenerowany na podstawie modeli interfejs [admina](https://eaterslab.herokuapp.com/admin/) w którym można zarządzać danymi.
+* [Admin page](https://eaterslab.herokuapp.com/admin/) that allows to manage data which is defined based on models specification.
 
-* Udostępnia automatycznie wygenerowany na podstawie kodu dokument z definicją [API](https://eaterslab.herokuapp.com/doc).
+* Sharing the document with interface of the [API](https://eaterslab.herokuapp.com/doc).
 
-* Komunikuje się z bazą danych oraz posiada własny, intuicyjny dla programisty sposób modelowania bazy.
+* Managing the database stored data (and gives the  ability to model the objects in code with no SQL).
 
-Przykład:
+Model example:
 
 ```python
 class Cafeteria(models.Model):
@@ -544,16 +544,16 @@ class Cafeteria(models.Model):
 
 .left-column[
   ## Django
-  ### Co robi
+  ### Tasks
   ### API
 ]
 .right-column[
 
-** [API](https://eaterslab.herokuapp.com/doc) &ndash; między innymi: **
+** [API](https://eaterslab.herokuapp.com/doc): **
 
-* Odbiór przez aplikacje mobilne przeróżnych danych &ndash; przede wszystkim dane o stołówkach.
+* serving canteens data for mobile clients
 
-* Wysyłanie przez kamery danych o zajętości stołówki.
+* receiving data from camera's devices
 
 ]
 
@@ -561,17 +561,17 @@ class Cafeteria(models.Model):
 
 .left-column[
   ## Django
-  ### Co robi
+  ### Tasks
   ### API
-  ### Baza Danych
+  ### Database
 ]
 .right-column[
 
-** Baza danych: PostgreSQL **
+** Database: PostgreSQL **
 
-* Obsługuje duży i asynchroniczny dostęp do danych.
+* It can easily manage huge amounts of data in asynchronous way.
 
-* W pełni wspierana i zalecana przez Django.
+* It is fully compatible with Django.
 
 ]
 
@@ -579,20 +579,20 @@ class Cafeteria(models.Model):
 
 .left-column[
   ## Django
-  ### Co robi
+  ### Tasks
   ### API
-  ### Baza Danych
-  ### Dodatki
+  ### Database
+  ### Addons
 ]
 .right-column[
 
-** Dodatki **
+** Addons **
 
 * [Django REST framework](https://www.django-rest-framework.org/)
 
-Budowanie API &ndash; serializacja danych, widoki API, autentykacja.
+Defining the API &ndash; data serialization, API views, authentification.
 
-* [drf-yasg](https://github.com/axnsan12/drf-yasg) &ndash; generacja dokumentu API.
+* [drf-yasg](https://github.com/axnsan12/drf-yasg) &ndash; API document generation
 
 ]
 
