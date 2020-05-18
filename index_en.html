@@ -615,13 +615,13 @@ There are a few functionalities in the app:
 
 - searching the place on the map
 
-- searching the place by text (**WIP**)
+- searching the place by text
 
 - access to data of selected place
 
   * podstawowego widoku wybranego miejsca
 
-  * statistics (**WIP**)
+  * statistics
 
   * fixed menu
 
@@ -634,25 +634,25 @@ Each functionality is implemented as the separate activity in the app what can b
 
 ---
 .left-column[
-  ## Podstawowe składniki
-  ## Zarządzanie danymi
+  ## Base parts
+  ## Data management
 ]
 .right-column[
-Zarządzanie danymi w aplikacji
+Process of data management in app:
 
-- mapowanie na specyficzny dla aplikacji format
+- mapping data to app format
 
-- trzymanie cache'owanych danych odpowiednich obiektów
+- keeping cached data
 
-- informowanie użytkownika o błędach
+- informing user about every connection error
 
-Sposób komunikacji z serwerem:
+Communiation with data server:
 
-- wykorzystanie kodu generowanego na podstawie definicji API
+- using the code generated using API definition file
+        
+- asynchronous requests to data server
 
-- asynchroniczne zapytania do API w ramach zakresu widoków
-
-- lekkie wykonywanie działań w tle
+- light background tasks thanks to coroutines
 ]
 ---
 .left-column[
