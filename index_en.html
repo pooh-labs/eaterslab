@@ -194,26 +194,26 @@ by PoohLabs
 ---
 layout: false
 .left-column[
-  ## Projekt
+  ## Project
   ### Problem
 ]
 .right-column[
 <img height="300px" src="img/cafeteria.jpg" />
 
-Klienci stołówki nie wiedzą nic:
+Cafeterias clients wonder:
 
-* Czy jest gdzie usiąść?
+* if there is a place to sit?
 
-* Co dzisiaj podają?
+* what is served in their favourite place today?
 
-* Czy dzisiejsze dania są dobre?
+* if are today dishes tasty?
 ]
 ---
 layout: false
 .left-column[
-  ## Projekt
+  ## Project
   ### Problem
-  ### Rozwiązanie
+  ### Solution
 ]
 .right-column[
 
@@ -222,50 +222,50 @@ layout: false
   <h2 style="margin-top: 0;">EatersLab</h2>
 </div>
 
-System automatycznego monitorowania zajętości stołówek
+System for automatic canteens occupancy data management
 
-* Automatyczne rozpoznawanie liczby osób
+* automatic counting of people inside
 
-* Zajętość live poprzez aplikację mobilną
+* live data access via mobile client app
 
-* Podgląd menu i ocen
+* fixed menu data access and reviewing possibility
 
 ]
 ---
 layout: false
 .left-column[
-  ## Projekt
+  ## Project
   ### Problem
-  ### Rozwiązanie
-  ### Korzyści
+  ### Solution
+  ### Benefits
 ]
 .right-column[
 
-Dla klientów:
+For clients:
 
-* Informacje dostępne przed pójściem na stołówkę
+* Data availability before visiting in place
 
-* Grupowe oceny posiłków
+* Sharing the opinion about any dishes
 
-* Dane dostępne dla niepełnosprawnych i osób nie mówiących po polsku
+* Data available also for foreign people
 
-Dla właścicieli:
+For canteen's owners:
 
-* System pomaga rozładować skoki w liczbie klientów
+* System allows to manage the huge clients density in cafeterias
 
-* Przegląd statystyk historycznych dot. odwiedzin i ocen
+* Availability of historical statistics data
 
-* Możliwości automatycznego eksportu np. na fanpage FB
+* Ability to export base data to social
 
 ]
 ---
 layout: false
 .left-column[
-  ## Projekt
+  ## Project
   ### Problem
-  ### Rozwiązanie
-  ### Korzyści
-  ### Architektura systemu
+  ### Solution
+  ### Benefits
+  ### System architecture
 ]
 .right-column[
 
@@ -275,91 +275,90 @@ layout: false
 ---
 template: inverse
 
-## Jak w takim razie to działa?
-czyli krótko o idei działania systemu
+## How does it work then?
+short introduction to the system
 ---
 name: how
 
 .left-column[
-  ## Jak to działa?
-  ### - Urządzenia - kamery
+  ## How it works?
+  ### - Devices - cameras
 ]
 .right-column[
 
-**Podstawowe założenia techniczne:**
+**Basic technical assumptions:**
 
-* niewielki rozmiar i kompaktowa budowa
+* short size and compact design
 
-* rozsądna moc obliczeniowa
+* reasonable computing power
 
-* łatwa dostępność i niewielka cena
+* easy availability and low price
 
 
-**Postawione cele:**
+**Set goals:**
 
-* wykonywanie podstawowej analizy danych
+* performing basic data analysis
 
-* udostępnianie przeanalizowanych danych
+* sharing the analyzed data
 
-* zapewnienie anonimowości użytkownikom miejsc publicznych
+* ensuring anonymity for users of public places
 
-* zwolnienie centrum systemu z wykonywania wielu obliczeń
+* release of the central server of the system from performing many calculations
 ]
 
 ---
 .left-column[
-  ## Jak to działa?
-  ### - Urządzenia - kamery
-  ### - Serwer danych
+  ## How it works?
+  ### - Devices - cameras
+  ### - Server
 ]
 .right-column[
 
-**Podstawowe założenia techniczne:**
+**Basic technical assumptions:**
 
-* początkowo niewielki koszt utrzymania (zanim system rozrośnie się)
+* low maintenance costs initially (before the system grows)
 
-* stosunkowo nietrudna możliwość wprowadzania nowych elementów dzięki wsparciu społeczności
+* relatively easy possibility to introduce new elements thanks to community support
 
-* łatwy dostęp do środowiska produkcyjnego dla developerów
+* easy access to the production environment for developers
 
 
-**Postawione cele:**
+**Set goals:**
 
-* udostępninie podstawowego API publicznie
+* sharing the basic API publicly
 
-* dobre udokumentowanie stworzonego API (niedużym nakładem pracy)
+* good documentation of the created API (a small amount of work)
 
 * pisanie kodu zgodnie z zasadami DRY oraz KISS
 
-* przygotowanie systemu na duże obciążenia
+* system preparation for high loads
 ]
 
 ---
 
 .left-column[
-  ## Jak to działa?
-  ### - Urządzenia - kamery
-  ### - Serwer danych
-  ### - Aplikacja klienta
+  ## How it works?
+  ### - Devices - cameras
+  ### - Server
+  ### - Client app
 ]
 .right-column[
 
-**Podstawowe założenia techniczne:**
+**Basic technical assumptions:**
 
-* stworzenie aplikacji klienta systemu Android
+* creating an Android client application
 
-* wykorzystanie oficjalnego języka platformy Android - Kotlina
+* using the offical Android language - Kotlin
 
-* wykorzystanie kodu generowanego przez definicję API w sposób
-  asynchroniczny charakterystyczny dla Kotlina
+* creating asynchronous Kotlin coroutines for connections management
 
-**Postawione cele:**
+**Set goals:**
 
-* stworzenie aplikacji dostępnej na większość urządzeń mobilnych
+* developing an app which can be used on the most of the devices
 
-* stworzenie aplikacji z przyjaznym interfejsem dla użytkownika
+* creating an application with a user-friendly interface
 
-* prezentacja danych użytkownikowi w klarowny sposób
+* presenting data to the user in a clear way
 ]
 
 ---
@@ -368,139 +367,138 @@ template: inverse
 ## Urządzenia śledzące - **kamery z RaspberryPi**
 ---
 .left-column[
-  ## Kamera
-  ### Co robi
+  ## Camera
+  ### What it does
 ]
 .right-column[
 
-** Co robią kamery? **
+** What is the role of cameras? **
 
-* Wczytują obraz z jednego z dostępnych źródeł (kamerka USB, RPi Camera Module, plik wideo).
+* Load video data from any type of source (USB camera, RPi Camera Module, video file).
 
-* Rozpoznają pojedyncze osoby na obrazie.
+* Recognize single person on frames
 
-* Grupują i wysyłają dane do serwera.
+* Group and send data to server
       * `person_entered`
       * `person_left`
       * `monitoring_started`
       * `monitoring_ended`
 
-* Zapisują lokalne statystyki.
+* Save local stats on device storage
 ]
 ---
 
 .left-column[
-  ## Kamera
-  ### Co robi
-  ### Jak działa
+  ## Camera
+  ### What it does
+  ### How it works
 ]
 .right-column[
 
-* Śledzi pozycje osób na obrazie.
+* Follow people position on frames.
 
-* Sprawdza, od której strony osoba przekracza linię.
+* Check from which direction person crosses the line
 
 <img src="./img/opencv_people_counter_result01.gif" alt="people on GIF" style="height: 400px;" />
 ]
 ---
 
 .left-column[
-  ## Kamera
-  ### Co robi
-  ### Jak działa
-  #### Etap 1
+   ## Camera
+  ### What it does
+  ### How it works
+  ### Step 1
 ]
 .right-column[
-### Etap 1: Rozpoznawanie osób
+### Step 1: People recognition
 
-* Uruchamia gotową, wytrenowaną sieć neuronową na pojedynczej klatce (`cv2.dnn`)
+* run ready neural network on single frame (`cv2.dnn`)
 
-* Sieć zwraca wierzchołki prostokąta dla każdego obiektu (`(startX, startY, endX, endY)`)
+* neural network returns the rectangles as the position for people positions (`(startX, startY, endX, endY)`)
 
-* Obliczamy środek prostokąta i zachowujemy dane
+* Calculate the center of rectangle and mark it as the person position
 
-Kosztowny etap, więc uruchamiany co np. 30 klatek.
+These computation can be really heavy so it is done relatively rarely (every 30 frames).
 
 ]
 ---
 
 .left-column[
-  ## Kamera
-  ### Co robi
-  ### Jak działa
-  #### Etap 1
-  #### Etap 2
+  ## Camera
+  ### What it does
+  ### How it works
+  ### Step 1
+  ### Step 2
 ]
 .right-column[
-### Etap 2: Śledzenie osób
+### Step 2: Following the people
 
-* Działa na każdym obiekcie oddzielnie
+* Every object can be followed separately
 
-* Uruchamia algorytm śledzenia z bibilioteki `dlib` podając dane prostokąta
+* Running following algorithm using the library `dlib` using the rectable coordinates
 
-* Otrzymuje nowe pozycje obiektów
+* Gets new positions of objects
 
-* Dla każdej starej pozycji przyporządkowuje nową, najbliższą
+* Assigns the nearest new position to old one
 
-* Jeżeli obiekt przekroczył linię, to osoba weszła/wyszła
-
+* When the object crosses the line - person enters/leaves the room
 ]
 
 ---
 
 .left-column[
-  ## Kamera
-  ### Co robi
-  ### Jak działa
-  #### Etap 1
-  #### Etap 2
-  ### Technologie
+  ## Camera
+  ### What it does
+  ### How it works
+  ### Step 1
+  ### Step 2
+  ### Technologies
 ]
 .right-column[
 
 * Python
 
-    * Używamy tego języka również na serwerze
+    * Used also on the server side of system
 
-    * Dobre wsparcie dla RaspberryPi
+    * Good support for RaspberryPi
 
-    * Automatyczny generator dla klienta API
+    * Automatic generator of API client
 
-    * Bogate wsparcie dla uczenia maszynowego
+    * Rich support for machine learning
 
 * OpenCV, `dlib`
 
-    * Gotowe implementacje algorytmów oszczędzają pracy
+    * ready implementations of algorithms saves developers time
 
-    * Jeden algorytm dokładny, drugi szybki
+    * Using two different algorithms = one fast + one precise
 
 ]
 ---
 
 .left-column[
-  ## Kamera
-  ### Co robi
-  ### Jak działa
-  #### Etap 1
-  #### Etap 2
-  ### Technologie
-  ### Postępy
+  ## Camera
+  ### What it does
+  ### How it works
+  ### Step 1
+  ### Step 2
+  ### Technologies
+  ### Project status
 ]
 .right-column[
 
-Zrobione:
+Done:
 
-* Wczytywanie obrazu z różnych źródeł
-* Grupowanie danych i zapis do urządzenia
-* Komunikacja z serwerem
+* Loading images data from different sources
+* Grouping data and saving on the devices
+* Comunication with server
 
-W trakcie:
+Work in progress:
 * Połączenie symulacji z kodem urządzenia
-  * aktualnie symulacja jest uruchamiana w innym miejscu
-  * urządzenie tymczasowo używa losowych danych w dalszych etapach
+* aktualnie symulacja jest uruchamiana w innym miejscu
+* urządzenie tymczasowo używa losowych danych w dalszych etapach
 
-Do zrobienia:
-* Skrypt do inicjalizacji konfiguracji
+Todo:
+* Initialization script for devices
 
 ]
 ---
