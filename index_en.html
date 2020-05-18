@@ -188,9 +188,9 @@ class: center, middle, inverse
 <img src="./img/eaters_icon_background.svg" alt="logo" height="200px"/>
 
 by PoohLabs
-.footnote[Zapraszamy na [stronę projektu](https://github.com/pooh-labs/eaterslab)]
+.footnote[Let's visit [the project site](https://github.com/pooh-labs/eaterslab)]
 ---
-## Co to właściwie i czemu właśnie Ty powinieneś tego używać?
+## What is it and why should you use it?
 ---
 layout: false
 .left-column[
@@ -600,88 +600,88 @@ Budowanie API &ndash; serializacja danych, widoki API, autentykacja.
 
 .left-column[
   ## Django
-  ### Co robi
+  ### Tasks
   ### API
-  ### Baza Danych
-  ### Dodatki
+  ### Database
+  ### Addons
   ### - Heroku
 ]
 .right-column[
 
 ** Heroku **
 
-* Hostuje serwer na chmurze.
+* is a hosting of the application in the cloud
 
 [production](https://eaterslab.herokuapp.com/) &ndash; [dev](https://eaterslab-dev.herokuapp.com/)
 
-* Skonfigurowana jako workflow &ndash; przy każdym push'u na repozytorium:
+* configured as the workflow - after every push to repository
 
-  - Buduje na nowo serwer.
+  - App server is built
 
-  - Wykonuje automatyczne testy.
+  - App tests are executed
 
-* Możliwość łączenia się z bazą danych PostgreSQL hostowaną na chmurze.
+* the ability to interoperate with the PostgreSQL database in the cloud
 
-* Posiada certyfikat SSL &ndash; transport danych po HTTPS.
+* has the SSL certificate (HTTPS protocol is forced in the app)
 
 ]
 ---
 .left-column[
   ## Django
-  ### Stan projektu
+  ### Project status
 ]
 .right-column[
 
 * API
-  - GET, POST dla większości modeli - gotowe
-  - Mogą dojść nowe modele do dodania do API
-  - Autentykacja - WIP
+  - GET, POST for most of the models - ready
+  - there will be new models added to API
+  - Authentification - WIP
 
-* Generowanie dokumentacji API - gotowe
+* API documentation generation - gotowe
 
-* Admin - gotowy
+* Admin - ready
 
-* Informacje o zajętości stołówki - WIP
+* Occupancy data - WIP
 
-* Część webowa
-  - statysyki - WIP
-  - strona główna - gotowa
+* Web part of app
+  - statistics - WIP
+  - main page - ready
 
-* Workflow + Heroku - gotowe
+* Workflow + Heroku - ready
 
 ]
 ---
 template: inverse
 
-## Aplikacja mobilna - **Android**
+## Mobile client - **Android**
 ---
 .left-column[
-  ## Podstawowe składniki
+  ## Base parts
 ]
 .right-column[
 
-Celem aplikacji jest zapewnienie użytkownikom dostępu do danych udostępnianych przez publiczne API.
+The app should allow users to easily access the data which is stored on server and exposed via public API.
 
+There are a few functionalities in the app:
 
-Aplikacja składa się z kilku podstawowych funkcjonalności:
+- welcome screen
 
-- powitalnej
+- searching the place on the map
 
-- wyszukiwania miejsc na mapie
+- searching the place by text (**WIP**)
 
-- wyszukiwania miejsc tekstem (**WIP**)
-
-- dostępu do danych miejsca
+- access to data of selected place
 
   * podstawowego widoku wybranego miejsca
 
-  * statystyk miejsca (**WIP**)
+  * statistics (**WIP**)
 
-  * menu wybranego miejsca
+  * fixed menu
 
-- ustawień
+- settings
 
-Implemetacja funkcjonalności jako osobnych aktyności, co umożliwia uruchomianie konkretnych funkcjonalności spoza naszej aplikacji.
+
+Each functionality is implemented as the separate activity in the app what can be useful in app future development and cooperation with other apps.
 
 ]
 
@@ -709,17 +709,17 @@ Sposób komunikacji z serwerem:
 ]
 ---
 .left-column[
-  ## Powitanie
+    ## Welcome
 ]
 .right-column[
 
 .text-content[
 
-Dwie podstawowe ścieżki wykorzystania aplikacji:
+Two base use cases of app
 
-- wyszukiwanie miejsca na mapie
+- searching places on map
 
-- wyszukiwanie tesktowe miejsca
+- searching places by text with filters (**WIP**)
 
 ]
 
@@ -729,20 +729,20 @@ Dwie podstawowe ścieżki wykorzystania aplikacji:
 ]
 ---
 .left-column[
-  ## Powitanie
-  ## Mapa
+  ## Welcome
+  ## Map
 ]
 .right-column[
 
 .text-content[
 
-Możwliwość wyszukiwania na mapie:
+The ability to search on map:
 
-- podstwowe informacje o miejscach
+- base information about places
 
-- dostęp do lokalizacji obiektów
+- access to places localisation
 
-- możliwość skorzystania z GPS urządzenia
+- using GPS provider to search nearby places
 
 ]
 
@@ -752,21 +752,21 @@ Możwliwość wyszukiwania na mapie:
 ]
 ---
 .left-column[
-  ## Powitanie
-  ## Mapa
-  ## Widok podstawowy
+  ## Welcome
+  ## Map
+  ## Main data screen
 ]
 .right-column[
 
 .text-content[
 
-Prezentacja danych dostarczonych z serwera:
+Presentation of base data fetched from server:
 
-- czytelna i prosta prezentacja podstawowych danych
+- simple and readable data presentation
 
-- niezależne ładowanie poszczególnych elementów
+- independent content loading
 
-- podgląd aktualnego zapełnienia miejsca
+- current occupancy data view
 
 ]
 
@@ -776,22 +776,22 @@ Prezentacja danych dostarczonych z serwera:
 ]
 ---
 .left-column[
-  ## Powitanie
-  ## Mapa
-  ## Widok podstawowy
-  ## Statystyki
+    ## Welcome
+  ## Map
+  ## Main data screen
+  ## Statistics
 ]
 .right-column[
 
 .text-content[
 
-Przygotowanie narzędzi do prezentacji statystyk:
+Setting up all needed libraries to present stats data:
 
-- gotowe wykresy słupkowe oraz liniowe
+- ready linear and bar plots
 
-- powiązanie danych z wykresami (**WIP**)
+- fetching real stats data from server (**WIP**)
 
-- możliwość zmiany prezentacji danych (**WIP**)
+-  changing the stats ranges and views (**WIP**)
 
 ]
 
@@ -801,21 +801,21 @@ Przygotowanie narzędzi do prezentacji statystyk:
 ]
 ---
 .left-column[
-  ## Powitanie
-  ## Mapa
-  ## Widok podstawowy
-  ## Statystyki
+  ## Welcome
+  ## Map
+  ## Main data screen
+  ## Statistics
   ## Menu
 ]
 .right-column[
 
 .text-content[
 
-Prezentacja stałego menu danego miejsca:
+Fixed menu of selected place presentation:
 
-- nazwy, ceny, opinie o produktach
+- names, prices and reviews of deishes
 
-- możliwość wystawienia własnej oceny jedzenia (**WIP**)
+- the ability to add your own review for dish (**WIP**)
 
 ]
 
@@ -825,26 +825,26 @@ Prezentacja stałego menu danego miejsca:
 ]
 ---
 .left-column[
-  ## Powitanie
-  ## Mapa
-  ## Widok podstawowy
-  ## Statystyki
+  ## Welcome
+  ## Map
+  ## Main data screen
+  ## Statistics
   ## Menu
-  ## Ustawienia
+  ## Settings
 ]
 .right-column[
 
 .text-content[
 
-Możliwość zmiany preferencji aplikacji w trwały sposób:
+MThe ability to change the application settings:
 
-- dwa języki interfejsu aplikacji - polski i angielski
+- two app's languages - Polish and English
 
-- dwa motywy interfejsu aplikacji - podstawowy i ciemny
+- two app's themes - standard and dark
 
-- aktualna wersja aplikacji jako wejście do *dev mode* (**WIP**)
+- current app version as an entry to *dev mode* (**WIP**)
 
-- zmiana nazwy użytkownika wystawiającego opinię (**WIP**)
+- setting username for meals reviews posting (**WIP**)
 
 ]
 
@@ -854,7 +854,7 @@ Możliwość zmiany preferencji aplikacji w trwały sposób:
 ]
 ---
 .left-column[
-  ## Ciemny motyw aplikacji
+  ## Dark app theme
 ]
 .right-column[
 <img src="./img/hello_dark.jpg" alt="stats" height="300px"/>
@@ -868,7 +868,7 @@ Możliwość zmiany preferencji aplikacji w trwały sposób:
 name: last-page
 template: inverse
 
-## To wszystko - **dziękujemy**!
+## That's all - **thank you**!
 
 
     </textarea>
