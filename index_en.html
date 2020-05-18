@@ -107,12 +107,6 @@
             line-height: 0.8em;
         }
 
-        .lang-version {
-            position: absolute;
-            bottom: 12px;
-            left: 30px;
-        }
-
         /* Slide-specific styling */
         #slide-inverse .footnote {
             bottom: 12px;
@@ -194,34 +188,32 @@ class: center, middle, inverse
 <img src="./img/eaters_icon_background.svg" alt="logo" height="200px"/>
 
 by PoohLabs
-
-.lang-version[[English version](./index_en.html)]
-.footnote[Zapraszamy na [stronę projektu](https://github.com/pooh-labs/eaterslab)]
+.footnote[Visit [project site](https://github.com/pooh-labs/eaterslab)]
 ---
-## Co to właściwie i czemu właśnie Ty powinieneś tego używać?
+## What is it and why should you use it?
 ---
 layout: false
 .left-column[
-  ## Projekt
+  ## Project
   ### Problem
 ]
 .right-column[
 <img height="300px" src="img/cafeteria.jpg" />
 
-Klienci stołówki nie wiedzą nic:
+Cafeterias customers wonder:
 
-* Czy jest gdzie usiąść?
+* are there free seats?
 
-* Co dzisiaj podają?
+* what is served in their favourite place today?
 
-* Czy dzisiejsze dania są dobre?
+* are today dishes tasty?
 ]
 ---
 layout: false
 .left-column[
-  ## Projekt
+  ## Project
   ### Problem
-  ### Rozwiązanie
+  ### Solution
 ]
 .right-column[
 
@@ -230,50 +222,50 @@ layout: false
   <h2 style="margin-top: 0;">EatersLab</h2>
 </div>
 
-System automatycznego monitorowania zajętości stołówek
+System for automatic canteen occupancy data management
 
-* Automatyczne rozpoznawanie liczby osób
+* automatic counting of people inside
 
-* Zajętość live poprzez aplikację mobilną
+* live data access via mobile app
 
-* Podgląd menu i ocen
+* menu listings and reviews
 
 ]
 ---
 layout: false
 .left-column[
-  ## Projekt
+  ## Project
   ### Problem
-  ### Rozwiązanie
-  ### Korzyści
+  ### Solution
+  ### Benefits
 ]
 .right-column[
 
-Dla klientów:
+For customers:
 
-* Informacje dostępne przed pójściem na stołówkę
+* Data available before visiting in person
 
-* Grupowe oceny posiłków
+* Sharing the opinion about dishes
 
-* Dane dostępne dla niepełnosprawnych i osób nie mówiących po polsku
+* Data available also for foreigners
 
-Dla właścicieli:
+For canteen owners:
 
-* System pomaga rozładować skoki w liczbie klientów
+* Help in managing traffic spikes
 
-* Przegląd statystyk historycznych dot. odwiedzin i ocen
+* Availability of historical statistics
 
-* Możliwości automatycznego eksportu np. na fanpage FB
+* Ability to export data to social channels
 
 ]
 ---
 layout: false
 .left-column[
-  ## Projekt
+  ## Project
   ### Problem
-  ### Rozwiązanie
-  ### Korzyści
-  ### Architektura systemu
+  ### Solution
+  ### Benefits
+  ### System architecture
 ]
 .right-column[
 
@@ -283,254 +275,225 @@ layout: false
 ---
 template: inverse
 
-## Jak w takim razie to działa?
-czyli krótko o idei działania systemu
+## How does it work then?
+short introduction to the system
 ---
 name: how
 
 .left-column[
-  ## Jak to działa?
-  ### - Urządzenia - kamery
+  ## How it works?
+  ### - Devices - cameras
 ]
 .right-column[
 
-**Podstawowe założenia techniczne:**
+**Architecture goals:**
 
-* niewielki rozmiar i kompaktowa budowa
+* compact design
 
-* rozsądna moc obliczeniowa
+* reasonable computing power
 
-* łatwa dostępność i niewielka cena
+* hardware availability and low price
 
 
-**Postawione cele:**
+**Design goals:**
 
-* wykonywanie podstawowej analizy danych 
+* performing basic data analysis
 
-* udostępnianie przeanalizowanych danych
+* sharing the analyzed data
 
-* zapewnienie anonimowości użytkownikom miejsc publicznych
+* ensuring anonymity of users
 
-* zwolnienie centrum systemu z wykonywania wielu obliczeń 
+* take part of the load from the server
 ]
 
 ---
 .left-column[
-  ## Jak to działa?
-  ### - Urządzenia - kamery
-  ### - Serwer danych
+  ## How it works?
+  ### - Devices - cameras
+  ### - Server
 ]
 .right-column[
 
-**Podstawowe założenia techniczne:**
+**Basic technical assumptions:**
 
-* początkowo niewielki koszt utrzymania (zanim system rozrośnie się)
+* low maintenance costs initially (before the system grows)
 
-* stosunkowo nietrudna możliwość wprowadzania nowych elementów dzięki wsparciu społeczności
+* relatively easy possibility to introduce new elements thanks to community support
 
-* łatwy dostęp do środowiska produkcyjnego dla developerów
+* easy access to the production environment for developers
 
 
-**Postawione cele:**
+**Set goals:**
 
-* udostępninie podstawowego API publicznie
+* sharing the basic API publicly
 
-* dobre udokumentowanie stworzonego API (niedużym nakładem pracy)
+* good documentation of the created API (a small amount of work)
 
 * pisanie kodu zgodnie z zasadami DRY oraz KISS
 
-* przygotowanie systemu na duże obciążenia 
+* system preparation for high loads
 ]
 
 ---
 
 .left-column[
-  ## Jak to działa?
-  ### - Urządzenia - kamery
-  ### - Serwer danych
-  ### - Aplikacja klienta
+  ## How it works?
+  ### - Devices - cameras
+  ### - Server
+  ### - Client app
 ]
 .right-column[
 
-**Podstawowe założenia techniczne:**
+**Basic technical assumptions:**
 
-* stworzenie aplikacji klienta systemu Android
+* creating an Android client application
 
-* wykorzystanie oficjalnego języka platformy Android - Kotlina
+* using the offical Android language - Kotlin
 
-* wykorzystanie kodu generowanego przez definicję API w sposób 
-  asynchroniczny charakterystyczny dla Kotlina
+* creating asynchronous Kotlin coroutines for connections management
 
-**Postawione cele:**
+**Set goals:**
 
-* stworzenie aplikacji dostępnej na większość urządzeń mobilnych
+* developing an app which can be used on the most of the devices
 
-* stworzenie aplikacji z przyjaznym interfejsem dla użytkownika
+* creating an application with a user-friendly interface
 
-* prezentacja danych użytkownikowi w klarowny sposób 
+* presenting data to the user in a clear way
 ]
 
 ---
 template: inverse
 
-## Urządzenia śledzące - **kamery z RaspberryPi**
+## RaspberryPi **camera devices**
 ---
 .left-column[
-  ## Kamera
-  ### Co robi
+  ## Camera
+  ### What it does
 ]
 .right-column[
 
-** Co robią kamery? **
+** What is the role of cameras? **
 
-* Wczytują obraz z jednego z dostępnych źródeł (kamerka USB, RPi Camera Module, plik wideo).
+* Load video data from a source (USB camera, RPi Camera Module, video file).
 
-* Rozpoznają pojedyncze osoby na obrazie.
+* Recognize single person on frames
 
-* Grupują i wysyłają dane do serwera.
+* Batch and send events to the server
       * `person_entered`
       * `person_left`
       * `monitoring_started`
       * `monitoring_ended`
 
-* Zapisują lokalne statystyki.
+* Save local stats in device storage
 ]
 ---
 
 .left-column[
-  ## Kamera
-  ### Co robi
-  ### Jak działa
+  ## Camera
+  ### What it does
+  ### How it works
 ]
 .right-column[
 
-* Śledzi pozycje osób na obrazie.
+* Track people in frames.
 
-* Sprawdza, od której strony osoba przekracza linię.
+* Check from which direction person crosses the line
 
 <img src="./img/opencv_people_counter_result01.gif" alt="people on GIF" style="height: 400px;" />
 ]
 ---
 
 .left-column[
-  ## Kamera
-  ### Co robi
-  ### Jak działa
-  #### Etap 1
+   ## Camera
+  ### What it does
+  ### How it works
+  #### Step 1
 ]
 .right-column[
-### Etap 1: Rozpoznawanie osób
+### Step 1: People recognition
 
-* Uruchamia gotową, wytrenowaną sieć neuronową na pojedynczej klatce (`cv2.dnn`)
+* Run pre-trained neural network on a single frame (`cv2.dnn`)
 
-* Sieć zwraca wierzchołki prostokąta dla każdego obiektu (`(startX, startY, endX, endY)`)
+* Neural network returns coordinates for each person (`(startX, startY, endX, endY)`)
 
-* Obliczamy środek prostokąta i zachowujemy dane
+* Calculate the centroid and mark it as the person position
 
-Kosztowny etap, więc uruchamiany co np. 30 klatek.
+These computations can take a long time so it's done relatively rarely (every 30 frames).
 
 ]
 ---
 
 .left-column[
-  ## Kamera
-  ### Co robi
-  ### Jak działa
-  #### Etap 1
-  #### Etap 2
+  ## Camera
+  ### What it does
+  ### How it works
+  #### Step 1
+  #### Step 2
 ]
 .right-column[
-### Etap 2: Śledzenie osób
+### Step 2: Following the people
 
-* Działa na każdym obiekcie oddzielnie
+* Every object can be followed separately
 
-* Uruchamia algorytm śledzenia z bibilioteki `dlib` podając dane prostokąta
+* Passing centroids to another algorithm (from `dlib` library)
 
-* Otrzymuje nowe pozycje obiektów
+* Algorithm returns new positions of objects
 
-* Dla każdej starej pozycji przyporządkowuje nową, najbliższą
+* Assign the nearest new position to old one
 
-* Jeżeli obiekt przekroczył linię, to osoba weszła/wyszła
-
+* When the object crosses the line - person enters/leaves the room
 ]
 
 ---
 
 .left-column[
-  ## Kamera
-  ### Co robi
-  ### Jak działa
-  #### Etap 1
-  #### Etap 2
-  ### Technologie
+  ## Camera
+  ### What it does
+  ### How it works
+  #### Step 1
+  #### Step 2
+  ### Technologies
 ]
 .right-column[
 
 * Python
 
-    * Używamy tego języka również na serwerze
-    
-    * Dobre wsparcie dla RaspberryPi
+    * Used also on the server
 
-    * Automatyczny generator dla klienta API
+    * Good support for RaspberryPi
 
-    * Bogate wsparcie dla uczenia maszynowego
+    * Automatic generator of API client
+
+    * Rich support for machine learning
 
 * OpenCV, `dlib`
 
-    * Gotowe implementacje algorytmów oszczędzają pracy
+    * Pre-implementated algorithms save developer time
 
-    * Jeden algorytm dokładny, drugi szybki
-
-]
----
-
-.left-column[
-  ## Kamera
-  ### Co robi
-  ### Jak działa
-  #### Etap 1
-  #### Etap 2
-  ### Technologie
-  ### Postępy
-]
-.right-column[
-
-Zrobione:
-
-* Wczytywanie obrazu z różnych źródeł
-* Grupowanie danych i zapis do urządzenia
-* Komunikacja z serwerem
-
-W trakcie:
-* Połączenie symulacji z kodem urządzenia
-  * aktualnie symulacja jest uruchamiana w innym miejscu
-  * urządzenie tymczasowo używa losowych danych w dalszych etapach
-
-Do zrobienia:
-* Skrypt do inicjalizacji konfiguracji
+    * Using two different algorithms = one fast + one precise
 
 ]
 ---
+
 template: inverse
 
-## Serwer danych **Django**
+## Data server **Django**
 ---
 .left-column[
   ## Django
-  ### Co robi
+  ### Tasks
 ]
 .right-column[
 
-** Co robi serwer? **
+** What's the role of the server **
 
-* Udostępnia wygenerowany na podstawie modeli interfejs [admina](https://eaterslab.herokuapp.com/admin/) w którym można zarządzać danymi.
+* [Admin page](https://eaterslab.herokuapp.com/admin/) that allows to manage data which is defined based on models specification.
 
-* Udostępnia automatycznie wygenerowany na podstawie kodu dokument z definicją [API](https://eaterslab.herokuapp.com/doc).
+* Sharing the document with interface of the [API](https://eaterslab.herokuapp.com/doc).
 
-* Komunikuje się z bazą danych oraz posiada własny, intuicyjny dla programisty sposób modelowania bazy.
+* Managing the database stored data (and gives the  ability to model the objects in code with no SQL).
 
-Przykład: 
+Model example:
 
 ```python
 class Cafeteria(models.Model):
@@ -552,16 +515,16 @@ class Cafeteria(models.Model):
 
 .left-column[
   ## Django
-  ### Co robi
+  ### Tasks
   ### API
 ]
 .right-column[
 
-** [API](https://eaterslab.herokuapp.com/doc) &ndash; między innymi: **
+** [API](https://eaterslab.herokuapp.com/doc): **
 
-* Odbiór przez aplikacje mobilne przeróżnych danych &ndash; przede wszystkim dane o stołówkach.
+* serving canteens data for mobile clients
 
-* Wysyłanie przez kamery danych o zajętości stołówki.
+* receiving data from camera's devices
 
 ]
 
@@ -569,17 +532,17 @@ class Cafeteria(models.Model):
 
 .left-column[
   ## Django
-  ### Co robi
+  ### Tasks
   ### API
-  ### Baza Danych
+  ### Database
 ]
 .right-column[
 
-** Baza danych: PostgreSQL **
+** Database: PostgreSQL **
 
-* Obsługuje duży i asynchroniczny dostęp do danych.
+* It can easily manage huge amounts of data in asynchronous way.
 
-* W pełni wspierana i zalecana przez Django.
+* It is fully compatible with Django.
 
 ]
 
@@ -587,20 +550,20 @@ class Cafeteria(models.Model):
 
 .left-column[
   ## Django
-  ### Co robi
+  ### Tasks
   ### API
-  ### Baza Danych
-  ### Dodatki
+  ### Database
+  ### Addons
 ]
 .right-column[
 
-** Dodatki **
+** Addons **
 
 * [Django REST framework](https://www.django-rest-framework.org/)
 
-Budowanie API &ndash; serializacja danych, widoki API, autentykacja.
+Defining the API &ndash; data serialization, API views, authentification.
 
-* [drf-yasg](https://github.com/axnsan12/drf-yasg) &ndash; generacja dokumentu API.
+* [drf-yasg](https://github.com/axnsan12/drf-yasg) &ndash; API document generation
 
 ]
 
@@ -608,126 +571,102 @@ Budowanie API &ndash; serializacja danych, widoki API, autentykacja.
 
 .left-column[
   ## Django
-  ### Co robi
+  ### Tasks
   ### API
-  ### Baza Danych
-  ### Dodatki
+  ### Database
+  ### Addons
   ### - Heroku
 ]
 .right-column[
 
 ** Heroku **
 
-* Hostuje serwer na chmurze.
+* is a hosting of the application in the cloud
 
 [production](https://eaterslab.herokuapp.com/) &ndash; [dev](https://eaterslab-dev.herokuapp.com/)
 
-* Skonfigurowana jako workflow &ndash; przy każdym push'u na repozytorium:
+* configured as the workflow - after every push to repository
 
-  - Buduje na nowo serwer.
+  - App server is built
 
-  - Wykonuje automatyczne testy.
+  - App tests are executed
 
-* Możliwość łączenia się z bazą danych PostgreSQL hostowaną na chmurze.
+* the ability to interoperate with the PostgreSQL database in the cloud
 
-* Posiada certyfikat SSL &ndash; transport danych po HTTPS.
-
-]
----
-.left-column[
-  ## Django
-  ### Stan projektu
-]
-.right-column[
-
-* API
-  - GET, POST dla większości modeli - gotowe
-  - Mogą dojść nowe modele do dodania do API
-  - Autentykacja - WIP
-
-* Generowanie dokumentacji API - gotowe
-
-* Admin - gotowy
-
-* Informacje o zajętości stołówki - WIP
-
-* Część webowa
-  - statysyki - WIP
-  - strona główna - gotowa
-
-* Workflow + Heroku - gotowe
+* has the SSL certificate (HTTPS protocol is forced in the app)
 
 ]
+
 ---
 template: inverse
 
-## Aplikacja mobilna - **Android**
+## Mobile client - **Android**
 ---
 .left-column[
-  ## Podstawowe składniki
+  ## Base parts
 ]
 .right-column[
 
-Celem aplikacji jest zapewnienie użytkownikom dostępu do danych udostępnianych przez publiczne API.
+The app should allow users to easily access the data which is stored on server and exposed via public API.
 
+There are a few functionalities in the app:
 
-Aplikacja składa się z kilku podstawowych funkcjonalności:
+- welcome screen
 
-- powitalnej
+- searching the place on the map
 
-- wyszukiwania miejsc na mapie
+- searching the place by text
 
-- wyszukiwania miejsc tekstem (**WIP**)
-
-- dostępu do danych miejsca
+- access to data of selected place
 
   * podstawowego widoku wybranego miejsca
 
-  * statystyk miejsca (**WIP**)
+  * statistics
 
-  * menu wybranego miejsca
+  * fixed menu
 
-- ustawień
+- settings
 
-Implemetacja funkcjonalności jako osobnych aktyności, co umożliwia uruchomianie konkretnych funkcjonalności spoza naszej aplikacji. 
+
+Each functionality is implemented as the separate activity in the app what can be useful in app future development and cooperation with other apps.
 
 ]
 
 ---
 .left-column[
-  ## Podstawowe składniki
-  ## Zarządzanie danymi
+  ## Base parts
+  ## Data management
 ]
 .right-column[
-Zarządzanie danymi w aplikacji
+Process of data management in app:
 
-- mapowanie na specyficzny dla aplikacji format
+- mapping data to app format
 
-- trzymanie cache'owanych danych odpowiednich obiektów
+- keeping cached data
 
-- informowanie użytkownika o błędach
+- informing user about every connection error
 
-Sposób komunikacji z serwerem:
+Communiation with data server:
 
-- wykorzystanie kodu generowanego na podstawie definicji API
+- using the code generated using API definition file
+        
+- asynchronous requests to data server
 
-- asynchroniczne zapytania do API w ramach zakresu widoków
-
-- lekkie wykonywanie działań w tle
+- light background tasks thanks to coroutines
 ]
 ---
 .left-column[
-  ## Powitanie
+    ## Welcome
 ]
 .right-column[
 
 .text-content[
 
-Dwie podstawowe ścieżki wykorzystania aplikacji:
+Two base use cases of app
 
-- wyszukiwanie miejsca na mapie
+- searching places on map
 
-- wyszukiwanie tesktowe miejsca
+- searching places by text with filters (**WIP**)
 
 ]
 
@@ -737,20 +676,20 @@ Dwie podstawowe ścieżki wykorzystania aplikacji:
 ]
 ---
 .left-column[
-  ## Powitanie
-  ## Mapa
+  ## Welcome
+  ## Map
 ]
 .right-column[
 
 .text-content[
 
-Możwliwość wyszukiwania na mapie:
+The ability to search on map:
 
-- podstwowe informacje o miejscach
+- base information about places
 
-- dostęp do lokalizacji obiektów
+- access to places localisation
 
-- możliwość skorzystania z GPS urządzenia
+- using GPS provider to search nearby places
 
 ]
 
@@ -760,21 +699,21 @@ Możwliwość wyszukiwania na mapie:
 ]
 ---
 .left-column[
-  ## Powitanie
-  ## Mapa
-  ## Widok podstawowy
+  ## Welcome
+  ## Map
+  ## Main data screen
 ]
 .right-column[
 
 .text-content[
 
-Prezentacja danych dostarczonych z serwera:
+Presentation of base data fetched from server:
 
-- czytelna i prosta prezentacja podstawowych danych
+- simple and readable data presentation
 
-- niezależne ładowanie poszczególnych elementów
+- independent content loading
 
-- podgląd aktualnego zapełnienia miejsca
+- current occupancy data view
 
 ]
 
@@ -784,22 +723,22 @@ Prezentacja danych dostarczonych z serwera:
 ]
 ---
 .left-column[
-  ## Powitanie
-  ## Mapa
-  ## Widok podstawowy
-  ## Statystyki
+    ## Welcome
+  ## Map
+  ## Main data screen
+  ## Statistics
 ]
 .right-column[
 
 .text-content[
 
-Przygotowanie narzędzi do prezentacji statystyk:
+Setting up all needed libraries to present stats data:
 
-- gotowe wykresy słupkowe oraz liniowe
+- ready linear and bar plots
 
-- powiązanie danych z wykresami (**WIP**)
+- fetching real stats data from server (**WIP**)
 
-- możliwość zmiany prezentacji danych (**WIP**)
+-  changing the stats ranges and views (**WIP**)
 
 ]
 
@@ -809,21 +748,21 @@ Przygotowanie narzędzi do prezentacji statystyk:
 ]
 ---
 .left-column[
-  ## Powitanie
-  ## Mapa
-  ## Widok podstawowy
-  ## Statystyki
+  ## Welcome
+  ## Map
+  ## Main data screen
+  ## Statistics
   ## Menu
 ]
 .right-column[
 
 .text-content[
 
-Prezentacja stałego menu danego miejsca:
+Fixed menu of selected place presentation:
 
-- nazwy, ceny, opinie o produktach
+- names, prices and reviews of deishes
 
-- możliwość wystawienia własnej oceny jedzenia (**WIP**)
+- the ability to add your own review for dish (**WIP**)
 
 ]
 
@@ -833,26 +772,26 @@ Prezentacja stałego menu danego miejsca:
 ]
 ---
 .left-column[
-  ## Powitanie
-  ## Mapa
-  ## Widok podstawowy
-  ## Statystyki
+  ## Welcome
+  ## Map
+  ## Main data screen
+  ## Statistics
   ## Menu
-  ## Ustawienia
+  ## Settings
 ]
 .right-column[
 
 .text-content[
 
-Możliwość zmiany preferencji aplikacji w trwały sposób:
+MThe ability to change the application settings:
 
-- dwa języki interfejsu aplikacji - polski i angielski
+- two app's languages - Polish and English
 
-- dwa motywy interfejsu aplikacji - podstawowy i ciemny
+- two app's themes - standard and dark
 
-- aktualna wersja aplikacji jako wejście do *dev mode* (**WIP**)
+- current app version as an entry to *dev mode* (**WIP**)
 
-- zmiana nazwy użytkownika wystawiającego opinię (**WIP**)
+- setting username for meals reviews posting (**WIP**)
 
 ]
 
@@ -862,7 +801,7 @@ Możliwość zmiany preferencji aplikacji w trwały sposób:
 ]
 ---
 .left-column[
-  ## Ciemny motyw aplikacji
+  ## Dark app theme
 ]
 .right-column[
 <img src="./img/hello_dark.jpg" alt="stats" height="300px"/>
@@ -876,7 +815,7 @@ Możliwość zmiany preferencji aplikacji w trwały sposób:
 name: last-page
 template: inverse
 
-## To wszystko - **dziękujemy**!
+## That's all - **thank you**!
 
 
     </textarea>
