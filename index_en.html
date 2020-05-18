@@ -188,32 +188,32 @@ class: center, middle, inverse
 <img src="./img/eaters_icon_background.svg" alt="logo" height="200px"/>
 
 by PoohLabs
-.footnote[Let's see at the [project page](https://github.com/pooh-labs/eaterslab)]
+.footnote[Zapraszamy na [stronę projektu](https://github.com/pooh-labs/eaterslab)]
 ---
-## What is it and why should you use it?
+## Co to właściwie i czemu właśnie Ty powinieneś tego używać?
 ---
 layout: false
 .left-column[
-  ## Project
+  ## Projekt
   ### Problem
 ]
 .right-column[
 <img height="300px" src="img/cafeteria.jpg" />
 
-Cafeterias clients wonders:
+Klienci stołówki nie wiedzą nic:
 
-* if there is aplace to sit and eat?
+* Czy jest gdzie usiąść?
 
-* what is served today in their favourite place?
+* Co dzisiaj podają?
 
-* if today's meals are good or not?
+* Czy dzisiejsze dania są dobre?
 ]
 ---
 layout: false
 .left-column[
-  ## Project
+  ## Projekt
   ### Problem
-  ### Solution
+  ### Rozwiązanie
 ]
 .right-column[
 
@@ -222,21 +222,21 @@ layout: false
   <h2 style="margin-top: 0;">EatersLab</h2>
 </div>
 
-Automatic monitoring system for cafeterias occupancy
+System automatycznego monitorowania zajętości stołówek
 
-* Counting people inside
+* Automatyczne rozpoznawanie liczby osób
 
-* Live data share by mobile client's app
+* Zajętość live poprzez aplikację mobilną
 
-* Preview of fixed menu with prices and reviews
+* Podgląd menu i ocen
 
 ]
 ---
 layout: false
 .left-column[
-  ## Project
+  ## Projekt
   ### Problem
-  ### Solution
+  ### Rozwiązanie
   ### Korzyści
 ]
 .right-column[
@@ -297,20 +297,14 @@ name: how
 
 **Postawione cele:**
 
-* wykonywanie podstawowej analizy danych 
+* wykonywanie podstawowej analizy danych
 
 * udostępnianie przeanalizowanych danych
 
 * zapewnienie anonimowości użytkownikom miejsc publicznych
 
-* zwolnienie centrum systemu z wykonywania wielu obliczeń 
+* zwolnienie centrum systemu z wykonywania wielu obliczeń
 ]
-
-???
-
-Tutaj wrzucamy notatki co miałoby być powiedziane do tego slajdu o kamerach.
-
-... bla bla bla
 
 ---
 .left-column[
@@ -337,14 +331,8 @@ Tutaj wrzucamy notatki co miałoby być powiedziane do tego slajdu o kamerach.
 
 * pisanie kodu zgodnie z zasadami DRY oraz KISS
 
-* przygotowanie systemu na duże obciążenia 
+* przygotowanie systemu na duże obciążenia
 ]
-
-???
-
-Tutaj wrzucamy notatki co miałoby być powiedziane do tego slajdu o serwerze.
-
-Mhm.
 
 ---
 
@@ -362,7 +350,7 @@ Mhm.
 
 * wykorzystanie oficjalnego języka platformy Android - Kotlina
 
-* wykorzystanie kodu generowanego przez definicję API w sposób 
+* wykorzystanie kodu generowanego przez definicję API w sposób
   asynchroniczny charakterystyczny dla Kotlina
 
 **Postawione cele:**
@@ -371,23 +359,8 @@ Mhm.
 
 * stworzenie aplikacji z przyjaznym interfejsem dla użytkownika
 
-* prezentacja danych użytkownikowi w klarowny sposób 
+* prezentacja danych użytkownikowi w klarowny sposób
 ]
-
-???
-
-Założyliśmy sobie stworzenie klienta na system operacyjny Android, który stanowi bardzo znaczący 
-udział na runku platform mobilnych. Ponadto cały proces tworzenia oprogramowania 
-ma odbywać się w stosunkowo niedawno powstałym języku Kotlin, który oficjalnie stał się językiem
-programowania na platformę Android. Chcąc jednak wykorzystać automatycznie generowany kod
-dostępu do API serwera postanowiliśmy nauczyć się nowego podejścia do programowania asynchronicznego
-wykorzystującego tak zwana koroutyny i storzyć w ramach proejktu nakładkę na wygenerowany kod
-zapewniającą nam wygdne korzystanie z asynchronicznych funkcji.
-
-Ponadto postanowiliśmy, że naszą aplikacji powinna być dostępna na większość oferowanych urządzeń, 
-co wiąże się ze wsparciem urządzeń z wersją Androida conajmniej 5.0. Oczywiście przy planowaniu 
-całej aplikacji naszym głównymcelem jest stworzenie aplikacji **dla użytkownika**, która w czytelny 
-sposób przedstawi mu niezbędne dane i pozwoli na łatwe nawigowanie po dostępnych informacjach. 
 
 ---
 template: inverse
@@ -488,7 +461,7 @@ Kosztowny etap, więc uruchamiany co np. 30 klatek.
 * Python
 
     * Używamy tego języka również na serwerze
-    
+
     * Dobre wsparcie dla RaspberryPi
 
     * Automatyczny generator dla klienta API
@@ -549,7 +522,7 @@ template: inverse
 
 * Komunikuje się z bazą danych oraz posiada własny, intuicyjny dla programisty sposób modelowania bazy.
 
-Przykład: 
+Przykład:
 
 ```python
 class Cafeteria(models.Model):
@@ -567,14 +540,6 @@ class Cafeteria(models.Model):
 ```
 
 ]
-
-???
-
-W interfejsie admina mamy dostęp do różnych elementów naszej bazy danych, takich jak 
-użytkownicy, kamery, stołówki ...
-
-API jest generowane automatycznie jednym z zainstalowanych dodatków do Django REST framework.
-
 ---
 
 .left-column[
@@ -591,10 +556,6 @@ API jest generowane automatycznie jednym z zainstalowanych dodatków do Django R
 * Wysyłanie przez kamery danych o zajętości stołówki.
 
 ]
-
-???
-
-Pobawić się na /doc odbieraniem danych o przykładowych stołówkach i wysłać losowy camera event.
 
 ---
 
@@ -613,11 +574,6 @@ Pobawić się na /doc odbieraniem danych o przykładowych stołówkach i wysła�
 * W pełni wspierana i zalecana przez Django.
 
 ]
-
-???
-
-Różne kamery mogą naraz wysyłać eventy, stołówki mogą w tym czasie pobierać dane...
-Django obsługuje to wszystko asynchronicznie i wymaga do tego asynchronicznego dostępu do bazy danych.
 
 ---
 
@@ -639,15 +595,6 @@ Budowanie API &ndash; serializacja danych, widoki API, autentykacja.
 * [drf-yasg](https://github.com/axnsan12/drf-yasg) &ndash; generacja dokumentu API.
 
 ]
-
-???
-
-* Najważniejszym frameworkiem dodanym w naszym serwerze do Django jest Django REST framework.
-
-* Korzystając z natywnych modeli bazodanowych Django pozwala w prosty sposób tworzyć serializację a następnie
-widoki oraz autentykację. 
-
-* drf-yash tworzy /doc i .yaml
 
 ---
 
@@ -678,15 +625,31 @@ widoki oraz autentykację.
 * Posiada certyfikat SSL &ndash; transport danych po HTTPS.
 
 ]
+---
+.left-column[
+  ## Django
+  ### Stan projektu
+]
+.right-column[
 
-???
+* API
+  - GET, POST dla większości modeli - gotowe
+  - Mogą dojść nowe modele do dodania do API
+  - Autentykacja - WIP
 
-* Heroku to nasz workflow - ktoś commituje coś na repozytorium, wykonują się testy, strona jest budowana i hostowana w sieci, dzięki czemu można od razu testować.
-* Nasz plan jest w danym momencie w pełni darmowy - mimo ograniczeń jesteśmy w stanie zrobić aż tyle.
-* Pozwala na proste skalowanie środowiska.
+* Generowanie dokumentacji API - gotowe
 
+* Admin - gotowy
 
-KONIECCC - Rhantolq
+* Informacje o zajętości stołówki - WIP
+
+* Część webowa
+  - statysyki - WIP
+  - strona główna - gotowa
+
+* Workflow + Heroku - gotowe
+
+]
 ---
 template: inverse
 
@@ -718,7 +681,7 @@ Aplikacja składa się z kilku podstawowych funkcjonalności:
 
 - ustawień
 
-Implemetacja funkcjonalności jako osobnych aktyności, co umożliwia uruchomianie konkretnych funkcjonalności spoza naszej aplikacji. 
+Implemetacja funkcjonalności jako osobnych aktyności, co umożliwia uruchomianie konkretnych funkcjonalności spoza naszej aplikacji.
 
 ]
 
@@ -907,32 +870,6 @@ template: inverse
 
 ## To wszystko - **dziękujemy**!
 
----
-
----
-.left-column[
-  ### Django
-]
-.right-column[
-
-* API
-  - GET, POST na większość modeli gotowa
-  - Mogą dojść nowe modele do dodania do API
-  - Autentykacja - WIP (Work In Progress)
-  
-* Generowanie dokumentacji API - gotowe
-  
-* Admin - gotowy
-
-* **Informacje o zajętości stołówki - WIP**
-
-* Część webowa
-  - statysyki - WIP
-  - strona główna - gotowa
-
-* Workflow + Heroku - gotowe
-
-]
 
     </textarea>
     <script src="scripts/ga.js"></script><script src="scripts/remark-latest.js"></script>
