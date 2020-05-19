@@ -13,23 +13,28 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/search_box_margin"
         android:autofillHints="@string/search_your_place"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="8dp"
         android:ems="10"
         android:hint="@string/search_your_place"
         android:inputType="text"
         android:maxLines="1"
         android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_center"
+        app:layout_constraintBottom_toTopOf="@+id/scroll_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/edit_text_search"/>
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:maxHeight="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline_center">
+        app:layout_constraintTop_toTopOf="@id/guideline_center"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:id="@+id/cafeteriasList"
@@ -52,7 +57,7 @@
         android:layout_margin="@dimen/search_box_margin"
         android:text="@string/opened_now"
         app:layout_constraintBottom_toTopOf="@+id/searchText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/searchText"
+        app:layout_constraintStart_toStartOf="@+id/searchText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

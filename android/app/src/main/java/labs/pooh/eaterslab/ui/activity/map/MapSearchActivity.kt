@@ -38,7 +38,9 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
 class MapSearchActivity : AbstractRevealedActivity() {
 
-    private val mapViewModel by lazy { ViewModelProvider(this, viewModelFactory { MapViewModel(this) }).get(MapViewModel::class.java) }
+    private val mapViewModel by lazy { ViewModelProvider(this, viewModelFactory {
+        MapViewModel(this) }).get(MapViewModel::class.java)
+    }
 
     companion object {
         const val DEFAULT_ZOOM = 16.0
