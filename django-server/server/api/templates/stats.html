@@ -1,0 +1,129 @@
+{% extends 'admin/change_list.html' %}
+
+{% block sidebar %}{% endblock %}
+
+{% block extrahead %}
+<script src="https://cdn.jsdelivr.net/npm/d3@5.16.0/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/plottable@3.8.6/plottable.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plottable@3.8.6/plottable.css">
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'admin:index' %}">Home</a>
+    &rsaquo; <a href="{% url 'admin:stats' %}">{{ title }}</a>
+</div>
+{% endblock %}
+
+{% block content %}
+
+<style>
+.header-option { display: none; margin-left: 1em; font-size: 13px; font-family: "Roboto","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif; font-weight: normal; }
+
+#graph header { display: flex; align-items: center; margin-bottom: 30px; }
+#graph header input { width: 8em; }
+#graph #range-name { flex-grow: 1; text-align: center; font-weight: bold; font-size: 16px; }
+
+#graph-contents { height: 40vh; max-height: 80vw; min-height: 300px; }
+
+#datasets table { width: 100%; }
+#datasets tr { display: flex; }
+#datasets td:nth-child(2) { flex-grow: 1; }
+</style>
+
+<div id="content-main">
+
+  <ul class="object-tools">
+    <li>
+      <a href="#" class="addlink" class="add-dataset">
+        Add dataset
+      </a>
+    </li>
+  </ul>
+
+  <section id="graph" class="module">
+    <header id="graph-header">
+      <input type="button" id="range-prev" value="&lt; Previous" />
+      <span id="range-name">2010-2020</span>
+      <input type="button" id="range-next" value="Next &gt;" />
+    </header>
+
+    <div id="graph-contents">
+
+    </div>
+  </section>
+
+  <section id="datasets" class="module">
+    <table>
+      <caption>Datasets</caption>
+      <tbody>
+        <tr>
+          <td>&#11034;</td>
+          <td>Kubuś (occupancy)</td>
+          <td><a href="#" class="deletelink">Delete</a></td>
+        </tr>
+        <tr>
+          <td>&#11034;</td>
+          <td>Biologia UW (average review)</td>
+          <td><a href="#" class="deletelink">Delete</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+</div>
+<br class="clear">
+
+<script>
+
+function sampleChart() {
+  var data_line = [
+    { "x": 0, "y": 1 },
+    { "x": 1, "y": 2 },
+    { "x": 2, "y": 4 },
+    { "x": 3, "y": 8 }
+  ];
+
+  var data_bar = [
+    { "x": 0, "y": 3.5 },
+    { "x": 1, "y": 4.2 },
+    { "x": 2, "y": 3.0 },
+    { "x": 3, "y": 3.8 }
+  ];
+
+  var xScale = new Plottable.Scales.Linear();
+  var yLeftScale = new Plottable.Scales.Linear();
+  var yRightScale = new Plottable.Scales.Linear();
+  var xAxis = new Plottable.Axes.Numeric(xScale, "bottom");
+  var yLeftAxis = new Plottable.Axes.Numeric(yLeftScale, "left");
+  var yRightAxis = new Plottable.Axes.Numeric(yRightScale, "right");
+
+  var plot = new Plottable.Plots.Line()
+    .x(function(d) { return d.x; }, xScale)
+    .y(function(d) { return d.y; }, yLeftScale);
+
+  
+  plot.addDataset(new Plottable.Dataset(data_line));
+
+  var barPlot = new Plottable.Plots.Bar()
+    .x(function(d) { return d.x; }, xScale)
+    .y(function(d) { return d.y; }, yRightScale)
+    .attr("fill", "rgba(100, 100, 256, 0.2)")
+    .addDataset(new Plottable.Dataset(data_bar));
+
+  var group = new Plottable.Components.Group([barPlot, plot]);
+  var chart = new Plottable.Components.Table([
+    [yLeftAxis, group, yRightAxis],
+    [null, xAxis, null]
+  ]);
+
+  chart.renderTo('#graph-contents');
+}
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  console.log(Plottable.Components.Table);
+  sampleChart();
+})
+
+</script>
+{% endblock %}

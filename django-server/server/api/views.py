@@ -1,6 +1,11 @@
 from os.path import join as path_join
 
+from django.contrib import admin
 from django.core.files.storage import FileSystemStorage
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.template import loader
+from django.views.generic.base import TemplateView
 
 from rest_framework import views, viewsets
 from rest_framework.authentication import TokenAuthentication
@@ -108,3 +113,16 @@ def handle_file_as_chunked(request, file_path):
         for chunk in file_obj.chunks():
             destination.write(chunk)
     return Response(status=204)
+
+
+class StatsView(TemplateView):
+
+    template_name = "stats.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**{
+            **kwargs,
+            **admin.site.each_context(self.request),
+        })
+        context['title'] = 'Statistics'
+        return context
