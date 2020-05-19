@@ -24,6 +24,7 @@
     <string name="info_image">Info image</string>
 
     <string name="food_image">food image</string>
+    <string name="cafeteria_image">cafeteria image</string>
     <string name="loading">Loading…</string>
     <string name="title_activity_settings">Settings</string>
 
@@ -68,4 +69,8 @@
     <string name="opening_hours">Opening hours</string>
     <string name="open_from">From</string>
     <string name="open_to">To</string>
+
+    <string name="time_from_to_format">Opened from %s to %s</string>
+    <string name="search_your_place">Search your place</string>
+    <string name="opened_now">Opened now</string>
 </resources>
