@@ -22,10 +22,12 @@ jobs:
     - name: Lint with flake8/wemake
       run: |
         cd "camera/rpi-files/" &&
-        pipenv run flake8 --config=setup.cfg &&
+        source "defines.sh" &&
+        pipenv run flake8 --config=setup.cfg ${ALL_FILES} &&
         cd -
     - name: Test with pytest
       run: |
         cd "camera/rpi-files/" &&
-        pipenv run pytest &&
+        source "defines.sh" &&
+        pipenv run pytest ${ALL_TESTS} &&
         cd -
