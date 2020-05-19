@@ -4,6 +4,8 @@ A quick overview of directory structure:
 * `rpi-files`: project files used on Raspberry Pi device
 * `vm-files`: ignored directory, default for virtual machines files if you didn't provide your own during setup
 
+Device code adapts samples from [this article](https://www.pyimagesearch.com/2018/08/13/opencv-people-counter/).
+
 ## API generation
 
 To generate api, call script from camera directory:

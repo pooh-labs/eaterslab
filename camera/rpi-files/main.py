@@ -9,7 +9,6 @@ Main application module will start monitoring for people entereing and leaving.
 import logging
 import os
 import signal
-import time
 from datetime import datetime
 
 import cv2
@@ -23,10 +22,13 @@ from frame_ingestor import (
     FrameIngestor,
     WebcamIngestorSource,
 )
+from imutils import resize
 from openapi_client import Configuration
+from people_counter import Configuration as PeopleCounterConfiguration
 from people_counter import PeopleCounter
 
 BATCH_SECONDS = 3
+DEFAULT_FRAME_WIDTH = 500
 
 
 def read_int_from_env(name, default=None):
@@ -41,6 +43,24 @@ def read_int_from_env(name, default=None):
     """
     try:
         return int(os.getenv(name, default))
+    except TypeError as ex:
+        msg = 'Could not parse {0}: {1}'.format(name, ex)
+        logging.error(msg)
+        return None
+
+
+def read_float_from_env(name, default=None):
+    """Read float from environment.
+
+    Args:
+        name: variable name
+        default: variable default value
+
+    Returns:
+        Value or None on parsing error
+    """
+    try:
+        return float(os.getenv(name, default))
     except TypeError as ex:
         msg = 'Could not parse {0}: {1}'.format(name, ex)
         logging.error(msg)
@@ -69,13 +89,40 @@ def load_api_configuration() -> Configuration:
     return configuration
 
 
+def load_counter_configuration() -> PeopleCounterConfiguration:
+    """Load counter configuration.
+
+    Raises:
+        RuntimeError: when required data missing or could not parse data.
+
+    Returns:
+        configuration object
+    """
+    try:
+        skip_frames = read_int_from_env('SKIP_FRAMES', None)
+    except TypeError as ex:
+        msg = 'Could not load fram skip count: {0}'.format(ex)
+        raise RuntimeError(msg)
+    try:
+        min_confidence = read_float_from_env('NET_MIN_CONFIDENCE', None)
+    except TypeError as ex1:
+        msg = 'Could not load minimal confidence: {0}'.format(ex1)
+        raise RuntimeError(msg)
+
+    configuration = PeopleCounterConfiguration()
+    configuration.skip_frames = skip_frames
+    configuration.prototxt_path = os.getenv('NET_PROTOTXT_PATH')
+    configuration.model_path = os.getenv('NET_MODEL_PATH')
+    configuration.min_confidence = min_confidence
+    return configuration
+
+
 class Main(object):
     """Handle application lifecycle."""
 
     def __init__(self):
         """Initialize signal handlers, API client and run."""
         self._should_close = False
-        self._counter = PeopleCounter()
         self._frame_ingestor = FrameIngestor()
         self._batcher = DataBatcher()
 
@@ -84,10 +131,27 @@ class Main(object):
         signal.signal(signal.SIGTERM, self._handle_signals)
 
         # Extra configuration
+        self._uses_file = False
         self._display_frame = read_int_from_env('DISPLAY_FRAME', 0) > 0
+        self._max_frame_width = read_int_from_env(
+            'MAX_FRAME_WIDTH', DEFAULT_FRAME_WIDTH,
+        )
 
         # Start client
         self._start()
+
+    def _init_counter(self):
+        """Set up people counter."""
+        try:
+            configuration = load_counter_configuration()
+        except RuntimeError as ex:
+            msg = 'Could not load counter settings: {0}'.format(ex)
+            logging.error(msg)
+            self._should_close = True
+            self._close()
+            return
+        logging.info('Setting up counter...')
+        self._counter = PeopleCounter(configuration)
 
     def _init_archiver(self, start_time: datetime):
         """Set up archiver and save initial message.
@@ -155,12 +219,6 @@ class Main(object):
             # Execute loop
             self._execute_loop()
 
-            # Get camera frame
-            if self._display_frame:
-                frame = self._frame_ingestor.get_frame()
-                cv2.imshow('Frame', frame)
-                cv2.waitKey(1)
-
         self._close()
 
     def _start_monitoring(self):
@@ -171,18 +229,28 @@ class Main(object):
         logging.info('System starts')
 
         # Start monitoring
+        self._init_counter()
         self._init_archiver(start_time)
         self._init_api_connector(start_time)
         self._init_ingestion_stream()
 
     def _execute_loop(self):
         """Execute main program loop."""
-        # Sleep to simulate computations
-        time.sleep(1)
+        # Get camera frame
+        frame = self._frame_ingestor.get_frame()
+        if self._uses_file and frame is None:
+            self._should_close = True
+            return
+
+        frame = resize(frame, width=self._max_frame_width)
+
+        if self._display_frame:
+            cv2.imshow('Frame', frame)
+            cv2.waitKey(1)
 
         # Update counter
         current_time = datetime.now().astimezone()
-        self._counter.update(current_time)
+        self._counter.update(frame, current_time)
         self._batcher.entered(self._counter.get_entering_list())
         self._batcher.left(self._counter.get_leaving_list())
 
@@ -202,7 +270,7 @@ class Main(object):
 
             # Send to API endpoint
             if not self._api_connector.send(batch):
-                logging.warn('Could not uploat events')
+                logging.warn('Could not upload events')
 
     def _close(self):
         """Close the system."""
@@ -240,6 +308,7 @@ class Main(object):
             return
 
         if stream_type == 0:  # File
+            self._uses_file = True
             path = os.getenv('SOURCE_FILE_PATH', None)
             source = FileIngestorSource(path)
         elif stream_type == 1:  # Webcam

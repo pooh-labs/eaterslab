@@ -14,7 +14,8 @@ SOURCES=(
     "events.py" \
     "frame_ingestor.py" \
     "main.py" \
-    "people_counter.py"
+    "people_counter.py" \
+    "people_recognizer.py"
 )
 
 TESTS=(
