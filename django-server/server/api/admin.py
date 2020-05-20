@@ -1,7 +1,7 @@
+from django.apps import apps
 from django.conf.urls import url
 from django.contrib.admin import AdminSite
 
-from .models import *
 from .views import StatsView
 
 class MyAdminSite(AdminSite):
@@ -10,15 +10,14 @@ class MyAdminSite(AdminSite):
     def get_urls(self):
         urls = super(MyAdminSite, self).get_urls()
         custom_urls = [
-            #url(r'stats/$', self.admin_view(stats), name="stats"),
             url('stats/$', self.admin_view(StatsView.as_view()), name='stats'),
         ]
         return urls + custom_urls
 
 admin_site = MyAdminSite(name='myadmin')
-admin_site.register(Cafeteria)
-admin_site.register(CameraEvent)
-admin_site.register(Camera)
-admin_site.register(FixedMenuOption)
-admin_site.register(FixedMenuOptionReview)
-admin_site.register(MenuOptionTag)
+models = apps.get_models()
+for model in models:
+    try:
+        admin_site.register(model)
+    except admin.sites.AlreadyRegistered:
+        pass

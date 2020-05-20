@@ -33,8 +33,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('', include('home.urls')),
-    path('admin/', admin.site.urls),
-    path('admin2/', admin_site.urls),
+    path('admin/', admin_site.urls),
     path('api/beta/', include('api.urls')),
     # For documentation generation with drf_yasg
     path(r'api.yaml', schema_view.without_ui(cache_timeout=0), name='schema-json'),
