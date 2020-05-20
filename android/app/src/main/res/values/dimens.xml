@@ -9,6 +9,9 @@
     <dimen name="small_font">12sp</dimen>
     <dimen name="tiny_font">9sp</dimen>
     <dimen name="button_radius">24dp</dimen>
+    <dimen name="button_circle_size">48dp</dimen>
+    <dimen name="button_circle_radius">24dp</dimen>
+    <dimen name="button_circle_radius_half">12dp</dimen>
     <dimen name="hello_line_spacing">16dp</dimen>
     <dimen name="padding_button_image">10dp</dimen>
     <dimen name="map_item_info_description_margin">8dp</dimen>
@@ -23,6 +26,7 @@
     <dimen name="card_view_price_size">20sp</dimen>
     <dimen name="card_view_text_size">23sp</dimen>
     <dimen name="search_card_view_text_size">20sp</dimen>
+    <dimen name="search_card_view_second_text_size">14sp</dimen>
     <dimen name="menu_item_image_height">150dp</dimen>
     <dimen name="menu_item_bottom_margin">8dp</dimen>
     <dimen name="rating_bar_margin">8dp</dimen>
@@ -55,4 +59,8 @@
     <dimen name="expanded_margin">16dp</dimen>
     <dimen name="occupancy_top_margin">8dp</dimen>
     <dimen name="search_box_margin">16dp</dimen>
+    <dimen name="search_box_separation">32dp</dimen>
+    <dimen name="filter_name_size">16sp</dimen>
+    <dimen name="search_result_radius">14dp</dimen>
+    <dimen name="logo_search_size">80dp</dimen>
 </resources>

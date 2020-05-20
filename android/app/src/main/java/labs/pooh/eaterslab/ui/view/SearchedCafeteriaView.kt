@@ -24,7 +24,7 @@ class SearchedCafeteriaView(context: Context) : CardView(context) {
     private var cafeteriaName: String = ""
         set(value) {
             field = value
-            setTimesFormatted()
+            textViewName.text = value
         }
 
     private fun setTimesFormatted() {

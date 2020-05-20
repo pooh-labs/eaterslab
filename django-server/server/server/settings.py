@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'home.apps.HomeConfig',                                 # Home app
     'drf_yasg',  # for API documentation and generation
     'api.apps.ApiConfig',  # API app
+
+    'django_filters'
 ]
 
 MIDDLEWARE = [

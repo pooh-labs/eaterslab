@@ -7,23 +7,41 @@
     android:id="@+id/rootTextSearchLayout"
     tools:context=".ui.activity.search.SearchActivity">
 
+    <Button
+        android:id="@+id/buttonSearch"
+        android:layout_width="@dimen/button_circle_size"
+        android:layout_height="@dimen/button_circle_size"
+        android:drawableStart="@drawable/ic_search"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:paddingStart="@dimen/button_circle_radius_half"
+        android:paddingEnd="@dimen/button_circle_radius_half"
+        android:background="@drawable/button_round_accent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/scroll_view"
+        android:layout_marginBottom="@dimen/search_box_margin"
+        android:layout_marginEnd="@dimen/search_box_margin" />
+
     <EditText
         android:id="@+id/searchText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/search_box_margin"
         android:autofillHints="@string/search_your_place"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="8dp"
+        android:background="@drawable/edit_text_search"
         android:ems="10"
+        android:textColor="@color/colorForegroundDark"
+        android:textColorHint="@color/colorDarkGray"
         android:hint="@string/search_your_place"
         android:inputType="text"
         android:maxLines="1"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="8dp"
         android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@+id/scroll_view"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonSearch"
+        app:layout_constraintEnd_toStartOf="@id/buttonSearch"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/edit_text_search"/>
+        app:layout_constraintTop_toTopOf="@+id/buttonSearch" />
 
     <ScrollView
         android:id="@+id/scroll_view"
@@ -54,10 +72,34 @@
         android:id="@+id/switchOpened"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/search_box_margin"
+        android:layout_marginHorizontal="@dimen/search_box_margin"
+        android:layout_marginBottom="@dimen/search_box_separation"
         android:text="@string/opened_now"
+        android:textSize="@dimen/filter_name_size"
         app:layout_constraintBottom_toTopOf="@+id/searchText"
-        app:layout_constraintEnd_toEndOf="@+id/searchText"
+        app:layout_constraintEnd_toEndOf="@+id/buttonSearch"
         app:layout_constraintStart_toStartOf="@+id/searchText" />
+
+    <RatingBar
+        android:id="@+id/ratingBarMin"
+        style="?android:attr/ratingBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="0.5"
+        android:scaleY="0.5"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewAvgRating"
+        app:layout_constraintEnd_toEndOf="@+id/switchOpened"
+        app:layout_constraintTop_toTopOf="@+id/textViewAvgRating" />
+
+    <TextView
+        android:id="@+id/textViewAvgRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/min_average_rating"
+        android:textColor="?foregroundColorText"
+        android:textSize="@dimen/filter_name_size"
+        android:layout_marginBottom="@dimen/search_box_margin"
+        app:layout_constraintBottom_toTopOf="@+id/switchOpened"
+        app:layout_constraintStart_toStartOf="@+id/switchOpened"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

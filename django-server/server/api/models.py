@@ -15,6 +15,11 @@ class Cafeteria(models.Model):
     address = models.CharField(max_length=256)
     opened_from = models.TimeField()
     opened_to = models.TimeField()
+    current_person_inside = models.IntegerField(validators=[MinValueValidator(0)], default=0)
+
+    @property
+    def occupancy(self):
+        return float(min(self.current_person_inside, self.capacity)) / float(self.capacity) * 100.0
 
     def __str__(self):
         return self.name
@@ -22,6 +27,7 @@ class Cafeteria(models.Model):
 
 class Camera(models.Model):
     description = models.CharField(max_length=200)
+    cafeteria = models.ForeignKey(Cafeteria, on_delete=models.CASCADE)
 
 
 class CameraEvent(models.Model):
@@ -30,13 +36,25 @@ class CameraEvent(models.Model):
         MONITORING_ENDED = 1, _('monitoring_ended')
         PERSON_ENTERED = 2, _('person_entered')
         PERSON_LEFT = 3, _('person_left')
+        OCCUPANCY_OVERRIDE = 4, _('occupancy_override')
 
     timestamp = models.DateTimeField()
     event_type = models.IntegerField(choices=EventType.choices)
-    camera_id = models.ForeignKey(Camera, on_delete=models.CASCADE)
+    event_value = models.IntegerField(default=None, blank=True, null=True)
+    cafeteria = models.ForeignKey(Cafeteria, on_delete=models.CASCADE)
+    camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        if self.event_type == CameraEvent.EventType.PERSON_ENTERED:
+            self.cafeteria += 1
+        elif self.event_type == CameraEvent.EventType.PERSON_LEFT and self.cafeteria.current_person_inside > 0:
+            self.cafeteria.current_person_inside -= 1
+        elif self.event_type == CameraEvent.EventType.OCCUPANCY_OVERRIDE:
+            self.cafeteria.current_person_inside = self.event_value if self.event_value is not None else 0
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return "{} {} {}".format(self.camera_id, self.event_type, self.timestamp)
+        return "Event {} for: {} [{}]".format(self.event_type, self.cafeteria, self.timestamp)
 
 
 class FixedMenuOption(models.Model):

@@ -19,6 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:cardMaxElevation="@dimen/menu_card_radius"
         android:padding="@dimen/menu_card_radius"
+        app:cardCornerRadius="@dimen/search_result_radius"
         android:background="?android:windowBackground"
         tools:context=".ui.view.SearchedCafeteriaView">
 
@@ -28,9 +29,8 @@
 
             <ImageView
                 android:id="@+id/cafeteriaImage"
-                android:layout_width="@dimen/search_item_card_height"
-                android:layout_height="@dimen/search_item_card_height"
-                android:layout_marginBottom="@dimen/menu_item_bottom_margin"
+                android:layout_width="@dimen/logo_search_size"
+                android:layout_height="@dimen/logo_search_size"
                 android:adjustViewBounds="true"
                 android:background="?backgroundColor"
                 android:contentDescription="@string/cafeteria_image"
@@ -45,13 +45,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/search_item_margin"
                 android:layout_marginBottom="@dimen/search_item_margin"
-                android:textSize="@dimen/card_view_price_size"
+                android:textSize="@dimen/search_card_view_second_text_size"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
                 android:id="@+id/textViewName"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:maxLines="1"

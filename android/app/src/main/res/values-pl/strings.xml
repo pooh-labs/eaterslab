@@ -65,4 +65,5 @@
     <string name="time_from_to_format">Otwarte od %s do %s</string>
     <string name="search_your_place">Wyszukaj swoje miejsce</string>
     <string name="opened_now">Otwarte teraz</string>
+    <string name="min_average_rating">Min średnia ocena</string>
 </resources>

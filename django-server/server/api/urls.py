@@ -14,6 +14,7 @@ cafeterias_router = NestedSimpleRouter(router, r'cafeterias', lookup='cafeteria'
 cafeterias_router.register(r'fixed_menu_options',
                            FixedMenuOptionViewSet,
                            basename='cafeteria-fixed_menu_options')
+cafeterias_router.register(r'occupancy_stamps', CafeteriaOccupancyViewSet, basename='cafeteria_occupancy')
 
 fixed_menu_options_router = NestedSimpleRouter(cafeterias_router, r'fixed_menu_options', lookup='option')
 fixed_menu_options_router.register(r'reviews',
