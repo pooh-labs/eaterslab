@@ -1,10 +1,6 @@
 from os.path import join as path_join
 
-from django.contrib import admin
 from django.core.files.storage import FileSystemStorage
-from django.http import HttpResponse
-from django.shortcuts import render
-from django.template import loader
 
 from rest_framework import views, viewsets
 from rest_framework.authentication import TokenAuthentication
