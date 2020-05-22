@@ -51,11 +51,11 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework.authtoken',  # token auth for artifacts upload
-
-    # External library for yaml generator (can be used but works only with OpenAPI 2.0)
-    'home.apps.HomeConfig',                                 # Home app
     'drf_yasg',  # for API documentation and generation
-    'api.apps.ApiConfig',  # API app
+
+    'admin.apps.AdminConfig', # Admin
+    'home.apps.HomeConfig',   # Home app
+    'api.apps.ApiConfig',     # API app
 ]
 
 MIDDLEWARE = [
