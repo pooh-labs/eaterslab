@@ -21,7 +21,14 @@ class Cafeteria(models.Model):
 
 
 class Camera(models.Model):
+    class State(models.IntegerChoices):
+        ONLINE = 0, _('online')
+        OFFLINE = 1, _('offline')
+        LOST_CONNECTION = 2, _('lost connection')
+
     description = models.CharField(max_length=200)
+    last_update = models.DateTimeField()
+    state = models.IntegerField(choices=State.choices)
 
 
 class CameraEvent(models.Model):
