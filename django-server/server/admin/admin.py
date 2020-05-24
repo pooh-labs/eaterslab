@@ -2,6 +2,7 @@ from django.apps import apps
 from django.conf.urls import url
 from django.contrib.admin import AdminSite
 from django.contrib.admin import ModelAdmin
+from django.db.models import Subquery, OuterRef, Max
 from django.utils.html import format_html
 
 from .views import StatsView
@@ -20,8 +21,16 @@ class MyAdminSite(AdminSite):
 
 
 class CameraAdmin(ModelAdmin):
-    list_display = ['id', 'state_with_icon']
+    list_display = ['id', 'state_with_icon', 'last_event']
 
+    # Modify queryset to fetch last event timestamp (in _last_event column)
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        last_event = CameraEvent.objects.filter(camera_id=OuterRef('pk')).annotate(last_event=Max('timestamp')).values('last_event')
+        queryset = queryset.annotate(_last_event = Subquery(last_event))
+        return queryset
+
+    # Extra field (state, with SVG icon) display
     def state_with_icon(self, obj):
         fill_color = '#000000'
         if obj.state == Camera.State.ONLINE:
@@ -35,7 +44,12 @@ class CameraAdmin(ModelAdmin):
             fill_color, obj.get_state_display()
         )
 
+    # Extra field, last event timestamp
+    def last_event(self, obj):
+        return obj._last_event
+
     state_with_icon.short_description = 'State'
+    last_event.short_description = 'Last event time'
 
 
 admin_site = MyAdminSite(name='admin')
