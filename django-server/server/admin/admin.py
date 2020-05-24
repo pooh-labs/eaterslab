@@ -21,6 +21,7 @@ class MyAdminSite(AdminSite):
 
 
 class CameraAdmin(ModelAdmin):
+    # TODO(Rhantolq): Add 'name' here to display once implemented
     list_display = ['id', 'state_with_icon', 'last_event']
 
     # Modify queryset to fetch last event timestamp (in _last_event column)
