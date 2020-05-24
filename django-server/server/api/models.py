@@ -3,6 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator, URLValidator
 from django.db.models import F
 
+from datetime import timedelta
+
 
 class Cafeteria(models.Model):
     name = models.CharField(max_length=128)
@@ -26,8 +28,9 @@ class Camera(models.Model):
         OFFLINE = 1, _('offline')
         LOST_CONNECTION = 2, _('lost connection')
 
+    LOSING_CONNECTION_INTERVAL = timedelta(minutes=3)
+
     description = models.CharField(max_length=200)
-    last_update = models.DateTimeField()
     state = models.IntegerField(choices=State.choices)
 
 
@@ -44,6 +47,12 @@ class CameraEvent(models.Model):
 
     def __str__(self):
         return "{} {} {}".format(self.camera_id, self.event_type, self.timestamp)
+
+    class Meta:
+        indexes = [
+            # For selecting last event per camera
+            models.Index(fields=['camera_id', 'timestamp']), 
+        ]
 
 
 class FixedMenuOption(models.Model):
