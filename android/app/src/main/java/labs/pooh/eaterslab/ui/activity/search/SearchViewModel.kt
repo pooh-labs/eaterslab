@@ -9,6 +9,8 @@ import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
 import labs.pooh.eaterslab.ui.activity.abstracts.RepositoryAccessViewModel
 import java.util.*
 
+typealias CafeteriaFilter = (CafeteriaDao) -> Boolean
+
 class SearchViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessViewModel(notifier) {
 
     private val _cafeteriasLiveData = MutableLiveData<MutableList<CafeteriaDao>>().apply {
@@ -30,15 +32,20 @@ class SearchViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessView
     }
 
     fun getFilteredData(textFilter: String) {
-        val trimmed = textFilter.trim()
         viewModelScope.launch {
             val cafeterias = repository.cafeteriasList()
-            cafeterias?.filter { it.name.toLowerCase(Locale.ROOT)
-                .startsWith(trimmed.toLowerCase(Locale.ROOT)) }
+            cafeterias
+                ?.filter(prefixFilter(textFilter))
                 ?.forEach { cafeteria ->
                     cafeteria.downloadContent()
                     addSearchedCafeteria(cafeteria)
             }
         }
+    }
+
+    private fun prefixFilter(prefix: String): CafeteriaFilter {
+        val trimmed = prefix.trim()
+        return { it.name.toLowerCase(Locale.ROOT)
+            .startsWith(trimmed.toLowerCase(Locale.ROOT)) }
     }
 }
