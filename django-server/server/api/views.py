@@ -26,6 +26,7 @@ class PostViewSet(viewsets.ModelViewSet):
 class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Cafeteria.objects.all().order_by('id')
     serializer_class = CafeteriaSerializer
+    filter_fields = ['id', 'opened_from', 'opened_to']
 
 
 class CameraViewSet(viewsets.ModelViewSet):
