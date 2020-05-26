@@ -27,6 +27,7 @@ class PostViewSet(viewsets.ModelViewSet):
 
 class CafeteriaFilterSet(filters.FilterSet):
     opened_now = filters.BooleanFilter(method='get_opened_now')
+    by_name = filters.CharFilter(method='get_name_prefix')
 
     class Meta:
         model = Cafeteria
@@ -36,13 +37,18 @@ class CafeteriaFilterSet(filters.FilterSet):
         opened = value
         now = datetime.now().time()
         if opened is True:
-            print("true parse {}".format(now))
             return queryset.filter(opened_from__lte=now).filter(opened_to__gte=now)
         elif opened is False:
-            print("false parse {}".format(now))
             return (queryset.filter(opened_from__gt=now) | queryset.filter(opened_to__lt=now)).distinct()
         else:
             return queryset
+
+    def get_name_prefix(self, queryset, field_name, value):
+        if value is None:
+            return queryset
+
+        prefix = value.strip()
+        return queryset.filter(name__istartswith=prefix)
 
 
 class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
