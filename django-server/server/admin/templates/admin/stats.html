@@ -34,14 +34,42 @@
 #datasets table { width: 100%; }
 #datasets tr { display: flex; }
 #datasets td:nth-child(2) { flex-grow: 1; }
+
+#add-dataset-popup { z-index: 1; position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.3); }
+#add-dataset-popup form { width: 400px;display: grid; grid-template-columns: 1fr 2fr; grid-gap: 15px; grid-template-areas: 
+    "h h" "l1 r1" "l2 r2" "e s"; padding: 30px; align-items: center; background: #FFF; border-radius: 2px; box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.2); }
+#add-dataset-popup label:after { content: ':'; }
+
+#add-dataset-popup h1 { grid-area: h; margin-bottom: 10px; }
+#add-dataset-cafeteria-label { grid-area: l1; }
+#add-dataset-cafeteria { grid-area: r1; }
+#add-dataset-type-label { grid-area: l2; }
+#add-dataset-type { grid-area: r2; }
+#add-dataset-submit { grid-area: s; width: 8em; margin-top: 10px; justify-self: end; }
 </style>
 
 {% verbatim %}
 <div id="content-main">
 
-  <ul v-if="!error" class="object-tools">
+  <section v-if="popup" id="add-dataset-popup" v-on:click.self="hide_popup">
+    <form>
+      <h1>Add dataset</h1>
+      <label for="add-dataset-cafeteria" id="add-dataset-cafeteria-label">Cafeteria</label>
+      <select id="add-dataset-cafeteria">
+        <option v-for="cafeteria in cafeterias" :value="cafeteria.id">{{ cafeteria.name }}</option>
+      </select>
+      <label for="add-dataset-type" id="add-dataset-type-label">Type</label>
+      <select id="add-dataset-type">
+        <option value="occupancy">occupancy</option>
+        <option value="average dish review">average dish review</option>
+      </select>
+      <input type="submit" id="add-dataset-submit" value="Add" v-on:submit.prevent="add_dataset" v-on:click.prevent="add_dataset" />
+    </form>
+  </section>
+
+  <ul v-if="!error && !loading" class="object-tools">
     <li>
-      <a href="#" class="addlink" class="add-dataset">
+      <a href="#" class="addlink" class="add-dataset" v-on:click.prevent="show_popup">
         Add dataset
       </a>
     </li>
@@ -97,7 +125,7 @@
       <path d="M0 0h24v24H0z" fill="none"/>
     </svg>
     <p>
-      <a href="#">Add first dataset</a>
+      <a href="#" v-on:click.prevent="show_popup">Add first dataset</a>
     </p>
   </div>
 
@@ -295,6 +323,7 @@ yRightScale.domain([0, 5.5]);
 const App = new Vue({
   data: {
     loading: true,
+    popup: false,
     error: null,
     cafeterias: {},
     datasets: [],
@@ -306,23 +335,63 @@ const App = new Vue({
     }
   },
   updated: function() {
+    if (this.loading || this.error) {
+      return;
+    }
     this.renderChart();
   },
   methods: {
+    showLoading: function(msg) {
+      Object.assign(this, {
+        'loading': true,
+        'error': null,
+        'popup': false
+      });
+    },
     showError: function(msg) {
       Object.assign(this, {
         'loading': false,
-        'error': msg
+        'error': msg,
+        'popup': false
       });
     },
     showChart: function() {
       Object.assign(this, {
         'loading': false,
-        'error': null
+        'error': null,
+        'popup': false
       });
     },
+    show_popup: function() {
+      this.popup = true;
+    },
+    hide_popup: function() {
+      this.popup = false;
+    },
+    add_dataset: function() {
+      this.showLoading();
+      
+      let cafeteria_id = document.getElementById('add-dataset-cafeteria').value;
+      let type = document.getElementById('add-dataset-type').value;
+
+      let data_loader = null;
+      switch (type) {
+        case DatasetType.OCCUPANCY:
+          data_loader = window.loadOccupancy(cafeteria_id, null, null);
+          break;
+        case DatasetType.AVERAGE_DISH_REVIEW:
+          data_loader = window.loadAvgReview(cafeteria_id, null, null);
+          break;
+        default:
+          showError('Incorrect dataset type');
+          return;
+      }
+
+      data_loader
+        .then(() => App.showChart())
+        .catch(error => App.showError(error.message));
+    },
     delete_dataset: function(key) {
-      console.log('delete');
       for (let i=0; i<this.datasets.length; i++) {
         let other = this.datasets[i];
         if (other.cafeteria_id != key.cafeteria_id || other.type != key.type) {
@@ -511,7 +580,7 @@ function loadOccupancy(cafeteria_id, from, to) {
       }
     })
   */
-  sample_promise
+  return sample_promise
     .then(data => {
       let result = [];
       data.forEach(entry => {
@@ -523,6 +592,7 @@ function loadOccupancy(cafeteria_id, from, to) {
       return result;
     })
     .then(data => {
+      App.showChart();
       App.datasets.push({
         'cafeteria_id': cafeteria_id,
         'type': DatasetType.OCCUPANCY,
@@ -577,7 +647,7 @@ function loadAvgReview(cafeteria_id, type, group_by) {
       }
     })
   */
-  sample_promise
+  return sample_promise
     .then(data => {
       let result = [];
       data.forEach(entry => {
@@ -589,6 +659,7 @@ function loadAvgReview(cafeteria_id, type, group_by) {
       return result;
     })
     .then(data => {
+      App.showChart();
       App.datasets.push({
         'cafeteria_id': cafeteria_id,
         'type': DatasetType.AVERAGE_DISH_REVIEW,
@@ -603,9 +674,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   loadCafeterias()
     .then(() => App.showChart())
-    .catch(error => App.showError(error.message))
-    .then(() => loadOccupancy(1, null, null))
-    .then(() => loadAvgReview(1, null, null));
+    .catch(error => App.showError(error.message));
 
   window.addEventListener('resize', function() {
     if (chart) {
