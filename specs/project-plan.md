@@ -27,7 +27,7 @@ Document includes:
 
 ### Rest of the document
 
-The rest of the document contains: ´
+The rest of the document contains:
 * Project plan
 * Description of the tasks of team members
 * Project supervision and control plans
