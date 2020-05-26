@@ -43,3 +43,15 @@ and the it can be used as *generated_token* for example for files uplading with 
 curl -H 'Authorization: Token generated_token' -X PUT --data-binary @./local_file.upload https://server.example/file/upload/path/
 ```
 when the authentication is needed for uploading files.
+
+### Data dump to file
+
+The data can be backed using the django `dumpdata` option by
+```bash
+python manage.py dumpdata --exclude=auth --exclude=contenttypes --exclude=sessions --exclude=authtoken > data.json
+```
+
+and then restored in the other environment using the 
+```bash
+python manage.py loaddata data.json
+```
