@@ -187,3 +187,12 @@ SD cards for customers' devices.
 
 https://sceweb.uhcl.edu/helm/RationalUnifiedProcess/process/artifact/ar_acpl.htm
 
+### Change management plan
+
+Each proposed change is discussed by the whole team. The effects of the change are considered and, if approved, the selected team member makes corrections to the documentation or code.
+
+### Problem solving plan
+
+Problems will be discussed at regular team meetings and solved in a democratic way after considering the possible advantages and disadvantages of the solution.
+
+
