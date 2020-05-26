@@ -131,14 +131,59 @@ Students are going to improve their programming skills in different languages du
 
 Decisions on the next steps in the project are made every week or every two weeks on team meetings. Any change made by one of the team members must be approved by at least one other person.
 
-## Technical processes # TODO(kantoniak)
+## Technical processes
 
 ### Programming
 
+**TODO(kantoniak)**
+
 ### Tools and technologies
+
+Management and planning tools are shared between all projects for unified planning process. Subprojects use different tools to match technical requirements.
+
+* `.git` as a control version system
+* GitHub [issues](https://help.github.com/en/github/managing-your-work-on-github), [milestones](https://help.github.com/en/github/managing-your-work-on-github/tracking-the-progress-of-your-work-with-milestones) and [a project board](https://help.github.com/en/github/managing-your-work-on-github/managing-project-boards) for work organization
+* GitHub [pull requests](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-requests) and [workflows](https://help.github.com/en/actions/configuring-and-managing-workflows) for code reviews and testing
+* Markdown files for documents and specifications
+* [Visual Paradigm Online](https://online.visual-paradigm.com) for technical diagrams
+* For server development:
+  * **TODO (Rhantolqu): Please add versions and links**
+  * Python X.X and Django X.X
+    * Django Rest Framework for API endpoint
+  * HTML 5, CSS 3, ECMAScript 2017 (JavaScript 8)
+  * PostgreSQL X.X and SQLite 3 databases
+* For Android development:
+  * **TODO (avan1235): Please add versions and links**
+  * Kotlin X.X
+  * Android X.X SDK
+  * Android Studio X.X
+* For camera device development:
+  * **TODO (kantoniak): Links, versions**
+  * Raspbian Buster Lite February 2020 edition
+  * Python 3.7
+  * OpenCV 4.2.0
+  * OpenJDK 11 for API client generation
 
 ### Infrastructure
 
+In product development stage members use their own machines for development.
+Development machines run on Linux system from Debian family. Members are free
+to configure systems to best suit their development style.
+
+Testing infrastructure depends on subproject type:
+* All subprojects use GitHub platform running Docker containers for initial
+  testing (linting, unit tests etc.)
+* API endpoint and administration panels are shipped as a Heroku website
+* Android application is tested in emulator or on a single device
+* Camera software is tested in a VirtualBox machine
+
+Customer-facing website is exposed as a separate Heroku project. Android
+application will be shipped to Google Play store. Camera software is copied to
+SD cards for customers' devices.
+
 ### Product acceptance plan
+
+**TODO(kantoniak)**
+
 https://sceweb.uhcl.edu/helm/RationalUnifiedProcess/process/artifact/ar_acpl.htm
 
