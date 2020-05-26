@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator, URLValidator
@@ -17,6 +18,7 @@ class Cafeteria(models.Model):
     address = models.CharField(max_length=256)
     opened_from = models.TimeField()
     opened_to = models.TimeField()
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

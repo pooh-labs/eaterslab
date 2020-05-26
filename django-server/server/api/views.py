@@ -27,11 +27,12 @@ class PostViewSet(viewsets.ModelViewSet):
 
 class CafeteriaFilterSet(filters.FilterSet):
     opened_now = filters.BooleanFilter(method='get_opened_now')
-    by_name = filters.CharFilter(method='get_name_prefix')
+    prefix_name = filters.CharFilter(method='get_name_prefix')
+    owner_id = filters.NumberFilter(method='get_for_owner')
 
     class Meta:
         model = Cafeteria
-        fields = ['opened_from', 'opened_to', 'opened_now']
+        fields = ['opened_from', 'opened_to', 'opened_now', 'prefix_name', 'owner_id']
 
     def get_opened_now(self, queryset, field_name, value):
         opened = value
@@ -49,6 +50,12 @@ class CafeteriaFilterSet(filters.FilterSet):
 
         prefix = value.strip()
         return queryset.filter(name__istartswith=prefix)
+
+    def get_for_owner(self, queryset, field_name, value):
+        owner_id = value
+        if owner_id is None:
+            return queryset
+        return queryset.filter(owner_id=owner_id)
 
 
 class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
