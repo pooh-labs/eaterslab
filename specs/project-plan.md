@@ -1,13 +1,13 @@
 # Project plan
 
-Version number: 1.0
+Version number: 2.0
 
-Authors:
-* Jakub Walendowski
+Authors: Jakub Walendowski, Maciej Procyk, Krzysztof Antoniak, Robert Michna
 
 ### Changelog
 
 * v1.0 (2020-05-19): Initial revision
+* v2.0 (2020-05-26): First public version
 
 ## Introduction
 
@@ -199,5 +199,3 @@ Each proposed change is discussed by the whole team. The effects of the change a
 ### Problem solving plan
 
 Problems will be discussed at regular team meetings and solved in a democratic way after considering the possible advantages and disadvantages of the solution.
-
-
