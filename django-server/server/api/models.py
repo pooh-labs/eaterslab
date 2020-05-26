@@ -19,6 +19,7 @@ class Cafeteria(models.Model):
     opened_from = models.TimeField()
     opened_to = models.TimeField()
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    occupancy = models.IntegerField(validators=[MinValueValidator(0)])
 
     def __str__(self):
         return self.name
@@ -49,6 +50,9 @@ class CameraEvent(models.Model):
 
     def __str__(self):
         return "{} {} {}".format(self.camera, self.event_type, self.timestamp)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
 
     class Meta:
         indexes = [
