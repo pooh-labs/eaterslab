@@ -96,14 +96,14 @@ budget may be enlarged if the team receives a development grant.
 
 The project should be realized in a few phases specified in table below.
 
-| Project phase                            | date from | date to | comments |
-|------------------------------------------|-----------|---------|----------|
-| Specified business requirements          |           |         |          |
-| The choice of technology used in project |           |         |          |
-| Modules implementation                   |           |         |          |
-| Documentation writing                    |           |         |          |
-| Tests writing                            |           |         |          |
-| Beta version of system                   |           |         |          |
+| Project phase                            | date from  | date to  | comments  |
+|------------------------------------------|------------|----------|-----------|
+| Specified business requirements          | 03.03.2020 |10.03.2020|    -      |
+| The choice of technology used in project | 03.03.2020 |10.03.2020|    -      |
+| Modules implementation                   | 10.03.2020 |09.06.2020|    -      |
+| Documentation writing                    | 10.03.2020 |02.06.2020|    -      |
+| Tests writing                            | 28.04.2020 |02.06.2020|    -      |
+| Beta version of system                   | 09.06.2020 |16.09.2020|    -      |
 
 ### Resources
 
@@ -116,14 +116,22 @@ in these languages
 * good understanding of concurrency problems in data management projects
 * good communication skills as the project will be realizes remotely so with limited communication possibilities
 
-#### Employment plan
+### Employment plan
 
 Students are going to realize the project specification in their free time as the part of the Software 
 Engineering classes in the 2020. They won't get any money reward as the project should give them the 
 ability to get introduced into project management and writing some bigger project in team that is bigger 
 than two people.
 
-#### Training plan
+### Training plan
 
 Students are going to improve their programming skills in different languages during this project realization.
+
+### Project supervision and control
+
+Decisions on the next steps in the project are made every week or every two weeks on team meetings. Any change made by one of the team members must be approved by at least one other person.
+
+## Technical processes plan
+
+TODO
 
