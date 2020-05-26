@@ -59,7 +59,7 @@ on a voluntary basis.
 ### Project products
 
 * Admin panel
-* Owner pannel
+* Owner panel
 * Client app
 * Database
 * Camera device software
@@ -136,15 +136,19 @@ Decisions on the next steps in the project are made every week or every two week
 
 ### Programming
 
-Team members develop software in sprints taking 1 or 2 weeks. During mentioned events team creates issues for each item and assigns a member to each issue. All issues from sprint are grouped under [a milestone](https://github.com/pooh-labs/eaterslab/milestones). All current issues are visible in [the project board](https://github.com/pooh-labs/eaterslab/projects/1).
+Team members develop software in sprints taking 1 or 2 weeks. During mentioned events team creates issues for each 
+item and assigns a member to each issue. All issues from sprint are grouped under [a milestone](https://github.com/pooh-labs/eaterslab/milestones). All current issues are visible in [the project board](https://github.com/pooh-labs/eaterslab/projects/1).
 
-For each issue, programmer creates a feature branch, makes changes and creates a pull request referencing issue. After passing automatic checks and getting approval from another team member, change can be merged into master branch.
+For each issue, programmer creates a feature branch, makes changes and creates a pull request referencing issue. 
+After passing automatic checks and getting approval from another team member, change can be merged into master branch.
 
-Merging pull request marks issue as resolved and moves it to "Done" section of the project board. At the planning meeting board is evaluated for milestone progress and cards of finished issues are archived.
+Merging pull request marks issue as resolved and moves it to "Done" section of the project board. At the planning 
+meeting board is evaluated for milestone progress and cards of finished issues are archived.
 
 ### Tools and technologies
 
-Management and planning tools are shared between all projects for unified planning process. Subprojects use varying tools to match technical requirements.
+Management and planning tools are shared between all projects for unified planning process. Subprojects use varying 
+tools to match technical requirements.
 
 * `.git` as a control version system
 * GitHub [issues](https://help.github.com/en/github/managing-your-work-on-github), [milestones](https://help.github.com/en/github/managing-your-work-on-github/tracking-the-progress-of-your-work-with-milestones) and [a project board](https://help.github.com/en/github/managing-your-work-on-github/managing-project-boards) for work organization
@@ -185,16 +189,21 @@ SD cards for customers' devices.
 
 ### Product acceptance plan
 
-Development team prepares a copy of all specifications for acceptance testing. Customer is responsible for providing their production equipment matching architecture specifications.
+Development team prepares a copy of all specifications for acceptance testing. Customer is responsible for providing 
+their production equipment matching architecture specifications.
 
-Development team performs installation and performs all tests. After all tests pass, customer delegates test conformance to functional requirements on their own.
+Development team performs installation and performs all tests. After all tests pass, customer delegates test conformance 
+to functional requirements on their own.
 
-Should customer notice any problems, they have 7 days to provide a list of issues. Developer team has 14 days for corrective action.
+Should customer notice any problems, they have 7 days to provide a list of issues. Developer team has 14 days for 
+corrective action.
 
 ### Change management plan
 
-Each proposed change is discussed by the whole team. The effects of the change are considered and, if approved, the selected team member makes corrections to the documentation or code.
+Each proposed change is discussed by the whole team. The effects of the change are considered and, if approved, the 
+selected team member makes corrections to the documentation or code.
 
 ### Problem solving plan
 
-Problems will be discussed at regular team meetings and solved in a democratic way after considering the possible advantages and disadvantages of the solution.
+Problems will be discussed at regular team meetings and solved in a democratic way after considering the possible 
+advantages and disadvantages of the solution.
