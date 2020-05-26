@@ -187,6 +187,7 @@
 <script>
 
 const API_URL_BASE = 'http{% if request.is_secure %}s{% endif %}://{{ request.get_host }}/api/beta/';
+const USER_ID = {{ user.id }};
 
 function makeSeriesData(n, startDate) {
   startDate = startDate || new Date();
@@ -500,7 +501,7 @@ const App = new Vue({
 });
 
 function loadCafeterias() {
-  return fetch(API_URL_BASE + 'cafeterias/?fields=id,name&owner=true')
+  return fetch(API_URL_BASE + 'cafeterias/?fields=id,name&owner_id=' + USER_ID)
     .then(response => {
       if (response.ok) {
         return response.json();
