@@ -125,6 +125,5 @@ than two people.
 
 #### Training plan
 
-Students are going to improve their programming skills ni different languages during this project realization.
-All the needed 
+Students are going to improve their programming skills in different languages during this project realization.
 
