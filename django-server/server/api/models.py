@@ -45,15 +45,15 @@ class CameraEvent(models.Model):
 
     timestamp = models.DateTimeField()
     event_type = models.IntegerField(choices=EventType.choices)
-    camera_id = models.ForeignKey(Camera, on_delete=models.CASCADE)
+    camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "{} {} {}".format(self.camera_id, self.event_type, self.timestamp)
+        return "{} {} {}".format(self.camera, self.event_type, self.timestamp)
 
     class Meta:
         indexes = [
             # For selecting last event per camera
-            models.Index(fields=['camera_id', 'timestamp']), 
+            models.Index(fields=['camera', 'timestamp']),
         ]
 
 
