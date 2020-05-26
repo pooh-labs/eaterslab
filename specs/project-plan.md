@@ -135,7 +135,11 @@ Decisions on the next steps in the project are made every week or every two week
 
 ### Programming
 
-**TODO(kantoniak)**
+Team members develop software in sprints taking 1 or 2 weeks. During mentioned events team creates issues for each item and assigns a member to each issue. All issues from sprint are grouped under [a milestone](https://github.com/pooh-labs/eaterslab/milestones). All current issues are visible in [the project board](https://github.com/pooh-labs/eaterslab/projects/1).
+
+For each issue, programmer creates a feature branch, makes changes and creates a pull request referencing issue. After passing automatic checks and getting approval from another team member, change can be merged into master branch.
+
+Merging pull request marks issue as resolved and moves it to "Done" section of the project board. At the planning meeting board is evaluated for milestone progress and cards of finished issues are archived.
 
 ### Tools and technologies
 
