@@ -19,7 +19,8 @@
 {% block content %}
 
 <style>
-.loading, .error { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.loading, .error, .empty { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.loading p, .error p, .empty p { margin-top: 0.5em; }
 .error p { color: #C76161; }
 
 .header-option { display: none; margin-left: 1em; font-size: 13px; font-family: "Roboto","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif; font-weight: normal; }
@@ -28,7 +29,7 @@
 #graph header input { width: 8em; }
 #graph #range-name { flex-grow: 1; text-align: center; font-weight: bold; font-size: 16px; }
 
-.loading, .error, #graph-contents { height: 40vh; max-height: 80vw; min-height: 300px; }
+.loading, .error, .empty, #graph-contents { height: 40vh; max-height: 80vw; min-height: 300px; }
 
 #datasets table { width: 100%; }
 #datasets tr { display: flex; }
@@ -37,6 +38,14 @@
 
 {% verbatim %}
 <div id="content-main">
+
+  <ul v-if="!error" class="object-tools">
+    <li>
+      <a href="#" class="addlink" class="add-dataset">
+        Add dataset
+      </a>
+    </li>
+  </ul>
 
   <div v-if="loading" class="loading">
     <!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
@@ -82,15 +91,17 @@
     <p>{{ error }}</p>
   </div>
 
-  <div v-else>
-    <ul class="object-tools">
-      <li>
-        <a href="#" class="addlink" class="add-dataset">
-          Add dataset
-        </a>
-      </li>
-    </ul>
+  <div v-else-if="empty" class="empty">
+    <svg xmlns="http://www.w3.org/2000/svg" height="60" width="60" viewBox="0 0 24 24">
+      <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" fill="#79aec8"/>
+      <path d="M0 0h24v24H0z" fill="none"/>
+    </svg>
+    <p>
+      <a href="#">Add first dataset</a>
+    </p>
+  </div>
 
+  <div v-else>
     <section id="graph" class="module">
       <header id="graph-header">
         <input type="button" id="range-prev" value="&lt; Previous" />
@@ -104,7 +115,7 @@
     </section>
 
     <section id="datasets" class="module">
-      <dataset-table :cafeterias="cafeterias" :datasets="datasets"></dataset-table>
+      <dataset-table :cafeterias="cafeterias" :datasets="datasets" v-on:delete-dataset="delete_dataset"></dataset-table>
     </section>
   </div>
 
@@ -120,7 +131,8 @@
         v-for="dataset in datasets"
         :key="dataset.key"
         :cafeteria="cafeterias[dataset.cafeteria_id]"
-        :dataset="dataset"></tr>
+        :dataset="dataset"
+        v-on:delete-dataset="on_delete_dataset"></tr>
     </tbody>
   </table>
 </template>
@@ -139,7 +151,7 @@
       </svg>
     </td>
     <td>{{ cafeteria.name }} ({{ dataset.type }})</td>
-    <td><a href="#" class="deletelink">Delete</a></td>
+    <td><a href="#" class="deletelink" v-on:click="emit_delete">Delete</a></td>
   </tr>
 </template>
 {% endverbatim %}
@@ -239,7 +251,15 @@ const DatasetType = {
 
 const DatasetTableRow = Vue.component('dataset-table', {
   template: '#template-dataset-table-row',
-  props: ['cafeteria', 'dataset']
+  props: ['cafeteria', 'dataset'],
+  methods: {
+    emit_delete: function() {
+      this.$emit('delete-dataset', {
+        cafeteria_id: this.dataset.cafeteria_id,
+        type: this.dataset.type
+      });
+    }
+  }
 })
 
 const DatasetTable = Vue.component('dataset-table', {
@@ -248,6 +268,11 @@ const DatasetTable = Vue.component('dataset-table', {
   components: {
     'dataset-table-row': DatasetTableRow
   },
+  methods: {
+    on_delete_dataset: function(key) {
+      this.$emit('delete-dataset', key);
+    }
+  }
 })
 
 /* Chart initialization */
@@ -275,10 +300,13 @@ const App = new Vue({
     datasets: [],
     group_by: DatasetGrouping.DAY
   },
-  watch: {
-    datasets: function() {
-      this.renderChart();
+  computed: {
+    empty: function() {
+      return this.datasets.length == 0;
     }
+  },
+  updated: function() {
+    this.renderChart();
   },
   methods: {
     showError: function(msg) {
@@ -293,12 +321,23 @@ const App = new Vue({
         'error': null
       });
     },
+    delete_dataset: function(key) {
+      console.log('delete');
+      for (let i=0; i<this.datasets.length; i++) {
+        let other = this.datasets[i];
+        if (other.cafeteria_id != key.cafeteria_id || other.type != key.type) {
+          continue;
+        }
+        this.datasets.splice(i, 1);
+        break;
+      }
+    },
     renderChart: function() {
       if (chart) {
         chart.detach();
       }
 
-      if (this.datasets.length == 0) {
+      if (this.empty) {
         return;
       }
 
