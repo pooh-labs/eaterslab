@@ -59,6 +59,7 @@
     <dimen name="expanded_margin">16dp</dimen>
     <dimen name="occupancy_top_margin">8dp</dimen>
     <dimen name="search_box_margin">16dp</dimen>
+    <dimen name="filter_box_margin">22dp</dimen>
     <dimen name="search_box_separation">32dp</dimen>
     <dimen name="filter_name_size">16sp</dimen>
     <dimen name="search_result_radius">14dp</dimen>

@@ -11,16 +11,20 @@ import labs.pooh.eaterslab.repository.dao.CafeteriaDao
 import labs.pooh.eaterslab.ui.activity.abstracts.AbstractRevealedActivity
 import labs.pooh.eaterslab.ui.activity.abstracts.viewModelFactory
 import labs.pooh.eaterslab.ui.activity.hello.HelloSelectActivity
+import labs.pooh.eaterslab.ui.fragment.dialogs.TimePickerDialogFragment
+import labs.pooh.eaterslab.ui.view.PickedTimeHolder
 import labs.pooh.eaterslab.ui.view.SearchedCafeteriaView
 
 
 
 class SearchActivity : AbstractRevealedActivity() {
 
+    private val pickedTimeFrom by lazy { PickedTimeHolder(this) { textViewOpenedFromValue.text = it } }
+    private val pickedTimeTo by lazy { PickedTimeHolder(this) { textViewOpenedToValue.text = it } }
+
     private val searchViewModel by lazy { ViewModelProvider(this, viewModelFactory {
         SearchViewModel(this) }).get(SearchViewModel::class.java)
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +39,15 @@ class SearchActivity : AbstractRevealedActivity() {
             searchViewModel.viewModelScope.coroutineContext.cancelChildren()
             val textSearch = searchText.text.toString()
             val onlyOpened = switchOpened.isChecked
-            searchViewModel.getFilteredData(textSearch, onlyOpened)
+            searchViewModel.getFilteredData(textSearch, onlyOpened, pickedTimeFrom.toTimeApiFormat(), pickedTimeTo.toTimeApiFormat())
+        }
+
+        textViewOpenedFromValue.setOnClickListener {
+            TimePickerDialogFragment(pickedTimeFrom).show(supportFragmentManager, "timePickerFrom")
+        }
+
+        textViewOpenedToValue.setOnClickListener {
+            TimePickerDialogFragment(pickedTimeTo).show(supportFragmentManager, "timePickerTo")
         }
     }
 

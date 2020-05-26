@@ -74,19 +74,32 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/search_box_margin"
         android:layout_marginBottom="@dimen/search_box_separation"
-        android:text="@string/opened_now"
         android:textSize="@dimen/filter_name_size"
         app:layout_constraintBottom_toTopOf="@+id/searchText"
         app:layout_constraintEnd_toEndOf="@+id/buttonSearch"
         app:layout_constraintStart_toStartOf="@+id/searchText" />
 
+    <TextView
+        android:id="@+id/textViewSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/opened_now"
+        android:textColor="?foregroundColorText"
+        android:textSize="@dimen/filter_name_size"
+        app:layout_constraintBottom_toBottomOf="@+id/switchOpened"
+        app:layout_constraintStart_toStartOf="@+id/switchOpened"
+        app:layout_constraintTop_toTopOf="@+id/switchOpened" />
+
     <RatingBar
         android:id="@+id/ratingBarMin"
         style="?android:attr/ratingBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="240dp"
+        android:layout_height="60dp"
         android:scaleX="0.5"
         android:scaleY="0.5"
+        android:padding="0dp"
+        android:transformPivotX="240dp"
+        android:transformPivotY="35dp"
         app:layout_constraintBottom_toBottomOf="@+id/textViewAvgRating"
         app:layout_constraintEnd_toEndOf="@+id/switchOpened"
         app:layout_constraintTop_toTopOf="@+id/textViewAvgRating" />
@@ -98,8 +111,54 @@
         android:text="@string/min_average_rating"
         android:textColor="?foregroundColorText"
         android:textSize="@dimen/filter_name_size"
-        android:layout_marginBottom="@dimen/search_box_margin"
+        android:layout_marginBottom="@dimen/filter_box_margin"
         app:layout_constraintBottom_toTopOf="@+id/switchOpened"
         app:layout_constraintStart_toStartOf="@+id/switchOpened"/>
+
+    <TextView
+        android:id="@+id/textViewOpenedTo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/opened_to"
+        android:textColor="?foregroundColorText"
+        android:textSize="@dimen/filter_name_size"
+        android:layout_marginBottom="@dimen/filter_box_margin"
+        app:layout_constraintBottom_toTopOf="@+id/textViewAvgRating"
+        app:layout_constraintStart_toStartOf="@+id/switchOpened"/>
+
+    <TextView
+        android:id="@+id/textViewOpenedToValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time_not_selected"
+        android:textStyle="bold"
+        android:textColor="?foregroundColorText"
+        android:textSize="@dimen/filter_name_size"
+        android:layout_marginBottom="@dimen/filter_box_margin"
+        app:layout_constraintBottom_toTopOf="@+id/textViewAvgRating"
+        app:layout_constraintEnd_toEndOf="@+id/switchOpened"/>
+
+    <TextView
+        android:id="@+id/textViewOpenedFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/opened_from"
+        android:textColor="?foregroundColorText"
+        android:textSize="@dimen/filter_name_size"
+        android:layout_marginBottom="@dimen/filter_box_margin"
+        app:layout_constraintBottom_toTopOf="@+id/textViewOpenedTo"
+        app:layout_constraintStart_toStartOf="@+id/switchOpened"/>
+
+    <TextView
+        android:id="@+id/textViewOpenedFromValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time_not_selected"
+        android:textColor="?foregroundColorText"
+        android:textSize="@dimen/filter_name_size"
+        android:textStyle="bold"
+        android:layout_marginBottom="@dimen/filter_box_margin"
+        app:layout_constraintBottom_toTopOf="@+id/textViewOpenedToValue"
+        app:layout_constraintEnd_toEndOf="@+id/switchOpened" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import labs.pooh.eaterslab.repository.BooleanApiFormat
 import labs.pooh.eaterslab.repository.CafeteriasRepository
+import labs.pooh.eaterslab.repository.TimeApiFormat
 import labs.pooh.eaterslab.repository.dao.CafeteriaDao
 import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
 import labs.pooh.eaterslab.ui.activity.abstracts.RepositoryAccessViewModel
@@ -33,11 +34,13 @@ class SearchViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessView
         _cafeteriasLiveData.value = _cafeteriasLiveData.value
     }
 
-    fun getFilteredData(prefixFilter: String, onlyOpenedFilter: Boolean) {
+    fun getFilteredData(prefixFilter: String, onlyOpenedFilter: Boolean, timeFrom: TimeApiFormat?, timeTo: TimeApiFormat?) {
         viewModelScope.launch {
             val cafeterias = repository.cafeteriasListFiltered(
                 openedNow = BooleanApiFormat.packedForTrue(onlyOpenedFilter),
-                prefixName = prefixFilter
+                prefixName = prefixFilter,
+                openedFrom = timeFrom,
+                openedTo = timeTo
             )
             cafeterias
                 ?.forEach { cafeteria ->
