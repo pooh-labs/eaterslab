@@ -1,5 +1,7 @@
+from datetime import datetime
 from os.path import join as path_join
 
+from django_filters import rest_framework as filters
 from django.core.files.storage import FileSystemStorage
 
 from rest_framework import views, viewsets
@@ -23,10 +25,31 @@ class PostViewSet(viewsets.ModelViewSet):
     http_method_names = ['post']
 
 
+class CafeteriaFilterSet(filters.FilterSet):
+    opened_now = filters.BooleanFilter(method='get_opened_now')
+
+    class Meta:
+        model = Cafeteria
+        fields = ['opened_from', 'opened_to', 'opened_now']
+
+    def get_opened_now(self, queryset, field_name, value):
+        opened = value
+        now = datetime.now().time()
+        if opened is True:
+            print("true parse {}".format(now))
+            return queryset.filter(opened_from__lte=now).filter(opened_to__gte=now)
+        elif opened is False:
+            print("false parse {}".format(now))
+            return (queryset.filter(opened_from__gt=now) | queryset.filter(opened_to__lt=now)).distinct()
+        else:
+            return queryset
+
+
 class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Cafeteria.objects.all().order_by('id')
     serializer_class = CafeteriaSerializer
-    filter_fields = ['id', 'opened_from', 'opened_to']
+    filter_backends = [filters.DjangoFilterBackend]
+    filterset_class = CafeteriaFilterSet
 
 
 class CameraViewSet(viewsets.ModelViewSet):
