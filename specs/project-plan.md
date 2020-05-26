@@ -104,6 +104,7 @@ The project should be realized in a few phases specified in table below.
 | Documentation writing                    | 10.03.2020 |02.06.2020|    -      |
 | Tests writing                            | 28.04.2020 |02.06.2020|    -      |
 | Beta version of system                   | 09.06.2020 |16.09.2020|    -      |
+| Product acceptance testing               | 09.09.2020 |16.09.2020|    -      |
 
 ### Resources
 
@@ -185,9 +186,11 @@ SD cards for customers' devices.
 
 ### Product acceptance plan
 
-**TODO(kantoniak)**
+Development team prepares a copy of all specifications for acceptance testing. Customer is responsible for providing their production equipment matching architecture specifications.
 
-https://sceweb.uhcl.edu/helm/RationalUnifiedProcess/process/artifact/ar_acpl.htm
+Development team performs installation and performs all tests. After all tests pass, customer delegates test conformance to functional requirements on their own.
+
+Should customer notice any problems, they have 7 days to provide a list of issues. Developer team has 14 days for corrective action.
 
 ### Change management plan
 
