@@ -9,6 +9,7 @@ import labs.pooh.eaterslab.repository.dao.*
 import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
 import org.threeten.bp.OffsetDateTime
 import java.lang.Exception
+import java.util.*
 
 class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatusNotifier) {
 
@@ -18,9 +19,13 @@ class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatu
     private val cachedCafeterias = mutableMapOf<Int, CafeteriaDao>()
     private val cachedMenuOptions = mutableMapOf<Int, List<FixedMenuOptionDao>>()
 
-    suspend fun cafeteriasList(): List<CafeteriaDao>? {
+    suspend fun cafeteriasList() = cafeteriasListFiltered()
+
+    suspend fun cafeteriasListFiltered(openedFrom: TimeApiFormat? = null, openedTo: TimeApiFormat? = null,
+                                       openedNow: BooleanApiFormat? = null, prefixName: String? = null): List<CafeteriaDao>? {
         val refreshed = tryApiConnect {
-            val models = cafeteriasApi.cafeteriasList()
+            val models = cafeteriasApi.cafeteriasList(openedFrom?.getForRequest(), openedTo?.getForRequest(),
+                                                      openedNow?.getForRequest(), prefixName, null)
             val daos = models.map { it.toDao() }
             daos
         }
@@ -96,4 +101,20 @@ class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatu
     private fun reportDataFetchError() = connectionStatusNotifier.notifyDataFetchError()
 
     fun isDevAPIVersion(): Boolean = cafeteriasApi.baseUrl.contains("dev", ignoreCase = true)
+
+    interface ApiRepresentation {
+        fun getForRequest(): String
+    }
+
+    class TimeApiFormat(calendar: Calendar) : ApiRepresentation {
+        val hour: Int = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute: Int = calendar.get(Calendar.MINUTE)
+
+        override fun getForRequest(): String = "$hour:$minute:00"
+    }
+
+    class BooleanApiFormat(val value: Boolean) : ApiRepresentation {
+        override fun getForRequest(): String = if (value) "True" else "False"
+    }
+
 }
