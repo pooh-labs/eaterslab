@@ -5,16 +5,15 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.android.synthetic.main.activity_search.*
-import kotlinx.android.synthetic.main.text_view_key_value.view.*
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.cancelChildren
 import labs.pooh.eaterslab.R
 import labs.pooh.eaterslab.repository.dao.CafeteriaDao
 import labs.pooh.eaterslab.ui.activity.abstracts.AbstractRevealedActivity
 import labs.pooh.eaterslab.ui.activity.abstracts.viewModelFactory
 import labs.pooh.eaterslab.ui.activity.hello.HelloSelectActivity
-import labs.pooh.eaterslab.ui.activity.map.MapViewModel
 import labs.pooh.eaterslab.ui.view.SearchedCafeteriaView
+
+
 
 class SearchActivity : AbstractRevealedActivity() {
 
@@ -35,7 +34,8 @@ class SearchActivity : AbstractRevealedActivity() {
             clearSearched()
             searchViewModel.viewModelScope.coroutineContext.cancelChildren()
             val textSearch = searchText.text.toString()
-            searchViewModel.getFilteredData(textSearch)
+            val onlyOpened = switchOpened.isChecked
+            searchViewModel.getFilteredData(textSearch, onlyOpened)
         }
     }
 

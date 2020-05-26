@@ -101,20 +101,21 @@ class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatu
     private fun reportDataFetchError() = connectionStatusNotifier.notifyDataFetchError()
 
     fun isDevAPIVersion(): Boolean = cafeteriasApi.baseUrl.contains("dev", ignoreCase = true)
+}
 
-    interface ApiRepresentation {
-        fun getForRequest(): String
+interface ApiParamRepresentation {
+    fun getForRequest(): String
+}
+
+class TimeApiFormat(val hour: Int, val minute: Int) : ApiParamRepresentation {
+
+    override fun getForRequest(): String = "$hour:$minute:00"
+}
+
+class BooleanApiFormat(val value: Boolean) : ApiParamRepresentation {
+    override fun getForRequest(): String = if (value) "True" else "False"
+
+    companion object {
+        fun packedForTrue(value: Boolean) = if (value) BooleanApiFormat(true) else null
     }
-
-    class TimeApiFormat(calendar: Calendar) : ApiRepresentation {
-        val hour: Int = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute: Int = calendar.get(Calendar.MINUTE)
-
-        override fun getForRequest(): String = "$hour:$minute:00"
-    }
-
-    class BooleanApiFormat(val value: Boolean) : ApiRepresentation {
-        override fun getForRequest(): String = if (value) "True" else "False"
-    }
-
 }
