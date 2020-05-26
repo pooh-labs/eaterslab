@@ -19,49 +19,98 @@
 {% block content %}
 
 <style>
+.loading, .error { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.error p { color: #C76161; }
+
 .header-option { display: none; margin-left: 1em; font-size: 13px; font-family: "Roboto","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif; font-weight: normal; }
 
 #graph header { display: flex; align-items: center; margin-bottom: 30px; }
 #graph header input { width: 8em; }
 #graph #range-name { flex-grow: 1; text-align: center; font-weight: bold; font-size: 16px; }
 
-#graph-contents { height: 40vh; max-height: 80vw; min-height: 300px; }
+.loading, .error, #graph-contents { height: 40vh; max-height: 80vw; min-height: 300px; }
 
 #datasets table { width: 100%; }
 #datasets tr { display: flex; }
 #datasets td:nth-child(2) { flex-grow: 1; }
 </style>
 
+{% verbatim %}
 <div id="content-main">
 
-  <ul class="object-tools">
-    <li>
-      <a href="#" class="addlink" class="add-dataset">
-        Add dataset
-      </a>
-    </li>
-  </ul>
+  <div v-if="loading" class="loading">
+    <!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
+    <svg width="60" height="15" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg" fill="#79aec8">
+      <circle cx="15" cy="15" r="15">
+          <animate attributeName="r" from="15" to="15"
+                  begin="0s" dur="0.8s"
+                  values="15;9;15" calcMode="linear"
+                  repeatCount="indefinite" />
+          <animate attributeName="fill-opacity" from="1" to="1"
+                  begin="0s" dur="0.8s"
+                  values="1;.5;1" calcMode="linear"
+                  repeatCount="indefinite" />
+      </circle>
+      <circle cx="60" cy="15" r="9" fill-opacity="0.3">
+          <animate attributeName="r" from="9" to="9"
+                  begin="0s" dur="0.8s"
+                  values="9;15;9" calcMode="linear"
+                  repeatCount="indefinite" />
+          <animate attributeName="fill-opacity" from="0.5" to="0.5"
+                  begin="0s" dur="0.8s"
+                  values=".5;1;.5" calcMode="linear"
+                  repeatCount="indefinite" />
+      </circle>
+      <circle cx="105" cy="15" r="15">
+          <animate attributeName="r" from="15" to="15"
+                  begin="0s" dur="0.8s"
+                  values="15;9;15" calcMode="linear"
+                  repeatCount="indefinite" />
+          <animate attributeName="fill-opacity" from="1" to="1"
+                  begin="0s" dur="0.8s"
+                  values="1;.5;1" calcMode="linear"
+                  repeatCount="indefinite" />
+      </circle>
+    </svg>
+  </div>
 
-  <section id="graph" class="module">
-    <header id="graph-header">
-      <input type="button" id="range-prev" value="&lt; Previous" />
-      <span id="range-name"></span>
-      <input type="button" id="range-next" value="Next &gt;" />
-    </header>
+  <div v-else-if="error" class="error">
+    <svg xmlns="http://www.w3.org/2000/svg" height="60" width="60" viewBox="0 0 24 24">
+      <path d="M0 0h24v24H0z" fill="none"/>
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" fill="#C76161"/>
+    </svg>
+    <p>{{ error }}</p>
+  </div>
 
-    <div id="graph-contents">
+  <div v-else>
+    <ul class="object-tools">
+      <li>
+        <a href="#" class="addlink" class="add-dataset">
+          Add dataset
+        </a>
+      </li>
+    </ul>
 
-    </div>
-  </section>
+    <section id="graph" class="module">
+      <header id="graph-header">
+        <input type="button" id="range-prev" value="&lt; Previous" />
+        <span id="range-name"></span>
+        <input type="button" id="range-next" value="Next &gt;" />
+      </header>
 
-  <section id="datasets" class="module">
-    <dataset-table :cafeterias="cafeterias" :datasets="datasets"></dataset-table>
-  </section>
+      <div id="graph-contents">
+
+      </div>
+    </section>
+
+    <section id="datasets" class="module">
+      <dataset-table :cafeterias="cafeterias" :datasets="datasets"></dataset-table>
+    </section>
+  </div>
 
 </div>
 <br class="clear">
 
-{% verbatim %}
 <template id="template-dataset-table">
   <table>
     <caption>Datasets</caption>
@@ -220,6 +269,8 @@ yRightScale.domain([0, 5.5]);
 
 const App = new Vue({
   data: {
+    loading: true,
+    error: null,
     cafeterias: {},
     datasets: [],
     group_by: DatasetGrouping.DAY
@@ -230,6 +281,18 @@ const App = new Vue({
     }
   },
   methods: {
+    showError: function(msg) {
+      Object.assign(this, {
+        'loading': false,
+        'error': msg
+      });
+    },
+    showChart: function() {
+      Object.assign(this, {
+        'loading': false,
+        'error': null
+      });
+    },
     renderChart: function() {
       if (chart) {
         chart.detach();
@@ -283,7 +346,6 @@ const App = new Vue({
         return plot;
       });
 
-      // FIXME(kantoniak): Date formatting
       let min_string = null;
       let max_string = null;
       let format_specifier = null;
@@ -498,9 +560,11 @@ function loadAvgReview(cafeteria_id, type, group_by) {
 
 document.addEventListener('DOMContentLoaded', (event) => {
 
-  App.$mount('#datasets');
+  App.$mount('#content-main');
 
   loadCafeterias()
+    .then(() => App.showChart())
+    .catch(error => App.showError(error.message))
     .then(() => loadOccupancy(1, null, null))
     .then(() => loadAvgReview(1, null, null));
 
