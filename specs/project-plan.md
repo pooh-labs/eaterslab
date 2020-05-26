@@ -147,11 +147,10 @@ Management and planning tools are shared between all projects for unified planni
 * Markdown files for documents and specifications
 * [Visual Paradigm Online](https://online.visual-paradigm.com) for technical diagrams
 * For server development:
-  * **TODO (Rhantolqu): Please add versions and links**
-  * Python X.X and Django X.X
-    * Django Rest Framework for API endpoint
+  * Python 3.8.0 and [Django](https://www.djangoproject.com/) 3.0.4
+    * [Django Rest Framework](https://www.django-rest-framework.org/) for API endpoint
   * HTML 5, CSS 3, ECMAScript 2017 (JavaScript 8)
-  * PostgreSQL X.X and SQLite 3 databases
+  * PostgreSQL 12.2 and SQLite 3 databases
 * For Android development:
   * **TODO (avan1235): Please add versions and links**
   * Kotlin X.X
