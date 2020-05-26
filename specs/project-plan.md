@@ -139,7 +139,7 @@ Decisions on the next steps in the project are made every week or every two week
 
 ### Tools and technologies
 
-Management and planning tools are shared between all projects for unified planning process. Subprojects use different tools to match technical requirements.
+Management and planning tools are shared between all projects for unified planning process. Subprojects use varying tools to match technical requirements.
 
 * `.git` as a control version system
 * GitHub [issues](https://help.github.com/en/github/managing-your-work-on-github), [milestones](https://help.github.com/en/github/managing-your-work-on-github/tracking-the-progress-of-your-work-with-milestones) and [a project board](https://help.github.com/en/github/managing-your-work-on-github/managing-project-boards) for work organization
@@ -147,7 +147,7 @@ Management and planning tools are shared between all projects for unified planni
 * Markdown files for documents and specifications
 * [Visual Paradigm Online](https://online.visual-paradigm.com) for technical diagrams
 * For server development:
-  * Python 3.8.0 and [Django](https://www.djangoproject.com/) 3.0.4
+  * [Python](https://www.python.org/) 3.8.0 and [Django](https://www.djangoproject.com/) 3.0.4
     * [Django Rest Framework](https://www.django-rest-framework.org/) for API endpoint
   * HTML 5, CSS 3, ECMAScript 2017 (JavaScript 8)
   * PostgreSQL 12.2 and SQLite 3 databases
@@ -157,11 +157,10 @@ Management and planning tools are shared between all projects for unified planni
   * Android X.X SDK
   * Android Studio X.X
 * For camera device development:
-  * **TODO (kantoniak): Links, versions**
-  * Raspbian Buster Lite February 2020 edition
-  * Python 3.7
-  * OpenCV 4.2.0
-  * OpenJDK 11 for API client generation
+  * [Raspbian Buster](https://www.raspberrypi.org/downloads/raspbian/) Lite February 2020 edition
+  * [Python](https://www.python.org/) 3.8.0
+  * [OpenCV](https://opencv.org/) 4.2.0
+  * [OpenJDK](https://openjdk.java.net/) 11 for API client generation
 
 ### Infrastructure
 
