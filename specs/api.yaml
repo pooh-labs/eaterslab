@@ -20,7 +20,32 @@ paths:
     get:
       operationId: cafeterias_list
       description: ''
-      parameters: []
+      parameters:
+        - name: opened_from
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: opened_to
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: opened_now
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: prefix_name
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: owner_id
+          in: query
+          description: ''
+          required: false
+          type: number
       responses:
         '200':
           description: ''
