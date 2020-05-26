@@ -27,7 +27,7 @@ class CameraAdmin(ModelAdmin):
     # Modify queryset to fetch last event timestamp (in _last_event column)
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        last_event = CameraEvent.objects.filter(camera_id=OuterRef('pk')).annotate(last_event=Max('timestamp')).values('last_event')
+        last_event = CameraEvent.objects.filter(camera=OuterRef('pk')).annotate(last_event=Max('timestamp')).values('last_event')
         queryset = queryset.annotate(_last_event = Subquery(last_event))
         return queryset
 
