@@ -131,7 +131,14 @@ Students are going to improve their programming skills in different languages du
 
 Decisions on the next steps in the project are made every week or every two weeks on team meetings. Any change made by one of the team members must be approved by at least one other person.
 
-## Technical processes plan
+## Technical processes # TODO(kantoniak)
 
-TODO
+### Programming
+
+### Tools and technologies
+
+### Infrastructure
+
+### Product acceptance plan
+https://sceweb.uhcl.edu/helm/RationalUnifiedProcess/process/artifact/ar_acpl.htm
 
