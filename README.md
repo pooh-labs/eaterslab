@@ -10,6 +10,7 @@ EatersLab is a system monitoring live occupation of cafeterias. System of camera
 4. [System architecture specification](specs/architecture.md)
 5. [Testing specification](specs/testing.md)
 6. [Project plan](specs/project-plan.md)
+7. [Project presentation](https://pooh-labs.github.io/eaterslab/index_en.html)
 
 ## Authors
 

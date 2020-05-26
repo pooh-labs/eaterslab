@@ -96,15 +96,15 @@ budget may be enlarged if the team receives a development grant.
 
 The project should be realized in a few phases specified in table below.
 
-| Project phase                            | date from  | date to  | comments  |
-|------------------------------------------|------------|----------|-----------|
-| Specified business requirements          | 03.03.2020 |10.03.2020|    -      |
-| The choice of technology used in project | 03.03.2020 |10.03.2020|    -      |
-| Modules implementation                   | 10.03.2020 |09.06.2020|    -      |
-| Documentation writing                    | 10.03.2020 |02.06.2020|    -      |
-| Tests writing                            | 28.04.2020 |02.06.2020|    -      |
-| Beta version of system                   | 09.06.2020 |16.09.2020|    -      |
-| Product acceptance testing               | 09.09.2020 |16.09.2020|    -      |
+| Project phase                            | date from  | date to  |
+|------------------------------------------|------------|----------|
+| Specified business requirements          | 03.03.2020 |10.03.2020|
+| The choice of technology used in project | 03.03.2020 |10.03.2020|
+| Modules implementation                   | 10.03.2020 |09.06.2020|
+| Documentation writing                    | 10.03.2020 |02.06.2020|
+| Tests writing                            | 28.04.2020 |02.06.2020|
+| Beta version of system                   | 09.06.2020 |16.09.2020|
+| Product acceptance testing               | 09.09.2020 |16.09.2020|
 
 ### Resources
 
@@ -157,10 +157,9 @@ Management and planning tools are shared between all projects for unified planni
   * HTML 5, CSS 3, ECMAScript 2017 (JavaScript 8)
   * PostgreSQL 12.2 and SQLite 3 databases
 * For Android development:
-  * **TODO (avan1235): Please add versions and links**
-  * Kotlin X.X
-  * Android X.X SDK
-  * Android Studio X.X
+  * [Kotlin](https://kotlinlang.org/) 1.3.61
+  * compile Android SDK v29 (with v21 as min Android SDK version)
+  * [Android Studio](https://developer.android.com/studio/) 3.6.3 (or higher)
 * For camera device development:
   * [Raspbian Buster](https://www.raspberrypi.org/downloads/raspbian/) Lite February 2020 edition
   * [Python](https://www.python.org/) 3.8.0
