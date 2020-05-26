@@ -11,10 +11,11 @@ import labs.pooh.eaterslab.repository.dao.CafeteriaDao
 import labs.pooh.eaterslab.ui.activity.abstracts.AbstractRevealedActivity
 import labs.pooh.eaterslab.ui.activity.abstracts.viewModelFactory
 import labs.pooh.eaterslab.ui.activity.hello.HelloSelectActivity
+import labs.pooh.eaterslab.ui.activity.main.MainActivity
 import labs.pooh.eaterslab.ui.fragment.dialogs.TimePickerDialogFragment
 import labs.pooh.eaterslab.ui.view.PickedTimeHolder
 import labs.pooh.eaterslab.ui.view.SearchedCafeteriaView
-
+import labs.pooh.eaterslab.util.start
 
 
 class SearchActivity : AbstractRevealedActivity() {
@@ -64,6 +65,10 @@ class SearchActivity : AbstractRevealedActivity() {
                 SearchedCafeteriaView(this@SearchActivity, cafeteriaDao.name, cafeteriaDao.openedFrom, cafeteriaDao.openedTo, R.drawable.ic_location)
             }
         }
+        cafeteriaView.setOnClickListener {
+            start<MainActivity> {
+                putExtra(MainActivity.ID_KEY, cafeteriaDao.id)
+        } }
         cafeteriasList.addView(cafeteriaView)
     }
 
