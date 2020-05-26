@@ -1,5 +1,7 @@
+from datetime import datetime
 from os.path import join as path_join
 
+from django_filters import rest_framework as filters
 from django.core.files.storage import FileSystemStorage
 
 from rest_framework import views, viewsets
@@ -23,9 +25,44 @@ class PostViewSet(viewsets.ModelViewSet):
     http_method_names = ['post']
 
 
+class CafeteriaFilterSet(filters.FilterSet):
+    opened_now = filters.BooleanFilter(method='get_opened_now')
+    prefix_name = filters.CharFilter(method='get_name_prefix')
+    owner_id = filters.NumberFilter(method='get_for_owner')
+
+    class Meta:
+        model = Cafeteria
+        fields = ['opened_from', 'opened_to', 'opened_now', 'prefix_name', 'owner_id']
+
+    def get_opened_now(self, queryset, field_name, value):
+        opened = value
+        now = datetime.now().time()
+        if opened is True:
+            return queryset.filter(opened_from__lte=now).filter(opened_to__gte=now)
+        elif opened is False:
+            return (queryset.filter(opened_from__gt=now) | queryset.filter(opened_to__lt=now)).distinct()
+        else:
+            return queryset
+
+    def get_name_prefix(self, queryset, field_name, value):
+        if value is None:
+            return queryset
+
+        prefix = value.strip()
+        return queryset.filter(name__istartswith=prefix)
+
+    def get_for_owner(self, queryset, field_name, value):
+        owner_id = value
+        if owner_id is None:
+            return queryset
+        return queryset.filter(owner_id=owner_id)
+
+
 class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Cafeteria.objects.all().order_by('id')
     serializer_class = CafeteriaSerializer
+    filter_backends = [filters.DjangoFilterBackend]
+    filterset_class = CafeteriaFilterSet
 
 
 class CameraViewSet(viewsets.ModelViewSet):

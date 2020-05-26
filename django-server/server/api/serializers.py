@@ -43,6 +43,6 @@ class CameraEventSerializer(serializers.ModelSerializer):
         fields = ['event_type', 'timestamp']
 
     def create(self, validated_data):
-        camera_id = Camera.objects.get(pk=self.context["view"].kwargs["camera_pk"])
-        validated_data["camera_id"] = camera_id
+        camera = Camera.objects.get(pk=self.context['view'].kwargs['camera_pk'])
+        validated_data['camera'] = camera
         return CameraEvent.objects.create(**validated_data)

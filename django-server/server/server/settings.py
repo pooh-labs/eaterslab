@@ -49,13 +49,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'django_filters',
     'rest_framework',
     'rest_framework.authtoken',  # token auth for artifacts upload
     'drf_yasg',  # for API documentation and generation
 
-    'admin.apps.AdminConfig', # Admin
-    'home.apps.HomeConfig',   # Home app
-    'api.apps.ApiConfig',     # API app
+    'admin.apps.AdminConfig',  # Admin
+    'home.apps.HomeConfig',  # Home app
+    'api.apps.ApiConfig',  # API app
 ]
 
 MIDDLEWARE = [
@@ -98,6 +99,9 @@ REST_FRAMEWORK = {
         # Uncomment to get the API renderer for browser view
         # 'rest_framework.renderers.BrowsableAPIRenderer',
     ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'url_filter.integrations.drf.DjangoFilterBackend',
+    ]
 }
 
 
@@ -162,7 +166,6 @@ SESSION_COOKIE_SECURE = ENABLE_SSL
 CSRF_COOKIE_SECURE = ENABLE_SSL
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-
 # Heroku static files configuration to get it working on deploy
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
@@ -176,4 +179,4 @@ ARTIFACT_NAME = 'EatersLab.apk'
 ARTIFACTS_ROOT = os.path.join(BASE_DIR, 'artifact')
 ARTIFACTS_ROOT_BETA = os.path.join(ARTIFACTS_ROOT, 'beta')
 
-DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760      # set max limit of uploaded file to 10 MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # set max limit of uploaded file to 10 MB
