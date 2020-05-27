@@ -109,7 +109,7 @@ class CafeteriaFixedMenuOptionReviewViewSet(viewsets.ReadOnlyModelViewSet):
         if getattr(self, 'swagger_fake_view', False):
             # queryset just for schema generation metadata
             return FixedMenuOptionReview.objects.none()
-        return FixedMenuOptionReview.objects.all().filter(option_pk=self.kwargs['option_pk']).order_by('id')
+        return FixedMenuOptionReview.objects.all().filter(option_id=self.kwargs['option_pk']).order_by('id')
 
 
 # Admin authenticated with token uploads can inherit from this class

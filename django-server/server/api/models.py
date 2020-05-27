@@ -117,7 +117,7 @@ class FixedMenuOptionReview(models.Model):
         return f'{self.option} by {self.author_nick} with {self.stars}'
 
     def save(self, *args, **kwargs):
-        curr_reviews = FixedMenuOptionReview.objects.count()
+        curr_reviews = FixedMenuOptionReview.objects.filter(option_id=self.option.pk).count()
         if not self.pk:
             FixedMenuOption.objects.filter(pk=self.option.pk)\
                 .update(avg_review_stars=self.calculate_new_avg_review(F('avg_review_stars'), curr_reviews))
