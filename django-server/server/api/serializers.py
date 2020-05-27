@@ -28,21 +28,22 @@ class CafeteriaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cafeteria
         fields = ['id', 'name', 'description', 'sub_description', 'longitude', 'latitude',
-                  'logo_url', 'address', 'opened_from', 'opened_to', 'occupancy']
+                  'logo_url', 'address', 'opened_from', 'opened_to', 'occupancy', 'occupancy_relative']
 
 
 class CameraSerializer(serializers.ModelSerializer):
     class Meta:
         model = Camera
-        fields = ['description']
+        fields = ['description', 'state', 'cafeteria']
 
 
 class CameraEventSerializer(serializers.ModelSerializer):
     class Meta:
         model = CameraEvent
-        fields = ['event_type', 'timestamp']
+        fields = ['event_type', 'timestamp', 'event_value']
 
     def create(self, validated_data):
         camera = Camera.objects.get(pk=self.context['view'].kwargs['camera_pk'])
         validated_data['camera'] = camera
+        validated_data['cafeteria'] = camera.cafeteria
         return CameraEvent.objects.create(**validated_data)

@@ -21,6 +21,10 @@ class Cafeteria(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     occupancy = models.IntegerField(validators=[MinValueValidator(0)])
 
+    @property
+    def occupancy_relative(self):
+        return float(self.occupancy) / float(self.capacity)
+
     def __str__(self):
         return self.name
 
@@ -35,6 +39,7 @@ class Camera(models.Model):
 
     description = models.CharField(max_length=200)
     state = models.IntegerField(choices=State.choices)
+    cafeteria = models.ForeignKey(Cafeteria, on_delete=models.CASCADE)
 
 
 class CameraEvent(models.Model):
@@ -43,16 +48,37 @@ class CameraEvent(models.Model):
         MONITORING_ENDED = 1, _('monitoring_ended')
         PERSON_ENTERED = 2, _('person_entered')
         PERSON_LEFT = 3, _('person_left')
+        OCCUPANCY_OVERRIDE = 4, _('occupancy_override')
 
     timestamp = models.DateTimeField()
     event_type = models.IntegerField(choices=EventType.choices)
-    camera = models.ForeignKey(Camera, on_delete=models.CASCADE)
+    camera = models.ForeignKey(Camera, on_delete=models.CASCADE, null=True, blank=True, default=None)
+    cafeteria = models.ForeignKey(Cafeteria, on_delete=models.CASCADE)
+    event_value = models.IntegerField(validators=[MinValueValidator(0)], null=True, blank=True, default=None)
 
     def __str__(self):
         return "{} {} {}".format(self.camera, self.event_type, self.timestamp)
 
     def save(self, *args, **kwargs):
+        self.update_cafeteria_occupancy()
         super().save(*args, **kwargs)
+
+    def update_cafeteria_occupancy(self):
+        cafeteria = Cafeteria.objects.filter(pk=self.cafeteria.pk)
+        if self.event_type == CameraEvent.EventType.OCCUPANCY_OVERRIDE.value \
+                and self.event_value is not None and self.event_value <= self.cafeteria.capacity:
+            cafeteria.update(occupancy=self.event_value)
+        elif self.event_type == CameraEvent.EventType.PERSON_ENTERED.value \
+                and self.cafeteria.occupancy < self.cafeteria.capacity:
+            print(self.cafeteria.occupancy)
+            cafeteria.update(occupancy=self.cafeteria.occupancy + 1)
+            print(self.cafeteria.occupancy)
+        elif self.event_type == CameraEvent.EventType.PERSON_LEFT.value \
+                and self.cafeteria.occupancy > 0:
+            cafeteria.update(occupancy=self.cafeteria.occupancy - 1)
+        elif self.event_type != CameraEvent.EventType.MONITORING_ENDED.value \
+                and self.event_type != CameraEvent.EventType.MONITORING_ENDED.value:
+            raise ValueError('Invalid CameraEvent fields specification')
 
     class Meta:
         indexes = [
