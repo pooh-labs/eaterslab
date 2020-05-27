@@ -17,6 +17,7 @@ from admin.admin import admin_site
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import permissions
+from django.conf.urls.i18n import i18n_patterns
 
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
@@ -31,9 +32,15 @@ schema_view = get_schema_view(
    permission_classes=(permissions.AllowAny,),
 )
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     path('', include('home.urls')),
     path('admin/', admin_site.urls),
+
+    # Turn of /pl/ prefix
+    prefix_default_language=False
+)
+
+urlpatterns += [
     path('api/beta/', include('api.urls')),
     # For documentation generation with drf_yasg
     path(r'api.yaml', schema_view.without_ui(cache_timeout=0), name='schema-json'),

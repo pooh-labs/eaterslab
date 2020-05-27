@@ -1,0 +1,74 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-27 23:30+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: api/models.py:34
+msgid "online"
+msgstr "online"
+
+#: api/models.py:35
+msgid "offline"
+msgstr "offline"
+
+#: api/models.py:36
+msgid "lost connection"
+msgstr "brak połączenia"
+
+#: api/models.py:47
+msgid "monitoring_started"
+msgstr "początek monitoringu"
+
+#: api/models.py:48
+msgid "monitoring_ended"
+msgstr "koniec monitoringu"
+
+#: api/models.py:49
+msgid "person_entered"
+msgstr "klient wszedł"
+
+#: api/models.py:50
+msgid "person_left"
+msgstr "klient wyszedl"
+
+#: api/models.py:51
+msgid "occupancy_override"
+msgstr "nadpisano zajętość"
+
+#: home/templates/home/home.html:8
+msgid "EatersLab Home"
+msgstr "Strona główna EatersLab"
+
+#: home/templates/home/home.html:32
+msgid "Administration"
+msgstr "Administracja"
+
+#: home/templates/home/home.html:35
+msgid "API documentation"
+msgstr "Dokumentacja API"
+
+#: home/templates/home/home.html:43
+msgid "Welcome to EatersLab by PoohLab."
+msgstr "Witamy w EatersLab od PoohLab."
+
+#: server/settings.py:155
+msgid "English"
+msgstr "Angielski"
+
+#: server/settings.py:156
+msgid "Polish"
+msgstr "Polski"
