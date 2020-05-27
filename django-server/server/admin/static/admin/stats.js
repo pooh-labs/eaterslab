@@ -79,32 +79,29 @@ const messages = {
 
 /* Date utilities */
 
+function padWithZero(number) {
+  return ('0' + number).slice(-2);
+}
+
 function monthLeadZero(date) {
-  return ('0' + (1 + date.getMonth())).slice(-2);
-}
-
-function dayLeadZero(date) {
-  return ('0' + date.getDate()).slice(-2);
-}
-
-function hourLeadZero(date) {
-  return ('0' + date.getHours()).slice(-2);
-}
-
-function minuteLeadZero(date) {
-  return ('0' + date.getMinutes()).slice(-2);
+  return padWithZero(1 + date.getMonth());
 }
 
 function dateYM(date) {
-  return date.getFullYear() + '-' + monthLeadZero(date);
+  const year = date.getFullYear();
+  const month = monthLeadZero(date);
+  return `${year}-${month}`;
 }
 
 function dateYMD(date) {
-  return date.getFullYear() + '-' + monthLeadZero(date) + '-' + dayLeadZero(date);
+  const day = padWithZero(date.getDate());
+  return `${dateYM(date)}-${day}`;
 }
 
 function dateYMDHM(date) {
-  return date.getFullYear() + '-' + monthLeadZero(date) + '-' + dayLeadZero(date) + ' ' + hourLeadZero(date) + ':' + minuteLeadZero(date);
+  const hour = padWithZero(date.getHours());
+  const minute = padWithZero(date.getMinutes());
+  return `${dateYMD(date)} ${hour}:${minute}`;
 }
 
 /* Color utilities */
@@ -121,11 +118,11 @@ class Color {
   }
 
   rgba(alpha) {
-    return 'rgba(' + this.r + ', ' + this.g + ', ' + this.b + ', ' + alpha + ')';
+    return `rgba(${this.r}, ${this.g}, ${this.b}, ${alpha})`;
   }
 
   hsla(alpha) {
-    return 'hsla(' + this.h + ', ' + this.s + '%, ' + this.l + '%, ' + alpha + ')';
+    return `hsla(${this.h}, ${this.s}, ${this.l}, ${alpha})`;
   }
 }
 
