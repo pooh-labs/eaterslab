@@ -1,3 +1,4 @@
+import abc
 from datetime import datetime
 from os.path import join as path_join
 
@@ -112,12 +113,59 @@ class CafeteriaFixedMenuOptionReviewViewSet(viewsets.ReadOnlyModelViewSet):
         return FixedMenuOptionReview.objects.all().filter(option_id=self.kwargs['option_pk']).order_by('id')
 
 
-class StatsViewSet(generics.ListAPIView):
-    serializer_class = OccupancyStatsSerializer
+class TimeStampedFilterSet(filters.FilterSet):
+    timestamp_start = filters.DateTimeFilter(required=True)
+    count = filters.NumberFilter(required=True)
 
-    def list(self, request, *args, **kwargs):
-        return [OccupancyStatsData(id=1, stamp_name='monday', occupancy=10, occupancy_relative=0.45),
-                OccupancyStatsData(id=2, stamp_name='friday', occupancy=1, occupancy_relative=0.35)]
+
+class StatsView(generics.ListAPIView):
+    serializer_class = OccupancyStatsSerializer
+    filter_backends = [filters.DjangoFilterBackend]
+    filterset_class = TimeStampedFilterSet
+
+    def get_queryset(self):
+        if getattr(self, 'swagger_fake_view', False):
+            # queryset just for schema generation metadata
+            return []
+        return [OccupancyStatsData(id=1, timestamp_name='monday', occupancy=10, occupancy_relative=0.45),
+                OccupancyStatsData(id=2, timestamp_name='friday', occupancy=1, occupancy_relative=0.35)]
+
+    def filter_queryset(self, queryset):
+        return queryset
+
+    @abc.abstractmethod
+    def get_timestamp_delta(self):
+        pass
+
+
+class HourStatsView(StatsView):
+
+    def get_timestamp_delta(self):
+        return datetime.timedelta(hours=1)
+
+
+class DayStatsView(StatsView):
+
+    def get_timestamp_delta(self):
+        return datetime.timedelta(days=1)
+
+
+class WeekStatsView(StatsView):
+
+    def get_timestamp_delta(self):
+        return datetime.timedelta(weeks=1)
+
+
+class MonthStatsView(StatsView):
+
+    def get_timestamp_delta(self):
+        return datetime.timedelta(days=30)
+
+
+class YearStatsView(StatsView):
+
+    def get_timestamp_delta(self):
+        return datetime.timedelta(days=365)
 
 
 # Admin authenticated with token uploads can inherit from this class
@@ -131,7 +179,6 @@ class AdminUploadView(views.APIView):
         self.file_path = save_file_path
 
     def put(self, request, filename, format=None):
-        print(request.body)
         return handle_file_as_chunked(request, self.file_path)
 
 
