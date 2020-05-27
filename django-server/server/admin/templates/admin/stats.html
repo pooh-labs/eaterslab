@@ -192,23 +192,9 @@
 
 <script>
 
+const DEBUGGING_LAG = 200;
 const API_URL_BASE = 'http{% if request.is_secure %}s{% endif %}://{{ request.get_host }}/api/beta/';
 const USER_ID = {{ user.id }};
-
-function makeSeriesData(n, startDate) {
-  startDate = startDate || new Date();
-  var startYear = startDate.getUTCFullYear();
-  var startMonth = startDate.getUTCMonth();
-  var startDay = startDate.getUTCDate();
-  var toReturn = new Array(n);
-  for (var i = 0; i < n; i++) {
-    toReturn[i] = {
-      x: new Date(Date.UTC(startYear, startMonth, startDay + i)),
-      y: i > 0 ? toReturn[i - 1].y + Math.random() * 2 - 1 : Math.random() * 5
-    };
-  };
-  return toReturn;
-}
 
 /* Date utilities */
 
@@ -217,7 +203,15 @@ function monthLeadZero(date) {
 }
 
 function dayLeadZero(date) {
-  return ('0' + (1 + date.getDay())).slice(-2);
+  return ('0' + date.getDate()).slice(-2);
+}
+
+function hourLeadZero(date) {
+  return ('0' + date.getHours()).slice(-2);
+}
+
+function minuteLeadZero(date) {
+  return ('0' + date.getMinutes()).slice(-2);
 }
 
 function dateYM(date) {
@@ -226,6 +220,10 @@ function dateYM(date) {
 
 function dateYMD(date) {
   return date.getFullYear() + '-' + monthLeadZero(date) + '-' + dayLeadZero(date);
+}
+
+function dateYMDHM(date) {
+  return date.getFullYear() + '-' + monthLeadZero(date) + '-' + dayLeadZero(date) + ' ' + hourLeadZero(date) + ':' + minuteLeadZero(date);
 }
 
 /* Color utilities */
@@ -312,6 +310,7 @@ const DatasetTable = Vue.component('dataset-table', {
 
 /* Chart initialization */
 var chart = null;
+var plots = [];
 var xScale = new Plottable.Scales.Time();
 var yLeftScale = new Plottable.Scales.Linear();
 var yRightScale = new Plottable.Scales.Linear();
@@ -336,7 +335,15 @@ const App = new Vue({
     datasets: [],
     data_types: DatasetType,
     data_groupings: DatasetGrouping,
-    group_by: DatasetGrouping.DAY
+    group_by: DatasetGrouping.DAY,
+    date_from: null,
+    date_to: null,
+  },
+  watch: {
+    group_by: function() {
+      console.log('GROUP BY: ' + this.group_by);
+      this.change_grouping();
+    }
   },
   computed: {
     empty: function() {
@@ -377,27 +384,34 @@ const App = new Vue({
     hide_popup: function() {
       this.popup = false;
     },
+    load_dataset: function(cafeteria_id, type) {
+      switch (type) {
+        case DatasetType.OCCUPANCY:
+          return window.loadOccupancy(cafeteria_id, date_from, date_to);
+        case DatasetType.AVERAGE_DISH_REVIEW:
+          return window.loadAvgReview(cafeteria_id, date_from, date_to, this.group_by);
+        default:
+          return new Promise(function(resolve, reject) {
+            reject(new Error('Incorrect dataset type'));
+          });
+      }
+    },
     add_dataset: function() {
       this.showLoading();
       
       let cafeteria_id = document.getElementById('add-dataset-cafeteria').value;
       let type = document.getElementById('add-dataset-type').value;
 
-      let data_loader = null;
-      switch (type) {
-        case DatasetType.OCCUPANCY:
-          data_loader = window.loadOccupancy(cafeteria_id, null, null);
-          break;
-        case DatasetType.AVERAGE_DISH_REVIEW:
-          data_loader = window.loadAvgReview(cafeteria_id, null, null);
-          break;
-        default:
-          showError('Incorrect dataset type');
-          return;
-      }
-
-      data_loader
-        .then(() => App.showChart())
+      let app = this;
+      this.load_dataset(cafeteria_id, type)
+        .then(data => {
+          app.datasets.push({
+            'cafeteria_id': cafeteria_id,
+            'type': type,
+            'data': data
+          });
+        })
+        .then(() => app.showChart())
         .catch(error => App.showError(error.message));
     },
     delete_dataset: function(key) {
@@ -410,11 +424,176 @@ const App = new Vue({
         break;
       }
     },
-    renderChart: function() {
-      if (chart) {
-        chart.detach();
+    reload_datasets: function() {
+      // Make copy of keys
+      let new_datasets = [];
+      for (let i=0; i<this.datasets.length; i++) {
+        let ds = this.datasets[i];
+        new_datasets.push({
+          cafeteria_id: ds.cafeteria_id,
+          type: ds.type
+        })
       }
 
+      // Set UI to loading
+      Object.assign(this, {
+        'loading': true,
+        'error': null,
+        'popup': false,
+        'datasets': []
+      });
+      this.showLoading();
+
+      // Start reloading all promises
+      let loaders = [];
+      for (let i=0; i<new_datasets.length; i++) {
+        let ds = new_datasets[i];
+        loaders.push(
+          this.load_dataset(ds.cafeteria_id, ds.type)
+          .then(data => {
+            ds.data = data;
+          })
+        );
+      }
+
+      let app = this;
+      Promise.all(loaders)
+        .then(() => {
+          Object.assign(this, {
+            'loading': false,
+            'error': null,
+            'popup': false,
+            'datasets': new_datasets
+          });
+        })
+        .then(() => app.showChart())
+        .catch(error => App.showError(error.message));
+    },
+    change_grouping: function() {
+      var interval = [null, null];
+      switch (this.group_by) {
+        case DatasetGrouping.YEAR:
+          interval = this.group_by_year();
+          break;
+        case DatasetGrouping.MONTH:
+          interval = this.group_by_month();
+          break;
+        case DatasetGrouping.WEEK:
+          interval = this.group_by_week();
+          break;
+        case DatasetGrouping.DAY:
+          interval = this.group_by_day();
+          break;
+        case DatasetGrouping.HOUR:
+          interval = this.group_by_hour();
+          break;
+      }
+
+      this.date_from = interval[0];
+      this.date_to = interval[1];
+      this.reload_datasets();
+    },
+    group_by_year: function() {
+      const YEARS_TO_COVER = 8;
+
+      date_to = new Date();
+      date_to.setFullYear(date_to.getFullYear() + 1);
+      date_to.setMonth(0);
+      date_to.setDate(1);
+      date_to.setHours(0);
+      date_to.setMinutes(0);
+      date_to.setSeconds(0);
+      date_to.setMilliseconds(0);
+      date_from = new Date(date_to);
+      date_from.setFullYear(date_from.getFullYear() - YEARS_TO_COVER + 1);
+
+      return [date_from, date_to];
+    },
+    group_by_month: function() {
+      const MONTHS_TO_COVER = 12;
+
+      date_to = new Date();
+      date_to.setMonth(date_to.getMonth() + 1);
+      date_to.setDate(1);
+      date_to.setHours(0);
+      date_to.setMinutes(0);
+      date_to.setSeconds(0);
+      date_to.setMilliseconds(0);
+      date_from = new Date(date_to);
+      date_from.setMonth(date_from.getMonth() - MONTHS_TO_COVER + 1);
+
+      return [date_from, date_to];
+    },
+    group_by_week: function() {
+      const WEEKS_TO_COVER = 4;
+      const FIRST_DAY_MONDAY = true;
+
+      const curr_date = new Date();
+      const curr_day = new Date(curr_date.getFullYear(), curr_date.getMonth(), curr_date.getDate());
+      const diff = curr_day.getDate() - curr_day.getDay() + (FIRST_DAY_MONDAY ? (curr_day.getDay() == 0 ? -6:1) : 0);
+      date_to = new Date(curr_day.setDate(diff + 7));
+      date_from = new Date(date_to);
+      date_from.setDate(date_from.getDate() - WEEKS_TO_COVER*7 + 1);
+
+      return [date_from, date_to];
+    },
+    group_by_day: function() {
+      const DAYS_TO_COVER = 14;
+
+      date_to = new Date();
+      date_to.setDate(date_to.getDate() + 1);
+      date_to.setHours(0);
+      date_to.setMinutes(0);
+      date_to.setSeconds(0);
+      date_to.setMilliseconds(0);
+      date_from = new Date(date_to);
+      date_from.setDate(date_from.getDate() - DAYS_TO_COVER + 1);
+
+      return [date_from, date_to];
+    },
+    group_by_hour: function() {
+      const HOURS_TO_COVER = 48;
+
+      date_to = new Date();
+      date_to.setHours(date_to.getHours() + 1);
+      date_to.setMinutes(0);
+      date_to.setSeconds(0);
+      date_to.setMilliseconds(0);
+      date_from = new Date(date_to);
+      date_from.setHours(date_from.getHours() - HOURS_TO_COVER + 1);
+
+      return [date_from, date_to];
+    },
+    update_header: function() {
+      let from_string = null;
+      let to_string = null;
+      switch (this.group_by) {
+        case DatasetGrouping.YEAR:
+          from_string = date_from.getFullYear();
+          to_string = date_to.getFullYear();
+          break;
+        case DatasetGrouping.MONTH:
+          from_string = dateYM(date_from);
+          to_string = dateYM(date_to);
+          break;
+        case DatasetGrouping.WEEK:
+          from_string = dateYMD(date_from);
+          to_string = dateYMD(date_to);
+          break;
+        case DatasetGrouping.DAY:
+          from_string = dateYMD(date_from);
+          to_string = dateYMD(date_to);
+          break;
+        case DatasetGrouping.HOUR:
+          from_string = dateYMDHM(date_from);
+          to_string = dateYMDHM(date_to);
+          break;
+      }
+
+      const header_string = from_string + ' — ' + to_string;
+      document.getElementById('range-name').textContent = header_string;
+    },
+    renderChart: function() {
       if (this.empty) {
         return;
       }
@@ -424,7 +603,13 @@ const App = new Vue({
         max: null
       }
 
-      let plots = this.datasets.map(dataset => {
+      // Destroy existing plots
+      for (let plot of plots) {
+        plot.detach();
+        plot.destroy(); 
+      }
+
+      plots = this.datasets.map(dataset => {
         // Get min and max
         const dates = dataset.data.map(entry => entry.x);
         const min = dates.reduce(function (pre, cur) {
@@ -463,40 +648,26 @@ const App = new Vue({
         return plot;
       });
 
-      let min_string = null;
-      let max_string = null;
+      // Set axis format specifier
       let format_specifier = null;
       switch (this.group_by) {
         case DatasetGrouping.YEAR:
           format_specifier = "%Y";
-          min_string = ranges.min.getFullYear();
-          max_string = ranges.max.getFullYear();
           break;
         case DatasetGrouping.MONTH:
           format_specifier = "%Y-%m";
-          min_string = dateYM(ranges.min);
-          max_string = dateYM(ranges.max);
           break;
         case DatasetGrouping.WEEK:
           format_specifier = "%Y-%m-%d";
-          min_string = dateYMD(ranges.min);
-          max_string = dateYMD(ranges.max);
           break;
         case DatasetGrouping.DAY:
           format_specifier = "%Y-%m-%d";
-          min_string = dateYMD(ranges.min);
-          max_string = dateYMD(ranges.max);
           break;
         case DatasetGrouping.HOUR:
-          format_specifier = "%H:%M";
-          min_string = ranges.min.getHours() + ':' + ranges.min.getMinutes();
-          max_string = ranges.max.getHours() + ':' + ranges.max.getMinutes();
+          format_specifier = "%m-%d %H:%M";
           break;
       }
-
       xAxis.formatter(Plottable.Formatters.time(format_specifier));
-      const header_string = min_string + ' — ' + max_string;
-      document.getElementById('range-name').textContent = header_string;
 
       const group = new Plottable.Components.Group(plots);
       chart = new Plottable.Components.Table([
@@ -504,6 +675,8 @@ const App = new Vue({
         [null, xAxis, null]
       ]);
       chart.renderTo('#graph-contents');
+
+      this.update_header();
     }
   }
 });
@@ -530,21 +703,31 @@ function loadCafeterias() {
     });
 }
 
-function makeOccupancyData(n, startDate) {
+function makeOccupancyData(startDate, endDate) {
+  const currentDate = new Date();
   startDate = startDate || new Date();
-  var startYear = startDate.getUTCFullYear();
-  var startMonth = startDate.getUTCMonth();
-  var startDay = startDate.getUTCDate();
-  var toReturn = new Array(n);
-  for (var i = 0; i < n; i++) {
+  var startYear = startDate.getFullYear();
+  var startMonth = startDate.getMonth();
+  var startDay = startDate.getDate();
+  var toReturn = [];
+  let i = 0;
+  while (true) {
+    const timestamp = new Date(startDate);
+    timestamp.setHours(startDate.getHours() + i);
+    if (timestamp >= endDate || timestamp >= currentDate) {
+      break;
+    }
+
     let people_in = Math.round(Math.max(i > 0 ? toReturn[i - 1].value.total + Math.random() * 10 - 5 : Math.random() * 5, 0));
     toReturn[i] = {
-      timestamp: new Date(Date.UTC(startYear, startMonth, startDay + i)),
+      timestamp: timestamp,
       value: {
         relative: people_in / 50,
         total: people_in
       }
     };
+
+    i++;
   };
   return toReturn;
 }
@@ -575,7 +758,9 @@ function loadOccupancy(cafeteria_id, from, to) {
   ];
 
   let sample_promise = new Promise(function(resolve, reject) {
-    resolve(makeOccupancyData(10));
+    setTimeout(() => {
+      resolve(makeOccupancyData(from, to));
+    }, DEBUGGING_LAG);
   });
 
   // TODO: Replace sample_promise with actual API call when implemented
@@ -599,33 +784,52 @@ function loadOccupancy(cafeteria_id, from, to) {
         });
       });
       return result;
-    })
-    .then(data => {
-      App.showChart();
-      App.datasets.push({
-        'cafeteria_id': cafeteria_id,
-        'type': DatasetType.OCCUPANCY,
-        'data': data
-      });
     });
 }
 
-function makeAvgReviewData(n, startDate) {
+function makeAvgReviewData(startDate, endDate, groupBy) {
   startDate = startDate || new Date();
-  var startYear = startDate.getUTCFullYear();
-  var startMonth = startDate.getUTCMonth();
-  var startDay = startDate.getUTCDate();
-  var toReturn = new Array(n);
-  for (var i = 0; i < n; i++) {
+  var startYear = startDate.getFullYear();
+  var startMonth = startDate.getMonth();
+  var startDay = startDate.getDate();
+  var toReturn = [];
+  let i = 0;
+  while (true) {
+    const timestamp = new Date(startDate);
+
+    switch (groupBy) {
+      case DatasetGrouping.YEAR:
+        timestamp.setFullYear(startDate.getFullYear() + i);
+        break;
+      case DatasetGrouping.MONTH:
+        timestamp.setMonth(startDate.getMonth() + i);
+        break;
+      case DatasetGrouping.WEEK:
+        timestamp.setDate(startDate.getDate() + 7*i);
+        break;
+      case DatasetGrouping.DAY:
+        timestamp.setDate(startDate.getDate() + i);
+        break;
+      case DatasetGrouping.HOUR:
+        timestamp.setHours(startDate.getHours() + i);
+        break;
+    }
+
+    if (timestamp >= endDate) {
+      break;
+    }
+
     toReturn[i] = {
-      timestamp: new Date(Date.UTC(startYear, startMonth, startDay + i)),
+      timestamp: timestamp,
       value: Math.random() * 5
     };
+
+    i++;
   };
   return toReturn;
 }
 
-function loadAvgReview(cafeteria_id, type, group_by) {
+function loadAvgReview(cafeteria_id, from, to, group_by) {
   let sample_data = [
     {
       timestamp: '2020-05-18T00:00:00.000Z',
@@ -642,7 +846,9 @@ function loadAvgReview(cafeteria_id, type, group_by) {
   ];
 
   let sample_promise = new Promise(function(resolve, reject) {
-    resolve(makeAvgReviewData(10));
+    setTimeout(() => {
+      resolve(makeAvgReviewData(from, to, group_by));
+    }, DEBUGGING_LAG);
   });
 
   // TODO: Replace sample_promise with actual API call when implemented
@@ -666,20 +872,13 @@ function loadAvgReview(cafeteria_id, type, group_by) {
         });
       });
       return result;
-    })
-    .then(data => {
-      App.showChart();
-      App.datasets.push({
-        'cafeteria_id': cafeteria_id,
-        'type': DatasetType.AVERAGE_DISH_REVIEW,
-        'data': data
-      });
     });
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
 
   App.$mount('#content-main');
+  App.change_grouping();
 
   loadCafeterias()
     .then(() => App.showChart())
