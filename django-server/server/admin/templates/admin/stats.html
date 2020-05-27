@@ -1,12 +1,21 @@
 {% extends 'admin/change_list.html' %}
+{% load static %}
 
 {% block sidebar %}{% endblock %}
 
 {% block extrahead %}
+<script>
+  const LANGUAGE = 'en';
+  const DEBUGGING_LAG = 200;
+  const API_URL_BASE = 'http{% if request.is_secure %}s{% endif %}://{{ request.get_host }}/api/beta/';
+  const USER_ID = {{ user.id }};
+</script>
 <script src="https://cdn.jsdelivr.net/npm/d3@5.16.0/dist/d3.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/plottable@3.8.6/plottable.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-i18n@8.18.0/dist/vue-i18n.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/plottable@3.8.6/plottable.css">
+<script src="{% static 'admin/stats.js' %}"></script>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -19,59 +28,154 @@
 {% block content %}
 
 <style>
-.header-option { display: none; margin-left: 1em; font-size: 13px; font-family: "Roboto","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif; font-weight: normal; }
+.loading, .error, .empty { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.loading p, .error p, .empty p { margin-top: 0.5em; }
+.error p { color: #C76161; }
+
+#grouping-selector { margin-right: 2em; }
+#grouping-selector select { height: 26px; margin-left: 0.25em; padding: 3px 6px; }
 
 #graph header { display: flex; align-items: center; margin-bottom: 30px; }
 #graph header input { width: 8em; }
 #graph #range-name { flex-grow: 1; text-align: center; font-weight: bold; font-size: 16px; }
 
-#graph-contents { height: 40vh; max-height: 80vw; min-height: 300px; }
+.loading, .error, .empty, #graph-contents { height: 40vh; max-height: 80vw; min-height: 300px; }
 
 #datasets table { width: 100%; }
 #datasets tr { display: flex; }
 #datasets td:nth-child(2) { flex-grow: 1; }
+
+#add-dataset-popup { z-index: 1; position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.3); }
+#add-dataset-popup form { width: 400px;display: grid; grid-template-columns: 1fr 2fr; grid-gap: 15px; grid-template-areas: 
+    "h h" "l1 r1" "l2 r2" "e s"; padding: 30px; align-items: center; background: #FFF; border-radius: 2px; box-shadow: 0px 0px 30px 0px rgba(0,0,0,0.2); }
+#add-dataset-popup label:after { content: ':'; }
+
+#add-dataset-popup h1 { grid-area: h; margin-bottom: 10px; }
+#add-dataset-cafeteria-label { grid-area: l1; }
+#add-dataset-cafeteria { grid-area: r1; }
+#add-dataset-type-label { grid-area: l2; }
+#add-dataset-type { grid-area: r2; }
+#add-dataset-submit { grid-area: s; width: 8em; margin-top: 10px; justify-self: end; }
 </style>
 
+{% verbatim %}
 <div id="content-main">
 
-  <ul class="object-tools">
+  <section v-if="popup" id="add-dataset-popup" v-on:click.self="hide_popup">
+    <form>
+      <h1>{{ $t('message.add_dataset') }}</h1>
+      <label for="add-dataset-cafeteria" id="add-dataset-cafeteria-label">{{ $t('message.cafeteria') }}</label>
+      <select id="add-dataset-cafeteria">
+        <option v-for="cafeteria in cafeterias" :value="cafeteria.id">{{ cafeteria.name }}</option>
+      </select>
+      <label for="add-dataset-type" id="add-dataset-type-label">{{ $t('message.type') }}</label>
+      <select id="add-dataset-type">
+        <option v-for="type in data_types" :value="type">{{ $t('dataset_type.' + type) }}</option>
+      </select>
+      <input type="submit" id="add-dataset-submit" :value="$t('message.add')" v-on:submit.prevent="add_dataset" v-on:click.prevent="add_dataset" />
+    </form>
+  </section>
+
+  <ul v-if="!error && !loading" class="object-tools">
+    <li v-if="!empty" id="grouping-selector">
+      <label>{{ $t('message.group_by') }}:</label>
+      <select id="group-by" v-model="group_by">
+        <option v-for="grouping in data_groupings" :value="grouping">{{ $t('dataset_grouping.' + grouping) }}</option>
+      </select>
+    </li>
     <li>
-      <a href="#" class="addlink" class="add-dataset">
-        Add dataset
+      <a href="#" class="addlink" class="add-dataset" v-on:click.prevent="show_popup">
+        {{ $t('message.add_dataset') }}
       </a>
     </li>
   </ul>
 
-  <section id="graph" class="module">
-    <header id="graph-header">
-      <input type="button" id="range-prev" value="&lt; Previous" />
-      <span id="range-name"></span>
-      <input type="button" id="range-next" value="Next &gt;" />
-    </header>
+  <div v-if="loading" class="loading">
+    <!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
+    <svg width="60" height="15" viewBox="0 0 120 30" xmlns="http://www.w3.org/2000/svg" fill="#79aec8">
+      <circle cx="15" cy="15" r="15">
+          <animate attributeName="r" from="15" to="15"
+                  begin="0s" dur="0.8s"
+                  values="15;9;15" calcMode="linear"
+                  repeatCount="indefinite" />
+          <animate attributeName="fill-opacity" from="1" to="1"
+                  begin="0s" dur="0.8s"
+                  values="1;.5;1" calcMode="linear"
+                  repeatCount="indefinite" />
+      </circle>
+      <circle cx="60" cy="15" r="9" fill-opacity="0.3">
+          <animate attributeName="r" from="9" to="9"
+                  begin="0s" dur="0.8s"
+                  values="9;15;9" calcMode="linear"
+                  repeatCount="indefinite" />
+          <animate attributeName="fill-opacity" from="0.5" to="0.5"
+                  begin="0s" dur="0.8s"
+                  values=".5;1;.5" calcMode="linear"
+                  repeatCount="indefinite" />
+      </circle>
+      <circle cx="105" cy="15" r="15">
+          <animate attributeName="r" from="15" to="15"
+                  begin="0s" dur="0.8s"
+                  values="15;9;15" calcMode="linear"
+                  repeatCount="indefinite" />
+          <animate attributeName="fill-opacity" from="1" to="1"
+                  begin="0s" dur="0.8s"
+                  values="1;.5;1" calcMode="linear"
+                  repeatCount="indefinite" />
+      </circle>
+    </svg>
+  </div>
 
-    <div id="graph-contents">
+  <div v-else-if="error" class="error">
+    <svg xmlns="http://www.w3.org/2000/svg" height="60" width="60" viewBox="0 0 24 24">
+      <path d="M0 0h24v24H0z" fill="none"/>
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" fill="#C76161"/>
+    </svg>
+    <p>{{ error }}</p>
+  </div>
 
-    </div>
-  </section>
+  <div v-else-if="empty" class="empty">
+    <a href="#" v-on:click.prevent="show_popup">
+      <svg xmlns="http://www.w3.org/2000/svg" height="60" width="60" viewBox="0 0 24 24">
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" fill="#79aec8"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+      </svg>
+      <p>{{ $t('message.add_first_dataset') }}</p>
+    </a>
+  </div>
 
-  <section id="datasets" class="module">
-    <dataset-table :cafeterias="cafeterias" :datasets="datasets"></dataset-table>
-  </section>
+  <div v-else>
+    <section id="graph" class="module">
+      <header id="graph-header">
+        <input type="button" id="range-prev" :value="$t('message.lt_previous')" v-on:click.prevent="prev_date_range" />
+        <span id="range-name"></span>
+        <input type="button" id="range-next" :value="$t('message.next_gt')" v-on:click.prevent="next_date_range" />
+      </header>
+
+      <div id="graph-contents">
+
+      </div>
+    </section>
+
+    <section id="datasets" class="module">
+      <dataset-table :cafeterias="cafeterias" :datasets="datasets" v-on:delete-dataset="delete_dataset"></dataset-table>
+    </section>
+  </div>
 
 </div>
 <br class="clear">
 
-{% verbatim %}
 <template id="template-dataset-table">
   <table>
-    <caption>Datasets</caption>
+    <caption>{{ $t('message.datasets') }}</caption>
     <tbody>
       <tr
         is="dataset-table-row"
         v-for="dataset in datasets"
         :key="dataset.key"
         :cafeteria="cafeterias[dataset.cafeteria_id]"
-        :dataset="dataset"></tr>
+        :dataset="dataset"
+        v-on:delete-dataset="on_delete_dataset"></tr>
     </tbody>
   </table>
 </template>
@@ -82,434 +186,19 @@
       <svg height="1em" width="1em">
         <g :fill="cafeteria.color.hex">
           <g v-if="dataset.type == 'occupancy'">
-            <circle cx="6.5" cy="8" r="4" />
             <rect x="0" y="7" width="14" height="2" />
+          </g>
+          <g v-else-if="dataset.type == 'relative occupancy'">
+            <rect x="0" y="7" width="6" height="2" />
+            <rect x="8" y="7" width="6" height="2" />
           </g>
           <rect v-else x="2" y="4" width="9" height="9" />
         </g>
       </svg>
     </td>
-    <td>{{ cafeteria.name }} ({{ dataset.type }})</td>
-    <td><a href="#" class="deletelink">Delete</a></td>
+    <td>{{ cafeteria.name }} ({{ $t('dataset_type.' + dataset.type) }})</td>
+    <td><a href="#" class="deletelink" v-on:click="emit_delete">{{ $t('message.delete') }}</a></td>
   </tr>
 </template>
 {% endverbatim %}
-
-<script>
-
-const API_URL_BASE = 'http{% if request.is_secure %}s{% endif %}://{{ request.get_host }}/api/beta/';
-
-function makeSeriesData(n, startDate) {
-  startDate = startDate || new Date();
-  var startYear = startDate.getUTCFullYear();
-  var startMonth = startDate.getUTCMonth();
-  var startDay = startDate.getUTCDate();
-  var toReturn = new Array(n);
-  for (var i = 0; i < n; i++) {
-    toReturn[i] = {
-      x: new Date(Date.UTC(startYear, startMonth, startDay + i)),
-      y: i > 0 ? toReturn[i - 1].y + Math.random() * 2 - 1 : Math.random() * 5
-    };
-  };
-  return toReturn;
-}
-
-/* Date utilities */
-
-function monthLeadZero(date) {
-  return ('0' + (1 + date.getMonth())).slice(-2);
-}
-
-function dayLeadZero(date) {
-  return ('0' + (1 + date.getDay())).slice(-2);
-}
-
-function dateYM(date) {
-  return date.getFullYear() + '-' + monthLeadZero(date);
-}
-
-function dateYMD(date) {
-  return date.getFullYear() + '-' + monthLeadZero(date) + '-' + dayLeadZero(date);
-}
-
-/* Color utilities */
-
-class Color {
-  constructor(hex, r, g, b, h, s, l) {
-    this.hex = hex;
-    this.r = r;
-    this.g = g;
-    this.b = b;
-    this.h = h;
-    this.s = s;
-    this.l = l;
-  }
-
-  rgba(alpha) {
-    return 'rgba(' + this.r + ', ' + this.g + ', ' + this.b + ', ' + alpha + ')';
-  }
-
-  hsla(alpha) {
-    return 'hsla(' + this.h + ', ' + this.s + '%, ' + this.l + '%, ' + alpha + ')';
-  }
-}
-
-class ColorMaker {
-  constructor() {
-    this.colors = [
-      new Color('#374EBF', 55, 78, 191, 230, 71, 75),
-      new Color('#BF3A37', 191, 58, 55, 1, 71, 75),
-      new Color('#45BF37', 69, 191, 55, 114, 71, 75),
-      new Color('#BF378D', 191, 55, 141, 322, 71, 75),
-      new Color('#BF9037', 191, 144, 55, 39, 71, 75),
-    ];
-    this.next_color = 0;
-  }
-
-  nextColor() {
-    let result = this.colors[this.next_color];
-    this.next_color = (this.next_color + 1) % this.colors.length;
-    return result;
-  }
-};
-
-var colorMaker = new ColorMaker();
-
-const DatasetGrouping = {
-  YEAR: 'year',
-  MONTH: 'month',
-  WEEK: 'week',
-  DAY: 'day',
-  HOUR: 'hour'
-}
-
-const DatasetType = {
-  OCCUPANCY: 'occupancy',
-  AVERAGE_DISH_REVIEW: 'average dish review',
-}
-
-const DatasetTableRow = Vue.component('dataset-table', {
-  template: '#template-dataset-table-row',
-  props: ['cafeteria', 'dataset']
-})
-
-const DatasetTable = Vue.component('dataset-table', {
-  template: '#template-dataset-table',
-  props: ['cafeterias', 'datasets'],
-  components: {
-    'dataset-table-row': DatasetTableRow
-  },
-})
-
-/* Chart initialization */
-var chart = null;
-var xScale = new Plottable.Scales.Time();
-var yLeftScale = new Plottable.Scales.Linear();
-var yRightScale = new Plottable.Scales.Linear();
-var xAxis = new Plottable.Axes.Numeric(xScale, "bottom");
-var yLeftAxis = new Plottable.Axes.Numeric(yLeftScale, "left");
-var yRightAxis = new Plottable.Axes.Numeric(yRightScale, "right");
-
-yLeftScale.domainMin(0);
-
-const reviewScaleTicks = [0, 1, 2, 3, 4, 5];
-yRightScale.tickGenerator(function() {
-  return reviewScaleTicks;
-});
-yRightScale.domain([0, 5.5]);
-
-const App = new Vue({
-  data: {
-    cafeterias: {},
-    datasets: [],
-    group_by: DatasetGrouping.DAY
-  },
-  watch: {
-    datasets: function() {
-      this.renderChart();
-    }
-  },
-  methods: {
-    renderChart: function() {
-      if (chart) {
-        chart.detach();
-      }
-
-      if (this.datasets.length == 0) {
-        return;
-      }
-
-      let ranges = {
-        min: null,
-        max: null
-      }
-
-      let plots = this.datasets.map(dataset => {
-        // Get min and max
-        const dates = dataset.data.map(entry => entry.x);
-        const min = dates.reduce(function (pre, cur) {
-          return Date.parse(pre) > Date.parse(cur) ? cur : pre;
-        });
-        const max = dates.reduce(function (pre, cur) {
-          return Date.parse(pre) < Date.parse(cur) ? cur : pre;
-        });
-
-        if (ranges.min == null || ranges.min > min) {
-          ranges.min = min;
-        }
-        if (ranges.max == null || ranges.max < max) {
-          ranges.max = max;
-        }
-
-        const color = this.cafeterias[dataset.cafeteria_id].color;
-        let plot = null;
-        switch (dataset.type) {
-          case DatasetType.OCCUPANCY:
-            plot = new Plottable.Plots.Line()
-            plot.y(function(d) { return d.y; }, yLeftScale);
-            plot.attr("stroke", color.hex);
-            break;
-
-          case DatasetType.AVERAGE_DISH_REVIEW:
-            plot = new Plottable.Plots.Bar()
-            plot.y(function(d) { return d.y; }, yRightScale);
-            plot.attr("fill", color.rgba(0.2));
-            break;
-        }
-
-        plot
-          .x(function(d) { return d.x; }, xScale)
-          .addDataset(new Plottable.Dataset(dataset.data));
-        return plot;
-      });
-
-      // FIXME(kantoniak): Date formatting
-      let min_string = null;
-      let max_string = null;
-      let format_specifier = null;
-      switch (this.group_by) {
-        case DatasetGrouping.YEAR:
-          format_specifier = "%Y";
-          min_string = ranges.min.getFullYear();
-          max_string = ranges.max.getFullYear();
-          break;
-        case DatasetGrouping.MONTH:
-          format_specifier = "%Y-%m";
-          min_string = dateYM(ranges.min);
-          max_string = dateYM(ranges.max);
-          break;
-        case DatasetGrouping.WEEK:
-          format_specifier = "%Y-%m-%d";
-          min_string = dateYMD(ranges.min);
-          max_string = dateYMD(ranges.max);
-          break;
-        case DatasetGrouping.DAY:
-          format_specifier = "%Y-%m-%d";
-          min_string = dateYMD(ranges.min);
-          max_string = dateYMD(ranges.max);
-          break;
-        case DatasetGrouping.HOUR:
-          format_specifier = "%H:%M";
-          min_string = ranges.min.getHours() + ':' + ranges.min.getMinutes();
-          max_string = ranges.max.getHours() + ':' + ranges.max.getMinutes();
-          break;
-      }
-
-      xAxis.formatter(Plottable.Formatters.time(format_specifier));
-      const header_string = min_string + ' — ' + max_string;
-      document.getElementById('range-name').textContent = header_string;
-
-      const group = new Plottable.Components.Group(plots);
-      chart = new Plottable.Components.Table([
-        [yLeftAxis, group, yRightAxis],
-        [null, xAxis, null]
-      ]);
-      chart.renderTo('#graph-contents');
-    }
-  }
-});
-
-function loadCafeterias() {
-  return fetch(API_URL_BASE + 'cafeterias/?fields=id,name&owner=true')
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('HTTP status ' + response.status);
-      }
-    })
-    .then(data => {
-      let result = {};
-      data.forEach(cafeteria => {
-        cafeteria.color = colorMaker.nextColor();
-        result[cafeteria.id] = cafeteria;
-      });
-      return result;
-    })
-    .then(data => {
-      Vue.set(App, 'cafeterias', data);
-    });
-}
-
-function makeOccupancyData(n, startDate) {
-  startDate = startDate || new Date();
-  var startYear = startDate.getUTCFullYear();
-  var startMonth = startDate.getUTCMonth();
-  var startDay = startDate.getUTCDate();
-  var toReturn = new Array(n);
-  for (var i = 0; i < n; i++) {
-    let people_in = Math.round(Math.max(i > 0 ? toReturn[i - 1].value.total + Math.random() * 10 - 5 : Math.random() * 5, 0));
-    toReturn[i] = {
-      timestamp: new Date(Date.UTC(startYear, startMonth, startDay + i)),
-      value: {
-        relative: people_in / 50,
-        total: people_in
-      }
-    };
-  };
-  return toReturn;
-}
-
-function loadOccupancy(cafeteria_id, from, to) {
-  let sample_data = [
-    {
-      timestamp: '2020-05-20T09:37:38.593Z',
-      value: {
-        relative: 0.86, // 86% occupied
-        total: 43       // 43 people inside
-      }
-    },
-    {
-      timestamp: '2020-05-20T09:38:38.593Z',
-      value: {
-        relative: 0.98,
-        total: 49
-      }
-    },
-    {
-      timestamp: '2020-05-20T09:39:38.593Z',
-      value: {
-        relative: 0.90,
-        total: 45
-      }
-    },
-  ];
-
-  let sample_promise = new Promise(function(resolve, reject) {
-    resolve(makeOccupancyData(10));
-  });
-
-  // TODO: Replace sample_promise with actual API call when implemented
-  /*
-  fetch(API_URL_BASE + 'cafeterias/' + d + '/occupancy/?from=' + from.toISOString() + '&to=' + to.toISOString())
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('HTTP status ' + response.status);
-      }
-    })
-  */
-  sample_promise
-    .then(data => {
-      let result = [];
-      data.forEach(entry => {
-        result.push({
-          x: new Date(entry.timestamp),
-          y: entry.value.total
-        });
-      });
-      return result;
-    })
-    .then(data => {
-      App.datasets.push({
-        'cafeteria_id': cafeteria_id,
-        'type': DatasetType.OCCUPANCY,
-        'data': data
-      });
-    });
-}
-
-function makeAvgReviewData(n, startDate) {
-  startDate = startDate || new Date();
-  var startYear = startDate.getUTCFullYear();
-  var startMonth = startDate.getUTCMonth();
-  var startDay = startDate.getUTCDate();
-  var toReturn = new Array(n);
-  for (var i = 0; i < n; i++) {
-    toReturn[i] = {
-      timestamp: new Date(Date.UTC(startYear, startMonth, startDay + i)),
-      value: Math.random() * 5
-    };
-  };
-  return toReturn;
-}
-
-function loadAvgReview(cafeteria_id, type, group_by) {
-  let sample_data = [
-    {
-      timestamp: '2020-05-18T00:00:00.000Z',
-      value: Math.random() * 5
-    },
-    {
-      timestamp: '2020-05-19T00:00:00.000Z',
-      value: Math.random() * 5
-    },
-    {
-      timestamp: '2020-05-20T00:00:00.000Z',
-      value: Math.random() * 5
-    },
-  ];
-
-  let sample_promise = new Promise(function(resolve, reject) {
-    resolve(makeAvgReviewData(10));
-  });
-
-  // TODO: Replace sample_promise with actual API call when implemented
-  /*
-  fetch(API_URL_BASE + 'cafeterias/' + d + '/avg_dish_review/?from=' + from.toISOString() + '&to=' + to.toISOString() + '&group_by=' + group_by)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('HTTP status ' + response.status);
-      }
-    })
-  */
-  sample_promise
-    .then(data => {
-      let result = [];
-      data.forEach(entry => {
-        result.push({
-          x: new Date(entry.timestamp),
-          y: entry.value
-        });
-      });
-      return result;
-    })
-    .then(data => {
-      App.datasets.push({
-        'cafeteria_id': cafeteria_id,
-        'type': DatasetType.AVERAGE_DISH_REVIEW,
-        'data': data
-      });
-    });
-}
-
-document.addEventListener('DOMContentLoaded', (event) => {
-
-  App.$mount('#datasets');
-
-  loadCafeterias()
-    .then(() => loadOccupancy(1, null, null))
-    .then(() => loadAvgReview(1, null, null));
-
-  window.addEventListener('resize', function() {
-    if (chart) {
-      chart.redraw();
-    }
-  });
-})
-
-</script>
 {% endblock %}
