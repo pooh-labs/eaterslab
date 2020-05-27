@@ -47,3 +47,18 @@ class CameraEventSerializer(serializers.ModelSerializer):
         validated_data['camera'] = camera
         validated_data['cafeteria'] = camera.cafeteria
         return CameraEvent.objects.create(**validated_data)
+
+
+class OccupancyStatsSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    stamp_name = serializers.CharField(read_only=True)
+    occupancy = serializers.IntegerField(read_only=True)
+    occupancy_relative = serializers.FloatField(read_only=True)
+
+    def create(self, validated_data):
+        return OccupancyStatsData(**validated_data)
+
+    def update(self, instance, validated_data):
+        for field, value in validated_data.items():
+            setattr(instance, field, value)
+        return instance

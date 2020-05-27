@@ -4,7 +4,7 @@ from os.path import join as path_join
 from django_filters import rest_framework as filters
 from django.core.files.storage import FileSystemStorage
 
-from rest_framework import views, viewsets
+from rest_framework import views, viewsets, generics
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import IsAdminUser
@@ -110,6 +110,14 @@ class CafeteriaFixedMenuOptionReviewViewSet(viewsets.ReadOnlyModelViewSet):
             # queryset just for schema generation metadata
             return FixedMenuOptionReview.objects.none()
         return FixedMenuOptionReview.objects.all().filter(option_id=self.kwargs['option_pk']).order_by('id')
+
+
+class StatsViewSet(generics.ListAPIView):
+    serializer_class = OccupancyStatsSerializer
+
+    def list(self, request, *args, **kwargs):
+        return [OccupancyStatsData(id=1, stamp_name='monday', occupancy=10, occupancy_relative=0.45),
+                OccupancyStatsData(id=2, stamp_name='friday', occupancy=1, occupancy_relative=0.35)]
 
 
 # Admin authenticated with token uploads can inherit from this class

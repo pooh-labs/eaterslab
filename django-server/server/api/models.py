@@ -124,3 +124,9 @@ class FixedMenuOptionReview(models.Model):
     def calculate_new_avg_review(self, old_review_stars, number_of_reviews):
         current_sum = old_review_stars * number_of_reviews + self.stars
         return current_sum / (number_of_reviews + 1)
+
+
+class OccupancyStatsData(object):
+    def __init__(self, **kwargs):
+        for field in ('id', 'stamp_name', 'occupancy', 'occupancy_relative'):
+            setattr(self, field, kwargs.get(field, None))
