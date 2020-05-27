@@ -138,9 +138,9 @@
   <div v-else>
     <section id="graph" class="module">
       <header id="graph-header">
-        <input type="button" id="range-prev" value="&lt; Previous" />
+        <input type="button" id="range-prev" value="&lt; Previous" v-on:click.prevent="prev_date_range" />
         <span id="range-name"></span>
-        <input type="button" id="range-next" value="Next &gt;" />
+        <input type="button" id="range-next" value="Next &gt;" v-on:click.prevent="next_date_range" />
       </header>
 
       <div id="graph-contents">
@@ -198,6 +198,13 @@
 const DEBUGGING_LAG = 200;
 const API_URL_BASE = 'http{% if request.is_secure %}s{% endif %}://{{ request.get_host }}/api/beta/';
 const USER_ID = {{ user.id }};
+
+// Graph settings
+const YEARS_TO_COVER = 8;
+const MONTHS_TO_COVER = 12;
+const WEEKS_TO_COVER = 4;
+const DAYS_TO_COVER = 14;
+const HOURS_TO_COVER = 48;
 
 /* Date utilities */
 
@@ -345,7 +352,6 @@ const App = new Vue({
   },
   watch: {
     group_by: function() {
-      console.log('GROUP BY: ' + this.group_by);
       this.change_grouping();
     }
   },
@@ -499,9 +505,42 @@ const App = new Vue({
       this.date_to = interval[1];
       this.reload_datasets();
     },
-    group_by_year: function() {
-      const YEARS_TO_COVER = 8;
+    prev_date_range: function() {
+      this.move_date_range(-1);
+    },
+    next_date_range: function() {
+      this.move_date_range(+1);
+    },
+    move_date_range: function(delta) {
+      var interval = [new Date(date_from), new Date(date_to)];
+      switch (this.group_by) {
+        case DatasetGrouping.YEAR:
+          interval[0].setFullYear(interval[0].getFullYear() + delta*YEARS_TO_COVER);
+          interval[1].setFullYear(interval[1].getFullYear() + delta*YEARS_TO_COVER);
+          break;
+        case DatasetGrouping.MONTH:
+          interval[0].setMonth(interval[0].getMonth() + delta*MONTHS_TO_COVER);
+          interval[1].setMonth(interval[1].getMonth() + delta*MONTHS_TO_COVER);
+          break;
+        case DatasetGrouping.WEEK:
+          interval[0].setDate(interval[0].getDate() + delta*WEEKS_TO_COVER*7);
+          interval[1].setDate(interval[1].getDate() + delta*WEEKS_TO_COVER*7);
+          break;
+        case DatasetGrouping.DAY:
+          interval[0].setDate(interval[0].getDate() + delta*DAYS_TO_COVER);
+          interval[1].setDate(interval[1].getDate() + delta*DAYS_TO_COVER);
+          break;
+        case DatasetGrouping.HOUR:
+          interval[0].setHours(interval[0].getHours() + delta*HOURS_TO_COVER);
+          interval[1].setHours(interval[1].getHours() + delta*HOURS_TO_COVER);
+          break;
+      }
 
+      date_from = interval[0];
+      date_to = interval[1];
+      this.reload_datasets();
+    },
+    group_by_year: function() {
       date_to = new Date();
       date_to.setFullYear(date_to.getFullYear() + 1);
       date_to.setMonth(0);
@@ -516,8 +555,6 @@ const App = new Vue({
       return [date_from, date_to];
     },
     group_by_month: function() {
-      const MONTHS_TO_COVER = 12;
-
       date_to = new Date();
       date_to.setMonth(date_to.getMonth() + 1);
       date_to.setDate(1);
@@ -531,7 +568,6 @@ const App = new Vue({
       return [date_from, date_to];
     },
     group_by_week: function() {
-      const WEEKS_TO_COVER = 4;
       const FIRST_DAY_MONDAY = true;
 
       const curr_date = new Date();
@@ -544,8 +580,6 @@ const App = new Vue({
       return [date_from, date_to];
     },
     group_by_day: function() {
-      const DAYS_TO_COVER = 14;
-
       date_to = new Date();
       date_to.setDate(date_to.getDate() + 1);
       date_to.setHours(0);
@@ -558,8 +592,6 @@ const App = new Vue({
       return [date_from, date_to];
     },
     group_by_hour: function() {
-      const HOURS_TO_COVER = 48;
-
       date_to = new Date();
       date_to.setHours(date_to.getHours() + 1);
       date_to.setMinutes(0);
@@ -617,6 +649,10 @@ const App = new Vue({
 
       let show_guideline = false;
       plots = this.datasets.map(dataset => {
+        if (dataset.data.length == 0) {
+          return null;
+        }
+
         // Get min and max
         const dates = dataset.data.map(entry => entry.x);
         const min = dates.reduce(function (pre, cur) {
@@ -663,7 +699,7 @@ const App = new Vue({
           .x(function(d) { return d.x; }, xScale)
           .addDataset(new Plottable.Dataset(dataset.data));
         return plot;
-      });
+      }).filter(Boolean);
 
       // Set axis format specifier
       let format_specifier = null;
