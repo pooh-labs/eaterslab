@@ -177,8 +177,11 @@
       <svg height="1em" width="1em">
         <g :fill="cafeteria.color.hex">
           <g v-if="dataset.type == 'occupancy'">
-            <circle cx="6.5" cy="8" r="4" />
             <rect x="0" y="7" width="14" height="2" />
+          </g>
+          <g v-else-if="dataset.type == 'relative occupancy'">
+            <rect x="0" y="7" width="6" height="2" />
+            <rect x="8" y="7" width="6" height="2" />
           </g>
           <rect v-else x="2" y="4" width="9" height="9" />
         </g>
@@ -279,6 +282,7 @@ const DatasetGrouping = {
 
 const DatasetType = {
   OCCUPANCY: 'occupancy',
+  RELATIVE_OCCUPANCY: 'relative occupancy',
   AVERAGE_DISH_REVIEW: 'average dish review',
 }
 
@@ -388,6 +392,8 @@ const App = new Vue({
       switch (type) {
         case DatasetType.OCCUPANCY:
           return window.loadOccupancy(cafeteria_id, date_from, date_to);
+        case DatasetType.RELATIVE_OCCUPANCY:
+          return window.loadRelOccupancy(cafeteria_id, date_from, date_to);
         case DatasetType.AVERAGE_DISH_REVIEW:
           return window.loadAvgReview(cafeteria_id, date_from, date_to, this.group_by);
         default:
@@ -609,6 +615,7 @@ const App = new Vue({
         plot.destroy(); 
       }
 
+      let show_guideline = false;
       plots = this.datasets.map(dataset => {
         // Get min and max
         const dates = dataset.data.map(entry => entry.x);
@@ -633,6 +640,16 @@ const App = new Vue({
             plot = new Plottable.Plots.Line()
             plot.y(function(d) { return d.y; }, yLeftScale);
             plot.attr("stroke", color.hex);
+            plot.attr("stroke-width", 1);
+            break;
+
+          case DatasetType.RELATIVE_OCCUPANCY:
+            plot = new Plottable.Plots.Line()
+            plot.y(function(d) { return d.y; }, yLeftScale);
+            plot.attr("stroke", color.hex);
+            plot.attr("stroke-dasharray", "4 2");
+            plot.attr("stroke-width", 1);
+            show_guideline = true;
             break;
 
           case DatasetType.AVERAGE_DISH_REVIEW:
@@ -668,6 +685,13 @@ const App = new Vue({
           break;
       }
       xAxis.formatter(Plottable.Formatters.time(format_specifier));
+
+      if (show_guideline) {
+        var guideline = new Plottable.Components.GuideLineLayer("horizontal");
+        guideline.scale(yLeftScale);
+        guideline.value(1);
+        plots.push(guideline);
+      }
 
       const group = new Plottable.Components.Group(plots);
       chart = new Plottable.Components.Table([
@@ -789,6 +813,61 @@ function loadOccupancy(cafeteria_id, from, to) {
         result.push({
           x: new Date(entry.timestamp),
           y: entry.value.total
+        });
+      });
+      return result;
+    });
+}
+
+function loadRelOccupancy(cafeteria_id, from, to) {
+  let sample_data = [
+    {
+      timestamp: '2020-05-20T09:37:38.593Z',
+      value: {
+        relative: 0.86, // 86% occupied
+        total: 43       // 43 people inside
+      }
+    },
+    {
+      timestamp: '2020-05-20T09:38:38.593Z',
+      value: {
+        relative: 0.98,
+        total: 49
+      }
+    },
+    {
+      timestamp: '2020-05-20T09:39:38.593Z',
+      value: {
+        relative: 0.90,
+        total: 45
+      }
+    },
+  ];
+
+  let sample_promise = new Promise(function(resolve, reject) {
+    setTimeout(() => {
+      resolve(makeOccupancyData(from, to));
+    }, DEBUGGING_LAG);
+  });
+
+  // TODO: Replace sample_promise with actual API call when implemented
+  /*
+  fetch(API_URL_BASE + 'cafeterias/' + d + '/occupancy/?from=' + from.toISOString() + '&to=' + to.toISOString())
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('HTTP status ' + response.status);
+      }
+    })
+  */
+  return sample_promise
+    .then(data => {
+      let result = [];
+      data.forEach(entry => {
+        result.push({
+          x: new Date(entry.timestamp),
+          y: entry.value.relative
         });
       });
       return result;
