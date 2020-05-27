@@ -295,6 +295,7 @@ definitions:
       - address
       - opened_from
       - opened_to
+      - occupancy
     type: object
     properties:
       id:
@@ -342,6 +343,15 @@ definitions:
       opened_to:
         title: Opened to
         type: string
+      occupancy:
+        title: Occupancy
+        type: integer
+        maximum: 2147483647
+        minimum: 0
+      occupancy_relative:
+        title: Occupancy relative
+        type: string
+        readOnly: true
   FixedMenuOption:
     required:
       - name
@@ -414,10 +424,17 @@ definitions:
           - 1
           - 2
           - 3
+          - 4
       timestamp:
         title: Timestamp
         type: string
         format: date-time
+      event_value:
+        title: Event value
+        type: integer
+        maximum: 2147483647
+        minimum: 0
+        x-nullable: true
   MenuOptionTag:
     type: object
     properties:
