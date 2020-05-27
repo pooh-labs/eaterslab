@@ -60,8 +60,7 @@
       </select>
       <label for="add-dataset-type" id="add-dataset-type-label">Type</label>
       <select id="add-dataset-type">
-        <option value="occupancy">occupancy</option>
-        <option value="average dish review">average dish review</option>
+        <option v-for="type in data_types" :value="type">{{ type }}</option>
       </select>
       <input type="submit" id="add-dataset-submit" value="Add" v-on:submit.prevent="add_dataset" v-on:click.prevent="add_dataset" />
     </form>
@@ -328,6 +327,8 @@ const App = new Vue({
     error: null,
     cafeterias: {},
     datasets: [],
+    data_types: DatasetType,
+    data_groupings: DatasetGrouping,
     group_by: DatasetGrouping.DAY
   },
   computed: {
