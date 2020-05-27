@@ -19,11 +19,12 @@
 {% block content %}
 
 <style>
-.loading, .error, .empty { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.loading, .error, .empty { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
 .loading p, .error p, .empty p { margin-top: 0.5em; }
 .error p { color: #C76161; }
 
-.header-option { display: none; margin-left: 1em; font-size: 13px; font-family: "Roboto","Lucida Grande","DejaVu Sans","Bitstream Vera Sans",Verdana,Arial,sans-serif; font-weight: normal; }
+#grouping-selector { margin-right: 2em; }
+#grouping-selector select { height: 26px; margin-left: 0.25em; padding: 3px 6px; }
 
 #graph header { display: flex; align-items: center; margin-bottom: 30px; }
 #graph header input { width: 8em; }
@@ -67,6 +68,12 @@
   </section>
 
   <ul v-if="!error && !loading" class="object-tools">
+    <li v-if="!empty" id="grouping-selector">
+      <label>Group by:</label>
+      <select id="group-by" v-model="group_by">
+        <option v-for="grouping in data_groupings" :value="grouping">{{ grouping }}</option>
+      </select>
+    </li>
     <li>
       <a href="#" class="addlink" class="add-dataset" v-on:click.prevent="show_popup">
         Add dataset
@@ -119,13 +126,13 @@
   </div>
 
   <div v-else-if="empty" class="empty">
-    <svg xmlns="http://www.w3.org/2000/svg" height="60" width="60" viewBox="0 0 24 24">
-      <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" fill="#79aec8"/>
-      <path d="M0 0h24v24H0z" fill="none"/>
-    </svg>
-    <p>
-      <a href="#" v-on:click.prevent="show_popup">Add first dataset</a>
-    </p>
+    <a href="#" v-on:click.prevent="show_popup">
+      <svg xmlns="http://www.w3.org/2000/svg" height="60" width="60" viewBox="0 0 24 24">
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" fill="#79aec8"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+      </svg>
+      <p>Add first dataset</p>
+    </a>
   </div>
 
   <div v-else>
