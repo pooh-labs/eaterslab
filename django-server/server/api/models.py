@@ -70,9 +70,7 @@ class CameraEvent(models.Model):
             cafeteria.update(occupancy=self.event_value)
         elif self.event_type == CameraEvent.EventType.PERSON_ENTERED.value \
                 and self.cafeteria.occupancy < self.cafeteria.capacity:
-            print(self.cafeteria.occupancy)
             cafeteria.update(occupancy=self.cafeteria.occupancy + 1)
-            print(self.cafeteria.occupancy)
         elif self.event_type == CameraEvent.EventType.PERSON_LEFT.value \
                 and self.cafeteria.occupancy > 0:
             cafeteria.update(occupancy=self.cafeteria.occupancy - 1)
