@@ -282,15 +282,13 @@ const App = new Vue({
             'cafeteria_id': cafeteria_id,
             'type': type,
             'data': data.map(value => {
-              obj =  {
+              return  {
                 timestamp: `${value.timestamp}`,
                 value: {
-                  relative: value.occupancy_relative, // 86% occupied
-                  total: value.occupancy       // 43 people inside
+                  relative: value.occupancy_relative,
+                  total: value.occupancy
                 }
               };
-              console.log(obj);
-              return obj;
             })
           });
         })
