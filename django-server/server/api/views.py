@@ -165,9 +165,9 @@ class StatsView(generics.ListAPIView):
             if finish_now:
                 break
 
-        occupancy = Cafeteria.objects.get(id=id).occupancy
+        capacity = Cafeteria.objects.get(id=id).capacity
         return [OccupancyStatsData(id=index, timestamp_name=self.get_timestamp_name(stamp), occupancy=inside,
-                                   occupancy_relative=min(float(inside) / float(occupancy), 1.0))
+                                   occupancy_relative=(float(inside) / float(capacity)))
                 for index, (inside, stamp) in enumerate(results)]
 
     def count_people(self, queryset):
