@@ -158,7 +158,7 @@ class StatsView(generics.ListAPIView):
             else:
                 last_override = curr_overrides.latest('timestamp')
                 after_override = curr_range.filter(timestamp__gt=last_override.timestamp)
-                people_inside = last_override + self.count_people(after_override)
+                people_inside = last_override.event_value + self.count_people(after_override)
             begin += self.get_timestamp_delta(begin)
             end += self.get_timestamp_delta(begin)
             results.append((people_inside, begin))
