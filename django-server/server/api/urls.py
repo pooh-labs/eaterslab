@@ -26,13 +26,12 @@ cameras_router.register(r'events', CameraEventsViewSet, basename='camera_events'
 urlpatterns = [
     path('', include(router.urls)),
     path('', include(cafeterias_router.urls)),
-    path('cafeterias/<int:cafeteria_pk>/stats/by_hour', HourStatsView.as_view()),
-    path('cafeterias/<int:cafeteria_pk>/stats/by_day', DayStatsView.as_view()),
-    path('cafeterias/<int:cafeteria_pk>/stats/by_week', WeekStatsView.as_view()),
-    path('cafeterias/<int:cafeteria_pk>/stats/by_month', MonthStatsView.as_view()),
-    path('cafeterias/<int:cafeteria_pk>/stats/by_year', YearStatsView.as_view()),
     path('', include(fixed_menu_options_router.urls)),
     path('', include(cameras_router.urls)),
     path('upload/artifacts/<str:filename>/', UploadArtifactsView.as_view()),
     path('upload/artifacts/beta/<str:filename>/', UploadArtifactsBetaView.as_view()),
 ]
+urlpatterns.extend([
+    path('cafeterias/<int:cafeteria_pk>/stats/{}/{}'.format(name, stats_range), view)
+    for (name, stats_range, view) in cafeterias_stats()
+])
