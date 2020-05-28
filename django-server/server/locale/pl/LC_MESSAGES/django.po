@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-27 23:30+0200\n"
+"POT-Creation-Date: 2020-05-28 10:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,71 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: admin/admin.py:14
+msgid "EatersLab administration"
+msgstr "Administracja EatersLab"
+
+#: admin/admin.py:15
+msgid "EatersLab"
+msgstr "EatersLab"
+
+#: admin/admin.py:16 home/templates/home/home.html:34
+msgid "Administration"
+msgstr "Administracja"
+
+#: admin/admin.py:56
+msgid "State"
+msgstr "Stan"
+
+#: admin/admin.py:57
+msgid "Last event time"
+msgstr "Czas ostatniego zdarzenia"
+
+#: admin/templates/admin/app_list_override.html:8
+#, python-format
+msgid "Models in the %(name)s application"
+msgstr "Modele w aplikacji %(name)s"
+
+#: admin/templates/admin/app_list_override.html:19
+msgid "Add"
+msgstr "Dodaj"
+
+#: admin/templates/admin/app_list_override.html:26
+msgid "View"
+msgstr "Zobacz"
+
+#: admin/templates/admin/app_list_override.html:28
+msgid "Change"
+msgstr "Zmień"
+
+#: admin/templates/admin/app_list_override.html:41
+msgid "Other pages"
+msgstr "Inne strony"
+
+#: admin/templates/admin/app_list_override.html:44
+msgid "Statistics"
+msgstr "Statystyki"
+
+#: admin/templates/admin/app_list_override.html:49
+msgid "You don’t have permission to view or edit anything."
+msgstr "Nie masz uprawnień do oglądania ani zmieniania czegokolwiek."
+
+#: admin/templates/admin/index_override.html:23
+msgid "Recent actions"
+msgstr "Ostatnie działania"
+
+#: admin/templates/admin/index_override.html:24
+msgid "My actions"
+msgstr "Moje działania"
+
+#: admin/templates/admin/index_override.html:28
+msgid "None available"
+msgstr "Brak dostępnych"
+
+#: admin/templates/admin/index_override.html:42
+msgid "Unknown content"
+msgstr "Nieznany typ zawartości"
 
 #: api/models.py:34
 msgid "online"
@@ -49,19 +114,15 @@ msgstr "klient wyszedl"
 msgid "occupancy_override"
 msgstr "nadpisano zajętość"
 
-#: home/templates/home/home.html:8
+#: home/templates/home/home.html:10
 msgid "EatersLab Home"
 msgstr "Strona główna EatersLab"
 
-#: home/templates/home/home.html:32
-msgid "Administration"
-msgstr "Administracja"
-
-#: home/templates/home/home.html:35
+#: home/templates/home/home.html:37
 msgid "API documentation"
 msgstr "Dokumentacja API"
 
-#: home/templates/home/home.html:43
+#: home/templates/home/home.html:45
 msgid "Welcome to EatersLab by PoohLab."
 msgstr "Witamy w EatersLab od PoohLab."
 
