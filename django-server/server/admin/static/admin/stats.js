@@ -278,18 +278,19 @@ const App = new Vue({
       let app = this;
       this.load_dataset(cafeteria_id, type)
         .then(data => {
-          app.datasets.push({
-            'cafeteria_id': cafeteria_id,
-            'type': type,
-            'data': data.map(value => {
+          let mapped_data = data.map(value => {
               return  {
-                timestamp: `${value.timestamp}`,
+                timestamp: value.timestamp,
                 value: {
                   relative: value.occupancy_relative,
                   total: value.occupancy
                 }
               };
-            })
+            });
+          app.datasets.push({
+            'cafeteria_id': cafeteria_id,
+            'type': type,
+            'data': mapped_data
           });
         })
         .then(() => app.showChart())
