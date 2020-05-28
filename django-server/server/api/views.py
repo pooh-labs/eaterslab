@@ -118,50 +118,33 @@ class StatsDivider:
     def get_timestamp_delta(self, time: datetime):
         pass
 
-    @abc.abstractmethod
     def get_timestamp_name(self, time: datetime):
-        pass
+        return time.isoformat()
 
 
 class HourStatsDivider(StatsDivider):
     def get_timestamp_delta(self, time: datetime):
         return timedelta(hours=1)
 
-    def get_timestamp_name(self, time: datetime):
-        return '{}:00'.format(time.hour)
-
 
 class DayStatsDivider(StatsDivider):
     def get_timestamp_delta(self, time: datetime):
         return timedelta(days=1)
-
-    def get_timestamp_name(self, time: datetime):
-        week_days = ['Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat', 'Sun']
-        return week_days[time.weekday()]
 
 
 class WeekStatsDivider(StatsDivider):
     def get_timestamp_delta(self, time: datetime):
         return timedelta(weeks=1)
 
-    def get_timestamp_name(self, time: datetime):
-        return '{} week'.format(time.isocalendar()[1])
-
 
 class MonthStatsDivider(StatsDivider):
     def get_timestamp_delta(self, time: datetime):
         return timedelta(days=monthrange(time.year, time.month)[1])
 
-    def get_timestamp_name(self, time: datetime):
-        return '{}'.format(time.day)
-
 
 class YearStatsDivider(StatsDivider):
     def get_timestamp_delta(self, time: datetime):
         return timedelta(days=(time.replace(year=time.year + 1) - time).days)
-
-    def get_timestamp_name(self, time: datetime):
-        return '{}'.format(time.year)
 
 
 class TimeStampedFilterSet(filters.FilterSet):
