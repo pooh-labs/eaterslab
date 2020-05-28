@@ -282,13 +282,15 @@ const App = new Vue({
             'cafeteria_id': cafeteria_id,
             'type': type,
             'data': data.map(value => {
-              return {
-                timestamp: '2020-05-20T09:37:38.593Z',
+              obj =  {
+                timestamp: `${value.timestamp}`,
                 value: {
-                  relative: 0.86, // 86% occupied
-                  total: 43       // 43 people inside
+                  relative: value.occupancy_relative, // 86% occupied
+                  total: value.occupancy       // 43 people inside
                 }
               };
+              console.log(obj);
+              return obj;
             })
           });
         })
