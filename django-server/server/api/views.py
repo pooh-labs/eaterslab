@@ -298,7 +298,7 @@ class OccupancyStatsView(StatsView):
     def map_to_result_objects(self, index, value, stamp, cafeteria_pk):
         capacity = Cafeteria.objects.get(id=cafeteria_pk).capacity
         return OccupancyStatsData(id=index,
-                                  timestamp_name=self.divider.get_timestamp_name(self.divider, stamp),
+                                  timestamp=self.divider.get_timestamp_name(self.divider, stamp),
                                   occupancy=value,
                                   occupancy_relative=(float(value) / float(capacity)))
 

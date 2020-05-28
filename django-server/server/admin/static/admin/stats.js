@@ -281,7 +281,15 @@ const App = new Vue({
           app.datasets.push({
             'cafeteria_id': cafeteria_id,
             'type': type,
-            'data': data
+            'data': data.map(value => {
+              return {
+                timestamp: '2020-05-20T09:37:38.593Z',
+                value: {
+                  relative: 0.86, // 86% occupied
+                  total: 43       // 43 people inside
+                }
+              };
+            })
           });
         })
         .then(() => app.showChart())
@@ -692,9 +700,7 @@ function loadOccupancy(cafeteria_id, from, to) {
     }, DEBUGGING_LAG);
   });
 
-  // TODO: Replace sample_promise with actual API call when implemented
-  /*
-  fetch(API_URL_BASE + 'cafeterias/' + d + '/occupancy/?from=' + from.toISOString() + '&to=' + to.toISOString())
+  fetch(API_URL_BASE + 'cafeterias/' + d + '/stats/occupancy/by_day?from=' + from.toISOString() + '&to=' + to.toISOString())
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -702,7 +708,7 @@ function loadOccupancy(cafeteria_id, from, to) {
         throw new Error('HTTP status ' + response.status);
       }
     })
-  */
+
   return sample_promise
     .then(data => {
       let result = [];
@@ -747,17 +753,15 @@ function loadRelOccupancy(cafeteria_id, from, to) {
     }, DEBUGGING_LAG);
   });
 
-  // TODO: Replace sample_promise with actual API call when implemented
-  /*
-  fetch(API_URL_BASE + 'cafeterias/' + d + '/occupancy/?from=' + from.toISOString() + '&to=' + to.toISOString())
+  fetch(API_URL_BASE + 'cafeterias/' + d + '/stats/occupancy/by_day?from=' + from.toISOString() + '&to=' + to.toISOString())
     .then(response => {
       if (response.ok) {
         return response.json();
       } else {
         throw new Error('HTTP status ' + response.status);
       }
-    })
-  */
+    });
+
   return sample_promise
     .then(data => {
       let result = [];

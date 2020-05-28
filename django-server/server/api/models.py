@@ -129,5 +129,5 @@ class FixedMenuOptionReview(models.Model):
 class OccupancyStatsData(object):
 
     def __init__(self, **kwargs):
-        for field in ('id', 'timestamp_name', 'occupancy', 'occupancy_relative'):
+        for field in ('id', 'timestamp', 'occupancy', 'occupancy_relative'):
             setattr(self, field, kwargs.get(field, None))

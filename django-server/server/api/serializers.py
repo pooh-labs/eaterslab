@@ -51,7 +51,7 @@ class CameraEventSerializer(serializers.ModelSerializer):
 
 class OccupancyStatsSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
-    timestamp_name = serializers.CharField(read_only=True)
+    timestamp = serializers.CharField(read_only=True)
     occupancy = serializers.IntegerField(read_only=True)
     occupancy_relative = serializers.FloatField(read_only=True)
 
