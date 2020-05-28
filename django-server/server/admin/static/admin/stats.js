@@ -670,6 +670,15 @@ function makeOccupancyData(startDate, endDate) {
 }
 
 function loadOccupancy(cafeteria_id, from, to) {
+  return fetch(API_URL_BASE + 'cafeterias/' + cafeteria_id + '/stats/occupancy/by_hour?timestamp_start=' + from.toISOString() + '&timestamp_end=' + to.toISOString())
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('HTTP status ' + response.status);
+      }
+    });
+  /*
   let sample_data = [
     {
       timestamp: '2020-05-20T09:37:38.593Z',
@@ -699,15 +708,6 @@ function loadOccupancy(cafeteria_id, from, to) {
       resolve(makeOccupancyData(from, to));
     }, DEBUGGING_LAG);
   });
-
-  fetch(API_URL_BASE + 'cafeterias/' + d + '/stats/occupancy/by_day?from=' + from.toISOString() + '&to=' + to.toISOString())
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('HTTP status ' + response.status);
-      }
-    })
 
   return sample_promise
     .then(data => {
@@ -720,9 +720,19 @@ function loadOccupancy(cafeteria_id, from, to) {
       });
       return result;
     });
+  */
 }
 
 function loadRelOccupancy(cafeteria_id, from, to) {
+  return fetch(API_URL_BASE + 'cafeterias/' + cafeteria_id + '/stats/occupancy/by_hour?timestamp_start=' + from.toISOString() + '&timestamp_end=' + to.toISOString())
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('HTTP status ' + response.status);
+      }
+    });
+  /*
   let sample_data = [
     {
       timestamp: '2020-05-20T09:37:38.593Z',
@@ -753,15 +763,6 @@ function loadRelOccupancy(cafeteria_id, from, to) {
     }, DEBUGGING_LAG);
   });
 
-  fetch(API_URL_BASE + 'cafeterias/' + d + '/stats/occupancy/by_day?from=' + from.toISOString() + '&to=' + to.toISOString())
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('HTTP status ' + response.status);
-      }
-    });
-
   return sample_promise
     .then(data => {
       let result = [];
@@ -773,6 +774,7 @@ function loadRelOccupancy(cafeteria_id, from, to) {
       });
       return result;
     });
+  */
 }
 
 function makeAvgReviewData(startDate, endDate, groupBy) {
@@ -841,7 +843,7 @@ function loadAvgReview(cafeteria_id, from, to, group_by) {
 
   // TODO: Replace sample_promise with actual API call when implemented
   /*
-  fetch(API_URL_BASE + 'cafeterias/' + d + '/avg_dish_review/?from=' + from.toISOString() + '&to=' + to.toISOString() + '&group_by=' + group_by)
+  fetch(API_URL_BASE + 'cafeterias/' + cafeteria_id + '/avg_dish_review/?timestamp_start=' + from.toISOString() + '&timestamp_end=' + to.toISOString() + '&group_by=' + group_by)
     .then(response => {
       if (response.ok) {
         return response.json();

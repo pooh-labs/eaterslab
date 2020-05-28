@@ -3,6 +3,7 @@ from calendar import monthrange
 from datetime import datetime
 from dateutil.parser import parse as timestamp_parse
 from os.path import join as path_join
+from pytz import utc
 
 from django.core.files.storage import FileSystemStorage
 from django.db.models import QuerySet
@@ -198,16 +199,18 @@ class StatsView(generics.ListAPIView):
         req_count = self.request.query_params.get('count')
         start_string = self.request.query_params.get('timestamp_start')
         end_string = self.request.query_params.get('timestamp_end')
+        divider = self.divider
 
-        timestamp_start = datetime.min if start_string is None else timestamp_parse(start_string)
-        timestamp_end = datetime.max if end_string is None else timestamp_parse(end_string)
+        timestamp_start = datetime.min + divider.get_timestamp_delta(divider, datetime.min) \
+            if start_string is None else timestamp_parse(start_string)
+        timestamp_end = datetime.max - divider.get_timestamp_delta(divider, datetime.max) \
+            if end_string is None else timestamp_parse(end_string)
         if cafeteria_pk is None:
             raise ValueError('required params not specified')
         count = LONGEST_SUPPORTED_STATS_LEN if req_count is None else min(int(req_count), LONGEST_SUPPORTED_STATS_LEN)
 
         lookup_lte = '%s__lte' % self.timestamp_field_name()
         lookup_gt = '%s__gt' % self.timestamp_field_name()
-        divider = self.divider
 
         data = self.get_full_queryset(cafeteria_pk)
         before_data = data.filter(**{lookup_lte: timestamp_start}).order_by(self.timestamp_field_name())
@@ -218,7 +221,7 @@ class StatsView(generics.ListAPIView):
         results = [(count_value, begin_stamp)]
         for interval_i in range(int(count) - 1):
             finish_now = False
-            if end_stamp > datetime.now() or end_stamp > timestamp_end:
+            if end_stamp > utc.localize(datetime.now()) or end_stamp > timestamp_end:
                 end_stamp = datetime.now()
                 finish_now = True
 
