@@ -146,6 +146,11 @@ class StatsView(generics.ListAPIView):
 
         results = [(people_inside, begin)]
         for interval_i in range(int(count) - 1):
+            finish_now = False
+            if end > datetime.now():
+                end = datetime.now()
+                finish_now = True
+
             curr_range = events.filter(timestamp__gt=begin, timestamp__lte=end).order_by('timestamp')
             curr_overrides = curr_range.filter(event_type=CameraEvent.EventType.OCCUPANCY_OVERRIDE.value)
             if len(curr_overrides) == 0:
@@ -157,9 +162,10 @@ class StatsView(generics.ListAPIView):
             begin += self.get_timestamp_delta(begin)
             end += self.get_timestamp_delta(begin)
             results.append((people_inside, begin))
+            if finish_now:
+                break
 
         occupancy = Cafeteria.objects.get(id=id).occupancy
-
         return [OccupancyStatsData(id=index, timestamp_name=self.get_timestamp_name(stamp), occupancy=inside,
                                    occupancy_relative=min(float(inside) / float(occupancy), 1.0))
                 for index, (inside, stamp) in enumerate(results)]
