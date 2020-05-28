@@ -160,7 +160,7 @@ class StatsView(generics.ListAPIView):
 
         occupancy = Cafeteria.objects.get(id=id).occupancy
 
-        return [OccupancyStatsData(id=index, timestamp_name=stamp, occupancy=inside,
+        return [OccupancyStatsData(id=index, timestamp_name=self.get_timestamp_name(stamp), occupancy=inside,
                                    occupancy_relative=min(float(inside) / float(occupancy), 1.0))
                 for index, (inside, stamp) in enumerate(results)]
 
