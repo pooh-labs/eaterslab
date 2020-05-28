@@ -1,21 +1,20 @@
 import abc
+from calendar import monthrange
 from datetime import datetime
+from dateutil.parser import parse
 from os.path import join as path_join
 
-from django_filters import rest_framework as filters
 from django.core.files.storage import FileSystemStorage
-
+from django_filters import rest_framework as filters
 from rest_framework import views, viewsets, generics
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
-
-from .serializers import *
-from .models import *
-
-from os.path import join as path_join
 from server import settings
+
+from .models import *
+from .serializers import *
 
 
 class GetPostViewSet(viewsets.ModelViewSet):
@@ -127,45 +126,109 @@ class StatsView(generics.ListAPIView):
         if getattr(self, 'swagger_fake_view', False):
             # queryset just for schema generation metadata
             return []
-        return [OccupancyStatsData(id=1, timestamp_name='monday', occupancy=10, occupancy_relative=0.45),
-                OccupancyStatsData(id=2, timestamp_name='friday', occupancy=1, occupancy_relative=0.35)]
+        id = self.kwargs.get('cafeteria_pk')
+        count = self.request.query_params.get('count')
+        timestamp_start = self.request.query_params.get('timestamp_start')
+        if id is None or count is None or timestamp_start is None:
+            raise ValueError('required params not specified')
+
+        timestamp_start = parse(timestamp_start)
+        events = CameraEvent.objects.filter(cafeteria_id=id)
+        before = events.filter(timestamp__lte=timestamp_start).order_by('timestamp')
+        overrides = before.filter(event_type=CameraEvent.EventType.OCCUPANCY_OVERRIDE.value)
+        init_override_value = 0 if len(overrides) == 0 else overrides.latest('timestamp').event_value
+        changed = self.count_people(before) if len(overrides) == 0 \
+            else self.count_people(before.filter(timestamp__gt=overrides.latest('timestamp').timestamp))
+
+        people_inside = init_override_value + changed
+        begin = timestamp_start
+        end = timestamp_start + self.get_timestamp_delta(timestamp_start)
+
+        results = [(people_inside, begin)]
+        for interval_i in range(int(count) - 1):
+            curr_range = events.filter(timestamp__gt=begin, timestamp__lte=end).order_by('timestamp')
+            curr_overrides = curr_range.filter(event_type=CameraEvent.EventType.OCCUPANCY_OVERRIDE.value)
+            if len(curr_overrides) == 0:
+                people_inside += self.count_people(curr_range)
+            else:
+                last_override = curr_overrides.latest('timestamp')
+                people_inside = last_override + self.count_people(
+                    curr_range.filter(timestamp__gt=last_override.timestamp))
+            begin += self.get_timestamp_delta(begin)
+            end += self.get_timestamp_delta(begin)
+            results.append((people_inside, begin))
+
+        occupancy = Cafeteria.objects.get(id=id).occupancy
+
+        return [OccupancyStatsData(id=index, timestamp_name=stamp, occupancy=inside,
+                                   occupancy_relative=min(float(inside) / float(occupancy), 1.0))
+                for index, (inside, stamp) in enumerate(results)]
+
+    def count_people(self, queryset):
+        counter = 0
+        for event in queryset:
+            if event.event_type == CameraEvent.EventType.PERSON_ENTERED.value:
+                counter += 1
+            elif event.event_type == CameraEvent.EventType.PERSON_LEFT.value:
+                counter -= 1
+        return counter
 
     def filter_queryset(self, queryset):
         return queryset
 
     @abc.abstractmethod
-    def get_timestamp_delta(self):
+    def get_timestamp_delta(self, datetime: datetime):
+        pass
+
+    @abc.abstractmethod
+    def get_timestamp_name(self, datetime: datetime):
         pass
 
 
 class HourStatsView(StatsView):
 
-    def get_timestamp_delta(self):
-        return datetime.timedelta(hours=1)
+    def get_timestamp_delta(self, datetime: datetime):
+        return timedelta(hours=1)
+
+    def get_timestamp_name(self, datetime: datetime):
+        return '{}'.format(datetime.hour)
 
 
 class DayStatsView(StatsView):
 
-    def get_timestamp_delta(self):
-        return datetime.timedelta(days=1)
+    def get_timestamp_delta(self, datetime: datetime):
+        return timedelta(days=1)
+
+    def get_timestamp_name(self, datetime: datetime):
+        week_days = ['Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat', 'Sun']
+        return week_days[datetime.weekday()]
 
 
 class WeekStatsView(StatsView):
 
-    def get_timestamp_delta(self):
-        return datetime.timedelta(weeks=1)
+    def get_timestamp_delta(self, datetime: datetime):
+        return timedelta(weeks=1)
+
+    def get_timestamp_name(self, datetime: datetime):
+        return '{} week'.format(datetime.isocalendar()[1])
 
 
 class MonthStatsView(StatsView):
 
-    def get_timestamp_delta(self):
-        return datetime.timedelta(days=30)
+    def get_timestamp_delta(self, datetime: datetime):
+        return timedelta(days=monthrange(datetime.year, datetime.month)[1])
+
+    def get_timestamp_name(self, datetime: datetime):
+        return '{}'.format(datetime.day)
 
 
 class YearStatsView(StatsView):
 
-    def get_timestamp_delta(self):
-        return datetime.timedelta(days=365)
+    def get_timestamp_delta(self, datetime: datetime):
+        return timedelta(days=(datetime.replace(year=datetime.year + 1) - datetime).days)
+
+    def get_timestamp_name(self, datetime: datetime):
+        return '{}'.format(datetime.year)
 
 
 # Admin authenticated with token uploads can inherit from this class
