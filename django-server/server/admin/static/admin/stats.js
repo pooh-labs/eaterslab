@@ -278,10 +278,19 @@ const App = new Vue({
       let app = this;
       this.load_dataset(cafeteria_id, type)
         .then(data => {
+          let mapped_data = data.map(value => {
+              return  {
+                timestamp: value.timestamp,
+                value: {
+                  relative: value.occupancy_relative,
+                  total: value.occupancy
+                }
+              };
+            });
           app.datasets.push({
             'cafeteria_id': cafeteria_id,
             'type': type,
-            'data': data
+            'data': mapped_data
           });
         })
         .then(() => app.showChart())
@@ -662,6 +671,15 @@ function makeOccupancyData(startDate, endDate) {
 }
 
 function loadOccupancy(cafeteria_id, from, to) {
+  return fetch(API_URL_BASE + 'cafeterias/' + cafeteria_id + '/stats/occupancy?start_timestamp=' + from.toISOString() + '&end_timestamp=' + to.toISOString())
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('HTTP status ' + response.status);
+      }
+    });
+  /*
   let sample_data = [
     {
       timestamp: '2020-05-20T09:37:38.593Z',
@@ -692,17 +710,6 @@ function loadOccupancy(cafeteria_id, from, to) {
     }, DEBUGGING_LAG);
   });
 
-  // TODO: Replace sample_promise with actual API call when implemented
-  /*
-  fetch(API_URL_BASE + 'cafeterias/' + d + '/occupancy/?from=' + from.toISOString() + '&to=' + to.toISOString())
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('HTTP status ' + response.status);
-      }
-    })
-  */
   return sample_promise
     .then(data => {
       let result = [];
@@ -714,9 +721,19 @@ function loadOccupancy(cafeteria_id, from, to) {
       });
       return result;
     });
+  */
 }
 
 function loadRelOccupancy(cafeteria_id, from, to) {
+  return fetch(API_URL_BASE + 'cafeterias/' + cafeteria_id + '/stats/occupancy?start_timestamp=' + from.toISOString() + '&end_timestamp=' + to.toISOString())
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('HTTP status ' + response.status);
+      }
+    });
+  /*
   let sample_data = [
     {
       timestamp: '2020-05-20T09:37:38.593Z',
@@ -747,17 +764,6 @@ function loadRelOccupancy(cafeteria_id, from, to) {
     }, DEBUGGING_LAG);
   });
 
-  // TODO: Replace sample_promise with actual API call when implemented
-  /*
-  fetch(API_URL_BASE + 'cafeterias/' + d + '/occupancy/?from=' + from.toISOString() + '&to=' + to.toISOString())
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('HTTP status ' + response.status);
-      }
-    })
-  */
   return sample_promise
     .then(data => {
       let result = [];
@@ -769,6 +775,7 @@ function loadRelOccupancy(cafeteria_id, from, to) {
       });
       return result;
     });
+  */
 }
 
 function makeAvgReviewData(startDate, endDate, groupBy) {
@@ -837,7 +844,7 @@ function loadAvgReview(cafeteria_id, from, to, group_by) {
 
   // TODO: Replace sample_promise with actual API call when implemented
   /*
-  fetch(API_URL_BASE + 'cafeterias/' + d + '/avg_dish_review/?from=' + from.toISOString() + '&to=' + to.toISOString() + '&group_by=' + group_by)
+  fetch(API_URL_BASE + 'cafeterias/' + cafeteria_id + '/avg_dish_review/?start_timestamp=' + from.toISOString() + '&end_timestamp=' + to.toISOString() + '&group_by=' + group_by)
     .then(response => {
       if (response.ok) {
         return response.json();
