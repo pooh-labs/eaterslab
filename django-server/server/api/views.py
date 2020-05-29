@@ -197,10 +197,16 @@ class StatsView(generics.ListAPIView):
         group_by_string = self.request.query_params.get('group_by')
         divider = get_divider(group_by_string)()
 
-        timestamp_start = datetime.min + divider.get_timestamp_delta(datetime.min) \
-            if start_string is None else timestamp_parse(start_string)
-        timestamp_end = datetime.max - divider.get_timestamp_delta(datetime.max) \
-            if end_string is None else timestamp_parse(end_string)
+        if start_string is None:
+            timestamp_start = datetime.min + divider.get_timestamp_delta(datetime.min)
+        else:
+            timestamp_start = timestamp_parse(start_string)
+
+        if end_string is None:
+            timestamp_end = datetime.max - divider.get_timestamp_delta(datetime.max)
+        else:
+            timestamp_end = timestamp_parse(end_string)
+
         if cafeteria_pk is None:
             raise ValueError('required params not specified')
         count = LONGEST_SUPPORTED_STATS_LEN if req_count is None else min(int(req_count), LONGEST_SUPPORTED_STATS_LEN)
