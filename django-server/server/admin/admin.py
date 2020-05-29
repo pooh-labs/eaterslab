@@ -4,6 +4,8 @@ from django.contrib.admin import AdminSite
 from django.contrib.admin import ModelAdmin
 from django.db.models import Subquery, OuterRef, Max
 from django.utils.html import format_html
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
 
 from .views import StatsView
 
@@ -60,3 +62,6 @@ admin_site.register(Camera, CameraAdmin)
 admin_site.register(FixedMenuOption)
 admin_site.register(FixedMenuOptionReview)
 admin_site.register(MenuOptionTag)
+
+UserAdmin.list_display = ['email', 'first_name', 'last_name', 'is_active', 'date_joined', 'is_staff']
+admin_site.register(User)
