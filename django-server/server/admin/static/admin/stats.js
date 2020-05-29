@@ -671,7 +671,7 @@ function makeOccupancyData(startDate, endDate) {
 }
 
 function loadOccupancy(cafeteria_id, from, to) {
-  return fetch(API_URL_BASE + 'cafeterias/' + cafeteria_id + '/stats/occupancy/by_hour?timestamp_start=' + from.toISOString() + '&timestamp_end=' + to.toISOString())
+  return fetch(API_URL_BASE + 'cafeterias/' + cafeteria_id + '/stats/occupancy?start_timestamp=' + from.toISOString() + '&end_timestamp=' + to.toISOString())
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -725,7 +725,7 @@ function loadOccupancy(cafeteria_id, from, to) {
 }
 
 function loadRelOccupancy(cafeteria_id, from, to) {
-  return fetch(API_URL_BASE + 'cafeterias/' + cafeteria_id + '/stats/occupancy/by_hour?timestamp_start=' + from.toISOString() + '&timestamp_end=' + to.toISOString())
+  return fetch(API_URL_BASE + 'cafeterias/' + cafeteria_id + '/stats/occupancy?start_timestamp=' + from.toISOString() + '&end_timestamp=' + to.toISOString())
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -844,7 +844,7 @@ function loadAvgReview(cafeteria_id, from, to, group_by) {
 
   // TODO: Replace sample_promise with actual API call when implemented
   /*
-  fetch(API_URL_BASE + 'cafeterias/' + cafeteria_id + '/avg_dish_review/?timestamp_start=' + from.toISOString() + '&timestamp_end=' + to.toISOString() + '&group_by=' + group_by)
+  fetch(API_URL_BASE + 'cafeterias/' + cafeteria_id + '/avg_dish_review/?start_timestamp=' + from.toISOString() + '&end_timestamp=' + to.toISOString() + '&group_by=' + group_by)
     .then(response => {
       if (response.ok) {
         return response.json();

@@ -149,24 +149,19 @@ class YearStatsDivider(StatsDivider):
 
 
 class TimeStampedFilterSet(filters.FilterSet):
-    timestamp_start = filters.DateTimeFilter(required=False)
-    timestamp_end = filters.DateTimeFilter(required=False)
+    start_timestamp = filters.DateTimeFilter(required=False)
+    end_timestamp = filters.DateTimeFilter(required=False)
     count = filters.NumberFilter(required=False)
+    group_by = filters.CharFilter(required=False)
 
 
 LONGEST_SUPPORTED_STATS_LEN = 1024
+DEFAULT_GROUP_BY = HourStatsDivider
 
 
 class StatsView(generics.ListAPIView):
     filter_backends = [filters.DjangoFilterBackend]
     filterset_class = TimeStampedFilterSet
-    divider = None
-
-    @classmethod
-    def as_view(cls, **initkwargs):
-        obj = super().as_view(**initkwargs)
-        obj.divider = initkwargs.get('divider', None)()
-        return obj
 
     @abc.abstractmethod
     def get_full_queryset(self, cafeteria_id):
@@ -197,13 +192,14 @@ class StatsView(generics.ListAPIView):
             return []
         cafeteria_pk = self.kwargs.get('cafeteria_pk')
         req_count = self.request.query_params.get('count')
-        start_string = self.request.query_params.get('timestamp_start')
-        end_string = self.request.query_params.get('timestamp_end')
-        divider = self.divider
+        start_string = self.request.query_params.get('start_timestamp')
+        end_string = self.request.query_params.get('end_timestamp')
+        group_by_string = self.request.query_params.get('group_by')
+        divider = get_divider(group_by_string)()
 
-        timestamp_start = datetime.min + divider.get_timestamp_delta(divider, datetime.min) \
+        timestamp_start = datetime.min + divider.get_timestamp_delta(datetime.min) \
             if start_string is None else timestamp_parse(start_string)
-        timestamp_end = datetime.max - divider.get_timestamp_delta(divider, datetime.max) \
+        timestamp_end = datetime.max - divider.get_timestamp_delta(datetime.max) \
             if end_string is None else timestamp_parse(end_string)
         if cafeteria_pk is None:
             raise ValueError('required params not specified')
@@ -216,20 +212,21 @@ class StatsView(generics.ListAPIView):
         before_data = data.filter(**{lookup_lte: timestamp_start}).order_by(self.timestamp_field_name())
         count_value = self.init_value(before_data)
         begin_stamp = timestamp_start
-        end_stamp = timestamp_start + divider.get_timestamp_delta(divider, timestamp_start)
+        end_stamp = timestamp_start + divider.get_timestamp_delta(timestamp_start)
 
         results = [(count_value, begin_stamp)]
         for interval_i in range(int(count) - 1):
             finish_now = False
-            if end_stamp > utc.localize(datetime.now()) or end_stamp > timestamp_end:
+            if end_stamp.astimezone() > datetime.now().astimezone() \
+                    or end_stamp.astimezone() > timestamp_end.astimezone():
                 end_stamp = datetime.now()
                 finish_now = True
 
             curr_queryset = data.filter(**{lookup_gt: begin_stamp, lookup_lte: end_stamp}) \
                 .order_by(self.timestamp_field_name())
             count_value = self.next_count_value(count_value, curr_queryset)
-            begin_stamp += divider.get_timestamp_delta(divider, begin_stamp)
-            end_stamp += divider.get_timestamp_delta(divider, begin_stamp)
+            begin_stamp += divider.get_timestamp_delta(begin_stamp)
+            end_stamp += divider.get_timestamp_delta(begin_stamp)
             results.append((count_value, begin_stamp))
 
             if finish_now:
@@ -239,23 +236,15 @@ class StatsView(generics.ListAPIView):
                 for index, (value, stamp) in enumerate(results)]
 
 
-def get_stats_ranges_views(stats_type):
-    return [
-        ('by_hour', stats_type.as_view(divider=HourStatsDivider)),
-        ('by_day', stats_type.as_view(divider=DayStatsDivider)),
-        ('by_week', stats_type.as_view(divider=WeekStatsDivider)),
-        ('by_month', stats_type.as_view(divider=MonthStatsDivider)),
-        ('by_year', stats_type.as_view(divider=YearStatsDivider))
-    ]
-
-
-def cafeterias_stats():
-    result = []
-    all_ranges_views = [(name, get_stats_ranges_views(view)) for (name, view) in AVAILABLE_STATS]
-    for (name, ranges_views) in all_ranges_views:
-        for (range_name, view) in ranges_views:
-            result.append((name, range_name, view))
-    return result
+def get_divider(group_by):
+    available = {
+        'hour': HourStatsDivider,
+        'day': DayStatsDivider,
+        'week': WeekStatsDivider,
+        'month': MonthStatsDivider,
+        'year': YearStatsDivider
+    }
+    return available.get(group_by, DEFAULT_GROUP_BY)
 
 
 def count_people(queryset):
@@ -301,7 +290,7 @@ class OccupancyStatsView(StatsView):
     def map_to_result_objects(self, index, value, stamp, cafeteria_pk):
         capacity = Cafeteria.objects.get(id=cafeteria_pk).capacity
         return OccupancyStatsData(id=index,
-                                  timestamp=self.divider.get_timestamp_name(self.divider, stamp),
+                                  timestamp=stamp,
                                   occupancy=value,
                                   occupancy_relative=(float(value) / float(capacity)))
 

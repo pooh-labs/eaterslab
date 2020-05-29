@@ -32,6 +32,6 @@ urlpatterns = [
     path('upload/artifacts/beta/<str:filename>/', UploadArtifactsBetaView.as_view()),
 ]
 urlpatterns.extend([
-    path('cafeterias/<int:cafeteria_pk>/stats/{}/{}'.format(name, stats_range), view)
-    for (name, stats_range, view) in cafeterias_stats()
+    path('cafeterias/<int:cafeteria_pk>/stats/{}'.format(name), view.as_view())
+    for (name, view) in AVAILABLE_STATS
 ])
