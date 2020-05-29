@@ -258,9 +258,9 @@ const App = new Vue({
       let app = this;
       switch (type) {
         case DatasetType.OCCUPANCY:
-          return window.loadOccupancy(cafeteria_id, date_from, date_to);
+          return window.loadOccupancy(cafeteria_id, date_from, date_to, 'occupancy');
         case DatasetType.RELATIVE_OCCUPANCY:
-          return window.loadRelOccupancy(cafeteria_id, date_from, date_to);
+          return window.loadOccupancy(cafeteria_id, date_from, date_to, 'occupancy_relative');
         case DatasetType.AVERAGE_DISH_REVIEW:
           return window.loadAvgReview(cafeteria_id, date_from, date_to, this.group_by);
         default:
@@ -278,19 +278,10 @@ const App = new Vue({
       let app = this;
       this.load_dataset(cafeteria_id, type)
         .then(data => {
-          let mapped_data = data.map(value => {
-              return  {
-                timestamp: value.timestamp,
-                value: {
-                  relative: value.occupancy_relative,
-                  total: value.occupancy
-                }
-              };
-            });
           app.datasets.push({
             'cafeteria_id': cafeteria_id,
             'type': type,
-            'data': mapped_data
+            'data': data
           });
         })
         .then(() => app.showChart())
@@ -641,141 +632,26 @@ function loadCafeterias() {
     });
 }
 
-function makeOccupancyData(startDate, endDate) {
-  const currentDate = new Date();
-  startDate = startDate || new Date();
-  var startYear = startDate.getFullYear();
-  var startMonth = startDate.getMonth();
-  var startDay = startDate.getDate();
-  var toReturn = [];
-  let i = 0;
-  while (true) {
-    const timestamp = new Date(startDate);
-    timestamp.setHours(startDate.getHours() + i);
-    if (timestamp >= endDate || timestamp >= currentDate) {
-      break;
-    }
-
-    let people_in = Math.round(Math.max(i > 0 ? toReturn[i - 1].value.total + Math.random() * 10 - 5 : Math.random() * 5, 0));
-    toReturn[i] = {
-      timestamp: timestamp,
-      value: {
-        relative: people_in / 50,
-        total: people_in
-      }
-    };
-
-    i++;
-  };
-  return toReturn;
-}
-
-function loadOccupancy(cafeteria_id, from, to) {
-  return fetch(API_URL_BASE + 'cafeterias/' + cafeteria_id + '/stats/occupancy?start_timestamp=' + from.toISOString() + '&end_timestamp=' + to.toISOString())
+function loadOccupancy(cafeteria_id, from, to, y_field_name) {
+  const api_url = `cafeterias/${cafeteria_id}/stats/occupancy?start_timestamp=${from.toISOString()}&end_timestamp=${to.toISOString()}`;
+  return fetch(API_URL_BASE + api_url)
     .then(response => {
       if (response.ok) {
         return response.json();
       } else {
         throw new Error('HTTP status ' + response.status);
       }
-    });
-  /*
-  let sample_data = [
-    {
-      timestamp: '2020-05-20T09:37:38.593Z',
-      value: {
-        relative: 0.86, // 86% occupied
-        total: 43       // 43 people inside
-      }
-    },
-    {
-      timestamp: '2020-05-20T09:38:38.593Z',
-      value: {
-        relative: 0.98,
-        total: 49
-      }
-    },
-    {
-      timestamp: '2020-05-20T09:39:38.593Z',
-      value: {
-        relative: 0.90,
-        total: 45
-      }
-    },
-  ];
-
-  let sample_promise = new Promise(function(resolve, reject) {
-    setTimeout(() => {
-      resolve(makeOccupancyData(from, to));
-    }, DEBUGGING_LAG);
-  });
-
-  return sample_promise
+    })
     .then(data => {
       let result = [];
       data.forEach(entry => {
         result.push({
           x: new Date(entry.timestamp),
-          y: entry.value.total
+          y: entry[y_field_name]
         });
       });
       return result;
     });
-  */
-}
-
-function loadRelOccupancy(cafeteria_id, from, to) {
-  return fetch(API_URL_BASE + 'cafeterias/' + cafeteria_id + '/stats/occupancy?start_timestamp=' + from.toISOString() + '&end_timestamp=' + to.toISOString())
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error('HTTP status ' + response.status);
-      }
-    });
-  /*
-  let sample_data = [
-    {
-      timestamp: '2020-05-20T09:37:38.593Z',
-      value: {
-        relative: 0.86, // 86% occupied
-        total: 43       // 43 people inside
-      }
-    },
-    {
-      timestamp: '2020-05-20T09:38:38.593Z',
-      value: {
-        relative: 0.98,
-        total: 49
-      }
-    },
-    {
-      timestamp: '2020-05-20T09:39:38.593Z',
-      value: {
-        relative: 0.90,
-        total: 45
-      }
-    },
-  ];
-
-  let sample_promise = new Promise(function(resolve, reject) {
-    setTimeout(() => {
-      resolve(makeOccupancyData(from, to));
-    }, DEBUGGING_LAG);
-  });
-
-  return sample_promise
-    .then(data => {
-      let result = [];
-      data.forEach(entry => {
-        result.push({
-          x: new Date(entry.timestamp),
-          y: entry.value.relative
-        });
-      });
-      return result;
-    });
-  */
 }
 
 function makeAvgReviewData(startDate, endDate, groupBy) {
