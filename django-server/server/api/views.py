@@ -119,9 +119,6 @@ class StatsDivider:
     def get_timestamp_delta(self, time: datetime):
         pass
 
-    def get_timestamp_name(self, time: datetime):
-        return time.isoformat()
-
 
 class HourStatsDivider(StatsDivider):
     def get_timestamp_delta(self, time: datetime):
@@ -298,7 +295,7 @@ class OccupancyStatsView(StatsView):
         return OccupancyStatsData(id=index,
                                   timestamp=timestamp,
                                   occupancy=value,
-                                  occupancy_relative=(float(value) / float(capacity)))
+                                  occupancy_relative=min((float(value) / float(capacity)), 1.0))
 
 
 AVAILABLE_STATS = [
