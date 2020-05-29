@@ -1,4 +1,5 @@
 from django.urls import include, path
+from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework_nested.routers import DefaultRouter, NestedSimpleRouter
 
 from .views import *
@@ -30,6 +31,7 @@ urlpatterns = [
     path('', include(cameras_router.urls)),
     path('upload/artifacts/<str:filename>/', UploadArtifactsView.as_view()),
     path('upload/artifacts/beta/<str:filename>/', UploadArtifactsBetaView.as_view()),
+    path('token-auth/', obtain_auth_token),
 ]
 urlpatterns.extend([
     path('cafeterias/<int:cafeteria_pk>/stats/{}'.format(name), view.as_view())

@@ -11,8 +11,9 @@ from django_filters import rest_framework as filters
 from rest_framework import views, viewsets, generics
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.parsers import FileUploadParser
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
+from rest_framework import status
 from server import settings
 
 from .models import *
@@ -76,12 +77,21 @@ class CameraViewSet(viewsets.ModelViewSet):
 class CameraEventsViewSet(viewsets.ModelViewSet):
     http_method_names = ['post']
     serializer_class = CameraEventSerializer
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         if getattr(self, 'swagger_fake_view', False):
             # queryset just for schema generation metadata
             return CameraEvent.objects.none()
         return CameraEvent.objects.filter(camera_id=self.kwargs['camera_pk'])
+
+    def create(self, request, *args, **kwargs):
+        camera = Camera.objects.get(id=self.kwargs['camera_pk'])
+        owner_id = camera.cafeteria.owner.id
+        if owner_id is None or owner_id != request.user.id:
+            return Response(status=status.HTTP_403_FORBIDDEN)
+        return super(CameraEventsViewSet, self).create(request, *args, **kwargs)
 
 
 class FixedMenuOptionViewSet(viewsets.ReadOnlyModelViewSet):
