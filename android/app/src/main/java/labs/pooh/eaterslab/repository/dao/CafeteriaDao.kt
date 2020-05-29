@@ -3,7 +3,7 @@ package labs.pooh.eaterslab.repository.dao
 import android.graphics.Bitmap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import labs.pooh.client.models.Cafeteria
+import labs.pooh.eaterslab.client.models.Cafeteria
 import labs.pooh.eaterslab.util.downloadImageFrom
 
 data class CafeteriaDao (

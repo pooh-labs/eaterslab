@@ -2,7 +2,7 @@ package labs.pooh.eaterslab.ui.view
 
 import android.content.Context
 import labs.pooh.eaterslab.R
-import labs.pooh.eaterslab.repository.TimeApiFormat
+import labs.pooh.eaterslab.repository.TimeApi
 
 class PickedTimeHolder(private val context: Context, private val useRepresentation: (String) -> Unit) {
     private var hour: Int? = null
@@ -26,13 +26,13 @@ class PickedTimeHolder(private val context: Context, private val useRepresentati
         }
     }
 
-    fun toTimeApiFormat(): TimeApiFormat? {
+    fun toTimeApiFormat(): TimeApi? {
         val currHour = hour
         val currMinute = minute
         return if (currHour == null || currMinute == null) {
             null
         } else {
-            TimeApiFormat(currHour, currMinute)
+            TimeApi(currHour, currMinute)
         }
     }
 }

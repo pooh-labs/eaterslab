@@ -9,8 +9,12 @@ import android.widget.FrameLayout
 import android.widget.Space
 import androidx.core.content.ContextCompat
 import androidx.core.view.plusAssign
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_stats.*
 import labs.pooh.eaterslab.R
+import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
+import labs.pooh.eaterslab.ui.activity.abstracts.viewModelFactory
 import labs.pooh.eaterslab.ui.fragment.ThemedAbstractFragment
 import labs.pooh.eaterslab.util.*
 import kotlin.math.abs
@@ -18,6 +22,12 @@ import kotlin.math.log
 import kotlin.math.sin
 
 class StatsFragment : ThemedAbstractFragment() {
+
+    private val viewModel by lazy {
+        ViewModelProvider(this, viewModelFactory {
+            StatsViewModel(activity as ConnectionStatusNotifier)
+        }).get(StatsViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,6 +42,30 @@ class StatsFragment : ThemedAbstractFragment() {
 
         val red = ContextCompat.getColor(requireContext(), R.color.colorAccent)
         val yellow = ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark)
+
+        viewModel.currentDayData.observe(viewLifecycleOwner, Observer {
+            val data = it.map { stat -> stat.occupancyRelative }
+            with(requireContext()) {
+                val frame = FrameLayout(this)
+                val barView = HorizontalBarPlot(this).apply {
+                    ticks = getOpenOrderedHours(StatsViewModel.minHour, StatsViewModel.maxHour)
+                    ticksIndexer = workingHoursIndexer(StatsViewModel.minHour)
+                    ticksScale = 2.0
+                    labelColor = getPlotFontColorForTheme()
+                    printTicks = printTicks()
+                }.plot(data, red)
+
+                frame += barView
+                frame.layoutParams = FrameLayout.LayoutParams(1000, 600).apply {
+                    gravity = Gravity.CENTER_HORIZONTAL
+                }
+
+                linearLayout += frame
+                linearLayout += Space(this).apply {
+                    layoutParams = ViewGroup.LayoutParams(0, 50)
+                }
+            }
+        })
 
         val exampleData = listOf(
             List(30) { it + sin(it.toDouble()) },
@@ -87,5 +121,7 @@ class StatsFragment : ThemedAbstractFragment() {
                 }
             }
         }
+
+        viewModel.updateStatsDayData()
     }
 }

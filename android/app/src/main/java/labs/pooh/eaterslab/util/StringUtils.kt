@@ -25,4 +25,4 @@ fun monthDaysIndexer(day: String) = day.toInt() - 1
 
 fun hoursIndexer(hour: String) = hour.takeWhile { it != ':' }.toInt()
 
-fun workingHoursIndexer(hour: String) = hoursIndexer(hour) - 8
+fun workingHoursIndexer(from: Int): (String) -> Int = { hoursIndexer(it) - from }

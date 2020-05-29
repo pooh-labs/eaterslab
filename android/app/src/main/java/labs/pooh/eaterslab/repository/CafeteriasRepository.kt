@@ -2,14 +2,15 @@ package labs.pooh.eaterslab.repository
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import labs.pooh.client.apis.CafeteriasApi
-import labs.pooh.client.apis.FixedMenuReviewsApi
-import labs.pooh.client.models.FixedMenuOptionReview
+import labs.pooh.eaterslab.client.apis.CafeteriasApi
+import labs.pooh.eaterslab.client.apis.FixedMenuReviewsApi
+import labs.pooh.eaterslab.client.models.FixedMenuOptionReview
+import labs.pooh.eaterslab.client.models.OccupancyStats
 import labs.pooh.eaterslab.repository.dao.*
 import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
 import org.threeten.bp.OffsetDateTime
 import java.lang.Exception
-import java.util.*
+import java.math.BigDecimal
 
 class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatusNotifier) {
 
@@ -21,8 +22,8 @@ class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatu
 
     suspend fun cafeteriasList() = cafeteriasListFiltered()
 
-    suspend fun cafeteriasListFiltered(openedFrom: TimeApiFormat? = null, openedTo: TimeApiFormat? = null,
-                                       openedNow: BooleanApiFormat? = null, prefixName: String? = null): List<CafeteriaDao>? {
+    suspend fun cafeteriasListFiltered(openedFrom: TimeApi? = null, openedTo: TimeApi? = null,
+                                       openedNow: BooleanApi? = null, prefixName: String? = null): List<CafeteriaDao>? {
         val refreshed = tryApiConnect {
             val models = cafeteriasApi.cafeteriasList(openedFrom?.getForRequest(), openedTo?.getForRequest(),
                                                       openedNow?.getForRequest(), prefixName, null)
@@ -50,6 +51,16 @@ class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatu
         }
 
         return cachedCafeterias[id]
+    }
+
+    suspend fun cafeteriaOccupancyStatsRead(cafeteriaId: Int, from: OffsetDateTime, count: Int,
+                                            groupBy: StatsGroupOption): List<OccupancyStatsDao>? {
+        val data = tryApiConnect {
+            cafeteriasApi.cafeteriasStatsOccupancyList("$cafeteriaId", "$from",
+                null, BigDecimal(count), groupBy.getForRequest())
+        }
+
+        return data?.map(OccupancyStats::toDao)
     }
 
     suspend fun addFixedMenuOptionReview(menuOption: Int, stars: Int, name: String) {
@@ -107,15 +118,23 @@ interface ApiParamRepresentation {
     fun getForRequest(): String
 }
 
-class TimeApiFormat(val hour: Int, val minute: Int) : ApiParamRepresentation {
+class TimeApi(val hour: Int, val minute: Int) : ApiParamRepresentation {
 
     override fun getForRequest(): String = "$hour:$minute:00"
 }
 
-class BooleanApiFormat(val value: Boolean) : ApiParamRepresentation {
+class BooleanApi(val value: Boolean) : ApiParamRepresentation {
     override fun getForRequest(): String = if (value) "True" else "False"
 
     companion object {
-        fun packedForTrue(value: Boolean) = if (value) BooleanApiFormat(true) else null
+        fun packedForTrue(value: Boolean) = if (value) BooleanApi(true) else null
     }
+}
+
+enum class StatsGroupOption: ApiParamRepresentation {
+    BY_HOUR { override fun getForRequest() = "hour" },
+    BY_DAY { override fun getForRequest() = "day" },
+    BY_WEEK { override fun getForRequest() = "week" },
+    BY_MONTH  { override fun getForRequest() = "month" },
+    BY_YEAR { override fun getForRequest() = "year" },
 }

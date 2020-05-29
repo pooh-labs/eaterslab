@@ -17,7 +17,7 @@ import labs.pooh.eaterslab.ui.view.RatedFoodView
 
 class MenuFragment : Fragment() {
 
-    private val slideshowViewModel by lazy {
+    private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory {
             MenuViewModel(activity as ConnectionStatusNotifier)
         }).get(MenuViewModel::class.java)
@@ -36,23 +36,23 @@ class MenuFragment : Fragment() {
 
         textSlideshow.text = getString(R.string.loading)
 
-        slideshowViewModel.textVisible.observe(viewLifecycleOwner, Observer { visible ->
+        viewModel.textVisible.observe(viewLifecycleOwner, Observer { visible ->
             textSlideshow.visibility = if (visible) View.VISIBLE else View.GONE
         })
 
-        slideshowViewModel.lastLoadedMenuOptionLiveData.observe(viewLifecycleOwner,
+        viewModel.lastLoadedMenuOptionLiveData.observe(viewLifecycleOwner,
             Observer { menuOption -> addMenuOptionToView(menuOption) })
     }
 
     override fun onResume() {
         menuOptionsGridLayout.removeAllViews()
         super.onResume()
-        slideshowViewModel.updateMenuOptionsData()
+        viewModel.updateMenuOptionsData()
     }
 
     override fun onPause() {
         super.onPause()
-        slideshowViewModel.clearMenuOptionsData()
+        viewModel.clearMenuOptionsData()
     }
 
     private fun addMenuOptionToView(menuOption: FixedMenuOptionDao) {

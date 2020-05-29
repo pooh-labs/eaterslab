@@ -4,13 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import labs.pooh.eaterslab.repository.BooleanApiFormat
-import labs.pooh.eaterslab.repository.CafeteriasRepository
-import labs.pooh.eaterslab.repository.TimeApiFormat
+import labs.pooh.eaterslab.repository.BooleanApi
+import labs.pooh.eaterslab.repository.TimeApi
 import labs.pooh.eaterslab.repository.dao.CafeteriaDao
 import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
 import labs.pooh.eaterslab.ui.activity.abstracts.RepositoryAccessViewModel
-import java.util.*
 
 typealias CafeteriaFilter = (CafeteriaDao) -> Boolean
 
@@ -34,10 +32,10 @@ class SearchViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessView
         _cafeteriasLiveData.value = _cafeteriasLiveData.value
     }
 
-    fun getFilteredData(prefixFilter: String, onlyOpenedFilter: Boolean, timeFrom: TimeApiFormat?, timeTo: TimeApiFormat?) {
+    fun getFilteredData(prefixFilter: String, onlyOpenedFilter: Boolean, timeFrom: TimeApi?, timeTo: TimeApi?) {
         viewModelScope.launch {
             val cafeterias = repository.cafeteriasListFiltered(
-                openedNow = BooleanApiFormat.packedForTrue(onlyOpenedFilter),
+                openedNow = BooleanApi.packedForTrue(onlyOpenedFilter),
                 prefixName = prefixFilter,
                 openedFrom = timeFrom,
                 openedTo = timeTo
