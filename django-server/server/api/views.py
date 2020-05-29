@@ -180,7 +180,7 @@ class StatsView(generics.ListAPIView):
         pass
 
     @abc.abstractmethod
-    def map_to_result_objects(self, index, value, stamp, cafeteria_pk):
+    def map_to_result_objects(self, index, value, timestamp, cafeteria_pk):
         pass
 
     def filter_queryset(self, queryset):
@@ -238,8 +238,8 @@ class StatsView(generics.ListAPIView):
             if finish_now:
                 break
 
-        return [self.map_to_result_objects(index, value, stamp, cafeteria_pk)
-                for index, (value, stamp) in enumerate(results)]
+        return [self.map_to_result_objects(index, value, timestamp, cafeteria_pk)
+                for index, (value, timestamp) in enumerate(results)]
 
 
 def get_divider(group_by):
@@ -293,10 +293,10 @@ class OccupancyStatsView(StatsView):
             count_value = last_override.event_value + count_people(after_override)
         return count_value
 
-    def map_to_result_objects(self, index, value, stamp, cafeteria_pk):
+    def map_to_result_objects(self, index, value, timestamp, cafeteria_pk):
         capacity = Cafeteria.objects.get(id=cafeteria_pk).capacity
         return OccupancyStatsData(id=index,
-                                  timestamp=stamp,
+                                  timestamp=timestamp,
                                   occupancy=value,
                                   occupancy_relative=(float(value) / float(capacity)))
 
