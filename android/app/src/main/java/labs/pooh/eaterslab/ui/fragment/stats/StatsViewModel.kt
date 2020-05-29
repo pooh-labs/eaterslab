@@ -26,7 +26,9 @@ class StatsViewModel(connectionStatusNotifier: ConnectionStatusNotifier) : ViewM
         value = listOf()
     }
 
-    val currentDayData: LiveData<List<OccupancyStatsDao>> = _currentDayData
+    val currentDayData: LiveData<List<OccupancyStatsDao>> = _currentDayData.apply {
+        value = listOf()
+    }
 
     fun updateStatsDayData() = viewModelScope.launch {
         val cafeteriaId = MainActivity.lastSelectedCafeteriaId

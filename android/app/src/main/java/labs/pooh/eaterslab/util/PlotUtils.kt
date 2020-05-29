@@ -48,7 +48,9 @@ open class HorizontalBarPlot(context: Context) : AbstractStandardPlot(context) {
     override fun <T : Number> plot(data: List<T>, mainColor: Int): View {
 
         val doubleData = data.map(Number::toDouble)
-        assert(doubleData.isNotEmpty())
+        if (data.isEmpty()) {
+            return FrameLayout(context)
+        }
 
         val printTicks = ticks.isNotEmpty() && ticksIndexer != null
 
@@ -147,7 +149,9 @@ open class DiscreteLinePlot(context: Context) : AbstractStandardPlot(context) {
     
     override fun <T : Number> plot(data: List<T>, mainColor: Int): View {
         val doubleData = data.map(Number::toDouble)
-        assert(doubleData.isNotEmpty())
+        if (data.isEmpty()) {
+            return FrameLayout(context)
+        }
 
         val w = doubleData.size * barWidth + padding
         val h = proportion.y / proportion.x * w - 2 * padding - labelSize
