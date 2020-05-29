@@ -144,6 +144,45 @@ paths:
         in: path
         required: true
         type: string
+  /cafeterias/{cafeteria_pk}/stats/occupancy:
+    get:
+      operationId: cafeterias_stats_occupancy_list
+      description: ''
+      parameters:
+        - name: start_timestamp
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: end_timestamp
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: count
+          in: query
+          description: ''
+          required: false
+          type: number
+        - name: group_by
+          in: query
+          description: ''
+          required: false
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OccupancyStats'
+      tags:
+        - cafeterias
+    parameters:
+      - name: cafeteria_pk
+        in: path
+        required: true
+        type: string
   /cafeterias/{id}/:
     get:
       operationId: cafeterias_read
@@ -410,6 +449,26 @@ definitions:
       option:
         title: Option
         type: integer
+  OccupancyStats:
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      timestamp:
+        title: Timestamp
+        type: string
+        format: date-time
+        readOnly: true
+      occupancy:
+        title: Occupancy
+        type: integer
+        readOnly: true
+      occupancy_relative:
+        title: Occupancy relative
+        type: number
+        readOnly: true
   CameraEvent:
     required:
       - event_type
