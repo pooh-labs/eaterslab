@@ -23,7 +23,7 @@ class Cafeteria(models.Model):
 
     @property
     def occupancy_relative(self):
-        return float(self.occupancy) / float(self.capacity)
+        return min(1.0, float(self.occupancy) / float(self.capacity))
 
     def __str__(self):
         return self.name
@@ -91,13 +91,12 @@ class CameraEvent(models.Model):
         if self.event_type == CameraEvent.EventType.OCCUPANCY_OVERRIDE.value \
                 and self.event_value is not None and self.event_value <= self.cafeteria.capacity:
             cafeteria.update(occupancy=self.event_value)
-        elif self.event_type == CameraEvent.EventType.PERSON_ENTERED.value \
-                and self.cafeteria.occupancy < self.cafeteria.capacity:
+        elif self.event_type == CameraEvent.EventType.PERSON_ENTERED.value:
             cafeteria.update(occupancy=self.cafeteria.occupancy + 1)
         elif self.event_type == CameraEvent.EventType.PERSON_LEFT.value \
                 and self.cafeteria.occupancy > 0:
             cafeteria.update(occupancy=self.cafeteria.occupancy - 1)
-        elif self.event_type != CameraEvent.EventType.MONITORING_ENDED.value \
+        elif self.event_type != CameraEvent.EventType.MONITORING_STARTED.value \
                 and self.event_type != CameraEvent.EventType.MONITORING_ENDED.value:
             raise ValueError('Invalid CameraEvent fields specification')
 
