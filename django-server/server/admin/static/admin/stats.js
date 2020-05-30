@@ -509,6 +509,8 @@ const App = new Vue({
       }
 
       let show_guideline = false;
+      let show_left_axis = false;
+      let show_right_axis = false;
       plots = this.datasets.map(dataset => {
         if (dataset.data.length == 0) {
           return null;
@@ -538,6 +540,7 @@ const App = new Vue({
             plot.y(function(d) { return d.y; }, yLeftScale);
             plot.attr("stroke", color.hex);
             plot.attr("stroke-width", 1);
+            show_left_axis = true;
             break;
 
           case DatasetType.RELATIVE_OCCUPANCY:
@@ -546,6 +549,7 @@ const App = new Vue({
             plot.attr("stroke", color.hex);
             plot.attr("stroke-dasharray", "4 2");
             plot.attr("stroke-width", 1);
+            show_left_axis = true;
             show_guideline = true;
             break;
 
@@ -553,6 +557,7 @@ const App = new Vue({
             plot = new Plottable.Plots.Bar()
             plot.y(function(d) { return d.y; }, yRightScale);
             plot.attr("fill", color.rgba(0.2));
+            show_right_axis = true;
             break;
         }
 
@@ -590,9 +595,21 @@ const App = new Vue({
         plots.push(guideline);
       }
 
+      let left_axis_nullable = yLeftAxis;
+      if (!show_left_axis) {
+        left_axis_nullable = null;
+        yLeftAxis.detach();
+      }
+
+      let right_axis_nullable = yRightAxis;
+      if (!show_right_axis) {
+        right_axis_nullable = null;
+        yRightAxis.detach();
+      }
+
       const group = new Plottable.Components.Group(plots);
       chart = new Plottable.Components.Table([
-        [yLeftAxis, group, yRightAxis],
+        [left_axis_nullable, group, right_axis_nullable],
         [null, xAxis, null]
       ]);
       chart.renderTo('#graph-contents');
