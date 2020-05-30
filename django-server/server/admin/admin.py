@@ -13,6 +13,7 @@ from api.models import *
 # To enforce registering translations
 from api.translation import *
 
+
 class MyAdminSite(AdminSite):
     site_header = _('EatersLab administration')
     site_title = _('EatersLab')
@@ -30,6 +31,7 @@ class MyAdminSite(AdminSite):
 class CafeteriaAdmin(TranslationAdmin):
     pass
 
+
 class CameraAdmin(ModelAdmin):
     # TODO(Rhantolq): Add 'name' here to display once implemented
     list_display = ['id', 'state_with_icon', 'last_event']
@@ -37,8 +39,9 @@ class CameraAdmin(ModelAdmin):
     # Modify queryset to fetch last event timestamp (in _last_event column)
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
-        last_event = CameraEvent.objects.filter(camera=OuterRef('pk')).values('camera').annotate(last_event=Max('timestamp')).values('last_event')
-        queryset = queryset.annotate(_last_event = Subquery(last_event))
+        last_event = CameraEvent.objects.filter(
+            camera=OuterRef('pk')).values('camera').annotate(last_event=Max('timestamp')).values('last_event')
+        queryset = queryset.annotate(_last_event=Subquery(last_event))
         return queryset
 
     # Extra field (state, with SVG icon) display

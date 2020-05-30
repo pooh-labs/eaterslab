@@ -5,6 +5,7 @@ from api.models import Camera, CameraEvent
 
 from datetime import datetime
 
+
 class Command(BaseCommand):
     help = 'Find cameras with did not send message in set interval and mark them as losing connection'
 
