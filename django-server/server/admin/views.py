@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 
 class StatsView(TemplateView):
@@ -10,5 +11,5 @@ class StatsView(TemplateView):
             **kwargs,
             **self.admin_site.each_context(self.request),
         })
-        context['title'] = 'Statistics'
+        context['title'] = _('Statistics')
         return context

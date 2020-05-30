@@ -16,6 +16,8 @@ import environ
 import sys
 import logging
 
+from django.utils.translation import gettext_lazy as _
+
 env = environ.Env()
 environ.Env.read_env()
 
@@ -49,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'modeltranslation', # Model translations
     'django_filters',
     'rest_framework',
     'rest_framework.authtoken',  # token auth for artifacts upload
@@ -62,12 +65,14 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',  # for static files handling on deploy
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',  # for ssl handling in Django
+    'api.middleware.ApiCallLanguageMiddleware', # For setting language in API calls
 ]
 
 ROOT_URLCONF = 'server.urls'
@@ -148,7 +153,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGES = (
+    ('pl', _('Polish')),
+    ('en', _('English')),
+)
+
+LANGUAGE_CODE = 'pl'
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'pl'
 
 TIME_ZONE = 'Europe/Warsaw'
 
@@ -157,6 +168,13 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+
+# API configuration
+API_PATH_PREFIX = 'api/'
 
 # SSL enable configuration for server
 

@@ -1,9 +1,13 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+
 <!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>{% block title %}EatersLab Home{% endblock %}</title>
+    <title>{% block title %}{% trans 'EatersLab Home' %}{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{% block description %}Eaters Lab Project Page{% endblock %}"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -27,10 +31,10 @@
                 <!-- Links -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin">Admin</a>
+                        <a class="nav-link" href="/admin">{% trans 'Administration' %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/doc">Api doc</a>
+                        <a class="nav-link" href="/doc">{% trans 'API documentation' %}</a>
                     </li>
                 </ul>
             </nav>
@@ -38,7 +42,13 @@
     </div>
     <div id="main-content" class="container">
         {% block content %}
-            <h1>Welcome to EatersLab made by PoohLab.</h1>
+            <h1>{% trans 'Welcome to EatersLab by PoohLab.' %}</h1>
+
+            <ul>
+                <li>{{ LANGUAGE_CODE }}</li>
+                <li>{{ LANGUAGES }}</li>
+            </ul>
+
             <!-- Access to CSRF token -->
             {% csrf_token %}
         {% endblock %}

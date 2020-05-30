@@ -7,7 +7,6 @@ from .views import *
 router = DefaultRouter()
 router.register(r'cameras', CameraViewSet)
 router.register(r'cafeterias', CafeteriaViewSet)
-router.register(r'menu_option_tags', MenuOptionTagViewSet)
 router.register(r'fixed_menu_reviews', FixedMenuOptionReviewViewSet)
 
 cafeterias_router = NestedSimpleRouter(router, r'cafeterias', lookup='cafeteria')

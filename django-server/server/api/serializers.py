@@ -12,12 +12,6 @@ class FixedMenuOptionReviewSerializer(serializers.ModelSerializer):
         fields = ['id', 'stars', 'author_nick', 'review_time', 'option']
 
 
-class MenuOptionTagSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = MenuOptionTag
-        fields = ['id', 'name']
-
-
 class FixedMenuOptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = FixedMenuOption
@@ -34,7 +28,7 @@ class CafeteriaSerializer(serializers.ModelSerializer):
 class CameraSerializer(serializers.ModelSerializer):
     class Meta:
         model = Camera
-        fields = ['description', 'state', 'cafeteria']
+        fields = ['id', 'state', 'cafeteria']
 
 
 class CameraEventSerializer(serializers.ModelSerializer):
