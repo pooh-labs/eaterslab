@@ -28,6 +28,23 @@ class Cafeteria(models.Model):
     def __str__(self):
         return self.name
 
+    name.verbose_name = _('name')
+    description.verbose_name = _('description')
+    sub_description.verbose_name = _('additional description')
+    latitude.verbose_name = _('latitude')
+    longitude.verbose_name = _('longitude')
+    capacity.verbose_name = _('cafeteria capacity')
+    logo_url.verbose_name = _('logo_url')
+    address.verbose_name = _('address')
+    opened_from.verbose_name = _('opened_from')
+    opened_to.verbose_name = _('opened_to')
+    owner.verbose_name = _('owner')
+    occupancy.verbose_name = _('cafeteria occupancy')
+
+    class Meta:
+        verbose_name = _('cafeteria')
+        verbose_name_plural = _('cafeterias')
+
 
 class Camera(models.Model):
     class State(models.IntegerChoices):
@@ -39,6 +56,13 @@ class Camera(models.Model):
 
     state = models.IntegerField(choices=State.choices)
     cafeteria = models.ForeignKey(Cafeteria, on_delete=models.CASCADE)
+
+    state.verbose_name = _('state')
+    cafeteria.verbose_name = _('cafeteria')
+
+    class Meta:
+        verbose_name = _('camera')
+        verbose_name_plural = _('cameras')
 
 
 class CameraEvent(models.Model):
@@ -77,7 +101,15 @@ class CameraEvent(models.Model):
                 and self.event_type != CameraEvent.EventType.MONITORING_ENDED.value:
             raise ValueError('Invalid CameraEvent fields specification')
 
+    timestamp.verbose_name = _('timestamp')
+    event_type.verbose_name = _('event_type')
+    camera.verbose_name = _('camera')
+    cafeteria.verbose_name = _('cafeteria')
+    event_value.verbose_name = _('event_value')
+
     class Meta:
+        verbose_name = _('camera event')
+        verbose_name_plural = _('camera events')
         indexes = [
             # For selecting last event per camera
             models.Index(fields=['camera', 'timestamp']),
@@ -95,6 +127,17 @@ class FixedMenuOption(models.Model):
 
     def __str__(self):
         return self.name
+
+    name.verbose_name = _('name')
+    price.verbose_name = _('price')
+    vegetarian.verbose_name = _('vegetarian')
+    cafeteria.verbose_name = _('cafeteria')
+    photo_url.verbose_name = _('photo_url')
+    avg_review_stars.verbose_name = _('avg_review_stars')
+
+    class Meta:
+        verbose_name = _('fixed menu entry')
+        verbose_name_plural = _('fixed menu entries')
 
 
 class FixedMenuOptionReview(models.Model):
@@ -116,6 +159,15 @@ class FixedMenuOptionReview(models.Model):
     def calculate_new_avg_review(self, old_review_stars, number_of_reviews):
         current_sum = old_review_stars * number_of_reviews + self.stars
         return current_sum / (number_of_reviews + 1)
+
+    option.verbose_name = _('menu option')
+    stars.verbose_name = _('rating')
+    author_nick.verbose_name = _('author')
+    review_time.verbose_name = _('timestamp')
+
+    class Meta:
+        verbose_name = _('menu entry review')
+        verbose_name_plural = _('menu entry reviews')
 
 
 class OccupancyStatsData(object):

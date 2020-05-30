@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-30 10:35+0200\n"
+"POT-Creation-Date: 2020-05-30 10:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,260 +16,261 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: admin/admin.py:17
 msgid "EatersLab administration"
-msgstr "Administracja EatersLab"
+msgstr ""
 
 #: admin/admin.py:18
 msgid "EatersLab"
-msgstr "EatersLab"
+msgstr ""
 
 #: admin/admin.py:19 home/templates/home/home.html:34
 msgid "Administration"
-msgstr "Administracja"
+msgstr ""
 
 #: admin/admin.py:62
 msgid "State"
-msgstr "Stan"
+msgstr ""
 
 #: admin/admin.py:63
 msgid "Last event time"
-msgstr "Czas ostatniego zdarzenia"
+msgstr ""
 
 #: admin/templates/admin/app_list_override.html:8
 #, python-format
 msgid "Models in the %(name)s application"
-msgstr "Modele w aplikacji %(name)s"
+msgstr ""
 
 #: admin/templates/admin/app_list_override.html:19
 msgid "Add"
-msgstr "Dodaj"
+msgstr ""
 
 #: admin/templates/admin/app_list_override.html:26
 msgid "View"
-msgstr "Zobacz"
+msgstr ""
 
 #: admin/templates/admin/app_list_override.html:28
 msgid "Change"
-msgstr "Zmień"
+msgstr ""
 
 #: admin/templates/admin/app_list_override.html:41
 msgid "Other pages"
-msgstr "Inne strony"
+msgstr ""
 
 #: admin/templates/admin/app_list_override.html:44 admin/views.py:14
 msgid "Statistics"
-msgstr "Statystyki"
+msgstr ""
 
 #: admin/templates/admin/app_list_override.html:49
 msgid "You don’t have permission to view or edit anything."
-msgstr "Nie masz uprawnień do oglądania ani zmieniania czegokolwiek."
+msgstr ""
 
 #: admin/templates/admin/index_override.html:23
 msgid "Recent actions"
-msgstr "Ostatnie działania"
+msgstr ""
 
 #: admin/templates/admin/index_override.html:24
 msgid "My actions"
-msgstr "Moje działania"
+msgstr ""
 
 #: admin/templates/admin/index_override.html:28
 msgid "None available"
-msgstr "Brak dostępnych"
+msgstr ""
 
 #: admin/templates/admin/index_override.html:42
 msgid "Unknown content"
-msgstr "Nieznany typ zawartości"
+msgstr ""
 
 #: admin/templates/admin/stats.html:23
 msgid "Home"
-msgstr "Strona główna"
+msgstr ""
 
 #: api/apps.py:7
 msgid "API"
-msgstr "API"
+msgstr ""
 
 #: api/models.py:31 api/models.py:131
 msgid "name"
-msgstr "nazwa"
+msgstr ""
 
 #: api/models.py:32
 msgid "description"
-msgstr "opis"
+msgstr ""
 
 #: api/models.py:33
 msgid "additional description"
-msgstr "dodatkowy opis"
+msgstr ""
 
 #: api/models.py:34
 msgid "latitude"
-msgstr "szerokość geograficzna"
+msgstr ""
 
 #: api/models.py:35
 msgid "longitude"
-msgstr "długość geograficzna"
+msgstr ""
 
 #: api/models.py:36
 msgid "cafeteria capacity"
-msgstr "pojemność stołówki"
+msgstr ""
 
 #: api/models.py:37
 msgid "logo_url"
-msgstr "URL loga"
+msgstr "logo URL"
 
 #: api/models.py:38
 msgid "address"
-msgstr "adres"
+msgstr ""
 
 #: api/models.py:39
 msgid "opened_from"
-msgstr "otwarta od"
+msgstr "open from"
 
 #: api/models.py:40
 msgid "opened_to"
-msgstr "otwarta do"
+msgstr "open to"
 
 #: api/models.py:41
 msgid "owner"
-msgstr "właściciel"
+msgstr ""
 
 #: api/models.py:42
 msgid "cafeteria occupancy"
-msgstr "liczba osób w stołówce"
+msgstr ""
 
 #: api/models.py:45 api/models.py:61 api/models.py:107 api/models.py:134
 msgid "cafeteria"
-msgstr "stołówka"
+msgstr ""
 
 #: api/models.py:46
 msgid "cafeterias"
-msgstr "stołówki"
+msgstr ""
 
 #: api/models.py:51
 msgid "online"
-msgstr "online"
+msgstr ""
 
 #: api/models.py:52
 msgid "offline"
-msgstr "offline"
+msgstr ""
 
 #: api/models.py:53
 msgid "lost connection"
-msgstr "brak połączenia"
+msgstr ""
 
 #: api/models.py:60
 msgid "state"
-msgstr "Stan"
+msgstr ""
 
 #: api/models.py:64 api/models.py:106
 msgid "camera"
-msgstr "kamera"
+msgstr ""
 
 #: api/models.py:65
 msgid "cameras"
-msgstr "kamery"
+msgstr ""
 
 #: api/models.py:70
 msgid "monitoring_started"
-msgstr "początek monitoringu"
+msgstr "monitoring started"
 
 #: api/models.py:71
 msgid "monitoring_ended"
-msgstr "koniec monitoringu"
+msgstr "monitoring ended"
 
 #: api/models.py:72
 msgid "person_entered"
-msgstr "klient wszedł"
+msgstr "person entered"
 
 #: api/models.py:73
 msgid "person_left"
-msgstr "klient wyszedl"
+msgstr "person left"
 
 #: api/models.py:74
 msgid "occupancy_override"
-msgstr "nadpisano zajętość"
+msgstr "occupancy override"
 
 #: api/models.py:104 api/models.py:166
 msgid "timestamp"
-msgstr "czas"
+msgstr ""
 
 #: api/models.py:105
 msgid "event_type"
-msgstr "typ zdarzenia"
+msgstr "event type"
 
 #: api/models.py:108
 msgid "event_value"
-msgstr "wartość zdarzenia"
+msgstr "event value"
 
 #: api/models.py:111
 msgid "camera event"
-msgstr "zdarzenie"
+msgstr ""
 
 #: api/models.py:112
 msgid "camera events"
-msgstr "zdarzenia"
+msgstr ""
 
 #: api/models.py:132
 msgid "price"
-msgstr "cena"
+msgstr ""
 
 #: api/models.py:133
 msgid "vegetarian"
-msgstr "opcja wegetariańska"
+msgstr ""
 
 #: api/models.py:135
 msgid "photo_url"
-msgstr "URL zdjęcia"
+msgstr "photo URL"
 
 #: api/models.py:136
 msgid "avg_review_stars"
-msgstr "średnia ocena"
+msgstr "average review"
 
 #: api/models.py:139
 msgid "fixed menu entry"
-msgstr "pozycja ze stałego menu"
+msgstr ""
 
 #: api/models.py:140
 msgid "fixed menu entries"
-msgstr "pozycje ze stałego menu"
+msgstr ""
 
 #: api/models.py:163
 msgid "menu option"
-msgstr "opcja z menu"
+msgstr ""
 
 #: api/models.py:164
 msgid "rating"
-msgstr "ocena"
+msgstr ""
 
 #: api/models.py:165
 msgid "author"
-msgstr "autor"
+msgstr ""
 
 #: api/models.py:169
 msgid "menu entry review"
-msgstr "recenzja pozycji z menu"
+msgstr ""
 
 #: api/models.py:170
 msgid "menu entry reviews"
-msgstr "recenzje pozycji z menu"
+msgstr ""
 
 #: home/templates/home/home.html:10
 msgid "EatersLab Home"
-msgstr "Strona główna EatersLab"
+msgstr ""
 
 #: home/templates/home/home.html:37
 msgid "API documentation"
-msgstr "Dokumentacja API"
+msgstr ""
 
 #: home/templates/home/home.html:45
 msgid "Welcome to EatersLab by PoohLab."
-msgstr "Witamy w EatersLab od PoohLab."
+msgstr ""
 
 #: server/settings.py:157
 msgid "Polish"
-msgstr "Polski"
+msgstr ""
 
 #: server/settings.py:158
 msgid "English"
-msgstr "Angielski"
+msgstr ""
