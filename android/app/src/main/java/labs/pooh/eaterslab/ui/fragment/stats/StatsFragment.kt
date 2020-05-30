@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Space
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.plusAssign
 import androidx.lifecycle.Observer
@@ -44,19 +45,22 @@ class StatsFragment : ThemedAbstractFragment() {
         val yellow = ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark)
 
         viewModel.currentDayData.observe(viewLifecycleOwner, Observer {
+            if (it.isEmpty()) {
+                return@Observer
+            }
             val data = it.map { stat -> stat.occupancyRelative }
             with(requireContext()) {
                 val frame = FrameLayout(this)
                 val barView = HorizontalBarPlot(this).apply {
-                    ticks = getOpenOrderedHours(StatsViewModel.minHour, StatsViewModel.maxHour)
-                    ticksIndexer = workingHoursIndexer(StatsViewModel.minHour)
-                    ticksScale = 2.0
+                    ticks = getOpenOrderedHours(it.first().timestamp, it.last().timestamp)
+                    ticksIndexer = workingHoursIndexer(it.first().timestamp)
+                    ticksScale = 1.5
                     labelColor = getPlotFontColorForTheme()
                     printTicks = printTicks()
                 }.plot(data, red)
 
                 frame += barView
-                frame.layoutParams = FrameLayout.LayoutParams(1000, 600).apply {
+                frame.layoutParams = FrameLayout.LayoutParams(1000, 800).apply {
                     gravity = Gravity.CENTER_HORIZONTAL
                 }
 

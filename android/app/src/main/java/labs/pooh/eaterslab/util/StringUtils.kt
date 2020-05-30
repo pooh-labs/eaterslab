@@ -2,6 +2,7 @@ package labs.pooh.eaterslab.util
 
 import android.content.Context
 import labs.pooh.eaterslab.R
+import org.threeten.bp.OffsetDateTime
 
 fun Context.getOrderedWeekDays() = listOf(
     getString(R.string.monday), getString(R.string.tuesday), getString(R.string.wednesday),
@@ -15,9 +16,7 @@ fun getOrderedMonthDays(month: Int, leapYear: Boolean = false) = when(month) {
     else -> (1..30)
 }.map(Int::toString)
 
-fun getOrderedHours() = getOpenOrderedHours(0, 23)
-
-fun getOpenOrderedHours(from: Int = 8, to: Int = 16) = (from..to).map { "$it:00" }
+fun getOpenOrderedHours(from: OffsetDateTime, to: OffsetDateTime) = (from.hour..to.hour).map { "$it:00" }
 
 fun Context.weekDaysIndexer(day: String) = getOrderedWeekDays().indexOf(day)
 
@@ -25,4 +24,4 @@ fun monthDaysIndexer(day: String) = day.toInt() - 1
 
 fun hoursIndexer(hour: String) = hour.takeWhile { it != ':' }.toInt()
 
-fun workingHoursIndexer(from: Int): (String) -> Int = { hoursIndexer(it) - from }
+fun workingHoursIndexer(from: OffsetDateTime): (String) -> Int = { (hoursIndexer(it) - from.hour) % 24 }

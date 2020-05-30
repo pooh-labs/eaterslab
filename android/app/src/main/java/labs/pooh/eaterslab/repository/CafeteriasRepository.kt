@@ -1,5 +1,6 @@
 package labs.pooh.eaterslab.repository
 
+import com.yariksoffice.lingver.Lingver
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import labs.pooh.eaterslab.client.apis.CafeteriasApi
@@ -26,7 +27,7 @@ class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatu
                                        openedNow: BooleanApi? = null, prefixName: String? = null): List<CafeteriaDao>? {
         val refreshed = tryApiConnect {
             val models = cafeteriasApi.cafeteriasList(openedFrom?.getForRequest(), openedTo?.getForRequest(),
-                                                      openedNow?.getForRequest(), prefixName, null)
+                                                      openedNow?.getForRequest(), prefixName, null, usedLanguage)
             val daos = models.map { it.toDao() }
             daos
         }
@@ -72,7 +73,7 @@ class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatu
 
     suspend fun getMenuOptionsOfCafeteria(cafeteriaDao: CafeteriaDao): List<FixedMenuOptionDao>? {
         val refreshed = tryApiConnect {
-            val models = cafeteriasApi.cafeteriasFixedMenuOptionsList(cafeteriaDao.id!!.toString())
+            val models = cafeteriasApi.cafeteriasFixedMenuOptionsList(cafeteriaDao.id!!.toString(), usedLanguage)
             val daos = models.map { it.toDao() }
             daos
         }
@@ -87,7 +88,7 @@ class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatu
 
     suspend fun getMenuOptionsOfCafeteria(cafeteriaId: Int): List<FixedMenuOptionDao>? {
         val refreshed = tryApiConnect {
-            val models = cafeteriasApi.cafeteriasFixedMenuOptionsList(cafeteriaId.toString())
+            val models = cafeteriasApi.cafeteriasFixedMenuOptionsList(cafeteriaId.toString(), usedLanguage)
             val daos = models.map { it.toDao() }
             daos
         }
@@ -112,6 +113,11 @@ class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatu
     private fun reportDataFetchError() = connectionStatusNotifier.notifyDataFetchError()
 
     fun isDevAPIVersion(): Boolean = cafeteriasApi.baseUrl.contains("dev", ignoreCase = true)
+
+    private val usedLanguage: String
+    get() {
+        return Lingver.getInstance().getLanguage()
+    }
 }
 
 interface ApiParamRepresentation {
