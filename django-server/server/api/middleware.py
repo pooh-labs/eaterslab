@@ -2,6 +2,7 @@ from django.conf import settings
 from django.utils import translation
 from django.utils.translation import trans_real
 
+
 class ApiCallLanguageMiddleware:
     supported_langs = [entry[0] for entry in settings.LANGUAGES]
     api_prefix = '/' + settings.API_PATH_PREFIX

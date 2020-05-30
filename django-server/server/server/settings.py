@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'modeltranslation', # Model translations
+    'modeltranslation',  # Model translations
     'django_filters',
     'rest_framework',
     'rest_framework.authtoken',  # token auth for artifacts upload
@@ -72,7 +72,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',  # for ssl handling in Django
-    'api.middleware.ApiCallLanguageMiddleware', # For setting language in API calls
+    'api.middleware.ApiCallLanguageMiddleware',  # For setting language in API calls
 ]
 
 ROOT_URLCONF = 'server.urls'

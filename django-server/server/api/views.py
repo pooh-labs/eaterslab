@@ -23,7 +23,8 @@ from .models import *
 from .serializers import *
 
 
-accept_language_header = Parameter('Accept-Language', IN_HEADER, description='Language for response content', type=TYPE_STRING)
+accept_language_header = Parameter('Accept-Language', IN_HEADER, description='Language for response content',
+                                   type=TYPE_STRING)
 accept_language_decorator = swagger_auto_schema(manual_parameters=[accept_language_header])
 
 
