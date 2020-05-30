@@ -4,10 +4,14 @@ from django.contrib.admin import AdminSite
 from django.contrib.admin import ModelAdmin
 from django.db.models import Subquery, OuterRef, Max
 from django.utils.html import format_html
+from modeltranslation.admin import TranslationAdmin
 from django.utils.translation import gettext_lazy as _
 
 from .views import StatsView
 from api.models import *
+
+# To enforce registering translations
+from api.translation import *
 
 class MyAdminSite(AdminSite):
     site_header = _('EatersLab administration')
@@ -22,6 +26,9 @@ class MyAdminSite(AdminSite):
         ]
         return urls + custom_urls
 
+
+class CafeteriaAdmin(TranslationAdmin):
+    pass
 
 class CameraAdmin(ModelAdmin):
     # TODO(Rhantolq): Add 'name' here to display once implemented
@@ -56,10 +63,13 @@ class CameraAdmin(ModelAdmin):
     last_event.short_description = _('Last event time')
 
 
+class FixedMenuOptionAdmin(TranslationAdmin):
+    pass
+
+
 admin_site = MyAdminSite(name='admin')
-admin_site.register(Cafeteria)
+admin_site.register(Cafeteria, CafeteriaAdmin)
 admin_site.register(CameraEvent)
 admin_site.register(Camera, CameraAdmin)
-admin_site.register(FixedMenuOption)
+admin_site.register(FixedMenuOption, FixedMenuOptionAdmin)
 admin_site.register(FixedMenuOptionReview)
-admin_site.register(MenuOptionTag)

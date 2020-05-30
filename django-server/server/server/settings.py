@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'modeltranslation', # Model translations
     'django_filters',
     'rest_framework',
     'rest_framework.authtoken',  # token auth for artifacts upload
@@ -71,6 +72,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',  # for ssl handling in Django
+    'api.middleware.ApiCallLanguageMiddleware', # For setting language in API calls
 ]
 
 ROOT_URLCONF = 'server.urls'
@@ -152,11 +154,12 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGES = (
-    ('en', _('English')),
     ('pl', _('Polish')),
+    ('en', _('English')),
 )
 
 LANGUAGE_CODE = 'pl'
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'pl'
 
 TIME_ZONE = 'Europe/Warsaw'
 
@@ -169,6 +172,9 @@ USE_TZ = True
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
+
+# API configuration
+API_PATH_PREFIX = 'api/'
 
 # SSL enable configuration for server
 

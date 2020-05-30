@@ -37,7 +37,6 @@ class Camera(models.Model):
 
     LOSING_CONNECTION_INTERVAL = timedelta(minutes=3)
 
-    description = models.CharField(max_length=200)
     state = models.IntegerField(choices=State.choices)
     cafeteria = models.ForeignKey(Cafeteria, on_delete=models.CASCADE)
 
@@ -88,18 +87,11 @@ class CameraEvent(models.Model):
 class FixedMenuOption(models.Model):
     name = models.CharField(max_length=128)
     price = models.FloatField(validators=[MinValueValidator(0.0)])
+    vegetarian = models.BooleanField(default=False)
     cafeteria = models.ForeignKey(Cafeteria, on_delete=models.CASCADE, related_name='fixed_menu_options')
     photo_url = models.CharField(max_length=2048, validators=[URLValidator])
     avg_review_stars = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5)],
                                          default=0, editable=False)
-
-    def __str__(self):
-        return self.name
-
-
-class MenuOptionTag(models.Model):
-    name = models.CharField(max_length=32, editable=False)
-    option = models.ManyToManyField(FixedMenuOption, related_name='menu_option_tags')
 
     def __str__(self):
         return self.name

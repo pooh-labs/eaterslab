@@ -7,7 +7,11 @@ from pytz import utc
 
 from django.core.files.storage import FileSystemStorage
 from django.db.models import QuerySet
+from django.utils.decorators import method_decorator
 from django_filters import rest_framework as filters
+from drf_yasg.openapi import Parameter, IN_HEADER, TYPE_STRING
+from drf_yasg.utils import swagger_auto_schema
+
 from rest_framework import views, viewsets, generics
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.parsers import FileUploadParser
@@ -17,6 +21,10 @@ from server import settings
 
 from .models import *
 from .serializers import *
+
+
+accept_language_header = Parameter('Accept-Language', IN_HEADER, description='Language for response content', type=TYPE_STRING)
+accept_language_decorator = swagger_auto_schema(manual_parameters=[accept_language_header])
 
 
 class GetPostViewSet(viewsets.ModelViewSet):
@@ -60,6 +68,7 @@ class CafeteriaFilterSet(filters.FilterSet):
         return queryset.filter(owner_id=owner_id)
 
 
+@method_decorator(name='list', decorator=accept_language_decorator)
 class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Cafeteria.objects.all().order_by('id')
     serializer_class = CafeteriaSerializer
@@ -84,6 +93,7 @@ class CameraEventsViewSet(viewsets.ModelViewSet):
         return CameraEvent.objects.filter(camera_id=self.kwargs['camera_pk'])
 
 
+@method_decorator(name='list', decorator=accept_language_decorator)
 class FixedMenuOptionViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = FixedMenuOptionSerializer
 
@@ -92,11 +102,6 @@ class FixedMenuOptionViewSet(viewsets.ReadOnlyModelViewSet):
             # queryset just for schema generation metadata
             return FixedMenuOption.objects.none()
         return FixedMenuOption.objects.all().filter(cafeteria=self.kwargs['cafeteria_pk']).order_by('id')
-
-
-class MenuOptionTagViewSet(GetPostViewSet):
-    queryset = MenuOptionTag.objects.all().order_by('name')
-    serializer_class = MenuOptionTagSerializer
 
 
 class FixedMenuOptionReviewViewSet(PostViewSet):
