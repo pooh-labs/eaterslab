@@ -56,3 +56,17 @@ class OccupancyStatsSerializer(serializers.Serializer):
         for field, value in validated_data.items():
             setattr(instance, field, value)
         return instance
+
+
+class AverageDishReviewStatsSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    timestamp = serializers.DateTimeField(read_only=True)
+    value = serializers.FloatField(read_only=True)
+
+    def create(self, validated_data):
+        return AverageDishReviewStatsData(**validated_data)
+
+    def update(self, instance, validated_data):
+        for field, value in validated_data.items():
+            setattr(instance, field, value)
+        return instance

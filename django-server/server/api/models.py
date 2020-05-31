@@ -174,3 +174,10 @@ class OccupancyStatsData(object):
     def __init__(self, **kwargs):
         for field in ('id', 'timestamp', 'occupancy', 'occupancy_relative'):
             setattr(self, field, kwargs.get(field, None))
+
+
+class AverageDishReviewStatsData(object):
+
+    def __init__(self, **kwargs):
+        for field in ('id', 'timestamp', 'value'):
+            setattr(self, field, kwargs.get(field, None))
