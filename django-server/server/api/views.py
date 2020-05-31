@@ -259,9 +259,9 @@ def get_divider(group_by):
 def count_people(queryset):
     counter = 0
     for event in queryset:
-        if event.event_type == CameraEvent.EventType.PERSON_ENTERED.value:
+        if event.event_type == CameraEventType.PERSON_ENTERED.value:
             counter += 1
-        elif event.event_type == CameraEvent.EventType.PERSON_LEFT.value:
+        elif event.event_type == CameraEventType.PERSON_LEFT.value:
             counter -= 1
     return counter
 
@@ -276,7 +276,7 @@ class OccupancyStatsView(StatsView):
         return 'timestamp'
 
     def init_value(self, before_queryset: QuerySet):
-        overrides = before_queryset.filter(event_type=CameraEvent.EventType.OCCUPANCY_OVERRIDE.value)
+        overrides = before_queryset.filter(event_type=CameraEventType.OCCUPANCY_OVERRIDE.value)
         if len(overrides) == 0:
             init_override_value = 0
             changed = count_people(before_queryset)
@@ -287,7 +287,7 @@ class OccupancyStatsView(StatsView):
         return init_override_value + changed
 
     def next_count_value(self, count_value, curr_queryset: QuerySet):
-        curr_overrides = curr_queryset.filter(event_type=CameraEvent.EventType.OCCUPANCY_OVERRIDE.value)
+        curr_overrides = curr_queryset.filter(event_type=CameraEventType.OCCUPANCY_OVERRIDE.value)
         if len(curr_overrides) == 0:
             count_value += count_people(curr_queryset)
         else:

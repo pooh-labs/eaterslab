@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import MinValueValidator, MaxValueValidator, URLValidator
-from django.db.models import F
+from django.db.models import F, Q
 
 from datetime import timedelta
 
@@ -65,16 +65,49 @@ class Camera(models.Model):
         verbose_name_plural = _('cameras')
 
 
-class CameraEvent(models.Model):
-    class EventType(models.IntegerChoices):
-        MONITORING_STARTED = 0, _('monitoring_started')
-        MONITORING_ENDED = 1, _('monitoring_ended')
-        PERSON_ENTERED = 2, _('person_entered')
-        PERSON_LEFT = 3, _('person_left')
-        OCCUPANCY_OVERRIDE = 4, _('occupancy_override')
+class CameraEventType(models.IntegerChoices):
+    MONITORING_STARTED = 0, _('monitoring_started')
+    MONITORING_ENDED = 1, _('monitoring_ended')
+    PERSON_ENTERED = 2, _('person_entered')
+    PERSON_LEFT = 3, _('person_left')
+    OCCUPANCY_OVERRIDE = 4, _('occupancy_override')
 
+
+# For enforcing event_type.camera is (non-)null 
+def get_q_event_camera_nullability():
+    null_cam_event_types = [
+        CameraEventType.OCCUPANCY_OVERRIDE
+    ]
+    nonnull_cam_event_types = [
+        CameraEventType.MONITORING_STARTED,
+        CameraEventType.MONITORING_ENDED,
+        CameraEventType.PERSON_ENTERED,
+        CameraEventType.PERSON_LEFT,
+    ]
+    return Q(event_type__in=null_cam_event_types, camera__isnull=True) | Q(
+        event_type__in=nonnull_cam_event_types, camera__isnull=False
+    )
+
+
+# For enforcing event_type.event_value is (non-)null 
+def get_q_event_value_nullability():
+    null_val_event_types = [
+        CameraEventType.MONITORING_STARTED,
+        CameraEventType.MONITORING_ENDED,
+        CameraEventType.PERSON_ENTERED,
+        CameraEventType.PERSON_LEFT,
+    ]
+    nonnull_val_event_types = [
+        CameraEventType.OCCUPANCY_OVERRIDE
+    ]
+    return Q(event_type__in=null_val_event_types, event_value__isnull=True) | Q(
+        event_type__in=nonnull_val_event_types, event_value__isnull=False
+    )
+
+
+class CameraEvent(models.Model):
     timestamp = models.DateTimeField()
-    event_type = models.IntegerField(choices=EventType.choices)
+    event_type = models.IntegerField(choices=CameraEventType.choices)
     camera = models.ForeignKey(Camera, on_delete=models.CASCADE, null=True, blank=True, default=None)
     cafeteria = models.ForeignKey(Cafeteria, on_delete=models.CASCADE)
     event_value = models.IntegerField(validators=[MinValueValidator(0)], null=True, blank=True, default=None)
@@ -88,16 +121,16 @@ class CameraEvent(models.Model):
 
     def update_cafeteria_occupancy(self):
         cafeteria = Cafeteria.objects.filter(pk=self.cafeteria.pk)
-        if self.event_type == CameraEvent.EventType.OCCUPANCY_OVERRIDE.value \
+        if self.event_type == CameraEventType.OCCUPANCY_OVERRIDE.value \
                 and self.event_value is not None and self.event_value <= self.cafeteria.capacity:
             cafeteria.update(occupancy=self.event_value)
-        elif self.event_type == CameraEvent.EventType.PERSON_ENTERED.value:
+        elif self.event_type == CameraEventType.PERSON_ENTERED.value:
             cafeteria.update(occupancy=self.cafeteria.occupancy + 1)
-        elif self.event_type == CameraEvent.EventType.PERSON_LEFT.value \
+        elif self.event_type == CameraEventType.PERSON_LEFT.value \
                 and self.cafeteria.occupancy > 0:
             cafeteria.update(occupancy=self.cafeteria.occupancy - 1)
-        elif self.event_type != CameraEvent.EventType.MONITORING_STARTED.value \
-                and self.event_type != CameraEvent.EventType.MONITORING_ENDED.value:
+        elif self.event_type != CameraEventType.MONITORING_STARTED.value \
+                and self.event_type != CameraEventType.MONITORING_ENDED.value:
             raise ValueError('Invalid CameraEvent fields specification')
 
     timestamp.verbose_name = _('timestamp')
@@ -109,6 +142,18 @@ class CameraEvent(models.Model):
     class Meta:
         verbose_name = _('camera event')
         verbose_name_plural = _('camera events')
+
+        constraints = [
+            models.CheckConstraint(
+                name = 'camera_nullable_per_type',
+                check = get_q_event_camera_nullability(),
+            ),
+            models.CheckConstraint(
+                name = 'event_value_nullable_per_type',
+                check = get_q_event_value_nullability(),
+            ),
+        ]
+
         indexes = [
             # For selecting last event per camera
             models.Index(fields=['camera', 'timestamp']),
