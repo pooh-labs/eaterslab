@@ -73,8 +73,6 @@ class CafeteriaFilterSet(filters.FilterSet):
         if value is None or value is False:
             return queryset
         for_vegs = FixedMenuOption.objects.filter(vegetarian=True).values_list('cafeteria_id')
-        print(queryset)
-        print(for_vegs)
         return queryset.filter(id__in=for_vegs)
 
 
