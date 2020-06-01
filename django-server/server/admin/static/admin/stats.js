@@ -5,6 +5,15 @@ const WEEKS_TO_COVER = 4;
 const DAYS_TO_COVER = 14;
 const HOURS_TO_COVER = 48;
 
+const StatsDataGrouping = {
+  YEAR: 'year',
+  MONTH: 'month',
+  WEEK: 'week',
+  DAY: 'day',
+  HOUR: 'hour',
+  MINUTE: 'minute'
+}
+
 const DatasetGrouping = {
   YEAR: 'year',
   MONTH: 'month',
@@ -258,9 +267,9 @@ const App = new Vue({
       let app = this;
       switch (type) {
         case DatasetType.OCCUPANCY:
-          return window.loadOccupancy(cafeteria_id, date_from, date_to, 'occupancy');
+          return window.loadOccupancy(cafeteria_id, date_from, date_to, this.group_by, 'occupancy');
         case DatasetType.RELATIVE_OCCUPANCY:
-          return window.loadOccupancy(cafeteria_id, date_from, date_to, 'occupancy_relative');
+          return window.loadOccupancy(cafeteria_id, date_from, date_to, this.group_by, 'occupancy_relative');
         case DatasetType.AVERAGE_DISH_REVIEW:
           return window.loadAvgReview(cafeteria_id, date_from, date_to, this.group_by);
         default:
@@ -649,8 +658,30 @@ function loadCafeterias() {
     });
 }
 
-function loadOccupancy(cafeteria_id, from, to, y_field_name) {
-  const api_url = `cafeterias/${cafeteria_id}/stats/occupancy?start_timestamp=${from.toISOString()}&end_timestamp=${to.toISOString()}`;
+function loadOccupancy(cafeteria_id, from, to, group_by, y_field_name) {
+  let group_data_by = null;
+  switch (group_by) {
+    case DatasetGrouping.YEAR:
+      group_data_by = StatsDataGrouping.MONTH;
+      break;
+    case DatasetGrouping.MONTH:
+      group_data_by = StatsDataGrouping.WEEK; 
+      break;
+    case DatasetGrouping.WEEK:
+      group_data_by = StatsDataGrouping.DAY; 
+      break;
+    case DatasetGrouping.DAY:
+      group_data_by = StatsDataGrouping.HOUR; 
+      break;
+    case DatasetGrouping.HOUR:
+      // TODO(kantoniak): Use minutes once implemented
+      group_data_by = StatsDataGrouping.HOUR; 
+      break;
+    default:
+      throw new Error('Grouping not supported');
+  }
+
+  const api_url = `cafeterias/${cafeteria_id}/stats/occupancy?start_timestamp=${from.toISOString()}&end_timestamp=${to.toISOString()}&group_by=${group_data_by}`;
   return fetch(API_URL_BASE + api_url)
     .then(response => {
       if (response.ok) {
@@ -671,73 +702,9 @@ function loadOccupancy(cafeteria_id, from, to, y_field_name) {
     });
 }
 
-function makeAvgReviewData(startDate, endDate, groupBy) {
-  startDate = startDate || new Date();
-  var startYear = startDate.getFullYear();
-  var startMonth = startDate.getMonth();
-  var startDay = startDate.getDate();
-  var toReturn = [];
-  let i = 0;
-  while (true) {
-    const timestamp = new Date(startDate);
-
-    switch (groupBy) {
-      case DatasetGrouping.YEAR:
-        timestamp.setFullYear(startDate.getFullYear() + i);
-        break;
-      case DatasetGrouping.MONTH:
-        timestamp.setMonth(startDate.getMonth() + i);
-        break;
-      case DatasetGrouping.WEEK:
-        timestamp.setDate(startDate.getDate() + 7*i);
-        break;
-      case DatasetGrouping.DAY:
-        timestamp.setDate(startDate.getDate() + i);
-        break;
-      case DatasetGrouping.HOUR:
-        timestamp.setHours(startDate.getHours() + i);
-        break;
-    }
-
-    if (timestamp >= endDate) {
-      break;
-    }
-
-    toReturn[i] = {
-      timestamp: timestamp,
-      value: Math.random() * 5
-    };
-
-    i++;
-  };
-  return toReturn;
-}
-
 function loadAvgReview(cafeteria_id, from, to, group_by) {
-  let sample_data = [
-    {
-      timestamp: '2020-05-18T00:00:00.000Z',
-      value: Math.random() * 5
-    },
-    {
-      timestamp: '2020-05-19T00:00:00.000Z',
-      value: Math.random() * 5
-    },
-    {
-      timestamp: '2020-05-20T00:00:00.000Z',
-      value: Math.random() * 5
-    },
-  ];
-
-  let sample_promise = new Promise(function(resolve, reject) {
-    setTimeout(() => {
-      resolve(makeAvgReviewData(from, to, group_by));
-    }, DEBUGGING_LAG);
-  });
-
-  // TODO: Replace sample_promise with actual API call when implemented
-  /*
-  fetch(API_URL_BASE + 'cafeterias/' + cafeteria_id + '/avg_dish_review/?start_timestamp=' + from.toISOString() + '&end_timestamp=' + to.toISOString() + '&group_by=' + group_by)
+  const api_url = `cafeterias/${cafeteria_id}/stats/avg_dish_review?start_timestamp=${from.toISOString()}&end_timestamp=${to.toISOString()}&group_by=${group_by}`;
+  return fetch(API_URL_BASE + api_url)
     .then(response => {
       if (response.ok) {
         return response.json();
@@ -745,8 +712,6 @@ function loadAvgReview(cafeteria_id, from, to, group_by) {
         throw new Error('HTTP status ' + response.status);
       }
     })
-  */
-  return sample_promise
     .then(data => {
       let result = [];
       data.forEach(entry => {
