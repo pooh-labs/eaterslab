@@ -87,6 +87,10 @@ class CameraEventsViewSet(viewsets.ModelViewSet):
     http_method_names = ['post']
     serializer_class = CameraEventSerializer
 
+    def get_serializer(self, *args, **kwargs):
+        kwargs['many'] = True
+        return super(CameraEventsViewSet, self).get_serializer(*args, **kwargs)
+
     def get_queryset(self):
         if getattr(self, 'swagger_fake_view', False):
             # queryset just for schema generation metadata
