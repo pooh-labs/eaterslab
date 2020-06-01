@@ -55,3 +55,12 @@ and then restored in the other environment using the
 ```bash
 python manage.py loaddata data.json
 ```
+
+## Sample data
+
+To load sample data in empty project, run:
+```
+python manage.py migrate
+python manage.py loaddata fixtures/demo-data.yaml
+python manage.py reset_passwords
+```

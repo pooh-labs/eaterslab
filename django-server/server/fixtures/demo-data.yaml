@@ -345,7 +345,7 @@
 - model: auth.user
   pk: 1
   fields:
-    password: pbkdf2_sha256$180000$jCQnpbI6TdC3$7yrSRAeYMha/+A36s2ikvYUeFquSi5wOLPSwUFjVzOU=
+    password: ''
     last_login: 2020-06-01 00:00:00+02:00
     is_superuser: true
     username: superuser
@@ -360,7 +360,7 @@
 - model: auth.user
   pk: 2
   fields:
-    password: pbkdf2_sha256$180000$FAOHrsHy7OnR$75iM3jmeGKZLUVDEBHPZxbjhog0zB2Pma82S9Fwe9F4=
+    password: ''
     last_login: 2020-06-01 00:00:00+02:00
     is_superuser: false
     username: admin
@@ -376,7 +376,7 @@
 - model: auth.user
   pk: 3
   fields:
-    password: owner-1
+    password: ''
     last_login: 2020-06-01 00:00:00+02:00
     is_superuser: false
     username: owner-1
@@ -392,7 +392,7 @@
 - model: auth.user
   pk: 4
   fields:
-    password: owner-2
+    password: ''
     last_login: 2020-06-01 00:00:00+02:00
     is_superuser: false
     username: owner-2
