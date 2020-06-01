@@ -12,7 +12,7 @@ from django_filters import rest_framework as filters
 from drf_yasg.openapi import Parameter, IN_HEADER, TYPE_STRING
 from drf_yasg.utils import swagger_auto_schema
 
-from rest_framework import views, viewsets, generics
+from rest_framework import views, viewsets, generics, mixins, status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.parsers import FileUploadParser
 from rest_framework.permissions import IsAdminUser
@@ -83,7 +83,7 @@ class CameraViewSet(viewsets.ModelViewSet):
     serializer_class = CameraSerializer
 
 
-class CameraEventsViewSet(viewsets.ModelViewSet):
+class CameraEventsViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
     http_method_names = ['post']
     serializer_class = CameraEventSerializer
 
@@ -92,6 +92,17 @@ class CameraEventsViewSet(viewsets.ModelViewSet):
             # queryset just for schema generation metadata
             return CameraEvent.objects.none()
         return CameraEvent.objects.filter(camera_id=self.kwargs['camera_pk'])
+
+    def create(self, request, *args, **kwargs):
+        is_many = isinstance(request.data, list)
+        if not is_many:
+            return super(CameraEventsViewSet, self).create(request, *args, **kwargs)
+        else:
+            serializer = self.get_serializer(data=request.data, many=True)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
 
 @method_decorator(name='list', decorator=accept_language_decorator)
