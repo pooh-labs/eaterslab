@@ -1,0 +1,727 @@
+### Permissions
+
+- model: auth.permission
+  pk: 1
+  fields:
+    name: Can add log entry
+    content_type: 1
+    codename: add_logentry
+- model: auth.permission
+  pk: 2
+  fields:
+    name: Can change log entry
+    content_type: 1
+    codename: change_logentry
+- model: auth.permission
+  pk: 3
+  fields:
+    name: Can delete log entry
+    content_type: 1
+    codename: delete_logentry
+- model: auth.permission
+  pk: 4
+  fields:
+    name: Can view log entry
+    content_type: 1
+    codename: view_logentry
+- model: auth.permission
+  pk: 5
+  fields:
+    name: Can add permission
+    content_type: 2
+    codename: add_permission
+- model: auth.permission
+  pk: 6
+  fields:
+    name: Can change permission
+    content_type: 2
+    codename: change_permission
+- model: auth.permission
+  pk: 7
+  fields:
+    name: Can delete permission
+    content_type: 2
+    codename: delete_permission
+- model: auth.permission
+  pk: 8
+  fields:
+    name: Can view permission
+    content_type: 2
+    codename: view_permission
+- model: auth.permission
+  pk: 9
+  fields:
+    name: Can add group
+    content_type: 3
+    codename: add_group
+- model: auth.permission
+  pk: 10
+  fields:
+    name: Can change group
+    content_type: 3
+    codename: change_group
+- model: auth.permission
+  pk: 11
+  fields:
+    name: Can delete group
+    content_type: 3
+    codename: delete_group
+- model: auth.permission
+  pk: 12
+  fields:
+    name: Can view group
+    content_type: 3
+    codename: view_group
+- model: auth.permission
+  pk: 13
+  fields:
+    name: Can add user
+    content_type: 4
+    codename: add_user
+- model: auth.permission
+  pk: 14
+  fields:
+    name: Can change user
+    content_type: 4
+    codename: change_user
+- model: auth.permission
+  pk: 15
+  fields:
+    name: Can delete user
+    content_type: 4
+    codename: delete_user
+- model: auth.permission
+  pk: 16
+  fields:
+    name: Can view user
+    content_type: 4
+    codename: view_user
+- model: auth.permission
+  pk: 17
+  fields:
+    name: Can add content type
+    content_type: 5
+    codename: add_contenttype
+- model: auth.permission
+  pk: 18
+  fields:
+    name: Can change content type
+    content_type: 5
+    codename: change_contenttype
+- model: auth.permission
+  pk: 19
+  fields:
+    name: Can delete content type
+    content_type: 5
+    codename: delete_contenttype
+- model: auth.permission
+  pk: 20
+  fields:
+    name: Can view content type
+    content_type: 5
+    codename: view_contenttype
+- model: auth.permission
+  pk: 21
+  fields:
+    name: Can add session
+    content_type: 6
+    codename: add_session
+- model: auth.permission
+  pk: 22
+  fields:
+    name: Can change session
+    content_type: 6
+    codename: change_session
+- model: auth.permission
+  pk: 23
+  fields:
+    name: Can delete session
+    content_type: 6
+    codename: delete_session
+- model: auth.permission
+  pk: 24
+  fields:
+    name: Can view session
+    content_type: 6
+    codename: view_session
+- model: auth.permission
+  pk: 25
+  fields:
+    name: Can add Token
+    content_type: 7
+    codename: add_token
+- model: auth.permission
+  pk: 26
+  fields:
+    name: Can change Token
+    content_type: 7
+    codename: change_token
+- model: auth.permission
+  pk: 27
+  fields:
+    name: Can delete Token
+    content_type: 7
+    codename: delete_token
+- model: auth.permission
+  pk: 28
+  fields:
+    name: Can view Token
+    content_type: 7
+    codename: view_token
+- model: auth.permission
+  pk: 29
+  fields:
+    name: Can add cafeteria
+    content_type: 8
+    codename: add_cafeteria
+- model: auth.permission
+  pk: 30
+  fields:
+    name: Can change cafeteria
+    content_type: 8
+    codename: change_cafeteria
+- model: auth.permission
+  pk: 31
+  fields:
+    name: Can delete cafeteria
+    content_type: 8
+    codename: delete_cafeteria
+- model: auth.permission
+  pk: 32
+  fields:
+    name: Can view cafeteria
+    content_type: 8
+    codename: view_cafeteria
+- model: auth.permission
+  pk: 33
+  fields:
+    name: Can add fixed menu entry
+    content_type: 9
+    codename: add_fixedmenuoption
+- model: auth.permission
+  pk: 34
+  fields:
+    name: Can change fixed menu entry
+    content_type: 9
+    codename: change_fixedmenuoption
+- model: auth.permission
+  pk: 35
+  fields:
+    name: Can delete fixed menu entry
+    content_type: 9
+    codename: delete_fixedmenuoption
+- model: auth.permission
+  pk: 36
+  fields:
+    name: Can view fixed menu entry
+    content_type: 9
+    codename: view_fixedmenuoption
+- model: auth.permission
+  pk: 37
+  fields:
+    name: Can add menu entry review
+    content_type: 10
+    codename: add_fixedmenuoptionreview
+- model: auth.permission
+  pk: 38
+  fields:
+    name: Can change menu entry review
+    content_type: 10
+    codename: change_fixedmenuoptionreview
+- model: auth.permission
+  pk: 39
+  fields:
+    name: Can delete menu entry review
+    content_type: 10
+    codename: delete_fixedmenuoptionreview
+- model: auth.permission
+  pk: 40
+  fields:
+    name: Can view menu entry review
+    content_type: 10
+    codename: view_fixedmenuoptionreview
+- model: auth.permission
+  pk: 41
+  fields:
+    name: Can add camera
+    content_type: 11
+    codename: add_camera
+- model: auth.permission
+  pk: 42
+  fields:
+    name: Can change camera
+    content_type: 11
+    codename: change_camera
+- model: auth.permission
+  pk: 43
+  fields:
+    name: Can delete camera
+    content_type: 11
+    codename: delete_camera
+- model: auth.permission
+  pk: 44
+  fields:
+    name: Can view camera
+    content_type: 11
+    codename: view_camera
+- model: auth.permission
+  pk: 45
+  fields:
+    name: Can add camera event
+    content_type: 12
+    codename: add_cameraevent
+- model: auth.permission
+  pk: 46
+  fields:
+    name: Can change camera event
+    content_type: 12
+    codename: change_cameraevent
+- model: auth.permission
+  pk: 47
+  fields:
+    name: Can delete camera event
+    content_type: 12
+    codename: delete_cameraevent
+- model: auth.permission
+  pk: 48
+  fields:
+    name: Can view camera event
+    content_type: 12
+    codename: view_cameraevent
+
+### Groups
+
+- model: auth.group
+  pk: 1
+  fields:
+    name: managing-administrator
+    permissions:
+    - 29
+    - 30
+    - 31
+    - 32
+    - 41
+    - 42
+    - 43
+    - 44
+    - 45
+    - 46
+    - 47
+    - 48
+    - 33
+    - 34
+    - 35
+    - 36
+    - 37
+    - 38
+    - 39
+    - 40
+    - 13
+    - 14
+    - 15
+    - 16
+- model: auth.group
+  pk: 2
+  fields:
+    name: cafeteria-owner
+    permissions:
+    - 29
+    - 30
+    - 31
+    - 32
+    - 41
+    - 42
+    - 43
+    - 44
+    - 48
+    - 33
+    - 34
+    - 35
+    - 36
+    - 40
+
+### Users
+
+- model: auth.user
+  pk: 1
+  fields:
+    password: ''
+    last_login: 2020-06-01 00:00:00+02:00
+    is_superuser: true
+    username: superuser
+    first_name: Superuser
+    last_name: Account
+    email: superuser@example.com
+    is_staff: true
+    is_active: true
+    date_joined: 2020-06-01 00:00:00+02:00
+    groups: []
+    user_permissions: []
+- model: auth.user
+  pk: 2
+  fields:
+    password: ''
+    last_login: 2020-06-01 00:00:00+02:00
+    is_superuser: false
+    username: admin
+    first_name: Admin
+    last_name: Account
+    email: admin@example.com
+    is_staff: true
+    is_active: true
+    date_joined: 2020-06-01 00:00:00+02:00
+    groups:
+    - 1
+    user_permissions: []
+- model: auth.user
+  pk: 3
+  fields:
+    password: ''
+    last_login: 2020-06-01 00:00:00+02:00
+    is_superuser: false
+    username: owner-1
+    first_name: Owner 1
+    last_name: Account
+    email: owner1@example.com
+    is_staff: true
+    is_active: true
+    date_joined: 2020-06-01 00:00:00+02:00
+    groups:
+    - 2
+    user_permissions: []
+- model: auth.user
+  pk: 4
+  fields:
+    password: ''
+    last_login: 2020-06-01 00:00:00+02:00
+    is_superuser: false
+    username: owner-2
+    first_name: Owner 2
+    last_name: Account
+    email: owner2@example.com
+    is_staff: true
+    is_active: true
+    date_joined: 2020-06-01 00:00:00+02:00
+    groups:
+    - 2
+    user_permissions: []
+
+### Cafeterias
+
+- model: api.cafeteria
+  pk: 1
+  fields:
+    name: „Kubuś” MIMUW
+    name_pl: „Kubuś” MIMUW
+    name_en: “Kubuś” MIMUW
+    description: Zjedz szybko i wygodnie
+    description_pl: Zjedz szybko i wygodnie
+    description_en: Quick and easy eats
+    sub_description: Stołówka na 3. piętrze
+    sub_description_pl: Stołówka na 3. piętrze
+    sub_description_en: Third floor cafeteria
+    latitude: 52.2118412
+    longitude: 20.9821114
+    capacity: 50
+    logo_url: https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg
+    address: Stefana Banacha 2, 02-097 Warszawa
+    opened_from: '09:00:00'
+    opened_to: '16:00:00'
+    owner: 3
+    occupancy: 0
+- model: api.cafeteria
+  pk: 2
+  fields:
+    name: Stołówka Biologii UW
+    name_pl: Stołówka Biologii UW
+    name_en: Faculty of Biology Cafeteria
+    description: Bogata karta stała
+    description_pl: Bogata karta stała
+    description_en: Vast array of options
+    sub_description: Po prawej stronie od głównego wejścia
+    sub_description_pl: Po prawej stronie od głównego wejścia
+    sub_description_en: Turn right at the entrance
+    latitude: 52.213231
+    longitude: 20.986494
+    capacity: 80
+    logo_url: http://im.biol.uw.edu.pl/wp-content/themes/imuw/img/logo_wb.png
+    address: Ilii, Miecznikowa 1, 02-096 Warszawa 
+    opened_from: '08:00:00'
+    opened_to: '17:00:00'
+    owner: 3
+    occupancy: 0
+- model: api.cafeteria
+  pk: 3
+  fields:
+    name: Café „Honoratka”
+    name_pl: Café „Honoratka”
+    name_en: Café “Honoratka”
+    description: Wielkomiejski powiew prestiżu
+    description_pl: Wielkomiejski powiew prestiżu
+    description_en: Taste metropolitan prestige
+    sub_description: Obok sklepu z częściami samochodowymi
+    sub_description_pl: Obok sklepu z częściami samochodowymi
+    sub_description_en: Look for a repair shop
+    latitude: 52.2132716
+    longitude: 20.9809242
+    capacity: 30
+    logo_url: https://lh3.ggpht.com/p/AF1QipO1xa-9m6_yZGDkWkz2QeZIkAQ1WqVItZwJrMOv=s1536
+    address: Winnicka 8b, 02-095 Warszawa
+    opened_from: '11:00:00'
+    opened_to: '23:00:00'
+    owner: 3
+    occupancy: 0
+- model: api.cafeteria
+  pk: 4
+  fields:
+    name: Bar mleczny „Biedronka”
+    name_pl: Bar mleczny „Biedronka”
+    name_en: “Biedronka” Milk bar
+    description: Z widokiem na tramwaj
+    description_pl: Z widokiem na tramwaj
+    description_en: With a tram view
+    sub_description: W pasażu wzdłuż ul. Grójeckiej
+    sub_description_pl: W pasażu wzdłuż ul. Grójeckiej
+    sub_description_en: Along Grójecka Street
+    latitude: 52.2121614
+    longitude: 20.9779687
+    capacity: 40
+    logo_url: https://lh3.ggpht.com/p/AF1QipNCGoyQ6Y6DLk91lR2E6GoHScjBuD_feXvq4oLy=s1024
+    address: Grójecka 79, 02-094 Warszawa
+    opened_from: '11:00:00'
+    opened_to: '18:00:00'
+    owner: 3
+    occupancy: 0
+- model: api.cafeteria
+  pk: 5
+  fields:
+    name: Van Binh
+    name_pl: Van Binh
+    name_en: Van Binh
+    description: Tốt nhất trong phố!
+    description_pl: Tốt nhất trong phố!
+    description_en: Tốt nhất trong phố!
+    sub_description: Pod szpitalem na ul. Banacha
+    sub_description_pl: Pod szpitalem na ul. Banacha
+    sub_description_en: In front of Banacha Street hospital
+    latitude: 52.210377
+    longitude: 20.9836158
+    capacity: 15
+    logo_url: http://im.biol.uw.edu.pl/wp-content/themes/imuw/img/logo_wb.png
+    address: Stefana Banacha 1A, 02-097 Warszawa
+    opened_from: '09:00:00'
+    opened_to: '21:00:00'
+    owner: 4
+    occupancy: 0
+- model: api.cafeteria
+  pk: 6
+  fields:
+    name: Kim Loan
+    name_pl: Kim Loan
+    name_en: Kim Loan
+    description: Kroimy makaron do phở 🤷‍♂️
+    description_pl: Kroimy makaron do phở 🤷‍♂️
+    description_en: We cut rice noodles 🤷‍♂️
+    sub_description: Obok domu pogrzebowego
+    sub_description_pl: Obok domu pogrzebowego
+    sub_description_en: Next to a funeral home
+    latitude: 52.2108443
+    longitude: 20.9793358
+    capacity: 20
+    logo_url: https://lh3.ggpht.com/p/AF1QipODSqn_P2JXBB52keUzGvFGG2zxrFnUaG5XvlOA=s1536
+    address: Stefana Banacha 16, 05-470 Warszawa
+    opened_from: '09:00:00'
+    opened_to: '22:00:00'
+    owner: 4
+    occupancy: 0
+
+### Menu entries
+
+- model: api.fixedmenuoption
+  pk: 1
+  fields:
+    name: Pierogi ruskie
+    name_pl: Pierogi ruskie
+    name_en: Duplings (ruskie)
+    price: 11.50
+    vegetarian: true
+    cafeteria: 1
+    photo_url: https://ocdn.eu/pulscms-transforms/1/DoOktkpTURBXy9jODJiMDdmZjk1MTYyNjBiMWM1MjBiZTc3ZDZjOThiYy5qcGeRkwXNAyDNAlg
+- model: api.fixedmenuoption
+  pk: 2
+  fields:
+    name: Pierogi z mięsem
+    name_pl: Pierogi z mięsem
+    name_en: Duplings (minced meat)
+    price: 12.50
+    vegetarian: false
+    cafeteria: 1
+    photo_url: https://ocdn.eu/pulscms-transforms/1/77_ktkpTURBXy84OTA5ODQ2N2NkYzI0YTcyMzdhNDdlY2JkNzI2ZDZiNC5qcGeTlQMAzQF7zRXwzQxZkwXNAxTNAbyVB9kyL3B1bHNjbXMvTURBXy8xNDBiMWNmZTdmMGFjNTJlZGMwMTBkNzA5NzhlODRiZS5wbmcAwgA
+- model: api.fixedmenuoption
+  pk: 3
+  fields:
+    name: Quesadilla ze szpinakiem
+    name_pl: Quesadilla ze szpinakiem
+    name_en: Spinach quesadilla
+    price: 14
+    vegetarian: true
+    cafeteria: 1
+    photo_url: https://foodyschmoodyblog.com/wp-content/uploads/2018/10/spinach-quesadilla.jpg
+- model: api.fixedmenuoption
+  pk: 4
+  fields:
+    name: Zupa krem z groszkiem ptysiowym
+    name_pl: Zupa krem z groszkiem ptysiowym
+    name_en: Creamy vegetables with peas puff
+    price: 8.50
+    vegetarian: true
+    cafeteria: 2
+    photo_url: https://lh3.ggpht.com/p/AF1QipPcvmEgiqArifJ85hMQ7Z24FgZHlwIgBZKWYMak=s1024
+- model: api.fixedmenuoption
+  pk: 5
+  fields:
+    name: Kotlet schabowy z marchewką, groszkiem i ziemniakami
+    name_pl: Kotlet schabowy z marchewką, groszkiem i ziemniakami
+    name_en: Pork chop with carrot, peas and mashed potatoes
+    price: 14.00
+    vegetarian: false
+    cafeteria: 2
+    photo_url: https://lh3.ggpht.com/p/AF1QipPZPEE4vLNlxsLbJDtLrtgVCjd4i5_PtvlaRsd2=s1024
+- model: api.fixedmenuoption
+  pk: 6
+  fields:
+    name: Zestaw dwóch dań z kompotem
+    name_pl: Zestaw dwóch dań z kompotem
+    name_en: Two entreés with a drink
+    price: 16.50
+    vegetarian: false
+    cafeteria: 2
+    photo_url: https://lh3.ggpht.com/p/AF1QipOIEPv8CNqkMKBJhokerY10blZ8ASux5sI_Zmhx=s1024
+- model: api.fixedmenuoption
+  pk: 7
+  fields:
+    name: Flaki luksusowe
+    name_pl: Flaki luksusowe
+    name_en: Tripe soup
+    price: 12.50
+    vegetarian: false
+    cafeteria: 3
+    photo_url: https://lh3.ggpht.com/p/AF1QipOdUEcyJ87nO6tLJdYx9PtmOC--Ox4KfZywou7l=s1536 
+- model: api.fixedmenuoption
+  pk: 8
+  fields:
+    name: Kufel piwa
+    name_pl: Kufel piwa
+    name_en: A pint of beer
+    price: 10.00
+    vegetarian: false
+    cafeteria: 3
+    photo_url: https://lh3.ggpht.com/p/AF1QipO6yo-PGzHvtbKxdDPMr7rtseovMqgdaBo_SS5L=s1536
+- model: api.fixedmenuoption
+  pk: 9
+  fields:
+    name: Chłodnik z jajkiem
+    name_pl: Chłodnik z jajkiem
+    name_en: Cold beetroot with an egg
+    price: 8.00
+    vegetarian: false
+    cafeteria: 4
+    photo_url: https://lh3.ggpht.com/p/AF1QipPtNdXTyknX20ZoxsfSbR3hAFFrjYp44D1UoPTi=s1024
+- model: api.fixedmenuoption
+  pk: 10
+  fields:
+    name: Kotlet schabowy
+    name_pl: Kotlet schabowy
+    name_en: Pork chop
+    price: 16.00
+    vegetarian: false
+    cafeteria: 4
+    photo_url: https://lh3.ggpht.com/p/AF1QipOCgnsaCCPWWZEn3s1xnDqpisK3JE7dlau1QWeq=s1024
+- model: api.fixedmenuoption
+  pk: 11
+  fields:
+    name: Chrupiący kurczak z frytkami
+    name_pl: Chrupiący kurczak z frytkami
+    name_en: Crispy chicken with fries
+    price: 12.00
+    vegetarian: false
+    cafeteria: 5
+    photo_url: https://lh3.ggpht.com/p/AF1QipPXJcTUl6kV57gMjRqeIgsvyy7spzo9Vk-yLEQd=s1536
+- model: api.fixedmenuoption
+  pk: 12
+  fields:
+    name: Kurczak z warzywami
+    name_pl: Kurczak z warzywami
+    name_en: Chicken with vegetables
+    price: 13
+    vegetarian: false
+    cafeteria: 5
+    photo_url: https://lh3.ggpht.com/p/AF1QipOg3MvkB5DI1WVnC5KLtD5S3bXyCvU3eGydf9N4=s1536
+- model: api.fixedmenuoption
+  pk: 13
+  fields:
+    name: Kurczak słodko-kwaśny
+    name_pl: Kurczak słodko-kwaśny
+    name_en: Sweet-sour chicken
+    price: 11.50
+    vegetarian: false
+    cafeteria: 6
+    photo_url: https://lh3.ggpht.com/p/AF1QipNfjk7YVbPDI0MwlD42jgQs5rnJX3WY-6jEZccR=s1536
+- model: api.fixedmenuoption
+  pk: 14
+  fields:
+    name: Danie dnia
+    name_pl: Danie dnia
+    name_en: Dish of the day
+    price: 13.50
+    vegetarian: false
+    cafeteria: 6
+    photo_url: https://lh3.ggpht.com/p/AF1QipMa887TLj83oOJAXK4feozrdg46U0wHN_GzApI6=s1536
+
+### Cameras
+
+- model: api.camera
+  pk: 1
+  fields:
+    # name: cam-kubus-1
+    state: 1
+    cafeteria: 1
+- model: api.camera
+  pk: 2
+  fields:
+    # name: cam-biologia-1
+    state: 1
+    cafeteria: 2
+- model: api.camera
+  pk: 3
+  fields:
+    # name: nad-wejsciem
+    state: 1
+    cafeteria: 3
+- model: api.camera
+  pk: 4
+  fields:
+    # name: biedronka-1
+    state: 1
+    cafeteria: 4
+- model: api.camera
+  pk: 5
+  fields:
+    # name: biedronka-2
+    state: 1
+    cafeteria: 4
+- model: api.camera
+  pk: 6
+  fields:
+    # name: vanbinh-wum
+    state: 1
+    cafeteria: 5
+- model: api.camera
+  pk: 7
+  fields:
+    # name: kimloan
+    state: 1
+    cafeteria: 6
+
+### No camera events
+### No reviews

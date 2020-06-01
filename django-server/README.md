@@ -55,3 +55,15 @@ and then restored in the other environment using the
 ```bash
 python manage.py loaddata data.json
 ```
+
+## Sample data
+
+To load sample data in empty project, run:
+```
+python manage.py migrate
+python manage.py loaddata fixtures/demo-data.yaml
+python manage.py reset_passwords  # Set password equal to username for each user
+python manage.py generate_events  # Use --from/to=YYYY-MM-DD to select dates
+python manage.py generate_reviews  # Use --from/to=YYYY-MM-DD to select dates
+```
+This will delete any existing camera events and reviews.
