@@ -6,7 +6,6 @@
 {% block extrahead %}
 <script>
   const LANGUAGE = '{{ LANGUAGE_CODE }}';
-  const DEBUGGING_LAG = 200;
   const API_URL_BASE = 'http{% if request.is_secure %}s{% endif %}://{{ request.get_host }}/api/beta/';
   const USER_ID = {{ user.id }};
 </script>
