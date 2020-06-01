@@ -38,7 +38,8 @@ class CameraEventSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         camera = Camera.objects.get(pk=self.context['view'].kwargs['camera_pk'])
-        validated_data['camera'] = camera
+        if validated_data['event_type'] != CameraEventType.OCCUPANCY_OVERRIDE.value:
+            validated_data['camera'] = camera
         validated_data['cafeteria'] = camera.cafeteria
         return CameraEvent.objects.create(**validated_data)
 
