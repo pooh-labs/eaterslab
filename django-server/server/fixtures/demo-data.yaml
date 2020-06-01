@@ -411,9 +411,9 @@
 - model: api.cafeteria
   pk: 1
   fields:
-    name: Kubuś MIMUW
-    name_pl: Kubuś MIMUW
-    name_en: Kubuś MIMUW
+    name: „Kubuś” MIMUW
+    name_pl: „Kubuś” MIMUW
+    name_en: “Kubuś” MIMUW
     description: Zjedz szybko i wygodnie
     description_pl: Zjedz szybko i wygodnie
     description_en: Quick and easy eats
@@ -453,9 +453,9 @@
 - model: api.cafeteria
   pk: 3
   fields:
-    name: Café Honoratka
-    name_pl: Café Honoratka
-    name_en: Café Honoratka
+    name: Café „Honoratka”
+    name_pl: Café „Honoratka”
+    name_en: Café “Honoratka”
     description: Wielkomiejski powiew prestiżu
     description_pl: Wielkomiejski powiew prestiżu
     description_en: Taste metropolitan prestige
@@ -474,9 +474,9 @@
 - model: api.cafeteria
   pk: 4
   fields:
-    name: Bar mleczny Biedronka
-    name_pl: Bar mleczny Biedronka
-    name_en: Biedronka Milk bar
+    name: Bar mleczny „Biedronka”
+    name_pl: Bar mleczny „Biedronka”
+    name_en: “Biedronka” Milk bar
     description: Z widokiem na tramwaj
     description_pl: Z widokiem na tramwaj
     description_en: With a tram view
