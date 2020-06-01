@@ -40,6 +40,7 @@ class CafeteriaFilterSet(filters.FilterSet):
     opened_now = filters.BooleanFilter(method='get_opened_now')
     prefix_name = filters.CharFilter(method='get_name_prefix')
     owner_id = filters.NumberFilter(method='get_for_owner')
+    have_vegs = filters.BooleanFilter(method='get_for_vegetarian')
 
     class Meta:
         model = Cafeteria
@@ -67,6 +68,14 @@ class CafeteriaFilterSet(filters.FilterSet):
         if owner_id is None:
             return queryset
         return queryset.filter(owner_id=owner_id)
+
+    def get_for_vegetarian(self, queryset, field_name, value):
+        if value is None or value is False:
+            return queryset
+        for_vegs = FixedMenuOption.objects.filter(vegetarian=True).values_list('cafeteria_id')
+        print(queryset)
+        print(for_vegs)
+        return queryset.filter(id__in=for_vegs)
 
 
 @method_decorator(name='list', decorator=accept_language_decorator)
