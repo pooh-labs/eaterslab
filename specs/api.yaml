@@ -152,6 +152,45 @@ paths:
         in: path
         required: true
         type: string
+  /cafeterias/{cafeteria_pk}/stats/avg_dish_review:
+    get:
+      operationId: cafeterias_stats_avg_dish_review_list
+      description: ''
+      parameters:
+        - name: start_timestamp
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: end_timestamp
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: count
+          in: query
+          description: ''
+          required: false
+          type: number
+        - name: group_by
+          in: query
+          description: ''
+          required: false
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AverageDishReviewStats'
+      tags:
+        - cafeterias
+    parameters:
+      - name: cafeteria_pk
+        in: path
+        required: true
+        type: string
   /cafeterias/{cafeteria_pk}/stats/occupancy:
     get:
       operationId: cafeterias_stats_occupancy_list
@@ -408,6 +447,22 @@ definitions:
       option:
         title: Option
         type: integer
+  AverageDishReviewStats:
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      timestamp:
+        title: Timestamp
+        type: string
+        format: date-time
+        readOnly: true
+      value:
+        title: Value
+        type: number
+        readOnly: true
   OccupancyStats:
     type: object
     properties:
