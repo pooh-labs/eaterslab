@@ -201,12 +201,12 @@ class StatsView(generics.ListAPIView):
         divider = get_divider(group_by_string)()
 
         if start_string is None:
-            timestamp_start = datetime.min + divider.get_timestamp_delta(datetime.min)
+            timestamp_start = datetime.min + divider.get_timestamp_delta(datetime.min) + timedelta(days=1)
         else:
             timestamp_start = timestamp_parse(start_string)
 
         if end_string is None:
-            timestamp_end = datetime.max - divider.get_timestamp_delta(datetime.max)
+            timestamp_end = datetime.max - divider.get_timestamp_delta(datetime.max) - timedelta(days=1)
         else:
             timestamp_end = timestamp_parse(end_string)
 
