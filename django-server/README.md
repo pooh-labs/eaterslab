@@ -64,4 +64,5 @@ python manage.py migrate
 python manage.py loaddata fixtures/demo-data.yaml
 python manage.py reset_passwords
 python manage.py generate_events  # Use --from/to=YYYY-MM-DD to select dates
+python manage.py generate_reviews  # Use --from/to=YYYY-MM-DD to select dates
 ```
