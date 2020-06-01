@@ -304,8 +304,32 @@ class OccupancyStatsView(StatsView):
                                   occupancy_relative=min((float(value) / float(capacity)), 1.0))
 
 
+class AverageDishReviewStatsView(StatsView):
+    serializer_class = AverageDishReviewStatsSerializer
+
+    def get_full_queryset(self, cafeteria_id):
+        return FixedMenuOptionReview.objects.filter(option__cafeteria_id=cafeteria_id)
+
+    def timestamp_field_name(self):
+        return 'review_time'
+
+    def init_value(self, before_queryset: QuerySet):
+        all_stars = 0
+        for review in before_queryset:
+            all_stars += review.stars
+        length = max(len(before_queryset), 1)
+        return all_stars / length
+
+    def next_count_value(self, count_value, curr_queryset: QuerySet):
+        return self.init_value(curr_queryset)
+
+    def map_to_result_objects(self, index, value, timestamp, cafeteria_pk):
+        return AverageDishReviewStatsData(id=index, value=value, timestamp=timestamp)
+
+
 AVAILABLE_STATS = [
     ('occupancy', OccupancyStatsView),
+    ('avg_dish_review', AverageDishReviewStatsView),
 ]
 
 
