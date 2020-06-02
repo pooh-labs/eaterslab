@@ -79,7 +79,7 @@ entire implementation team.
   * Krzysztof Antoniak ([@kantoniak](https://github.com/kantoniak))
 * Server:
   * Robert Michna ([@Rhantolq](https://github.com/Rhantolq))
-  * Krzysztof Antoniak ([@kantoniak](https://github.com/kantoniak)))
+  * Krzysztof Antoniak ([@kantoniak](https://github.com/kantoniak))
   * Maciej Procyk ([@avan1235](https://gitlab.com/avan1235))
 * Android:
   * Maciej Procyk ([@avan1235](https://gitlab.com/avan1235))
