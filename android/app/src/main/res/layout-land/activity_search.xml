@@ -61,6 +61,7 @@
             <ProgressBar
                 android:id="@+id/progressBarLoading"
                 style="?android:attr/progressBarStyle"
+                android:layout_marginVertical="@dimen/loading_bar_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"

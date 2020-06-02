@@ -13,7 +13,6 @@
         android:layout_height="@dimen/button_circle_size"
         android:drawableStart="@drawable/ic_search"
         android:gravity="center"
-        android:layout_gravity="center"
         android:paddingStart="@dimen/button_circle_radius_half"
         android:paddingEnd="@dimen/button_circle_radius_half"
         android:background="@drawable/button_round_accent"
@@ -48,6 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxHeight="0dp"
+        app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,6 +64,7 @@
                 style="?android:attr/progressBarStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/loading_bar_margin"
                 android:indeterminate="true"
                 android:visibility="gone"/>
 
