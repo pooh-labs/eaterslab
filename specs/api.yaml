@@ -51,6 +51,11 @@ paths:
           description: ''
           required: false
           type: string
+        - name: min_avg_review
+          in: query
+          description: ''
+          required: false
+          type: number
         - name: Accept-Language
           in: header
           description: Language for response content
