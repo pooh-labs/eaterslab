@@ -46,6 +46,11 @@ paths:
           description: ''
           required: false
           type: number
+        - name: have_vegs
+          in: query
+          description: ''
+          required: false
+          type: string
         - name: Accept-Language
           in: header
           description: Language for response content
