@@ -6,7 +6,7 @@ from os.path import join as path_join
 from pytz import utc
 
 from django.core.files.storage import FileSystemStorage
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Avg
 from django.utils.decorators import method_decorator
 from django_filters import rest_framework as filters
 from drf_yasg.openapi import Parameter, IN_HEADER, TYPE_STRING
@@ -43,10 +43,11 @@ class CafeteriaFilterSet(filters.FilterSet):
     prefix_name = filters.CharFilter(method='get_name_prefix')
     owner_id = filters.NumberFilter(method='get_for_owner')
     have_vegs = filters.BooleanFilter(method='get_for_vegetarian')
+    min_avg_review = filters.NumberFilter(method='get_with_min_review')
 
     class Meta:
         model = Cafeteria
-        fields = ['opened_from', 'opened_to', 'opened_now', 'prefix_name', 'owner_id']
+        fields = ['opened_from', 'opened_to', 'opened_now', 'prefix_name', 'owner_id', 'have_vegs', 'min_avg_review']
 
     def get_opened_now(self, queryset, field_name, value):
         opened = value
@@ -85,6 +86,11 @@ class CafeteriaFilterSet(filters.FilterSet):
         if value is None:
             return queryset
         return queryset.filter(opened_to__gte=value)
+
+    def get_with_min_review(self, queryset, field_name, value):
+        if value is None:
+            return queryset
+        return queryset.annotate(avg_review=Avg('fixed_menu_options__avg_review_stars')).filter(avg_review__gte=value)
 
 
 @method_decorator(name='list', decorator=accept_language_decorator)
