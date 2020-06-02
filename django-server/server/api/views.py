@@ -77,6 +77,7 @@ class CafeteriaFilterSet(filters.FilterSet):
 
 
 @method_decorator(name='list', decorator=accept_language_decorator)
+@method_decorator(name='retrieve', decorator=accept_language_decorator)
 class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Cafeteria.objects.all().order_by('id')
     serializer_class = CafeteriaSerializer
@@ -113,6 +114,7 @@ class CameraEventsViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewse
 
 
 @method_decorator(name='list', decorator=accept_language_decorator)
+@method_decorator(name='retrieve', decorator=accept_language_decorator)
 class FixedMenuOptionViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = FixedMenuOptionSerializer
 
