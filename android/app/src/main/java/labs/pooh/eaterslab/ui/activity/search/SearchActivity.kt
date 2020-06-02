@@ -1,6 +1,7 @@
 package labs.pooh.eaterslab.ui.activity.search
 
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -37,6 +38,7 @@ class SearchActivity : AbstractRevealedActivity() {
 
         buttonSearch.setOnClickListener {
             clearSearched()
+            progressBarLoading.visibility = View.VISIBLE
             searchViewModel.viewModelScope.coroutineContext.cancelChildren()
             val textSearch = searchText.text.toString()
             val onlyOpened = switchOpened.isChecked
@@ -58,6 +60,7 @@ class SearchActivity : AbstractRevealedActivity() {
     }
 
     private fun addNewSearchResult(cafeteriaDao: CafeteriaDao) {
+        progressBarLoading.visibility = View.GONE
         val cafeteriaView = with(cafeteriaDao.downloadedImage) {
             if (this != null) {
                 SearchedCafeteriaView(this@SearchActivity, cafeteriaDao.name, cafeteriaDao.openedFrom, cafeteriaDao.openedTo, this)

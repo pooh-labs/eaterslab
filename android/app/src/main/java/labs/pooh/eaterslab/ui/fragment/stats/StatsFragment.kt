@@ -89,9 +89,17 @@ class StatsFragment : ThemedAbstractFragment() {
                 statsReviewLayout += frame
             }
         })
+    }
 
+    override fun onResume() {
+        super.onResume()
         updateStatsOccupancy()
         updateStatsReviews()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        resetViews()
     }
 
     private fun updateStatsOccupancy() {
@@ -106,12 +114,10 @@ class StatsFragment : ThemedAbstractFragment() {
         viewModel.updateAvgReviewStatsMonthData()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        statsOccupancyLayout.removeAllViews()
-        statsReviewLayout.removeAllViews()
-        progressBarOccupancy.visibility = View.VISIBLE
-        progressBarReview.visibility = View.VISIBLE
-
+    private fun resetViews() {
+        statsOccupancyLayout?.removeAllViews()
+        statsReviewLayout?.removeAllViews()
+        progressBarOccupancy?.visibility = View.VISIBLE
+        progressBarReview?.visibility = View.VISIBLE
     }
 }
