@@ -6,7 +6,7 @@ from os.path import join as path_join
 from pytz import utc
 
 from django.core.files.storage import FileSystemStorage
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Avg
 from django.utils.decorators import method_decorator
 from django_filters import rest_framework as filters
 from drf_yasg.openapi import Parameter, IN_HEADER, TYPE_STRING
@@ -37,14 +37,17 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 class CafeteriaFilterSet(filters.FilterSet):
+    opened_from = filters.TimeFilter(method='get_opened_from')
+    opened_to = filters.TimeFilter(method='get_opened_to')
     opened_now = filters.BooleanFilter(method='get_opened_now')
     prefix_name = filters.CharFilter(method='get_name_prefix')
     owner_id = filters.NumberFilter(method='get_for_owner')
     have_vegs = filters.BooleanFilter(method='get_for_vegetarian')
+    min_avg_review = filters.NumberFilter(method='get_with_min_review')
 
     class Meta:
         model = Cafeteria
-        fields = ['opened_from', 'opened_to', 'opened_now', 'prefix_name', 'owner_id']
+        fields = ['opened_from', 'opened_to', 'opened_now', 'prefix_name', 'owner_id', 'have_vegs', 'min_avg_review']
 
     def get_opened_now(self, queryset, field_name, value):
         opened = value
@@ -59,7 +62,6 @@ class CafeteriaFilterSet(filters.FilterSet):
     def get_name_prefix(self, queryset, field_name, value):
         if value is None:
             return queryset
-
         prefix = value.strip()
         return queryset.filter(name__istartswith=prefix)
 
@@ -70,10 +72,25 @@ class CafeteriaFilterSet(filters.FilterSet):
         return queryset.filter(owner_id=owner_id)
 
     def get_for_vegetarian(self, queryset, field_name, value):
-        if value is None or value is False:
+        if value is None:
             return queryset
-        for_vegs = FixedMenuOption.objects.filter(vegetarian=True).values_list('cafeteria_id')
+        for_vegs = FixedMenuOption.objects.filter(vegetarian=value).values_list('cafeteria_id')
         return queryset.filter(id__in=for_vegs)
+
+    def get_opened_from(self, queryset, field_name, value):
+        if value is None:
+            return queryset
+        return queryset.filter(opened_from__lte=value)
+
+    def get_opened_to(self, queryset, field_name, value):
+        if value is None:
+            return queryset
+        return queryset.filter(opened_to__gte=value)
+
+    def get_with_min_review(self, queryset, field_name, value):
+        if value is None:
+            return queryset
+        return queryset.annotate(avg_review=Avg('fixed_menu_options__avg_review_stars')).filter(avg_review__gte=value)
 
 
 @method_decorator(name='list', decorator=accept_language_decorator)
