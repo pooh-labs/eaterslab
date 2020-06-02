@@ -13,9 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from admin.admin import admin_site
 from django.contrib import admin
 from django.urls import include, path
 from rest_framework import permissions
+from django.conf.urls.i18n import i18n_patterns
+from django.conf import settings
 
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
@@ -30,10 +33,16 @@ schema_view = get_schema_view(
    permission_classes=(permissions.AllowAny,),
 )
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     path('', include('home.urls')),
-    path('admin/', admin.site.urls),
-    path('api/beta/', include('api.urls')),
+    path('admin/', admin_site.urls),
+
+    # Turn of /pl/ prefix
+    prefix_default_language=False
+)
+
+urlpatterns += [
+    path(settings.API_PATH_PREFIX + 'beta/', include('api.urls')),
     # For documentation generation with drf_yasg
     path(r'api.yaml', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path(r'doc', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

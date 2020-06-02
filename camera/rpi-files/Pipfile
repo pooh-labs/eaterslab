@@ -13,6 +13,8 @@ imutils = "*"
 setuptools = "*"
 python-dotenv = "*"
 wemake-python-styleguide = "*"
+dlib = "*"
+scipy = "*"
 
 [dev-packages]
 

@@ -16,6 +16,8 @@ import environ
 import sys
 import logging
 
+from django.utils.translation import gettext_lazy as _
+
 env = environ.Env()
 environ.Env.read_env()
 
@@ -49,12 +51,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'modeltranslation',  # Model translations
+    'django_filters',
     'rest_framework',
     'rest_framework.authtoken',  # token auth for artifacts upload
-
-    # External library for yaml generator (can be used but works only with OpenAPI 2.0)
-    'home.apps.HomeConfig',                                 # Home app
     'drf_yasg',  # for API documentation and generation
+
+    'admin.apps.AdminConfig',  # Admin
+    'home.apps.HomeConfig',  # Home app
     'api.apps.ApiConfig',  # API app
 
     'django_filters'
@@ -63,12 +67,14 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',  # for static files handling on deploy
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',  # for ssl handling in Django
+    'api.middleware.ApiCallLanguageMiddleware',  # For setting language in API calls
 ]
 
 ROOT_URLCONF = 'server.urls'
@@ -100,6 +106,9 @@ REST_FRAMEWORK = {
         # Uncomment to get the API renderer for browser view
         # 'rest_framework.renderers.BrowsableAPIRenderer',
     ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'url_filter.integrations.drf.DjangoFilterBackend',
+    ]
 }
 
 
@@ -146,7 +155,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGES = (
+    ('pl', _('Polish')),
+    ('en', _('English')),
+)
+
+LANGUAGE_CODE = 'pl'
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'pl'
 
 TIME_ZONE = 'Europe/Warsaw'
 
@@ -156,6 +171,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
+
+# API configuration
+API_PATH_PREFIX = 'api/'
+
 # SSL enable configuration for server
 
 ENABLE_SSL = env.bool('SSL', default=True)
@@ -163,7 +185,6 @@ SECURE_SSL_REDIRECT = ENABLE_SSL
 SESSION_COOKIE_SECURE = ENABLE_SSL
 CSRF_COOKIE_SECURE = ENABLE_SSL
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
 
 # Heroku static files configuration to get it working on deploy
 
@@ -178,4 +199,4 @@ ARTIFACT_NAME = 'EatersLab.apk'
 ARTIFACTS_ROOT = os.path.join(BASE_DIR, 'artifact')
 ARTIFACTS_ROOT_BETA = os.path.join(ARTIFACTS_ROOT, 'beta')
 
-DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760      # set max limit of uploaded file to 10 MB
+DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # set max limit of uploaded file to 10 MB

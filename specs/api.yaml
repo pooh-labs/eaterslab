@@ -20,7 +20,46 @@ paths:
     get:
       operationId: cafeterias_list
       description: ''
-      parameters: []
+      parameters:
+        - name: opened_from
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: opened_to
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: opened_now
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: prefix_name
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: owner_id
+          in: query
+          description: ''
+          required: false
+          type: number
+        - name: have_vegs
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: min_avg_review
+          in: query
+          description: ''
+          required: false
+          type: number
+        - name: Accept-Language
+          in: header
+          description: Language for response content
+          type: string
       responses:
         '200':
           description: ''
@@ -35,7 +74,11 @@ paths:
     get:
       operationId: cafeterias_fixed_menu_options_list
       description: ''
-      parameters: []
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: Language for response content
+          type: string
       responses:
         '200':
           description: ''
@@ -54,7 +97,11 @@ paths:
     get:
       operationId: cafeterias_fixed_menu_options_read
       description: ''
-      parameters: []
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: Language for response content
+          type: string
       responses:
         '200':
           description: ''
@@ -119,11 +166,93 @@ paths:
         in: path
         required: true
         type: string
+  /cafeterias/{cafeteria_pk}/stats/avg_dish_review:
+    get:
+      operationId: cafeterias_stats_avg_dish_review_list
+      description: ''
+      parameters:
+        - name: start_timestamp
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: end_timestamp
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: count
+          in: query
+          description: ''
+          required: false
+          type: number
+        - name: group_by
+          in: query
+          description: ''
+          required: false
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AverageDishReviewStats'
+      tags:
+        - cafeterias
+    parameters:
+      - name: cafeteria_pk
+        in: path
+        required: true
+        type: string
+  /cafeterias/{cafeteria_pk}/stats/occupancy:
+    get:
+      operationId: cafeterias_stats_occupancy_list
+      description: ''
+      parameters:
+        - name: start_timestamp
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: end_timestamp
+          in: query
+          description: ''
+          required: false
+          type: string
+        - name: count
+          in: query
+          description: ''
+          required: false
+          type: number
+        - name: group_by
+          in: query
+          description: ''
+          required: false
+          type: string
+      responses:
+        '200':
+          description: ''
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OccupancyStats'
+      tags:
+        - cafeterias
+    parameters:
+      - name: cafeteria_pk
+        in: path
+        required: true
+        type: string
   /cafeterias/{id}/:
     get:
       operationId: cafeterias_read
       description: ''
-      parameters: []
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: Language for response content
+          type: string
       responses:
         '200':
           description: ''
@@ -134,7 +263,7 @@ paths:
     parameters:
       - name: id
         in: path
-        description: A unique integer value identifying this cafeteria.
+        description: "A unique integer value identifying this sto\u0142\xF3wka."
         required: true
         type: integer
   /cameras/{camera_pk}/events/:
@@ -177,55 +306,6 @@ paths:
       tags:
         - fixed_menu_reviews
     parameters: []
-  /menu_option_tags/:
-    get:
-      operationId: menu_option_tags_list
-      description: ''
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/MenuOptionTag'
-      tags:
-        - menu_option_tags
-    post:
-      operationId: menu_option_tags_create
-      description: ''
-      parameters:
-        - name: data
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/MenuOptionTag'
-      responses:
-        '201':
-          description: ''
-          schema:
-            $ref: '#/definitions/MenuOptionTag'
-      tags:
-        - menu_option_tags
-    parameters: []
-  /menu_option_tags/{id}/:
-    get:
-      operationId: menu_option_tags_read
-      description: ''
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          schema:
-            $ref: '#/definitions/MenuOptionTag'
-      tags:
-        - menu_option_tags
-    parameters:
-      - name: id
-        in: path
-        description: A unique integer value identifying this menu option tag.
-        required: true
-        type: integer
   /upload/artifacts/beta/{filename}/:
     put:
       operationId: upload_artifacts_beta_update
@@ -270,6 +350,7 @@ definitions:
       - address
       - opened_from
       - opened_to
+      - occupancy
     type: object
     properties:
       id:
@@ -277,46 +358,55 @@ definitions:
         type: integer
         readOnly: true
       name:
-        title: Name
+        title: Nazwa
         type: string
         maxLength: 128
         minLength: 1
       description:
-        title: Description
+        title: Opis
         type: string
         maxLength: 256
         minLength: 1
       sub_description:
-        title: Sub description
+        title: Dodatkowy opis
         type: string
         maxLength: 512
         minLength: 1
       longitude:
-        title: Longitude
+        title: "D\u0142ugo\u015B\u0107 geograficzna"
         type: number
         maximum: 180.0
         minimum: -180.0
       latitude:
-        title: Latitude
+        title: "Szeroko\u015B\u0107 geograficzna"
         type: number
         maximum: 90.0
         minimum: -90.0
       logo_url:
-        title: Logo url
+        title: URL loga
         type: string
         maxLength: 2048
         minLength: 1
       address:
-        title: Address
+        title: Adres
         type: string
         maxLength: 256
         minLength: 1
       opened_from:
-        title: Opened from
+        title: Otwarta od
         type: string
       opened_to:
-        title: Opened to
+        title: Otwarta do
         type: string
+      occupancy:
+        title: "Liczba os\xF3b w sto\u0142\xF3wce"
+        type: integer
+        maximum: 2147483647
+        minimum: 0
+      occupancy_relative:
+        title: Occupancy relative
+        type: string
+        readOnly: true
   FixedMenuOption:
     required:
       - name
@@ -329,21 +419,21 @@ definitions:
         type: integer
         readOnly: true
       name:
-        title: Name
+        title: Nazwa
         type: string
         maxLength: 128
         minLength: 1
       price:
-        title: Price
+        title: Cena
         type: number
         minimum: 0.0
       photo_url:
-        title: Photo url
+        title: "URL zdj\u0119cia"
         type: string
         maxLength: 2048
         minLength: 1
       avg_review_stars:
-        title: Avg review stars
+        title: "\u015Arednia ocena"
         type: number
         readOnly: true
   FixedMenuOptionReview:
@@ -359,22 +449,58 @@ definitions:
         type: integer
         readOnly: true
       stars:
-        title: Stars
+        title: Ocena
         type: integer
         maximum: 5
         minimum: 0
       author_nick:
-        title: Author nick
+        title: Autor
         type: string
         maxLength: 64
         minLength: 1
       review_time:
-        title: Review time
+        title: Czas
         type: string
         format: date-time
       option:
         title: Option
         type: integer
+  AverageDishReviewStats:
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      timestamp:
+        title: Timestamp
+        type: string
+        format: date-time
+        readOnly: true
+      value:
+        title: Value
+        type: number
+        readOnly: true
+  OccupancyStats:
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+        readOnly: true
+      timestamp:
+        title: Timestamp
+        type: string
+        format: date-time
+        readOnly: true
+      occupancy:
+        title: Occupancy
+        type: integer
+        readOnly: true
+      occupancy_relative:
+        title: Occupancy relative
+        type: number
+        readOnly: true
   CameraEvent:
     required:
       - event_type
@@ -382,26 +508,21 @@ definitions:
     type: object
     properties:
       event_type:
-        title: Event type
+        title: Typ zdarzenia
         type: integer
         enum:
           - 0
           - 1
           - 2
           - 3
+          - 4
       timestamp:
-        title: Timestamp
+        title: Czas
         type: string
         format: date-time
-  MenuOptionTag:
-    type: object
-    properties:
-      id:
-        title: ID
+      event_value:
+        title: "Warto\u015B\u0107 zdarzenia"
         type: integer
-        readOnly: true
-      name:
-        title: Name
-        type: string
-        readOnly: true
-        minLength: 1
+        maximum: 2147483647
+        minimum: 0
+        x-nullable: true

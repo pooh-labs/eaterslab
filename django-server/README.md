@@ -43,3 +43,27 @@ and the it can be used as *generated_token* for example for files uplading with 
 curl -H 'Authorization: Token generated_token' -X PUT --data-binary @./local_file.upload https://server.example/file/upload/path/
 ```
 when the authentication is needed for uploading files.
+
+### Data dump to file
+
+The data can be backed using the django `dumpdata` option by
+```bash
+python manage.py dumpdata --exclude=auth --exclude=contenttypes --exclude=sessions --exclude=authtoken > data.json
+```
+
+and then restored in the other environment using the 
+```bash
+python manage.py loaddata data.json
+```
+
+## Sample data
+
+To load sample data in empty project, run:
+```
+python manage.py migrate
+python manage.py loaddata fixtures/demo-data.yaml
+python manage.py reset_passwords  # Set password equal to username for each user
+python manage.py generate_events  # Use --from/to=YYYY-MM-DD to select dates
+python manage.py generate_reviews  # Use --from/to=YYYY-MM-DD to select dates
+```
+This will delete any existing camera events and reviews.

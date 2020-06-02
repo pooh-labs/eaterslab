@@ -7,7 +7,6 @@ from .views import *
 router = DefaultRouter()
 router.register(r'cameras', CameraViewSet)
 router.register(r'cafeterias', CafeteriaViewSet)
-router.register(r'menu_option_tags', MenuOptionTagViewSet)
 router.register(r'fixed_menu_reviews', FixedMenuOptionReviewViewSet)
 
 cafeterias_router = NestedSimpleRouter(router, r'cafeterias', lookup='cafeteria')
@@ -32,3 +31,7 @@ urlpatterns = [
     path('upload/artifacts/<str:filename>/', UploadArtifactsView.as_view()),
     path('upload/artifacts/beta/<str:filename>/', UploadArtifactsBetaView.as_view()),
 ]
+urlpatterns.extend([
+    path('cafeterias/<int:cafeteria_pk>/stats/{}'.format(name), view.as_view())
+    for (name, view) in AVAILABLE_STATS
+])

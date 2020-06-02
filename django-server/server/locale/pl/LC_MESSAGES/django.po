@@ -1,0 +1,275 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-30 10:35+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin/admin.py:17
+msgid "EatersLab administration"
+msgstr "Administracja EatersLab"
+
+#: admin/admin.py:18
+msgid "EatersLab"
+msgstr "EatersLab"
+
+#: admin/admin.py:19 home/templates/home/home.html:34
+msgid "Administration"
+msgstr "Administracja"
+
+#: admin/admin.py:62
+msgid "State"
+msgstr "Stan"
+
+#: admin/admin.py:63
+msgid "Last event time"
+msgstr "Czas ostatniego zdarzenia"
+
+#: admin/templates/admin/app_list_override.html:8
+#, python-format
+msgid "Models in the %(name)s application"
+msgstr "Modele w aplikacji %(name)s"
+
+#: admin/templates/admin/app_list_override.html:19
+msgid "Add"
+msgstr "Dodaj"
+
+#: admin/templates/admin/app_list_override.html:26
+msgid "View"
+msgstr "Zobacz"
+
+#: admin/templates/admin/app_list_override.html:28
+msgid "Change"
+msgstr "Zmień"
+
+#: admin/templates/admin/app_list_override.html:41
+msgid "Other pages"
+msgstr "Inne strony"
+
+#: admin/templates/admin/app_list_override.html:44 admin/views.py:14
+msgid "Statistics"
+msgstr "Statystyki"
+
+#: admin/templates/admin/app_list_override.html:49
+msgid "You don’t have permission to view or edit anything."
+msgstr "Nie masz uprawnień do oglądania ani zmieniania czegokolwiek."
+
+#: admin/templates/admin/index_override.html:23
+msgid "Recent actions"
+msgstr "Ostatnie działania"
+
+#: admin/templates/admin/index_override.html:24
+msgid "My actions"
+msgstr "Moje działania"
+
+#: admin/templates/admin/index_override.html:28
+msgid "None available"
+msgstr "Brak dostępnych"
+
+#: admin/templates/admin/index_override.html:42
+msgid "Unknown content"
+msgstr "Nieznany typ zawartości"
+
+#: admin/templates/admin/stats.html:23
+msgid "Home"
+msgstr "Strona główna"
+
+#: api/apps.py:7
+msgid "API"
+msgstr "API"
+
+#: api/models.py:31 api/models.py:131
+msgid "name"
+msgstr "nazwa"
+
+#: api/models.py:32
+msgid "description"
+msgstr "opis"
+
+#: api/models.py:33
+msgid "additional description"
+msgstr "dodatkowy opis"
+
+#: api/models.py:34
+msgid "latitude"
+msgstr "szerokość geograficzna"
+
+#: api/models.py:35
+msgid "longitude"
+msgstr "długość geograficzna"
+
+#: api/models.py:36
+msgid "cafeteria capacity"
+msgstr "pojemność stołówki"
+
+#: api/models.py:37
+msgid "logo_url"
+msgstr "URL loga"
+
+#: api/models.py:38
+msgid "address"
+msgstr "adres"
+
+#: api/models.py:39
+msgid "opened_from"
+msgstr "otwarta od"
+
+#: api/models.py:40
+msgid "opened_to"
+msgstr "otwarta do"
+
+#: api/models.py:41
+msgid "owner"
+msgstr "właściciel"
+
+#: api/models.py:42
+msgid "cafeteria occupancy"
+msgstr "liczba osób w stołówce"
+
+#: api/models.py:45 api/models.py:61 api/models.py:107 api/models.py:134
+msgid "cafeteria"
+msgstr "stołówka"
+
+#: api/models.py:46
+msgid "cafeterias"
+msgstr "stołówki"
+
+#: api/models.py:51
+msgid "online"
+msgstr "online"
+
+#: api/models.py:52
+msgid "offline"
+msgstr "offline"
+
+#: api/models.py:53
+msgid "lost connection"
+msgstr "brak połączenia"
+
+#: api/models.py:60
+msgid "state"
+msgstr "Stan"
+
+#: api/models.py:64 api/models.py:106
+msgid "camera"
+msgstr "kamera"
+
+#: api/models.py:65
+msgid "cameras"
+msgstr "kamery"
+
+#: api/models.py:70
+msgid "monitoring_started"
+msgstr "początek monitoringu"
+
+#: api/models.py:71
+msgid "monitoring_ended"
+msgstr "koniec monitoringu"
+
+#: api/models.py:72
+msgid "person_entered"
+msgstr "klient wszedł"
+
+#: api/models.py:73
+msgid "person_left"
+msgstr "klient wyszedl"
+
+#: api/models.py:74
+msgid "occupancy_override"
+msgstr "nadpisano zajętość"
+
+#: api/models.py:104 api/models.py:166
+msgid "timestamp"
+msgstr "czas"
+
+#: api/models.py:105
+msgid "event_type"
+msgstr "typ zdarzenia"
+
+#: api/models.py:108
+msgid "event_value"
+msgstr "wartość zdarzenia"
+
+#: api/models.py:111
+msgid "camera event"
+msgstr "zdarzenie"
+
+#: api/models.py:112
+msgid "camera events"
+msgstr "zdarzenia"
+
+#: api/models.py:132
+msgid "price"
+msgstr "cena"
+
+#: api/models.py:133
+msgid "vegetarian"
+msgstr "opcja wegetariańska"
+
+#: api/models.py:135
+msgid "photo_url"
+msgstr "URL zdjęcia"
+
+#: api/models.py:136
+msgid "avg_review_stars"
+msgstr "średnia ocena"
+
+#: api/models.py:139
+msgid "fixed menu entry"
+msgstr "pozycja ze stałego menu"
+
+#: api/models.py:140
+msgid "fixed menu entries"
+msgstr "pozycje ze stałego menu"
+
+#: api/models.py:163
+msgid "menu option"
+msgstr "opcja z menu"
+
+#: api/models.py:164
+msgid "rating"
+msgstr "ocena"
+
+#: api/models.py:165
+msgid "author"
+msgstr "autor"
+
+#: api/models.py:169
+msgid "menu entry review"
+msgstr "recenzja pozycji z menu"
+
+#: api/models.py:170
+msgid "menu entry reviews"
+msgstr "recenzje pozycji z menu"
+
+#: home/templates/home/home.html:10
+msgid "EatersLab Home"
+msgstr "Strona główna EatersLab"
+
+#: home/templates/home/home.html:37
+msgid "API documentation"
+msgstr "Dokumentacja API"
+
+#: home/templates/home/home.html:45
+msgid "Welcome to EatersLab by PoohLab."
+msgstr "Witamy w EatersLab od PoohLab."
+
+#: server/settings.py:157
+msgid "Polish"
+msgstr "Polski"
+
+#: server/settings.py:158
+msgid "English"
+msgstr "Angielski"
