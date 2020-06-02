@@ -8,6 +8,7 @@ Authors: Jakub Walendowski, Maciej Procyk, Krzysztof Antoniak, Robert Michna
 
 * v1.0 (2020-05-19): Initial revision
 * v2.0 (2020-05-26): First public version
+* v2.1 (2020-06-02): Add profile links and note about coding style enforcement (Krzysztof Antoniak)
 
 ## Introduction
 
@@ -74,10 +75,15 @@ entire implementation team.
 
 ### Organizational structure
 
-* Krzysztof Antoniak - camera devices and server
-* Robert Michna - server
-* Maciej Procyk - android application and server
-* Jakub Walendowski - android application
+* Cameras:
+  * Krzysztof Antoniak ([@kantoniak](https://github.com/kantoniak))
+* Server:
+  * Robert Michna ([@Rhantolq](https://github.com/Rhantolq))
+  * Krzysztof Antoniak ([@kantoniak](https://github.com/kantoniak)))
+  * Maciej Procyk ([@avan1235](https://github.com/avan1235))
+* Android:
+  * Maciej Procyk ([@avan1235](https://github.com/avan1235))
+  * Jakub Walendowski ([@jakubpw](https://github.com/jakubpw))
 
 ### External contacts
 
@@ -174,7 +180,7 @@ tools to match technical requirements.
 
 In product development stage members use their own machines for development.
 Development machines run on Linux system from Debian family. Members are free
-to configure systems to best suit their development style.
+to configure systems to best suit their development style, as long as produced code matches coding style enforced by GitHub workflow linters.
 
 Testing infrastructure depends on subproject type:
 * All subprojects use GitHub platform running Docker containers for initial
