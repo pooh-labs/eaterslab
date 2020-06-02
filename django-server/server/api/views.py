@@ -37,6 +37,8 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 class CafeteriaFilterSet(filters.FilterSet):
+    opened_from = filters.TimeFilter(method='get_opened_from')
+    opened_to = filters.TimeFilter(method='get_opened_to')
     opened_now = filters.BooleanFilter(method='get_opened_now')
     prefix_name = filters.CharFilter(method='get_name_prefix')
     owner_id = filters.NumberFilter(method='get_for_owner')
@@ -59,7 +61,6 @@ class CafeteriaFilterSet(filters.FilterSet):
     def get_name_prefix(self, queryset, field_name, value):
         if value is None:
             return queryset
-
         prefix = value.strip()
         return queryset.filter(name__istartswith=prefix)
 
@@ -70,10 +71,20 @@ class CafeteriaFilterSet(filters.FilterSet):
         return queryset.filter(owner_id=owner_id)
 
     def get_for_vegetarian(self, queryset, field_name, value):
-        if value is None or value is False:
+        if value is None:
             return queryset
-        for_vegs = FixedMenuOption.objects.filter(vegetarian=True).values_list('cafeteria_id')
+        for_vegs = FixedMenuOption.objects.filter(vegetarian=value).values_list('cafeteria_id')
         return queryset.filter(id__in=for_vegs)
+
+    def get_opened_from(self, queryset, field_name, value):
+        if value is None:
+            return queryset
+        return queryset.filter(opened_from__lte=value)
+
+    def get_opened_to(self, queryset, field_name, value):
+        if value is None:
+            return queryset
+        return queryset.filter(opened_to__gte=value)
 
 
 @method_decorator(name='list', decorator=accept_language_decorator)
