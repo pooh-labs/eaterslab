@@ -97,7 +97,11 @@ paths:
     get:
       operationId: cafeterias_fixed_menu_options_read
       description: ''
-      parameters: []
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: Language for response content
+          type: string
       responses:
         '200':
           description: ''
@@ -244,7 +248,11 @@ paths:
     get:
       operationId: cafeterias_read
       description: ''
-      parameters: []
+      parameters:
+        - name: Accept-Language
+          in: header
+          description: Language for response content
+          type: string
       responses:
         '200':
           description: ''
