@@ -19,8 +19,6 @@ class FixedMenuOptionSerializer(serializers.ModelSerializer):
 
 
 class CafeteriaSerializer(serializers.ModelSerializer):
-    occupancy = serializers.ReadOnlyField()
-
     class Meta:
         model = Cafeteria
         fields = ['id', 'name', 'description', 'sub_description', 'longitude', 'latitude',

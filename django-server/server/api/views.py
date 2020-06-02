@@ -5,7 +5,6 @@ from dateutil.parser import parse as timestamp_parse
 from os.path import join as path_join
 from pytz import utc
 
-from django.db import models as django_models
 from django.core.files.storage import FileSystemStorage
 from django.db.models import QuerySet, Avg
 from django.utils.decorators import method_decorator
@@ -369,39 +368,6 @@ AVAILABLE_STATS = [
     ('occupancy', OccupancyStatsView),
     ('avg_dish_review', AverageDishReviewStatsView),
 ]
-
-
-class EventFilter(filters.FilterSet):
-    class Meta:
-        model = CameraEvent
-        fields = {
-            'timestamp': ('lte', 'gte')
-        }
-
-    filter_overrides = {
-        django_models.DateTimeField: {
-            'filter_class': filters.IsoDateTimeFilter
-        },
-    }
-
-
-class CafeteriaOccupancyViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    serializer_class = CafeteriaOccupancySerializer
-    filter_backends = [filters.DjangoFilterBackend]
-    filterset_class = EventFilter
-
-    def list(self, request, *args, **kwargs):
-        if getattr(self, 'swagger_fake_view', False):
-            # queryset just for schema generation metadata
-            return Cafeteria.objects.none()
-        cafeteria = Cafeteria.objects.get(pk=self.kwargs['cafeteria_pk'])
-        request.query_params = request.query_params.copy()
-        request.query_params.setdefault('date_from', datetime.min)
-        request.query_params.setdefault('date_to', datetime.max)
-        queryset = CameraEvent.objects.filter(cafeteria=cafeteria)
-        time_filter = EventFilter(request=request)
-        queryset_timed = time_filter.filter_queryset(queryset)
-        return queryset_timed
 
 
 # Admin authenticated with token uploads can inherit from this class

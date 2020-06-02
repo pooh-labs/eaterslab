@@ -60,8 +60,6 @@ INSTALLED_APPS = [
     'admin.apps.AdminConfig',  # Admin
     'home.apps.HomeConfig',  # Home app
     'api.apps.ApiConfig',  # API app
-
-    'django_filters'
 ]
 
 MIDDLEWARE = [
