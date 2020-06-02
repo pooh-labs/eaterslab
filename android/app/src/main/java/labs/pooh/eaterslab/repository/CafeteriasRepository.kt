@@ -22,29 +22,41 @@ class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatu
     private val cachedCafeterias = mutableMapOf<Int, CafeteriaDao>()
     private val cachedMenuOptions = mutableMapOf<Int, List<FixedMenuOptionDao>>()
 
-    suspend fun cafeteriasList() = cafeteriasListFiltered()
+    suspend fun cafeteriasList() = cafeteriasListFiltered(includeCached = true)
 
     suspend fun cafeteriasListFiltered(openedFrom: TimeApi? = null, openedTo: TimeApi? = null,
-                                       openedNow: BooleanApi? = null, haveVegs: BooleanApi? = null, prefixName: String? = null): List<CafeteriaDao>? {
+                                       openedNow: BooleanApi? = null, haveVegs: BooleanApi? = null,
+                                       minAvgReview: Double? = null, prefixName: String? = null, includeCached: Boolean = false): List<CafeteriaDao>? {
         val refreshed = tryApiConnect {
             val models = cafeteriasApi.cafeteriasList(openedFrom?.getForRequest(), openedTo?.getForRequest(),
                                                       openedNow?.getForRequest(), prefixName, null,
-                                                      haveVegs?.getForRequest(), usedLanguage)
+                                                      haveVegs?.getForRequest(),
+                                                      if (minAvgReview != null)
+                                                          BigDecimal(minAvgReview)
+                                                      else null,
+                                                      usedLanguage)
             val daos = models.map { it.toDao() }
             daos
         }
 
-        refreshed?.forEach {
-            cachedCafeterias[it.id ?: 0] = it
+        val currentCafeteriaData = if (includeCached) {
+            refreshed?.forEach {
+                cachedCafeterias[it.id ?: 0] = it
+            }
+            cachedCafeterias.values
         }
-        val currentCafeteriaData = cachedCafeterias.values
+        else {
+            refreshed
+        }
 
-        return if (currentCafeteriaData.isNotEmpty()) currentCafeteriaData.toList() else null
+
+
+        return if (currentCafeteriaData?.isNotEmpty() == true) currentCafeteriaData.toList() else null
     }
 
     suspend fun cafeteriasRead(id: Int): CafeteriaDao? {
         val refreshed = tryApiConnect {
-            val model = cafeteriasApi.cafeteriasRead(id)
+            val model = cafeteriasApi.cafeteriasRead(id, usedLanguage)
             val dao = model.toDao()
             dao
         }

@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.fragment_stats.*
 import kotlinx.coroutines.cancelChildren
 import labs.pooh.eaterslab.R
 import labs.pooh.eaterslab.repository.dao.CafeteriaDao
@@ -43,7 +44,11 @@ class SearchActivity : AbstractRevealedActivity() {
             val textSearch = searchText.text.toString()
             val onlyOpened = switchOpened.isChecked
             val forVeg = switchVegans.isChecked
-            searchViewModel.getFilteredData(textSearch, onlyOpened, forVeg, pickedTimeFrom.toTimeApiFormat(), pickedTimeTo.toTimeApiFormat())
+            val minReview = ratingBarMin.rating.toDouble()
+            searchViewModel.getFilteredData(textSearch, onlyOpened, forVeg,
+                pickedTimeFrom.toTimeApiFormat(), pickedTimeTo.toTimeApiFormat(), minReview) {
+                progressBarLoading.visibility = View.GONE
+            }
         }
 
         textViewOpenedFromValue.setOnClickListener {
@@ -60,7 +65,6 @@ class SearchActivity : AbstractRevealedActivity() {
     }
 
     private fun addNewSearchResult(cafeteriaDao: CafeteriaDao) {
-        progressBarLoading.visibility = View.GONE
         val cafeteriaView = with(cafeteriaDao.downloadedImage) {
             if (this != null) {
                 SearchedCafeteriaView(this@SearchActivity, cafeteriaDao.name, cafeteriaDao.openedFrom, cafeteriaDao.openedTo, this)

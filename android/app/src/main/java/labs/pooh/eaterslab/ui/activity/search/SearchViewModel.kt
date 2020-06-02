@@ -31,20 +31,21 @@ class SearchViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessView
     }
 
     fun getFilteredData(prefixFilter: String, onlyOpenedFilter: Boolean, onlyForVegetariansFilter: Boolean,
-                        timeFrom: TimeApi?, timeTo: TimeApi?) {
+                        timeFrom: TimeApi?, timeTo: TimeApi?, avgReview: Double, onFinished: () -> Unit) {
         viewModelScope.launch {
             val cafeterias = repository.cafeteriasListFiltered(
                 openedNow = BooleanApi.packedForTrue(onlyOpenedFilter),
                 haveVegs = BooleanApi.packedForTrue(onlyForVegetariansFilter),
                 prefixName = prefixFilter,
                 openedFrom = timeFrom,
-                openedTo = timeTo
+                openedTo = timeTo,
+                minAvgReview = avgReview
             )
-            cafeterias
-                ?.forEach { cafeteria ->
+            cafeterias?.forEach { cafeteria ->
                     cafeteria.downloadContent()
                     addSearchedCafeteria(cafeteria)
             }
+            onFinished()
         }
     }
 }
