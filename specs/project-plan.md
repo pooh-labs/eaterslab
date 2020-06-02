@@ -80,9 +80,9 @@ entire implementation team.
 * Server:
   * Robert Michna ([@Rhantolq](https://github.com/Rhantolq))
   * Krzysztof Antoniak ([@kantoniak](https://github.com/kantoniak)))
-  * Maciej Procyk (@avan1235[@gitlab](https://gitlab.com/avan1235)[@github](https://github.com/avan1235))
+  * Maciej Procyk ([@avan1235](https://gitlab.com/avan1235))
 * Android:
-  * Maciej Procyk ([@avan1235](https://github.com/avan1235))
+  * Maciej Procyk ([@avan1235](https://gitlab.com/avan1235))
   * Jakub Walendowski ([@jakubpw](https://github.com/jakubpw))
 
 ### External contacts
