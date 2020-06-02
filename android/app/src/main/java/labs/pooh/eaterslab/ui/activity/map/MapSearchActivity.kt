@@ -209,9 +209,9 @@ fun CafeteriaDao.toMarker(mapView: MapView, listener: (LocationOccupancyMarker) 
     LocationOccupancyMarker(
         mapView,
         title = name, id = id,
-        description = subDescription,
+        description = description,
         latitude = latitude, longitude = longitude,
-        occupancy = 50, // TODO fill in with occupancy when ready in model
+        occupancy = minOf((occupancy  * 100).toInt(), 100),
         onMarkerClickListener = listener
     )
 } else null

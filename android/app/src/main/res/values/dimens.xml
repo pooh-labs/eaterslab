@@ -64,4 +64,6 @@
     <dimen name="filter_name_size">16sp</dimen>
     <dimen name="search_result_radius">14dp</dimen>
     <dimen name="logo_search_size">80dp</dimen>
+    <dimen name="stats_title_size">22sp</dimen>
+    <dimen name="stats_title_margin">16dp</dimen>
 </resources>

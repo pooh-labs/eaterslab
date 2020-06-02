@@ -6,21 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.Space
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.plusAssign
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_stats.*
 import labs.pooh.eaterslab.R
+import labs.pooh.eaterslab.repository.dao.AverageDishReviewStatsDao
+import labs.pooh.eaterslab.repository.dao.OccupancyStatsDao
 import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
 import labs.pooh.eaterslab.ui.activity.abstracts.viewModelFactory
 import labs.pooh.eaterslab.ui.fragment.ThemedAbstractFragment
 import labs.pooh.eaterslab.util.*
-import kotlin.math.abs
-import kotlin.math.log
-import kotlin.math.sin
 
 class StatsFragment : ThemedAbstractFragment() {
 
@@ -44,88 +41,77 @@ class StatsFragment : ThemedAbstractFragment() {
         val red = ContextCompat.getColor(requireContext(), R.color.colorAccent)
         val yellow = ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark)
 
-        viewModel.currentDayData.observe(viewLifecycleOwner, Observer {
-            if (it.isEmpty()) {
+        viewModel.occupancyData.observe(viewLifecycleOwner, Observer { stats ->
+            if (stats.isEmpty()) {
                 return@Observer
             }
-            val data = it.map { stat -> stat.occupancyRelative }
             with(requireContext()) {
-                val frame = FrameLayout(this)
-                val barView = HorizontalBarPlot(this).apply {
-                    ticks = getOpenOrderedHours(it.first().timestamp, it.last().timestamp)
-                    ticksIndexer = workingHoursIndexer(it.first().timestamp)
-                    ticksScale = 1.5
+                val context = this
+                val frame = FrameLayout(context)
+                val barView = HorizontalBarPlot<OccupancyStatsDao>(context).apply {
                     labelColor = getPlotFontColorForTheme()
                     printTicks = printTicks()
-                }.plot(data, red)
+                    ticksScale = 4.0
+                    ticksDistance = 0.5
+                    ticksMap = { value, index -> HourTicks(index, value.timestamp, context) }
+                }.plot(stats, red) { it.occupancyRelative }
 
                 frame += barView
-                frame.layoutParams = FrameLayout.LayoutParams(1000, 800).apply {
+                frame.layoutParams = FrameLayout.LayoutParams(1000, 600).apply {
                     gravity = Gravity.CENTER_HORIZONTAL
                 }
 
-                linearLayout += frame
-                linearLayout += Space(this).apply {
-                    layoutParams = ViewGroup.LayoutParams(0, 50)
-                }
+                progressBarOccupancy.visibility = View.GONE
+                statsOccupancyLayout += frame
             }
         })
 
-//        val exampleData = listOf(
-//            List(30) { it + sin(it.toDouble()) },
-//            List(7) { 3 + sin(it.toDouble()) },
-//            List(13) { abs(6 - it).toDouble() },
-//            List(24) { if (it in (8..16)) (0..30).random().toDouble() else 0.0 },
-//            List(13) { 12 - abs(6 - it).toDouble() },
-//            List(10) { log(1.0 + it, 2.0) },
-//            List(51) { sin(abs(it - 25).toDouble() + 0.001) / (abs(it - 25)  + 0.001) }
-//        )
-//
-//        // example data plots
-//        exampleData.forEach { dataSet ->
-//            with(requireContext()) {
-//                val frame = FrameLayout(this)
-//                val barView = when(dataSet.size) {
-//                    24 -> HorizontalBarPlot(this).apply {
-//                        ticks = getOrderedHours()
-//                        ticksIndexer = ::hoursIndexer
-//                        ticksScale = 2.0
-//                        labelColor = getPlotFontColorForTheme()
-//                        printTicks = printTicks()
-//                    }.plot(dataSet, red)
-//                    30 -> HorizontalBarPlot(this).apply {
-//                        ticks = getOrderedMonthDays(4)
-//                        ticksIndexer = ::monthDaysIndexer
-//                        ticksScale = 1.5
-//                        labelColor = getPlotFontColorForTheme()
-//                        printTicks = printTicks()
-//                    }.plot(dataSet, red)
-//                    7 -> HorizontalBarPlot(this).apply {
-//                        ticks = getOrderedWeekDays()
-//                        ticksIndexer = ::weekDaysIndexer
-//                        labelColor = getPlotFontColorForTheme()
-//                        printTicks = printTicks()
-//                    }.plot(dataSet, red)
-//                    else -> HorizontalBarPlot(this).apply {
-//                        labelColor = getPlotFontColorForTheme()
-//                        printTicks = printTicks()
-//                    }.plot(dataSet, red)
-//                }
-//                val plotView = DiscreteLinePlot(this).plot(dataSet, yellow)
-//
-//                frame += barView
-//                frame += plotView
-//                frame.layoutParams = FrameLayout.LayoutParams(1000, 600).apply {
-//                    gravity = Gravity.CENTER_HORIZONTAL
-//                }
-//
-//                linearLayout += frame
-//                linearLayout += Space(this).apply {
-//                    layoutParams = ViewGroup.LayoutParams(0, 50)
-//                }
-//            }
-//        }
+        viewModel.reviewData.observe(viewLifecycleOwner, Observer { stats ->
+            if (stats.isEmpty()) {
+                return@Observer
+            }
+            with(requireContext()) {
+                val context = this
+                val frame = FrameLayout(context)
+                val barView = DiscreteLinePlot<AverageDishReviewStatsDao>(context).apply {
+                    printTicks = printTicks()
+                    ticksScale = 1.3
+                    ticksDistance = 0.5
+                    ticksMap = { value, index -> MonthDayTicks(index, value.timestamp, context) }
+                }.plot(stats, yellow) { it.value }
 
-        viewModel.updateStatsDayData()
+                frame += barView
+                frame.layoutParams = FrameLayout.LayoutParams(1000, 600).apply {
+                    gravity = Gravity.CENTER_HORIZONTAL
+                }
+
+                progressBarReview.visibility = View.GONE
+                statsReviewLayout += frame
+            }
+        })
+
+        updateStatsOccupancy()
+        updateStatsReviews()
+    }
+
+    private fun updateStatsOccupancy() {
+        statsOccupancyLayout.removeAllViews()
+        progressBarOccupancy.visibility = View.VISIBLE
+        viewModel.updateOccupancyStatsDayData()
+    }
+
+    private fun updateStatsReviews() {
+        statsReviewLayout.removeAllViews()
+        progressBarReview.visibility = View.VISIBLE
+        viewModel.updateAvgReviewStatsMonthData()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        statsOccupancyLayout.removeAllViews()
+        statsReviewLayout.removeAllViews()
+        progressBarOccupancy.visibility = View.VISIBLE
+        progressBarReview.visibility = View.VISIBLE
+
     }
 }

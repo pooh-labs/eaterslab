@@ -5,6 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import labs.pooh.eaterslab.client.apis.CafeteriasApi
 import labs.pooh.eaterslab.client.apis.FixedMenuReviewsApi
+import labs.pooh.eaterslab.client.models.AverageDishReviewStats
 import labs.pooh.eaterslab.client.models.FixedMenuOptionReview
 import labs.pooh.eaterslab.client.models.OccupancyStats
 import labs.pooh.eaterslab.repository.dao.*
@@ -24,10 +25,11 @@ class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatu
     suspend fun cafeteriasList() = cafeteriasListFiltered()
 
     suspend fun cafeteriasListFiltered(openedFrom: TimeApi? = null, openedTo: TimeApi? = null,
-                                       openedNow: BooleanApi? = null, prefixName: String? = null): List<CafeteriaDao>? {
+                                       openedNow: BooleanApi? = null, haveVegs: BooleanApi? = null, prefixName: String? = null): List<CafeteriaDao>? {
         val refreshed = tryApiConnect {
             val models = cafeteriasApi.cafeteriasList(openedFrom?.getForRequest(), openedTo?.getForRequest(),
-                                                      openedNow?.getForRequest(), prefixName, null, usedLanguage)
+                                                      openedNow?.getForRequest(), prefixName, null,
+                                                      haveVegs?.getForRequest(), usedLanguage)
             val daos = models.map { it.toDao() }
             daos
         }
@@ -54,14 +56,24 @@ class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatu
         return cachedCafeterias[id]
     }
 
-    suspend fun cafeteriaOccupancyStatsRead(cafeteriaId: Int, from: OffsetDateTime, count: Int,
+    suspend fun cafeteriaOccupancyStatsRead(cafeteriaId: Int, from: OffsetDateTime, to: OffsetDateTime, count: Int,
                                             groupBy: StatsGroupOption): List<OccupancyStatsDao>? {
         val data = tryApiConnect {
-            cafeteriasApi.cafeteriasStatsOccupancyList("$cafeteriaId", "$from",
-                null, BigDecimal(count), groupBy.getForRequest())
+            cafeteriasApi.cafeteriasStatsOccupancyList("$cafeteriaId", "$from", "$to",
+                BigDecimal(count), groupBy.getForRequest())
         }
 
         return data?.map(OccupancyStats::toDao)
+    }
+
+    suspend fun cafeteriaReviewStatsRead(cafeteriaId: Int, from: OffsetDateTime, to: OffsetDateTime, count: Int,
+                                         groupBy: StatsGroupOption): List<AverageDishReviewStatsDao>? {
+        val data = tryApiConnect {
+            cafeteriasApi.cafeteriasStatsAvgDishReviewList("$cafeteriaId", "$from", "$to",
+                BigDecimal(count), groupBy.getForRequest())
+        }
+
+        return data?.map(AverageDishReviewStats::toDao)
     }
 
     suspend fun addFixedMenuOptionReview(menuOption: Int, stars: Int, name: String) {

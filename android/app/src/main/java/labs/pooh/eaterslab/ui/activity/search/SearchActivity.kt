@@ -40,7 +40,8 @@ class SearchActivity : AbstractRevealedActivity() {
             searchViewModel.viewModelScope.coroutineContext.cancelChildren()
             val textSearch = searchText.text.toString()
             val onlyOpened = switchOpened.isChecked
-            searchViewModel.getFilteredData(textSearch, onlyOpened, pickedTimeFrom.toTimeApiFormat(), pickedTimeTo.toTimeApiFormat())
+            val forVeg = switchVegans.isChecked
+            searchViewModel.getFilteredData(textSearch, onlyOpened, forVeg, pickedTimeFrom.toTimeApiFormat(), pickedTimeTo.toTimeApiFormat())
         }
 
         textViewOpenedFromValue.setOnClickListener {

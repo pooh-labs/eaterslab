@@ -10,8 +10,6 @@ import labs.pooh.eaterslab.repository.dao.CafeteriaDao
 import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
 import labs.pooh.eaterslab.ui.activity.abstracts.RepositoryAccessViewModel
 
-typealias CafeteriaFilter = (CafeteriaDao) -> Boolean
-
 class SearchViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessViewModel(notifier) {
 
     private val _cafeteriasLiveData = MutableLiveData<MutableList<CafeteriaDao>>().apply {
@@ -32,10 +30,12 @@ class SearchViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessView
         _cafeteriasLiveData.value = _cafeteriasLiveData.value
     }
 
-    fun getFilteredData(prefixFilter: String, onlyOpenedFilter: Boolean, timeFrom: TimeApi?, timeTo: TimeApi?) {
+    fun getFilteredData(prefixFilter: String, onlyOpenedFilter: Boolean, onlyForVegetariansFilter: Boolean,
+                        timeFrom: TimeApi?, timeTo: TimeApi?) {
         viewModelScope.launch {
             val cafeterias = repository.cafeteriasListFiltered(
                 openedNow = BooleanApi.packedForTrue(onlyOpenedFilter),
+                haveVegs = BooleanApi.packedForTrue(onlyForVegetariansFilter),
                 prefixName = prefixFilter,
                 openedFrom = timeFrom,
                 openedTo = timeTo

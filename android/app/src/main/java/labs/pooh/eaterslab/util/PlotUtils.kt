@@ -12,6 +12,9 @@ import io.data2viz.scale.FirstLastRange
 import io.data2viz.scale.Scales
 import io.data2viz.scale.Tickable
 import io.data2viz.viz.*
+import org.threeten.bp.OffsetDateTime
+
+import labs.pooh.eaterslab.R
 
 data class PlotProportion(val x: Double, val y: Double)
 
@@ -24,40 +27,39 @@ private fun GroupNode.moveTransform(padding: Double, width: Double, index: Int, 
     }
 }
 
-abstract class AbstractStandardPlot(protected val context: Context) {
+abstract class AbstractStandardPlot<D>(protected val context: Context) {
 
     var proportion = PlotProportion(2.0, 1.0)
     var barWidth = 10.0
     var lowValueFix = 1.0
     var padding = 5.0
-    var labelSize = 9.0
+    var labelSize = 4.0
 
-    abstract fun <T: Number> plot(data: List<T>, mainColor: Int): View
+    abstract fun plot(data: List<D>, mainColor: Int, dataMap: (D) -> Number): View
 }
 
-open class HorizontalBarPlot(context: Context) : AbstractStandardPlot(context) {
+open class HorizontalBarPlot<D>(context: Context) : AbstractStandardPlot<D>(context) {
 
     var ticksScale = 4.0
     var ticksDistance = 0.5
     var labelColor = Color.BLACK
     var plotLabels = true
-    var ticksIndexer: ((String) -> Int)? = null
-    var ticks: List<String> = listOf()
+    var ticksMap: ((D, Int) -> PrintableDateTimeTicks)? = null
     var printTicks = true
 
-    override fun <T : Number> plot(data: List<T>, mainColor: Int): View {
+    override fun plot(data: List<D>, mainColor: Int, dataMap: (D) -> Number): View {
 
-        val doubleData = data.map(Number::toDouble)
+        val doubleData = data.map(dataMap).map { it.toDouble() }
         if (data.isEmpty()) {
             return FrameLayout(context)
         }
 
-        val printTicks = ticks.isNotEmpty() && ticksIndexer != null
+        val printTicks = ticksMap != null
 
         val w = doubleData.size * (barWidth + padding) + padding
         val h = proportion.y / proportion.x * w - 2 * padding - labelSize
 
-        val wTicks = (ticks.size * (barWidth + padding) + padding) * ticksScale
+        val wTicks = (doubleData.size * (barWidth + padding) + padding) * ticksScale
         val hTicks = (wTicks * proportion.y  / proportion.x)
         val paddingTicks = wTicks * (padding + barWidth / 2) / ((data.size * barWidth) + ((data.size + 1) * padding))
 
@@ -94,7 +96,6 @@ open class HorizontalBarPlot(context: Context) : AbstractStandardPlot(context) {
                             vAlign = TextVAlign.BASELINE
                             hAlign = TextHAlign.MIDDLE
                             textColor = Colors.rgb(labelColor)
-
                         }
                     }
                 }
@@ -105,6 +106,8 @@ open class HorizontalBarPlot(context: Context) : AbstractStandardPlot(context) {
             return plotView
         }
 
+        val ticks = data.mapIndexed { index, value -> ticksMap!!(value, index) }
+
         val ticksView = viz {
             size = Size(wTicks, hTicks * (1 + ticksDistance))
 
@@ -112,7 +115,7 @@ open class HorizontalBarPlot(context: Context) : AbstractStandardPlot(context) {
                 transform {
                     translate(y = hTicks)
                 }
-                axis(Orient.BOTTOM, FirstLastRangeTickable(ticks, wTicks, paddingTicks, ticksIndexer!!))
+                axis(Orient.BOTTOM, FirstLastRangeTickable(ticks, wTicks, paddingTicks) { it.index })
             }
         }.toView(context)
 
@@ -121,37 +124,28 @@ open class HorizontalBarPlot(context: Context) : AbstractStandardPlot(context) {
             addView(ticksView)
         }
     }
-
-    private class FirstLastRangeTickable<T>(private val ticksValues: List<T>,
-                                    val widthWithPadding: Double, val padding: Double,
-                                    val ticksIndexer: (T) -> Int): Tickable<T>, FirstLastRange<T, Double> {
-
-        override fun ticks(count: Int) = ticksValues
-
-        override fun end() = widthWithPadding - padding
-
-        override fun start() = padding
-
-        override fun invoke(domainValue: T): Double {
-            val index = ticksIndexer(domainValue)
-            val ticks = ticksValues.size
-            if (ticks < 2) {
-                return widthWithPadding / 2
-            }
-
-            val distance = (widthWithPadding - 2 * padding) / (ticks - 1)
-            return index * distance + padding
-        }
-    }
 }
 
-open class DiscreteLinePlot(context: Context) : AbstractStandardPlot(context) {
-    
-    override fun <T : Number> plot(data: List<T>, mainColor: Int): View {
-        val doubleData = data.map(Number::toDouble)
+open class DiscreteLinePlot<D>(context: Context) : AbstractStandardPlot<D>(context) {
+
+    var ticksScale = 4.0
+    var ticksDistance = 0.5
+    var ticksMap: ((D, Int) -> PrintableDateTimeTicks)? = null
+    var printTicks = true
+
+    override fun plot(data: List<D>, mainColor: Int, dataMap: (D) -> Number): View {
+
+        val doubleData = data.map(dataMap).map { it.toDouble() }
         if (data.isEmpty()) {
             return FrameLayout(context)
         }
+
+        val printTicks = ticksMap != null
+
+        val wTicks = (doubleData.size * (barWidth + padding) + padding) * ticksScale
+        val hTicks = (wTicks * proportion.y  / proportion.x)
+        val paddingTicks = wTicks * (padding + barWidth / 2) / ((data.size * barWidth) + ((data.size + 1) * padding))
+
 
         val w = doubleData.size * barWidth + padding
         val h = proportion.y / proportion.x * w - 2 * padding - labelSize
@@ -161,7 +155,7 @@ open class DiscreteLinePlot(context: Context) : AbstractStandardPlot(context) {
             range = listOf(0.0, proportion.y)
         }
 
-        return viz {
+        val plotView = viz {
             size = Size(w, h)
             doubleData.zipWithNext().forEachIndexed { index, value ->
                 group {
@@ -181,5 +175,71 @@ open class DiscreteLinePlot(context: Context) : AbstractStandardPlot(context) {
             }
 
         }.toView(context)
+
+        if (!printTicks || !this.printTicks) {
+            return plotView
+        }
+
+        val ticks = data.mapIndexed { index, value -> ticksMap!!(value, index) }
+
+        val ticksView = viz {
+            size = Size(wTicks, hTicks * (1 + ticksDistance))
+
+            group {
+                transform {
+                    translate(y = hTicks)
+                }
+                axis(Orient.BOTTOM, FirstLastRangeTickable(ticks, wTicks, paddingTicks) { it.index })
+            }
+        }.toView(context)
+
+        return FrameLayout(context).apply {
+            addView(plotView)
+            addView(ticksView)
+        }
+    }
+}
+
+sealed class PrintableDateTimeTicks(val index: Int, val dateTime: OffsetDateTime, protected val context: Context) {
+    abstract override fun toString(): String
+}
+
+class HourTicks(index: Int, dateTime: OffsetDateTime, context: Context)
+    : PrintableDateTimeTicks(index, dateTime, context) {
+    override fun toString() = "${dateTime.hour}:00"
+}
+
+class WeekDayTicks(index: Int, dateTime: OffsetDateTime, context: Context)
+    : PrintableDateTimeTicks(index, dateTime, context) {
+    override fun toString() = when(dateTime.dayOfWeek.value) {
+         in 1..7 -> context.getOrderedWeekDays()[dateTime.dayOfWeek.value - 1]
+        else -> context.getString(R.string.noday)
+    }
+}
+
+class MonthDayTicks(index: Int, dateTime: OffsetDateTime, context: Context)
+    : PrintableDateTimeTicks(index, dateTime, context) {
+    override fun toString() = "${dateTime.dayOfMonth}"
+}
+
+private class FirstLastRangeTickable<T>(private val ticksValues: List<T>,
+                                        val widthWithPadding: Double, val padding: Double,
+                                        val ticksIndexer: (T) -> Int): Tickable<T>, FirstLastRange<T, Double> {
+
+    override fun ticks(count: Int) = ticksValues
+
+    override fun end() = widthWithPadding - padding
+
+    override fun start() = padding
+
+    override fun invoke(domainValue: T): Double {
+        val index = ticksIndexer(domainValue)
+        val ticks = ticksValues.size
+        if (ticks < 2) {
+            return widthWithPadding / 2
+        }
+
+        val distance = (widthWithPadding - 2 * padding) / (ticks - 1)
+        return index * distance + padding
     }
 }

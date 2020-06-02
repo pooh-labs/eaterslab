@@ -49,6 +49,7 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
+    <string name="noday">Error</string>
     <string name="wait_connection">Waiting for connection</string>
     <string name="cafeteria_logo">Cafeteria logo</string>
     <string name="enjoy_your_meal">Enjoy\nyour meal! </string>
@@ -77,4 +78,7 @@
     <string name="opened_from">Opened from</string>
     <string name="opened_to">Opened to</string>
     <string name="time_not_selected">Pick time</string>
+    <string name="vegeterian_options">Vegeterian options</string>
+    <string name="occupancy_stats">Occupancy stats</string>
+    <string name="average_review_stats">Average review stats</string>
 </resources>
