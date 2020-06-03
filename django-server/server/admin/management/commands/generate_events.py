@@ -19,7 +19,7 @@ def as_time_today(time):
 def add_seconds(timestamp, seconds):
     whole_seconds = floor(seconds)
     microseconds = floor((seconds - whole_seconds)*1000000)
-    return timestamp + timedelta(seconds = whole_seconds, microseconds = microseconds)
+    return timestamp + timedelta(seconds=whole_seconds, microseconds=microseconds)
 
 
 class Command(BaseCommand):
