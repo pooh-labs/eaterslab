@@ -6,6 +6,7 @@ from random import uniform
 
 from api.models import FixedMenuOption, FixedMenuOptionReview
 
+
 class Command(BaseCommand):
     help = 'Generate sample reviews for all menu entries. Drops all existing reviews.'
 
