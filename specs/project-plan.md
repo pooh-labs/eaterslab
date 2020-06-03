@@ -9,6 +9,7 @@ Authors: Jakub Walendowski, Maciej Procyk, Krzysztof Antoniak, Robert Michna
 * v1.0 (2020-05-19): Initial revision
 * v2.0 (2020-05-26): First public version
 * v2.1 (2020-06-02): Add profile links and note about coding style enforcement (Krzysztof Antoniak)
+* v2.2 (2020-06-02): Fixes mentioned by the supervisor (Jakub Walendowski)
 
 ## Introduction
 
@@ -39,13 +40,7 @@ The rest of the document contains:
 
 The aim of the project is to create a system supporting the work of canteens. The system's task is to 
 inform customers about cafeteria state to saves their time and helps them decide whether to go for lunch 
-at given time. They should know how many people are currently having lunch and what the menu is 
-beforehands. With rating options, users can guide each other in search for the best dishes. Foreign 
-visitors and disabled users can easily access all data on their devices.
-Owners will benefit from analytics. Historical data and occupancy predictions help to prepare for lunch 
-in advance, while updating customers mitigates traffic spikes. Publishing menus is a new marketing 
-channel promoting cafe directly to interested users. Administration panel can automate posting to 
-social media channels. Collected feedback will contribute to service improvements.
+at given time. Detailed information can be found in the file: [Project pitch](specs/pitch.md).
 
 ### Assumptions and dependencies
 
@@ -122,6 +117,7 @@ in these languages
 * good understanding of databases working and modeling the project elements
 * good understanding of concurrency problems in data management projects
 * good communication skills as the project will be realizes remotely so with limited communication possibilities
+* physical resources such as the camera, which are discussed in the chapter "Infrastructure"
 
 ### Employment plan
 
