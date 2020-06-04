@@ -8,6 +8,7 @@ from api.models import FixedMenuOption, FixedMenuOptionReview
 
 
 review_texts = [
+    # plain english
     "Magnificent!",
     "Could've been worse",
     "I enjoyed it",
@@ -17,8 +18,11 @@ review_texts = [
     "Kinda tasteless...",
     "The taste was pretty lit if you'd ask me. The main dish's flavour was rockin'. Gonna definitely drop here more!",
 
+    # emotes + english
     "Delicious 😋",
+    "What is this?! 😠😠😠",
 
+    # plain polish
     "Ciekawy smak.",
     "Pychota!",
     "Bardzo dobre, polecam :)",
@@ -36,22 +40,27 @@ review_texts = [
     "Po pierwsze, co ja w ogóle zjadłem to ja nawet nie wiem. Koszmar! Ziemniaki niedogotowane,"  # continues
     " mięso twarde! Jestem zawiedziony i chcę zwrotu.",
 
-    ":<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+    # polish + emotes
+    "Bardzo dobre😂",
+    "Niedobre 🤢",
+
+    # random
+    ":<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"  # 4 line 200+ character text
     "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
     "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
     "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-    "Bardzo dobre😂",
     "😂😂😂😂😂",
+    ".",
 
+    # japanese and utf characters
     "(╯°□°）╯︵ ┻━┻",
     "あまい (´・ω・`)",
     "甘かった！",
-    "まず！"
-
-    ".",
+    "まず！",
 ]
 
 review_authors = [
+    # polish
     "Stefan",
     "Pawel",
     "sebafor01",
@@ -65,12 +74,12 @@ review_authors = [
     "david_504",
     "xXx_Kucharz_xXx",
     "Oleksandra",
-    "Robert'); DROP TABLE Camera_Event;--",
     "Głowa w betoniarce",
     "Kondrad",
     "Witold",
     "KrystianK",
 
+    # english
     "_boi",
     "ILikeTrains",
     "Will Smith",
@@ -85,12 +94,17 @@ review_authors = [
     "John",
     "Kyle'o",
 
+    # other text
     "ishikawa yamako",
     "tamajiro gonpachiro",
     "shakariki gengoro",
     "itadaki tontaro",
     "本田山本",
     "икак",
+
+    # random
+    "🙃🙃🙃",
+    "Robert'); DROP TABLE api_cameraevent;--",
 ]
 
 
