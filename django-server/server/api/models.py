@@ -189,9 +189,10 @@ class FixedMenuOptionReview(models.Model):
     stars = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(5)])
     author_nick = models.CharField(max_length=64)
     review_time = models.DateTimeField()
+    review_text = models.CharField(max_length=255, default="")
 
     def __str__(self):
-        return f'{self.option} by {self.author_nick} with {self.stars}'
+        return f'{self.option} by {self.author_nick} with {self.stars} stars'
 
     def save(self, *args, **kwargs):
         curr_reviews = FixedMenuOptionReview.objects.filter(option_id=self.option.pk).count()

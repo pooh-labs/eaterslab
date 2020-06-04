@@ -2,9 +2,111 @@ from django.core.management.base import BaseCommand
 from django.db import transaction
 
 from datetime import date, datetime, time, timedelta
-from random import uniform
+from random import uniform, choice
 
 from api.models import FixedMenuOption, FixedMenuOptionReview
+
+
+review_texts = [
+    # plain english
+    "Magnificent!",
+    "Could've been worse",
+    "I enjoyed it",
+    "Salty",
+    "Loved the food, will come again.",
+    "Splendid, absolutely refined taste.",
+    "Kinda tasteless...",
+    "The taste was pretty lit if you'd ask me. The main dish's flavour was rockin'. Gonna definitely drop here more!",
+
+    # emotes + english
+    "Delicious 😋",
+    "What is this?! 😠😠😠",
+
+    # plain polish
+    "Ciekawy smak.",
+    "Pychota!",
+    "Bardzo dobre, polecam :)",
+    "Całkiem dobre",
+    "Średnie",
+    "Moja ulubiona opcja w menu",
+    "Jadłem lepsze",
+    "Polecam spróbować!",
+    "Niezłe jak na tę cenę.",
+    "Miodzio",
+    "Wiem kto mieszał ten rosół ;)",
+    "Smakowało :)",
+    "Niedobre",
+    "Nie było złe, ale nie urywa",
+    "Po pierwsze, co ja w ogóle zjadłem to ja nawet nie wiem. Koszmar! Ziemniaki niedogotowane,"  # continues
+    " mięso twarde! Jestem zawiedziony i chcę zwrotu.",
+
+    # polish + emotes
+    "Bardzo dobre😂",
+    "Niedobre 🤢",
+
+    # random
+    ":<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"  # 4 line 200+ character text
+    "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+    "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
+    "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+    "😂😂😂😂😂",
+    ".",
+
+    # japanese and utf characters
+    "(╯°□°）╯︵ ┻━┻",
+    "あまい (´・ω・`)",
+    "甘かった！",
+    "まず！",
+]
+
+review_authors = [
+    # polish
+    "Stefan",
+    "Pawel",
+    "sebafor01",
+    "Czym_sa_monady?",
+    "Gabrysia",
+    "a.pestka",
+    "dark_michał",
+    "KaLorakkk",
+    "p4v31",
+    "1gor",
+    "david_504",
+    "xXx_Kucharz_xXx",
+    "Oleksandra",
+    "Głowa w betoniarce",
+    "Kondrad",
+    "Witold",
+    "KrystianK",
+
+    # english
+    "_boi",
+    "ILikeTrains",
+    "Will Smith",
+    "Wouldn't Smith",
+    "jajajaja",
+    "gothgf",
+    "aaaaaaaaa",
+    "Stancley Brekley",
+    "John PP",
+    "Karen Chop",
+    "xDean",
+    "John",
+    "Kyle'o",
+
+    # other text
+    "ishikawa yamako",
+    "tamajiro gonpachiro",
+    "shakariki gengoro",
+    "itadaki tontaro",
+    "本田山本",
+    "икак",
+
+    # random
+    "🙃🙃🙃",
+    "Robert'); DROP TABLE api_cameraevent;--",
+]
+
 
 class Command(BaseCommand):
     help = 'Generate sample reviews for all menu entries. Drops all existing reviews.'
@@ -51,11 +153,12 @@ class Command(BaseCommand):
         review = int(uniform(1, 8))
         if review > 5:
             review = 5
-        author = 'review-author'
+        author = choice(review_authors)
         hour = int(uniform(10, 20))
         minute = int(uniform(0, 60))
         timestamp = datetime.combine(date.today(), datetime.min.time()).replace(hour=hour, minute=minute).astimezone()
-        return FixedMenuOptionReview(option=option, stars=review, author_nick=author, review_time=timestamp)
+        review_text = choice(review_texts)
+        return FixedMenuOptionReview(option=option, stars=review, author_nick=author, review_time=timestamp, review_text=review_text)
 
     def generate_for_entree(self, entry, count):
         # Create reviews

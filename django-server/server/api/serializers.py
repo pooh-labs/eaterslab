@@ -9,7 +9,7 @@ class FixedMenuOptionReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FixedMenuOptionReview
-        fields = ['id', 'stars', 'author_nick', 'review_time', 'option']
+        fields = ['id', 'stars', 'review_text', 'author_nick', 'review_time', 'option']
 
 
 class FixedMenuOptionSerializer(serializers.ModelSerializer):
