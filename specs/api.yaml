@@ -453,6 +453,11 @@ definitions:
         type: integer
         maximum: 5
         minimum: 0
+      review_text:
+        title: Review text
+        type: string
+        maxLength: 255
+        minLength: 1
       author_nick:
         title: Autor
         type: string
