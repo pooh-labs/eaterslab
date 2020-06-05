@@ -74,7 +74,8 @@ The process of loading sample data is setup on developer environment as a kind o
 (which is called a Scheduled task on Heroku) and runs noe time per day. The whole data in system
 is clean and then generated again using the commands
 ```shell script
-psql $DATABASE_URL -t -c "select 'drop table \"' || tablename || '\" cascade;' from pg_tables where schemaname = 'public'" | psql $DATABASE_URL && python manage.py migrate && 
+psql $DATABASE_URL -t -c "select 'drop table \"' || tablename || '\" cascade;' from pg_tables where schemaname = 'public'" | psql $DATABASE_URL && 
+python manage.py migrate && 
 python manage.py loaddata fixtures/demo-data.yaml && 
 python manage.py reset_passwords  && 
 python manage.py generate_events && 
