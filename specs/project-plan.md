@@ -192,7 +192,7 @@ SD cards for customers' devices.
 Data delivered to beta testers of the system is generated periodically on the 
 heroku server using the available Scheduler plugin that works as a cronjobs on 
 linux systems. The whole data is dropped and then regenerated every day using 
-the mechanism described in details [here](../django-server/README.md) 
+the mechanism described in details in server project part [README](../django-server/README.md) 
 
 ### Product acceptance plan
 
