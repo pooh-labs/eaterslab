@@ -24,6 +24,7 @@
     <string name="info_image">Info image</string>
 
     <string name="food_image">food image</string>
+    <string name="cafeteria_image">cafeteria image</string>
     <string name="loading">Loading…</string>
     <string name="title_activity_settings">Settings</string>
 
@@ -48,6 +49,7 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
+    <string name="noday">Error</string>
     <string name="wait_connection">Waiting for connection</string>
     <string name="cafeteria_logo">Cafeteria logo</string>
     <string name="enjoy_your_meal">Enjoy\nyour meal! </string>
@@ -68,4 +70,15 @@
     <string name="opening_hours">Opening hours</string>
     <string name="open_from">From</string>
     <string name="open_to">To</string>
+
+    <string name="time_from_to_format">Opened from %s to %s</string>
+    <string name="search_your_place">Search your place</string>
+    <string name="opened_now">Opened now</string>
+    <string name="min_average_rating">Min average rating</string>
+    <string name="opened_from">Opened from</string>
+    <string name="opened_to">Opened to</string>
+    <string name="time_not_selected">Pick time</string>
+    <string name="vegeterian_options">Vegeterian options</string>
+    <string name="occupancy_stats">Occupancy stats</string>
+    <string name="average_review_stats">Average review stats</string>
 </resources>

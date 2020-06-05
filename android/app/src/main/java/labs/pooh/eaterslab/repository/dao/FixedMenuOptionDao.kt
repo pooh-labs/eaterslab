@@ -1,6 +1,6 @@
 package labs.pooh.eaterslab.repository.dao
 
-import labs.pooh.client.models.FixedMenuOption
+import labs.pooh.eaterslab.client.models.FixedMenuOption
 
 data class FixedMenuOptionDao(
     val name: String,

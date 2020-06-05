@@ -61,4 +61,16 @@
     <string name="open_from">Od</string>
     <string name="open_to">Do</string>
     <string name="address">Adres</string>
+    <string name="cafeteria_image">zdjęcie cafeterii</string>
+    <string name="time_from_to_format">Otwarte od %s do %s</string>
+    <string name="search_your_place">Wyszukaj swoje miejsce</string>
+    <string name="opened_now">Otwarte teraz</string>
+    <string name="min_average_rating">Min średnia ocena</string>
+    <string name="opened_from">Otwarte od</string>
+    <string name="opened_to">Otwarte do</string>
+    <string name="time_not_selected">Wybierz godzinę</string>
+    <string name="noday">Błąd</string>
+    <string name="vegeterian_options">Opcja dla wegetarian</string>
+    <string name="occupancy_stats">Statystyki zajętości</string>
+    <string name="average_review_stats">Statystyki opinii</string>
 </resources>

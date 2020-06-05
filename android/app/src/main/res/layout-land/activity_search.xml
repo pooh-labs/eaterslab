@@ -11,15 +11,16 @@
         android:id="@+id/buttonSearch"
         android:layout_width="@dimen/button_circle_size"
         android:layout_height="@dimen/button_circle_size"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/search_box_margin"
+        android:layout_marginEnd="@dimen/search_box_margin"
+        android:background="@drawable/button_round_accent"
         android:drawableStart="@drawable/ic_search"
         android:gravity="center"
         android:paddingStart="@dimen/button_circle_radius_half"
         android:paddingEnd="@dimen/button_circle_radius_half"
-        android:background="@drawable/button_round_accent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/scroll_view"
-        android:layout_marginBottom="@dimen/search_box_margin"
-        android:layout_marginEnd="@dimen/search_box_margin" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_center" />
 
     <EditText
         android:id="@+id/searchText"
@@ -44,14 +45,12 @@
 
     <ScrollView
         android:id="@+id/scroll_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:maxHeight="0dp"
-        app:layout_constrainedHeight="true"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/guideline_center"
+        app:layout_constraintStart_toStartOf="@id/guideline_center"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
@@ -62,9 +61,9 @@
             <ProgressBar
                 android:id="@+id/progressBarLoading"
                 style="?android:attr/progressBarStyle"
+                android:layout_marginVertical="@dimen/loading_bar_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/loading_bar_margin"
                 android:indeterminate="true"
                 android:visibility="gone"/>
 
@@ -80,7 +79,7 @@
         android:id="@+id/guideline_center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
     <Switch
@@ -95,7 +94,7 @@
         app:layout_constraintStart_toStartOf="@+id/searchText" />
 
     <TextView
-        android:id="@+id/textViewSwitchOpen"
+        android:id="@+id/textViewSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/opened_now"
@@ -126,7 +125,6 @@
         app:layout_constraintBottom_toBottomOf="@+id/switchVegans"
         app:layout_constraintStart_toStartOf="@+id/switchVegans"
         app:layout_constraintTop_toTopOf="@+id/switchVegans" />
-    
 
     <RatingBar
         android:id="@+id/ratingBarMin"

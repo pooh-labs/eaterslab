@@ -1,6 +1,6 @@
 package labs.pooh.eaterslab.repository.dao
 
-import labs.pooh.client.models.FixedMenuOptionReview
+import labs.pooh.eaterslab.client.models.FixedMenuOptionReview
 
 data class FixedMenuOptionReviewDao(
     val stars: Int,
