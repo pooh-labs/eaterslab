@@ -189,6 +189,11 @@ Customer-facing website is exposed as a separate Heroku project. Android
 application will be shipped to Google Play store. Camera software is copied to
 SD cards for customers' devices.
 
+Data delivered to beta testers of the system is generated periodically on the 
+heroku server using the available Scheduler plugin that works as a cronjobs on 
+linux systems. The whole data is dropped and then regenerated every day using 
+the mechanism described in details [here](../django-server/README.md) 
+
 ### Product acceptance plan
 
 Development team prepares a copy of all specifications for acceptance testing. Customer is responsible for providing 
