@@ -59,7 +59,7 @@ python manage.py loaddata data.json
 ## Sample data
 
 To load sample data in empty project, run:
-```
+```shell script
 python manage.py migrate
 python manage.py loaddata fixtures/demo-data.yaml
 python manage.py reset_passwords  # Set password equal to username for each user
@@ -67,3 +67,18 @@ python manage.py generate_events  # Use --from/to=YYYY-MM-DD to select dates
 python manage.py generate_reviews  # Use --from/to=YYYY-MM-DD to select dates
 ```
 This will delete any existing camera events and reviews.
+
+### Fresh data generation process
+
+The process of loading sample data is setup on developer environment as a kind of a cronjob 
+(which is called a Scheduled task on Heroku) and runs noe time per day. The whole data in system
+is clean and then generated again using the commands
+```shell script
+psql $DATABASE_URL -t -c "select 'drop table \"' || tablename || '\" cascade;' from pg_tables where schemaname = 'public'" | psql $DATABASE_URL && python manage.py migrate && 
+python manage.py loaddata fixtures/demo-data.yaml && 
+python manage.py reset_passwords  && 
+python manage.py generate_events && 
+python manage.py generate_reviews 
+```
+which generates tables names to get removed, drops them, creates new one by migration and 
+at the end inserts sample data to fresh database.
