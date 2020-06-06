@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import io.data2viz.timer.now
 import kotlinx.coroutines.launch
 import labs.pooh.eaterslab.repository.CafeteriasRepository
 import labs.pooh.eaterslab.repository.StatsGroupOption
@@ -17,9 +16,9 @@ import org.threeten.bp.OffsetDateTime
 class StatsViewModel(connectionStatusNotifier: ConnectionStatusNotifier) : ViewModel() {
 
     companion object {
-        const val minHour = 8
-        const val hours = 12
-        const val maxHour = minHour + hours
+        const val MIN_HOUR = 7
+        const val HOURS_OCCUPANCY = 12
+        const val MONTHS_REVIEW = 1
     }
 
     private val repository = CafeteriasRepository(connectionStatusNotifier)
@@ -40,9 +39,9 @@ class StatsViewModel(connectionStatusNotifier: ConnectionStatusNotifier) : ViewM
         val cafeteriaId = MainActivity.lastSelectedCafeteriaId
 
         val now = OffsetDateTime.now()
-        val minTime = now.withHour(minHour).zeroMinutes()
+        val minTime = now.minusHours(HOURS_OCCUPANCY.toLong()).zeroMinutes()
 
-        val data = repository.cafeteriaOccupancyStatsRead(cafeteriaId, minTime, now, hours, StatsGroupOption.BY_HOUR)
+        val data = repository.cafeteriaOccupancyStatsRead(cafeteriaId, minTime, now, HOURS_OCCUPANCY, StatsGroupOption.BY_HOUR)
         _currentDayOccupancyData.value = data
     }
     
@@ -50,7 +49,7 @@ class StatsViewModel(connectionStatusNotifier: ConnectionStatusNotifier) : ViewM
         val cafeteriaId = MainActivity.lastSelectedCafeteriaId
 
         val now = OffsetDateTime.now()
-        val minTime = now.minusMonths(1).withHour(minHour).zeroMinutes()
+        val minTime = now.minusMonths(MONTHS_REVIEW.toLong()).withHour(MIN_HOUR).zeroMinutes()
         val data = repository.cafeteriaReviewStatsRead(cafeteriaId, minTime, now, Int.MAX_VALUE, StatsGroupOption.BY_DAY)
         _currentMonthAverageReviewData.value = data
     }

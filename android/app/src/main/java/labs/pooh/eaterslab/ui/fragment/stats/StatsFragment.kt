@@ -18,8 +18,14 @@ import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
 import labs.pooh.eaterslab.ui.activity.abstracts.viewModelFactory
 import labs.pooh.eaterslab.ui.fragment.ThemedAbstractFragment
 import labs.pooh.eaterslab.util.*
+import kotlin.math.min
 
 class StatsFragment : ThemedAbstractFragment() {
+
+    companion object {
+        const val PLOT_HEIGHT = 600
+        const val PLOT_WIDTH = 1000
+    }
 
     private val viewModel by lazy {
         ViewModelProvider(this, viewModelFactory {
@@ -51,13 +57,13 @@ class StatsFragment : ThemedAbstractFragment() {
                 val barView = HorizontalBarPlot<OccupancyStatsDao>(context).apply {
                     labelColor = getPlotFontColorForTheme()
                     printTicks = printTicks()
-                    ticksScale = 4.0
+                    ticksScale = 1.9
                     ticksDistance = 0.5
                     ticksMap = { value, index -> HourTicks(index, value.timestamp, context) }
-                }.plot(stats, red) { it.occupancyRelative }
+                }.plot(stats, red) { min(it.occupancyRelative, 1.0) * 100.0 }
 
                 frame += barView
-                frame.layoutParams = FrameLayout.LayoutParams(1000, 600).apply {
+                frame.layoutParams = FrameLayout.LayoutParams(PLOT_WIDTH, PLOT_HEIGHT).apply {
                     gravity = Gravity.CENTER_HORIZONTAL
                 }
 
@@ -75,13 +81,13 @@ class StatsFragment : ThemedAbstractFragment() {
                 val frame = FrameLayout(context)
                 val barView = DiscreteLinePlot<AverageDishReviewStatsDao>(context).apply {
                     printTicks = printTicks()
-                    ticksScale = 1.3
+                    ticksScale = 1.1
                     ticksDistance = 0.5
                     ticksMap = { value, index -> MonthDayTicks(index, value.timestamp, context) }
                 }.plot(stats, yellow) { it.value }
 
                 frame += barView
-                frame.layoutParams = FrameLayout.LayoutParams(1000, 600).apply {
+                frame.layoutParams = FrameLayout.LayoutParams(PLOT_WIDTH, PLOT_HEIGHT).apply {
                     gravity = Gravity.CENTER_HORIZONTAL
                 }
 
