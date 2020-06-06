@@ -13,7 +13,7 @@ import labs.pooh.eaterslab.ui.activity.main.MainActivity
 class CafeteriaViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessViewModel(notifier) {
 
     companion object {
-        const val OCCUPANCY_DATA_UPDATE_MILLIS = 1_000
+        const val OCCUPANCY_DATA_UPDATE_MILLIS = 3_000
     }
 
     private val _cafeteriaName = MutableLiveData<String>()
