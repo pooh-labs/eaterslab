@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-07 23:18+0200\n"
+"POT-Creation-Date: 2020-06-08 00:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin/admin.py:18
+#: admin/admin.py:19
 msgid "EatersLab administration"
 msgstr "Administracja EatersLab"
 
-#: admin/admin.py:19 home/templates/home/home.html:64
+#: admin/admin.py:20 home/templates/home/home.html:61
 msgid "EatersLab"
 msgstr "EatersLab"
 
-#: admin/admin.py:20 home/templates/home/home.html:51
+#: admin/admin.py:21 home/templates/home/home.html:48
 msgid "Administration"
 msgstr "Administracja"
 
-#: admin/admin.py:65
+#: admin/admin.py:95
 msgid "State"
 msgstr "Stan"
 
-#: admin/admin.py:66
+#: admin/admin.py:96
 msgid "Last event time"
 msgstr "Czas ostatniego zdarzenia"
 
@@ -90,207 +90,207 @@ msgstr "Strona główna"
 msgid "API"
 msgstr "API"
 
-#: api/models.py:32 api/models.py:67 api/models.py:199
+#: api/models.py:43 api/models.py:86 api/models.py:223
 msgid "name"
 msgstr "nazwa"
 
-#: api/models.py:33
+#: api/models.py:44
 msgid "description"
 msgstr "opis"
 
-#: api/models.py:34
+#: api/models.py:45
 msgid "additional description"
 msgstr "dodatkowy opis"
 
-#: api/models.py:35
+#: api/models.py:46
 msgid "latitude"
 msgstr "szerokość geograficzna"
 
-#: api/models.py:36
+#: api/models.py:47
 msgid "longitude"
 msgstr "długość geograficzna"
 
-#: api/models.py:37
+#: api/models.py:48
 msgid "cafeteria capacity"
 msgstr "pojemność stołówki"
 
-#: api/models.py:38
+#: api/models.py:49
 msgid "logo_url"
 msgstr "URL loga"
 
-#: api/models.py:39
+#: api/models.py:50
 msgid "address"
 msgstr "adres"
 
-#: api/models.py:40
+#: api/models.py:51
 msgid "opened_from"
 msgstr "otwarta od"
 
-#: api/models.py:41
+#: api/models.py:52
 msgid "opened_to"
 msgstr "otwarta do"
 
-#: api/models.py:42
+#: api/models.py:53
 msgid "owner"
 msgstr "właściciel"
 
-#: api/models.py:43
+#: api/models.py:54
 msgid "cafeteria occupancy"
 msgstr "liczba osób w stołówce"
 
-#: api/models.py:46 api/models.py:66 api/models.py:163 api/models.py:202
+#: api/models.py:57 api/models.py:85 api/models.py:182 api/models.py:226
 msgid "cafeteria"
 msgstr "stołówka"
 
-#: api/models.py:47
+#: api/models.py:58
 msgid "cafeterias"
 msgstr "stołówki"
 
-#: api/models.py:52
+#: api/models.py:63
 msgid "online"
 msgstr "online"
 
-#: api/models.py:53
+#: api/models.py:64
 msgid "offline"
 msgstr "offline"
 
-#: api/models.py:54
+#: api/models.py:65
 msgid "lost connection"
 msgstr "brak połączenia"
 
-#: api/models.py:62
+#: api/models.py:78
 msgid "Enter a valid name: use english letters, numbers and underscores"
 msgstr "Wpisz poprawną nazwę: użyj angielskich liter, cyfr oraz znaku '_'"
 
-#: api/models.py:65
+#: api/models.py:84
 msgid "state"
 msgstr "Stan"
 
-#: api/models.py:70 api/models.py:162
+#: api/models.py:89 api/models.py:181
 msgid "camera"
 msgstr "kamera"
 
-#: api/models.py:71
+#: api/models.py:90
 msgid "cameras"
 msgstr "kamery"
 
-#: api/models.py:75
+#: api/models.py:94
 msgid "monitoring_started"
 msgstr "początek monitoringu"
 
-#: api/models.py:76
+#: api/models.py:95
 msgid "monitoring_ended"
 msgstr "koniec monitoringu"
 
-#: api/models.py:77
+#: api/models.py:96
 msgid "person_entered"
 msgstr "klient wszedł"
 
-#: api/models.py:78
+#: api/models.py:97
 msgid "person_left"
 msgstr "klient wyszedl"
 
-#: api/models.py:79
+#: api/models.py:98
 msgid "occupancy_override"
 msgstr "nadpisano zajętość"
 
-#: api/models.py:148
+#: api/models.py:167
 msgid "Cafeteria is required for this event type."
 msgstr "Stołówka jest wymagana dla zdarzenia tegotypu."
 
-#: api/models.py:150
+#: api/models.py:169
 msgid "This event type should not have camera assigned."
 msgstr "Zdarzenie tego typu nie powinno mieć przypisanej kamery."
 
-#: api/models.py:153
+#: api/models.py:172
 msgid "This event type should not have value."
 msgstr "Zdarzenie tego typu nie powinno mieć wartości."
 
-#: api/models.py:155
+#: api/models.py:174
 msgid "Camera is required for this event type."
 msgstr "Zdarzenie tego typu powinno mieć przypisaną kamerę."
 
-#: api/models.py:160 api/models.py:235
+#: api/models.py:179 api/models.py:259
 msgid "timestamp"
 msgstr "czas"
 
-#: api/models.py:161
+#: api/models.py:180
 msgid "event_type"
 msgstr "typ zdarzenia"
 
-#: api/models.py:164
+#: api/models.py:183
 msgid "event_value"
 msgstr "wartość zdarzenia"
 
-#: api/models.py:167
+#: api/models.py:186
 msgid "camera event"
 msgstr "zdarzenie"
 
-#: api/models.py:168
+#: api/models.py:187
 msgid "camera events"
 msgstr "zdarzenia"
 
-#: api/models.py:200
+#: api/models.py:224
 msgid "price"
 msgstr "cena"
 
-#: api/models.py:201
+#: api/models.py:225
 msgid "vegetarian"
 msgstr "opcja wegetariańska"
 
-#: api/models.py:203
+#: api/models.py:227
 msgid "photo_url"
 msgstr "URL zdjęcia"
 
-#: api/models.py:204
+#: api/models.py:228
 msgid "avg_review_stars"
 msgstr "średnia ocena"
 
-#: api/models.py:207
+#: api/models.py:231
 msgid "fixed menu entry"
 msgstr "pozycja ze stałego menu"
 
-#: api/models.py:208
+#: api/models.py:232
 msgid "fixed menu entries"
 msgstr "pozycje ze stałego menu"
 
-#: api/models.py:232
+#: api/models.py:256
 msgid "menu option"
 msgstr "opcja z menu"
 
-#: api/models.py:233
+#: api/models.py:257
 msgid "rating"
 msgstr "ocena"
 
-#: api/models.py:234
+#: api/models.py:258
 msgid "author"
 msgstr "autor"
 
-#: api/models.py:238
+#: api/models.py:262
 msgid "menu entry review"
 msgstr "recenzja pozycji z menu"
 
-#: api/models.py:239
+#: api/models.py:263
 msgid "menu entry reviews"
 msgstr "recenzje pozycji z menu"
 
-#: home/templates/home/home.html:10
+#: home/templates/home/home.html:7
 msgid "EatersLab Home"
 msgstr "Strona główna EatersLab"
 
-#: home/templates/home/home.html:54
+#: home/templates/home/home.html:51
 msgid "API documentation"
 msgstr "Dokumentacja API"
 
-#: home/templates/home/home.html:65
+#: home/templates/home/home.html:62
 msgid "Cafeteria data management"
 msgstr "Menedżer danych stołówek"
 
-#: home/templates/home/home.html:71
+#: home/templates/home/home.html:68
 msgid "For customers"
 msgstr "Dla klientów"
 
-#: home/templates/home/home.html:72
+#: home/templates/home/home.html:69
 msgid ""
 "Have you ever went for lunch only to find out that there are no free seats? "
 "Now you can check everything before leaving:"
@@ -298,31 +298,31 @@ msgstr ""
 "Zdarzyło ci się pójść na stołówkę tylko po to, żeby zobaczyć że jest pełna? "
 "Teraz możesz sprawdzić wszystko przed wyjściem:"
 
-#: home/templates/home/home.html:74
+#: home/templates/home/home.html:71
 msgid "check for crowded places,"
 msgstr "sprawdź zatłoczenie,"
 
-#: home/templates/home/home.html:75
+#: home/templates/home/home.html:72
 msgid "browse menus,"
 msgstr "przeglądaj menu,"
 
-#: home/templates/home/home.html:76
+#: home/templates/home/home.html:73
 msgid "rate dishes,"
 msgstr "oceniaj potrawy,"
 
-#: home/templates/home/home.html:77
+#: home/templates/home/home.html:74
 msgid "find new places."
 msgstr "znajduje nowe miejsca!"
 
-#: home/templates/home/home.html:79
+#: home/templates/home/home.html:76
 msgid "Download for Android"
 msgstr "Pobierz dla Androida"
 
-#: home/templates/home/home.html:82
+#: home/templates/home/home.html:79
 msgid "For owners"
 msgstr "Dla właścicieli"
 
-#: home/templates/home/home.html:83
+#: home/templates/home/home.html:80
 msgid ""
 "Base your purchases on hard data! With occupancy statistics you can track "
 "cafeteria popularity and rating over time."
@@ -330,62 +330,62 @@ msgstr ""
 "Podejmuj decyzje na podstawie danych! Z pomocą statystyk możesz śledzić "
 "popluarność i oceny twojego lokalu."
 
-#: home/templates/home/home.html:85
+#: home/templates/home/home.html:82
 msgid "See how your bussiness is doing,"
 msgstr "Zbierz dane na temat firmy,"
 
-#: home/templates/home/home.html:86
+#: home/templates/home/home.html:83
 msgid "publish menus,"
 msgstr "udostępniaj menu,"
 
-#: home/templates/home/home.html:87
+#: home/templates/home/home.html:84
 msgid "get customer feedback,"
 msgstr "zbieraj feedback,"
 
-#: home/templates/home/home.html:88
+#: home/templates/home/home.html:85
 msgid "analyze historical trends."
 msgstr "sprawdź trendy w danych."
 
-#: home/templates/home/home.html:90
+#: home/templates/home/home.html:87
 msgid "Access backend"
 msgstr "Zaloguj się"
 
-#: home/templates/home/home.html:93
+#: home/templates/home/home.html:90
 msgid "For administrators"
 msgstr "Dla administratorów"
 
-#: home/templates/home/home.html:94
+#: home/templates/home/home.html:91
 msgid ""
 "Tired of typing everything in? With our API you can now access all "
 "cafeterias without human intervention:"
 msgstr ""
-"Masz dość wpisywania wszystkiego ręcznie? Z naszym API pobierzesz "
-"wszystkie dane automatycznie:"
+"Masz dość wpisywania wszystkiego ręcznie? Z naszym API pobierzesz wszystkie "
+"dane automatycznie:"
 
-#: home/templates/home/home.html:96
+#: home/templates/home/home.html:93
 msgid "get place details,"
 msgstr "pobierz szczegóły lokalu,"
 
-#: home/templates/home/home.html:97
+#: home/templates/home/home.html:94
 msgid "fetch menus,"
 msgstr "pobierz menu,"
 
-#: home/templates/home/home.html:98
+#: home/templates/home/home.html:95
 msgid "show occupancy on your page,"
 msgstr "pokaż zajętość na swojej stronie,"
 
-#: home/templates/home/home.html:99
+#: home/templates/home/home.html:96
 msgid "access statistics."
 msgstr "pobierz statystyki."
 
-#: home/templates/home/home.html:101
+#: home/templates/home/home.html:98
 msgid "Browse API"
 msgstr "Przeglądaj dokumentację"
 
-#: server/settings.py:157
+#: server/settings.py:158
 msgid "Polish"
 msgstr "Polski"
 
-#: server/settings.py:158
+#: server/settings.py:159
 msgid "English"
 msgstr "Angielski"
