@@ -5,7 +5,18 @@ from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator, URLValidator
 from django.db.models import F, Q
 
+from crum import get_current_user
 from datetime import timedelta
+
+from admin.utils import is_admin
+
+
+def user_cafeterias_only():
+    user = get_current_user()
+    if is_admin(user):
+        return Q()
+    else:
+        return Q(owner=user)
 
 
 class Cafeteria(models.Model):
@@ -56,7 +67,11 @@ class Camera(models.Model):
     LOSING_CONNECTION_INTERVAL = timedelta(minutes=3)
 
     state = models.IntegerField(choices=State.choices)
-    cafeteria = models.ForeignKey(Cafeteria, on_delete=models.CASCADE)
+    cafeteria = models.ForeignKey(
+        Cafeteria,
+        on_delete=models.CASCADE,
+        limit_choices_to=user_cafeterias_only
+    )
 
     state.verbose_name = _('state')
     cafeteria.verbose_name = _('cafeteria')
@@ -183,7 +198,12 @@ class FixedMenuOption(models.Model):
     name = models.CharField(max_length=128)
     price = models.FloatField(validators=[MinValueValidator(0.0)])
     vegetarian = models.BooleanField(default=False)
-    cafeteria = models.ForeignKey(Cafeteria, on_delete=models.CASCADE, related_name='fixed_menu_options')
+    cafeteria = models.ForeignKey(
+        Cafeteria,
+        on_delete=models.CASCADE,
+        related_name='fixed_menu_options',
+        limit_choices_to=user_cafeterias_only
+    )
     photo_url = models.CharField(max_length=2048, validators=[URLValidator])
     avg_review_stars = models.FloatField(validators=[MinValueValidator(0), MaxValueValidator(5)],
                                          default=0, editable=False)
