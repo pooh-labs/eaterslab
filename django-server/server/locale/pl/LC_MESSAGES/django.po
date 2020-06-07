@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-30 10:35+0200\n"
+"POT-Creation-Date: 2020-06-07 14:12+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,23 +17,23 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin/admin.py:17
+#: admin/admin.py:18
 msgid "EatersLab administration"
 msgstr "Administracja EatersLab"
 
-#: admin/admin.py:18
+#: admin/admin.py:19
 msgid "EatersLab"
 msgstr "EatersLab"
 
-#: admin/admin.py:19 home/templates/home/home.html:34
+#: admin/admin.py:20 home/templates/home/home.html:34
 msgid "Administration"
 msgstr "Administracja"
 
-#: admin/admin.py:62
+#: admin/admin.py:65
 msgid "State"
 msgstr "Stan"
 
-#: admin/admin.py:63
+#: admin/admin.py:66
 msgid "Last event time"
 msgstr "Czas ostatniego zdarzenia"
 
@@ -58,7 +58,7 @@ msgstr "Zmień"
 msgid "Other pages"
 msgstr "Inne strony"
 
-#: admin/templates/admin/app_list_override.html:44 admin/views.py:14
+#: admin/templates/admin/app_list_override.html:44 admin/views.py:15
 msgid "Statistics"
 msgstr "Statystyki"
 
@@ -82,7 +82,7 @@ msgstr "Brak dostępnych"
 msgid "Unknown content"
 msgstr "Nieznany typ zawartości"
 
-#: admin/templates/admin/stats.html:23
+#: admin/templates/admin/stats.html:22
 msgid "Home"
 msgstr "Strona główna"
 
@@ -90,83 +90,83 @@ msgstr "Strona główna"
 msgid "API"
 msgstr "API"
 
-#: api/models.py:31 api/models.py:131
+#: api/models.py:32 api/models.py:194
 msgid "name"
 msgstr "nazwa"
 
-#: api/models.py:32
+#: api/models.py:33
 msgid "description"
 msgstr "opis"
 
-#: api/models.py:33
+#: api/models.py:34
 msgid "additional description"
 msgstr "dodatkowy opis"
 
-#: api/models.py:34
+#: api/models.py:35
 msgid "latitude"
 msgstr "szerokość geograficzna"
 
-#: api/models.py:35
+#: api/models.py:36
 msgid "longitude"
 msgstr "długość geograficzna"
 
-#: api/models.py:36
+#: api/models.py:37
 msgid "cafeteria capacity"
 msgstr "pojemność stołówki"
 
-#: api/models.py:37
+#: api/models.py:38
 msgid "logo_url"
 msgstr "URL loga"
 
-#: api/models.py:38
+#: api/models.py:39
 msgid "address"
 msgstr "adres"
 
-#: api/models.py:39
+#: api/models.py:40
 msgid "opened_from"
 msgstr "otwarta od"
 
-#: api/models.py:40
+#: api/models.py:41
 msgid "opened_to"
 msgstr "otwarta do"
 
-#: api/models.py:41
+#: api/models.py:42
 msgid "owner"
 msgstr "właściciel"
 
-#: api/models.py:42
+#: api/models.py:43
 msgid "cafeteria occupancy"
 msgstr "liczba osób w stołówce"
 
-#: api/models.py:45 api/models.py:61 api/models.py:107 api/models.py:134
+#: api/models.py:46 api/models.py:62 api/models.py:158 api/models.py:197
 msgid "cafeteria"
 msgstr "stołówka"
 
-#: api/models.py:46
+#: api/models.py:47
 msgid "cafeterias"
 msgstr "stołówki"
 
-#: api/models.py:51
+#: api/models.py:52
 msgid "online"
 msgstr "online"
 
-#: api/models.py:52
+#: api/models.py:53
 msgid "offline"
 msgstr "offline"
 
-#: api/models.py:53
+#: api/models.py:54
 msgid "lost connection"
 msgstr "brak połączenia"
 
-#: api/models.py:60
+#: api/models.py:61
 msgid "state"
 msgstr "Stan"
 
-#: api/models.py:64 api/models.py:106
+#: api/models.py:65 api/models.py:157
 msgid "camera"
 msgstr "kamera"
 
-#: api/models.py:65
+#: api/models.py:66
 msgid "cameras"
 msgstr "kamery"
 
@@ -190,67 +190,83 @@ msgstr "klient wyszedl"
 msgid "occupancy_override"
 msgstr "nadpisano zajętość"
 
-#: api/models.py:104 api/models.py:166
+#: api/models.py:143
+msgid "Cafeteria is required for this event type."
+msgstr "Stołówka jest wymagana dla zdarzenia tegotypu."
+
+#: api/models.py:145
+msgid "This event type should not have camera assigned."
+msgstr "Zdarzenie tego typu nie powinno mieć przypisanej kamery."
+
+#: api/models.py:148
+msgid "This event type should not have value."
+msgstr "Zdarzenie tego typu nie powinno mieć wartości."
+
+#: api/models.py:150
+msgid "Camera is required for this event type."
+msgstr "Zdarzenie tego typu powinno mieć przypisaną kamerę."
+
+#: api/models.py:155 api/models.py:229
 msgid "timestamp"
 msgstr "czas"
 
-#: api/models.py:105
+#: api/models.py:156
 msgid "event_type"
 msgstr "typ zdarzenia"
 
-#: api/models.py:108
+#: api/models.py:159
 msgid "event_value"
 msgstr "wartość zdarzenia"
 
-#: api/models.py:111
+#: api/models.py:162
 msgid "camera event"
 msgstr "zdarzenie"
 
-#: api/models.py:112
+#: api/models.py:163
 msgid "camera events"
 msgstr "zdarzenia"
 
-#: api/models.py:132
+#: api/models.py:195
 msgid "price"
 msgstr "cena"
 
-#: api/models.py:133
+#: api/models.py:196
 msgid "vegetarian"
 msgstr "opcja wegetariańska"
 
-#: api/models.py:135
+#: api/models.py:198
 msgid "photo_url"
 msgstr "URL zdjęcia"
 
-#: api/models.py:136
+#: api/models.py:199
 msgid "avg_review_stars"
 msgstr "średnia ocena"
 
-#: api/models.py:139
+#: api/models.py:202
 msgid "fixed menu entry"
 msgstr "pozycja ze stałego menu"
 
-#: api/models.py:140
+#: api/models.py:203
 msgid "fixed menu entries"
 msgstr "pozycje ze stałego menu"
 
-#: api/models.py:163
+#: api/models.py:226
 msgid "menu option"
 msgstr "opcja z menu"
 
-#: api/models.py:164
+#: api/models.py:227
 msgid "rating"
 msgstr "ocena"
 
-#: api/models.py:165
+#: api/models.py:228
 msgid "author"
 msgstr "autor"
 
-#: api/models.py:169
+#: api/models.py:232
 msgid "menu entry review"
 msgstr "recenzja pozycji z menu"
 
-#: api/models.py:170
+#: api/models.py:233
 msgid "menu entry reviews"
 msgstr "recenzje pozycji z menu"
 

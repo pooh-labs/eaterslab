@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator, URLValidator
 from django.db.models import F, Q
 
@@ -132,6 +133,24 @@ class CameraEvent(models.Model):
         elif self.event_type != CameraEventType.MONITORING_STARTED.value \
                 and self.event_type != CameraEventType.MONITORING_ENDED.value:
             raise ValueError('Invalid CameraEvent fields specification')
+
+    def clean(self):
+        # Make sure admin form is filled in correcly
+        errors = dict()
+        
+        if (self.event_type == CameraEventType.OCCUPANCY_OVERRIDE):
+            if not self.event_value and self.event_value != 0:
+                errors.update(event_value = ValidationError(_('Cafeteria is required for this event type.'), code='required'))
+            if self.camera_id:
+                errors.update(camera = ValidationError(_('This event type should not have camera assigned.'), code='custom'))
+        else:
+            if self.event_value or self.event_value == 0:
+                errors.update(event_value = ValidationError(_('This event type should not have value.'), code='custom'))
+            if not self.camera_id:
+                errors.update(camera = ValidationError(_('Camera is required for this event type.'), code='required'))
+
+        if errors:
+            raise ValidationError(errors)
 
     timestamp.verbose_name = _('timestamp')
     event_type.verbose_name = _('event_type')
