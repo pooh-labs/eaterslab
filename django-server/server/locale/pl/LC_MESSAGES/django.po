@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-07 14:12+0200\n"
+"POT-Creation-Date: 2020-06-07 23:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -82,7 +82,7 @@ msgstr "Brak dostępnych"
 msgid "Unknown content"
 msgstr "Nieznany typ zawartości"
 
-#: admin/templates/admin/stats.html:22
+#: admin/templates/admin/stats.html:24
 msgid "Home"
 msgstr "Strona główna"
 
@@ -90,7 +90,7 @@ msgstr "Strona główna"
 msgid "API"
 msgstr "API"
 
-#: api/models.py:32 api/models.py:194
+#: api/models.py:32 api/models.py:67 api/models.py:199
 msgid "name"
 msgstr "nazwa"
 
@@ -138,7 +138,7 @@ msgstr "właściciel"
 msgid "cafeteria occupancy"
 msgstr "liczba osób w stołówce"
 
-#: api/models.py:46 api/models.py:62 api/models.py:158 api/models.py:197
+#: api/models.py:46 api/models.py:66 api/models.py:163 api/models.py:202
 msgid "cafeteria"
 msgstr "stołówka"
 
@@ -158,115 +158,119 @@ msgstr "offline"
 msgid "lost connection"
 msgstr "brak połączenia"
 
-#: api/models.py:61
+#: api/models.py:62
+msgid "Enter a valid name: use english letters, numbers and underscores"
+msgstr "Wpisz poprawną nazwę: użyj angielskich liter, cyfr oraz znaku '_'"
+
+#: api/models.py:65
 msgid "state"
 msgstr "Stan"
 
-#: api/models.py:65 api/models.py:157
+#: api/models.py:70 api/models.py:162
 msgid "camera"
 msgstr "kamera"
 
-#: api/models.py:66
+#: api/models.py:71
 msgid "cameras"
 msgstr "kamery"
 
-#: api/models.py:70
+#: api/models.py:75
 msgid "monitoring_started"
 msgstr "początek monitoringu"
 
-#: api/models.py:71
+#: api/models.py:76
 msgid "monitoring_ended"
 msgstr "koniec monitoringu"
 
-#: api/models.py:72
+#: api/models.py:77
 msgid "person_entered"
 msgstr "klient wszedł"
 
-#: api/models.py:73
+#: api/models.py:78
 msgid "person_left"
 msgstr "klient wyszedl"
 
-#: api/models.py:74
+#: api/models.py:79
 msgid "occupancy_override"
 msgstr "nadpisano zajętość"
 
-#: api/models.py:143
+#: api/models.py:148
 msgid "Cafeteria is required for this event type."
 msgstr "Stołówka jest wymagana dla zdarzenia tegotypu."
 
-#: api/models.py:145
+#: api/models.py:150
 msgid "This event type should not have camera assigned."
 msgstr "Zdarzenie tego typu nie powinno mieć przypisanej kamery."
 
-#: api/models.py:148
+#: api/models.py:153
 msgid "This event type should not have value."
 msgstr "Zdarzenie tego typu nie powinno mieć wartości."
 
-#: api/models.py:150
+#: api/models.py:155
 msgid "Camera is required for this event type."
 msgstr "Zdarzenie tego typu powinno mieć przypisaną kamerę."
 
-#: api/models.py:155 api/models.py:229
+#: api/models.py:160 api/models.py:235
 msgid "timestamp"
 msgstr "czas"
 
-#: api/models.py:156
+#: api/models.py:161
 msgid "event_type"
 msgstr "typ zdarzenia"
 
-#: api/models.py:159
+#: api/models.py:164
 msgid "event_value"
 msgstr "wartość zdarzenia"
 
-#: api/models.py:162
+#: api/models.py:167
 msgid "camera event"
 msgstr "zdarzenie"
 
-#: api/models.py:163
+#: api/models.py:168
 msgid "camera events"
 msgstr "zdarzenia"
 
-#: api/models.py:195
+#: api/models.py:200
 msgid "price"
 msgstr "cena"
 
-#: api/models.py:196
+#: api/models.py:201
 msgid "vegetarian"
 msgstr "opcja wegetariańska"
 
-#: api/models.py:198
+#: api/models.py:203
 msgid "photo_url"
 msgstr "URL zdjęcia"
 
-#: api/models.py:199
+#: api/models.py:204
 msgid "avg_review_stars"
 msgstr "średnia ocena"
 
-#: api/models.py:202
+#: api/models.py:207
 msgid "fixed menu entry"
 msgstr "pozycja ze stałego menu"
 
-#: api/models.py:203
+#: api/models.py:208
 msgid "fixed menu entries"
 msgstr "pozycje ze stałego menu"
 
-#: api/models.py:226
+#: api/models.py:232
 msgid "menu option"
 msgstr "opcja z menu"
 
-#: api/models.py:227
+#: api/models.py:233
 msgid "rating"
 msgstr "ocena"
 
-#: api/models.py:228
+#: api/models.py:234
 msgid "author"
 msgstr "autor"
 
-#: api/models.py:232
+#: api/models.py:238
 msgid "menu entry review"
 msgstr "recenzja pozycji z menu"
 
-#: api/models.py:233
+#: api/models.py:239
 msgid "menu entry reviews"
 msgstr "recenzje pozycji z menu"
 
