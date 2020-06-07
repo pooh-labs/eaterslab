@@ -18,18 +18,20 @@ class ApiConnector(object):
 
     def __init__(
         self,
-        device_id: int,
+        camera_pk: int,
         configuration: Configuration,
         timestamp: datetime,
     ):
         """Save path for writing.
 
         Args:
-            device_id: device ID for writing
+            camera_pk: device ID for writing
             configuration: API client configuration
             timestamp: start time
         """
-        self._device_id = device_id
+        self._camera_pk = camera_pk
+        self._device_id = configuration.api_key['X-DEVICE-ID']
+        self._api_key = configuration.api_key['X-API-KEY']
         self._api_client = ApiClient(configuration)
         self._api = CamerasApi(self._api_client)
 
@@ -72,9 +74,11 @@ class ApiConnector(object):
         Returns:
             true when upload finalizes
         """
-        camera_pk = str(self._device_id)
+        camera_pk = str(self._camera_pk)
         try:
-            self._api.cameras_events_create(camera_pk, event)
+            self._api.cameras_events_create(
+                camera_pk, self._device_id, self._api_key, event,
+            )
         except ApiException as ex:
             msg = 'Could not upload event: {0}'.format(ex)
             raise RuntimeError(msg)
