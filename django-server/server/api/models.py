@@ -62,6 +62,9 @@ class Camera(models.Model):
                                                        message=_('Enter a valid name: use english '
                                                                 'letters, numbers and underscores'))])
 
+    def __str__(self):
+        return str(self.name)
+
     state.verbose_name = _('state')
     cafeteria.verbose_name = _('cafeteria')
     name.verbose_name = _('name')

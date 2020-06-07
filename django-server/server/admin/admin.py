@@ -33,7 +33,6 @@ class CafeteriaAdmin(TranslationAdmin):
 
 
 class CameraAdmin(ModelAdmin):
-    # TODO(Rhantolq): Add 'name' here to display once implemented
     list_display = ['id', 'name', 'state_with_icon', 'last_event']
 
     # Modify queryset to fetch last event timestamp (in _last_event column)
