@@ -23,9 +23,15 @@ from .models import *
 from .serializers import *
 
 
+# Accept-Language header
 accept_language_header = Parameter('Accept-Language', IN_HEADER, description='Language for response content',
                                    type=TYPE_STRING)
 accept_language_decorator = swagger_auto_schema(manual_parameters=[accept_language_header])
+
+# Camera auth headers
+x_device_id_header = Parameter('X-DEVICE-ID', IN_HEADER, required=True, description='Camera device name', type=TYPE_STRING)
+x_api_key_header = Parameter('X-API-KEY', IN_HEADER, required=True, description='Camera key', type=TYPE_STRING)
+auth_headers_decorator = swagger_auto_schema(manual_parameters=[x_device_id_header, x_api_key_header])
 
 
 class GetPostViewSet(viewsets.ModelViewSet):
@@ -108,6 +114,7 @@ class CameraViewSet(viewsets.ModelViewSet):
     serializer_class = CameraSerializer
 
 
+@method_decorator(name='create', decorator=auth_headers_decorator)
 class CameraEventsViewSet(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
     http_method_names = ['post']
     serializer_class = CameraEventSerializer

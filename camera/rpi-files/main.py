@@ -77,15 +77,16 @@ def load_api_configuration() -> Configuration:
         configuration object
     """
     try:
-        device_id = read_int_from_env('DEVICE_ID', None)
+        camera_pk = read_int_from_env('CAMERA_PK', None)
     except TypeError as ex:
-        msg = 'Could not load device ID: {0}'.format(ex)
+        msg = 'Could not load camera PK: {0}'.format(ex)
         raise RuntimeError(msg)
 
     configuration = Configuration()
     configuration.host = os.getenv('API_HOST')
+    configuration.camera_pk = camera_pk
     configuration.api_key['X-API-KEY'] = os.getenv('API_KEY')
-    configuration.api_key['X-DEVICE-ID'] = device_id
+    configuration.api_key['X-DEVICE-ID'] = os.getenv('DEVICE_ID')
     return configuration
 
 
@@ -205,10 +206,10 @@ class Main(object):
             self._should_close = True
             self._close()
             return
-        device_id = configuration.api_key['X-DEVICE-ID']
+        camera_pk = configuration.camera_pk
         logging.info('Setting up uplink...')
         self._api_connector = ApiConnector(
-            device_id, configuration, start_time,
+            camera_pk, configuration, start_time,
         )
 
     def _start(self):

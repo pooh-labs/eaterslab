@@ -276,6 +276,16 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/CameraEvent'
+        - name: X-DEVICE-ID
+          in: header
+          description: Camera device name
+          required: true
+          type: string
+        - name: X-API-KEY
+          in: header
+          description: Camera key
+          required: true
+          type: string
       responses:
         '201':
           description: ''
