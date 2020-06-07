@@ -26,9 +26,11 @@ class CafeteriaSerializer(serializers.ModelSerializer):
 
 
 class CameraSerializer(serializers.ModelSerializer):
+    name = serializers.RegexField('^[a-zA-Z0-9-_]+$')
+
     class Meta:
         model = Camera
-        fields = ['id', 'state', 'cafeteria']
+        fields = ['id', 'state', 'name', 'cafeteria']
 
 
 class CameraEventSerializer(serializers.ModelSerializer):

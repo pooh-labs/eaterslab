@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
-from django.core.validators import MinValueValidator, MaxValueValidator, URLValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, URLValidator, RegexValidator
 from django.db.models import F, Q
 
 from datetime import timedelta
@@ -57,9 +57,14 @@ class Camera(models.Model):
 
     state = models.IntegerField(choices=State.choices)
     cafeteria = models.ForeignKey(Cafeteria, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50,
+                            validators=[RegexValidator(regex='^[a-zA-Z0-9-_]+$',
+                                                       message=_('Enter a valid name: use english '
+                                                                'letters, numbers and underscores'))])
 
     state.verbose_name = _('state')
     cafeteria.verbose_name = _('cafeteria')
+    name.verbose_name = _('name')
 
     class Meta:
         verbose_name = _('camera')
@@ -138,7 +143,7 @@ class CameraEvent(models.Model):
         # Make sure admin form is filled in correcly
         errors = dict()
         
-        if (self.event_type == CameraEventType.OCCUPANCY_OVERRIDE):
+        if self.event_type == CameraEventType.OCCUPANCY_OVERRIDE:
             if not self.event_value and self.event_value != 0:
                 errors.update(event_value = ValidationError(_('Cafeteria is required for this event type.'), code='required'))
             if self.camera_id:
@@ -164,12 +169,12 @@ class CameraEvent(models.Model):
 
         constraints = [
             models.CheckConstraint(
-                name = 'camera_nullable_per_type',
-                check = get_q_event_camera_nullability(),
+                name='camera_nullable_per_type',
+                check=get_q_event_camera_nullability(),
             ),
             models.CheckConstraint(
-                name = 'event_value_nullable_per_type',
-                check = get_q_event_value_nullability(),
+                name='event_value_nullable_per_type',
+                check=get_q_event_value_nullability(),
             ),
         ]
 
