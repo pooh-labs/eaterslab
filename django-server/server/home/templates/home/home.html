@@ -1,7 +1,4 @@
-{% load i18n %}
-{% get_current_language as LANGUAGE_CODE %}
-{% get_available_languages as LANGUAGES %}
-
+{% load i18n static %}
 <!doctype html>
 <html lang="en">
 
@@ -16,6 +13,23 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Yanone+Kaffeesatz:wght@500&display=swap" rel="stylesheet"> 
+
+<style>
+    body { font-family: 'Roboto', Arial; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Yanone Kaffeesatz', sans-serif; }
+
+    #logo-container { padding-top: 1vh; padding-bottom: 2vh; background: #E6AE07; text-align: center; }
+    #logo-container img { width: 20em; max-width: 80vw; filter: drop-shadow(0 0 2rem rgba(0, 0, 0, 0.2)); }
+    #logo-container h1 { margin-bottom: 0; font-size: 48px; }
+
+    #pros { margin-top: 30px; margin-bottom: 30px; }
+    #pros .col { padding: 30px; }
+    #pros a.btn { margin-top: 10px; background: #4799FF; border-width: 0; }
+
+    footer { padding: 30px; padding-bottom: 15px; background: #343a40; }
+    footer p { text-align: center; color: #CCC; }
+</style>
 </head>
 
 
@@ -25,13 +39,13 @@
             <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
                 <!-- Brand/logo -->
                 <a class="navbar-brand" href="#">
-                    <img src="https://cdn.discordapp.com/attachments/223488707158736897/708649740052594768/eaters_icon_background.svg" alt="logo" style="width:40px;">
+                    <img src="{% static 'icon.svg' %}" alt="logo" style="width:40px;">
                 </a>
 
                 <!-- Links -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin">{% trans 'Administration' %}</a>
+                        <a class="nav-link" href="{% url 'admin:index' %}">{% trans 'Administration' %}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/doc">{% trans 'API documentation' %}</a>
@@ -40,14 +54,55 @@
             </nav>
         {% endblock %}
     </div>
-    <div id="main-content" class="container">
+    <div id="main-content">
         {% block content %}
-            <h1>{% trans 'Welcome to EatersLab by PoohLab.' %}</h1>
+            <header id="logo-container" class="container-fluid">
+                <img src="{% static 'icon.svg' %}" alt="logo">
+                <h1>{% trans 'EatersLab' %}</h1>
+                <p>{% trans 'Cafeteria data management' %}</p>
+            </header>
+            
+            <section id="pros" class="container">
+                <div class="row">
+                    <div class="col">
+                        <h2>{% trans 'For customers' %}</h2>
+                        <p>{% trans 'Have you ever went for lunch only to find out that there are no free seats? Now you can check everything before leaving:' %}</p>
+                        <ul>
+                            <li>{% trans 'check for crowded places,' %}</li>
+                            <li>{% trans 'browse menus,' %}</li>
+                            <li>{% trans 'rate dishes,' %}</li>
+                            <li>{% trans 'find new places.' %}</li>
+                        </ul>
+                        <a href="/download/EatersLabBeta.apk" class="btn btn-primary btn-lg">{% trans 'Download for Android' %}</a>
+                    </div>
+                    <div class="col">
+                        <h2>{% trans 'For owners' %}</h2>
+                        <p>{% trans 'Base your purchases on hard data! With occupancy statistics you can track cafeteria popularity and rating over time.' %}</p>
+                        <ul>
+                            <li>{% trans 'See how your bussiness is doing,' %}</li>
+                            <li>{% trans 'publish menus,' %}</li>
+                            <li>{% trans 'get customer feedback,' %}</li>
+                            <li>{% trans 'analyze historical trends.' %}</li>
+                        </ul>
+                        <a href="{% url 'admin:index' %}" class="btn btn-primary btn-lg">{% trans 'Access backend' %}</a>
+                    </div>
+                    <div class="col">
+                        <h2>{% trans 'For administrators' %}</h2>
+                        <p>{% trans 'Tired of typing everything in? With our API you can now access all cafeterias without human intervention:' %}</p>
+                        <ul>
+                            <li>{% trans 'get place details,' %}</li>
+                            <li>{% trans 'fetch menus,' %}</li>
+                            <li>{% trans 'show occupancy on your page,' %}</li>
+                            <li>{% trans 'access statistics.' %}</li>
+                        </ul>
+                        <a href="/doc" class="btn btn-primary btn-lg">{% trans 'Browse API' %}</a>
+                    </div>
+                </div>
+            </section>
 
-            <ul>
-                <li>{{ LANGUAGE_CODE }}</li>
-                <li>{{ LANGUAGES }}</li>
-            </ul>
+            <footer class="container-fluid">
+                <p>Copyright &copy; PoohLabs 2020.</p>
+            </footer>
 
             <!-- Access to CSRF token -->
             {% csrf_token %}
