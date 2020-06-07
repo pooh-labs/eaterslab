@@ -36,6 +36,18 @@ class CafeteriaAdmin(TranslationAdmin):
             queryset = queryset.filter(owner=request.user)
         return queryset
 
+    def get_form(self, request, obj=None, **kwargs):
+        if not is_admin(request.user):
+            self.exclude = ('owner', 'occupancy',)
+        form = super().get_form(request, obj, **kwargs)
+        return form
+
+    def save_model(self, request, obj, form, change):
+        if not obj.pk and not is_admin(request.user):
+            obj.owner = request.user
+            obj.occupancy = 0
+        super().save_model(request, obj, form, change)
+
 
 class CameraEventAdmin(ModelAdmin):
     def get_queryset(self, request):
