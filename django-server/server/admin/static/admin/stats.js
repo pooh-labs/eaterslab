@@ -32,6 +32,7 @@ const DatasetType = {
 const messages = {
   en: {
     message: {
+      add_cafeteria_first: 'Add first cafeteria to use statistics.',
       add_dataset: 'Add dataset',
       add_first_dataset: 'Add first dataset',
       add: 'Add',
@@ -59,6 +60,7 @@ const messages = {
   },
   pl: {
     message: {
+      add_cafeteria_first: 'Aby korzystać ze statystyk, dodaj stołówkę.',
       add: 'Dodaj',
       add_dataset: 'Dodaj dane',
       add_first_dataset: 'Dodaj pierwszy zbiór danych',
@@ -218,6 +220,7 @@ const App = new Vue({
     group_by: DatasetGrouping.DAY,
     date_from: null,
     date_to: null,
+    cafeterias_add_url: CAFETERIAS_URL,
   },
   watch: {
     group_by: function() {
@@ -227,6 +230,9 @@ const App = new Vue({
   computed: {
     empty: function() {
       return this.datasets.length == 0;
+    },
+    empty_cafeterias: function() {
+      return Object.keys(this.cafeterias).length == 0;
     }
   },
   updated: function() {
@@ -637,7 +643,11 @@ const App = new Vue({
 });
 
 function loadCafeterias() {
-  return fetch(API_URL_BASE + 'cafeterias/?fields=id,name&owner_id=' + USER_ID)
+  let api_url = API_URL_BASE + 'cafeterias/?fields=id,name';
+  if (!IS_ADMIN) {
+    api_url += '&owner_id=' + USER_ID;
+  }
+  return fetch(api_url)
     .then(response => {
       if (response.ok) {
         return response.json();
