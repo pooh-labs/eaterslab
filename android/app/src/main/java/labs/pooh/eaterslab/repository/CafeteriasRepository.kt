@@ -88,8 +88,8 @@ class CafeteriasRepository(private val connectionStatusNotifier: ConnectionStatu
         return data?.map(AverageDishReviewStats::toDao)
     }
 
-    suspend fun addFixedMenuOptionReview(menuOption: Int, stars: Int, name: String) {
-        val review = FixedMenuOptionReview(stars, name, OffsetDateTime.now(), menuOption)
+    suspend fun addFixedMenuOptionReview(menuOption: Int, stars: Int, name: String, reviewText: String) {
+        val review = FixedMenuOptionReview(stars, name, OffsetDateTime.now(), menuOption, null, reviewText)
         tryApiConnect {
             reviewsApi.fixedMenuReviewsCreate(review)
         }
