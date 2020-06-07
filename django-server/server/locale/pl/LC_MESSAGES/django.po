@@ -21,11 +21,11 @@ msgstr ""
 msgid "EatersLab administration"
 msgstr "Administracja EatersLab"
 
-#: admin/admin.py:19
+#: admin/admin.py:19 home/templates/home/home.html:64
 msgid "EatersLab"
 msgstr "EatersLab"
 
-#: admin/admin.py:20 home/templates/home/home.html:34
+#: admin/admin.py:20 home/templates/home/home.html:51
 msgid "Administration"
 msgstr "Administracja"
 
@@ -278,13 +278,109 @@ msgstr "recenzje pozycji z menu"
 msgid "EatersLab Home"
 msgstr "Strona główna EatersLab"
 
-#: home/templates/home/home.html:37
+#: home/templates/home/home.html:54
 msgid "API documentation"
 msgstr "Dokumentacja API"
 
-#: home/templates/home/home.html:45
-msgid "Welcome to EatersLab by PoohLab."
-msgstr "Witamy w EatersLab od PoohLab."
+#: home/templates/home/home.html:65
+msgid "Cafeteria data management"
+msgstr "Menedżer danych stołówek"
+
+#: home/templates/home/home.html:71
+msgid "For customers"
+msgstr "Dla klientów"
+
+#: home/templates/home/home.html:72
+msgid ""
+"Have you ever went for lunch only to find out that there are no free seats? "
+"Now you can check everything before leaving:"
+msgstr ""
+"Zdarzyło ci się pójść na stołówkę tylko po to, żeby zobaczyć że jest pełna? "
+"Teraz możesz sprawdzić wszystko przed wyjściem:"
+
+#: home/templates/home/home.html:74
+msgid "check for crowded places,"
+msgstr "sprawdź zatłoczenie,"
+
+#: home/templates/home/home.html:75
+msgid "browse menus,"
+msgstr "przeglądaj menu,"
+
+#: home/templates/home/home.html:76
+msgid "rate dishes,"
+msgstr "oceniaj potrawy,"
+
+#: home/templates/home/home.html:77
+msgid "find new places."
+msgstr "znajduje nowe miejsca!"
+
+#: home/templates/home/home.html:79
+msgid "Download for Android"
+msgstr "Pobierz dla Androida"
+
+#: home/templates/home/home.html:82
+msgid "For owners"
+msgstr "Dla właścicieli"
+
+#: home/templates/home/home.html:83
+msgid ""
+"Base your purchases on hard data! With occupancy statistics you can track "
+"cafeteria popularity and rating over time."
+msgstr ""
+"Podejmuj decyzje na podstawie danych! Z pomocą statystyk możesz śledzić "
+"popluarność i oceny twojego lokalu."
+
+#: home/templates/home/home.html:85
+msgid "See how your bussiness is doing,"
+msgstr "Zbierz dane na temat firmy,"
+
+#: home/templates/home/home.html:86
+msgid "publish menus,"
+msgstr "udostępniaj menu,"
+
+#: home/templates/home/home.html:87
+msgid "get customer feedback,"
+msgstr "zbieraj feedback,"
+
+#: home/templates/home/home.html:88
+msgid "analyze historical trends."
+msgstr "sprawdź trendy w danych."
+
+#: home/templates/home/home.html:90
+msgid "Access backend"
+msgstr "Zaloguj się"
+
+#: home/templates/home/home.html:93
+msgid "For administrators"
+msgstr "Dla administratorów"
+
+#: home/templates/home/home.html:94
+msgid ""
+"Tired of typing everything in? With our API you can now access all "
+"cafeterias without human intervention:"
+msgstr ""
+"Masz dość wpisywania wszystkiego ręcznie? Z naszym API pobierzesz "
+"wszystkie dane automatycznie:"
+
+#: home/templates/home/home.html:96
+msgid "get place details,"
+msgstr "pobierz szczegóły lokalu,"
+
+#: home/templates/home/home.html:97
+msgid "fetch menus,"
+msgstr "pobierz menu,"
+
+#: home/templates/home/home.html:98
+msgid "show occupancy on your page,"
+msgstr "pokaż zajętość na swojej stronie,"
+
+#: home/templates/home/home.html:99
+msgid "access statistics."
+msgstr "pobierz statystyki."
+
+#: home/templates/home/home.html:101
+msgid "Browse API"
+msgstr "Przeglądaj dokumentację"
 
 #: server/settings.py:157
 msgid "Polish"

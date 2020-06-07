@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-07 14:12+0200\n"
+"POT-Creation-Date: 2020-06-07 17:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,11 +22,11 @@ msgstr ""
 msgid "EatersLab administration"
 msgstr ""
 
-#: admin/admin.py:19
+#: admin/admin.py:19 home/templates/home/home.html:64
 msgid "EatersLab"
 msgstr ""
 
-#: admin/admin.py:20 home/templates/home/home.html:34
+#: admin/admin.py:20 home/templates/home/home.html:51
 msgid "Administration"
 msgstr ""
 
@@ -207,7 +207,7 @@ msgstr ""
 msgid "Camera is required for this event type."
 msgstr ""
 
-#: api/models.py:155 api/models.py:229
+#: api/models.py:155 api/models.py:230
 msgid "timestamp"
 msgstr ""
 
@@ -251,23 +251,23 @@ msgstr ""
 msgid "fixed menu entries"
 msgstr ""
 
-#: api/models.py:226
+#: api/models.py:227
 msgid "menu option"
 msgstr ""
 
-#: api/models.py:227
+#: api/models.py:228
 msgid "rating"
 msgstr ""
 
-#: api/models.py:228
+#: api/models.py:229
 msgid "author"
 msgstr ""
 
-#: api/models.py:232
+#: api/models.py:233
 msgid "menu entry review"
 msgstr ""
 
-#: api/models.py:233
+#: api/models.py:234
 msgid "menu entry reviews"
 msgstr ""
 
@@ -275,12 +275,102 @@ msgstr ""
 msgid "EatersLab Home"
 msgstr ""
 
-#: home/templates/home/home.html:37
+#: home/templates/home/home.html:54
 msgid "API documentation"
 msgstr ""
 
-#: home/templates/home/home.html:45
-msgid "Welcome to EatersLab by PoohLab."
+#: home/templates/home/home.html:65
+msgid "Cafeteria data management"
+msgstr ""
+
+#: home/templates/home/home.html:71
+msgid "For customers"
+msgstr ""
+
+#: home/templates/home/home.html:72
+msgid ""
+"Have you ever went for lunch only to find out that there are no free seats? "
+"Now you can check everything before leaving:"
+msgstr ""
+
+#: home/templates/home/home.html:74
+msgid "check for crowded places,"
+msgstr ""
+
+#: home/templates/home/home.html:75
+msgid "browse menus,"
+msgstr ""
+
+#: home/templates/home/home.html:76
+msgid "rate dishes,"
+msgstr ""
+
+#: home/templates/home/home.html:77
+msgid "find new places."
+msgstr ""
+
+#: home/templates/home/home.html:79
+msgid "Download for Android"
+msgstr ""
+
+#: home/templates/home/home.html:82
+msgid "For owners"
+msgstr ""
+
+#: home/templates/home/home.html:83
+msgid ""
+"Base your purchases on hard data! With occupancy statistics you can track "
+"cafeteria popularity and rating over time."
+msgstr ""
+
+#: home/templates/home/home.html:85
+msgid "See how your bussiness is doing,"
+msgstr ""
+
+#: home/templates/home/home.html:86
+msgid "publish menus,"
+msgstr ""
+
+#: home/templates/home/home.html:87
+msgid "get customer feedback,"
+msgstr ""
+
+#: home/templates/home/home.html:88
+msgid "analyze historical trends."
+msgstr ""
+
+#: home/templates/home/home.html:90
+msgid "Access backend"
+msgstr ""
+
+#: home/templates/home/home.html:93
+msgid "For administrators"
+msgstr ""
+
+#: home/templates/home/home.html:94
+msgid ""
+"Tired of typing everything in? With our API you can now access all "
+"cafeterias without human intervention:"
+msgstr ""
+
+#: home/templates/home/home.html:96
+msgid "get place details,"
+msgstr ""
+
+#: home/templates/home/home.html:97
+msgid "fetch menus,"
+msgstr ""
+
+#: home/templates/home/home.html:98
+msgid "show occupancy on your page,"
+msgstr ""
+
+#: home/templates/home/home.html:99
+msgid "access statistics."
+msgstr ""
+
+#: home/templates/home/home.html:101
+msgid "Browse API"
 msgstr ""
 
 #: server/settings.py:157
