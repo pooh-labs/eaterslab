@@ -7,6 +7,7 @@ from django.utils.html import format_html
 from modeltranslation.admin import TranslationAdmin
 from django.utils.translation import gettext_lazy as _
 
+from .utils import is_admin
 from .views import StatsView
 from api.models import *
 
@@ -29,7 +30,33 @@ class MyAdminSite(AdminSite):
 
 
 class CafeteriaAdmin(TranslationAdmin):
-    pass
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        if not is_admin(request.user):
+            queryset = queryset.filter(owner=request.user)
+        return queryset
+
+    def get_form(self, request, obj=None, **kwargs):
+        if not is_admin(request.user):
+            self.exclude = ('owner', 'occupancy',)
+        form = super().get_form(request, obj, **kwargs)
+        return form
+
+    def save_model(self, request, obj, form, change):
+        if not obj.pk and not is_admin(request.user):
+            obj.owner = request.user
+            obj.occupancy = 0
+        super().save_model(request, obj, form, change)
+
+
+class CameraEventAdmin(ModelAdmin):
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        if not is_admin(request.user):
+            owned_cafeterias = Cafeteria.objects.filter(owner=request.user).values_list('id', flat=True)
+            owned_cameras = Camera.objects.filter(cafeteria_id__in=set(owned_cafeterias)).values_list('id', flat=True)
+            queryset = queryset.filter(camera_id__in=set(owned_cameras))
+        return queryset
 
 
 class CameraAdmin(ModelAdmin):
@@ -39,6 +66,10 @@ class CameraAdmin(ModelAdmin):
     # Modify queryset to fetch last event timestamp (in _last_event column)
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
+        if not is_admin(request.user):
+            owned_cafeterias = Cafeteria.objects.filter(owner=request.user).values_list('id', flat=True)
+            queryset = queryset.filter(cafeteria_id__in=set(owned_cafeterias))
+
         last_event = CameraEvent.objects.filter(
             camera=OuterRef('pk')).values('camera').annotate(last_event=Max('timestamp')).values('last_event')
         queryset = queryset.annotate(_last_event=Subquery(last_event))
@@ -67,12 +98,27 @@ class CameraAdmin(ModelAdmin):
 
 
 class FixedMenuOptionAdmin(TranslationAdmin):
-    pass
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        if not is_admin(request.user):
+            owned_cafeterias = Cafeteria.objects.filter(owner=request.user).values_list('id', flat=True)
+            queryset = queryset.filter(cafeteria_id__in=set(owned_cafeterias))
+        return queryset
+
+
+class FixedMenuOptionReviewAdmin(ModelAdmin):
+    def get_queryset(self, request):
+        queryset = super().get_queryset(request)
+        if not is_admin(request.user):
+            owned_cafeterias = Cafeteria.objects.filter(owner=request.user).values_list('id', flat=True)
+            owned_menu_options = FixedMenuOption.objects.filter(cafeteria_id__in=set(owned_cafeterias)).values_list('id', flat=True)
+            queryset = queryset.filter(option__in=set(owned_menu_options))
+        return queryset
 
 
 admin_site = MyAdminSite(name='admin')
 admin_site.register(Cafeteria, CafeteriaAdmin)
-admin_site.register(CameraEvent)
+admin_site.register(CameraEvent, CameraEventAdmin)
 admin_site.register(Camera, CameraAdmin)
 admin_site.register(FixedMenuOption, FixedMenuOptionAdmin)
-admin_site.register(FixedMenuOptionReview)
+admin_site.register(FixedMenuOptionReview, FixedMenuOptionReviewAdmin)

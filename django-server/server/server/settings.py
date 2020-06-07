@@ -73,6 +73,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',  # for ssl handling in Django
     'api.middleware.ApiCallLanguageMiddleware',  # For setting language in API calls
+    'crum.CurrentRequestUserMiddleware',
 ]
 
 ROOT_URLCONF = 'server.urls'
