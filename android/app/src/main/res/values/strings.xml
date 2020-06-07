@@ -79,6 +79,6 @@
     <string name="opened_to">Opened to</string>
     <string name="time_not_selected">Pick time</string>
     <string name="vegeterian_options">Vegeterian options</string>
-    <string name="occupancy_stats">Occupancy stats</string>
+    <string name="occupancy_stats">Occupancy stats [%]</string>
     <string name="average_review_stats">Average review stats</string>
 </resources>

@@ -57,7 +57,7 @@ class StatsFragment : ThemedAbstractFragment() {
                 val barView = HorizontalBarPlot<OccupancyStatsDao>(context).apply {
                     labelColor = getPlotFontColorForTheme()
                     printTicks = printTicks()
-                    ticksScale = 1.9
+                    ticksScale = 2.1
                     ticksDistance = 0.5
                     ticksMap = { value, index -> HourTicks(index, value.timestamp, context) }
                 }.plot(stats, red) { min(it.occupancyRelative, 1.0) * 100.0 }

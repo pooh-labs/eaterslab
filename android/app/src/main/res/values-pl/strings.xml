@@ -71,6 +71,6 @@
     <string name="time_not_selected">Wybierz godzinę</string>
     <string name="noday">Błąd</string>
     <string name="vegeterian_options">Opcja dla wegetarian</string>
-    <string name="occupancy_stats">Statystyki zajętości</string>
+    <string name="occupancy_stats">Statystyki zajętości [%]</string>
     <string name="average_review_stats">Statystyki opinii</string>
 </resources>
