@@ -19,6 +19,9 @@ class FixedMenuOptionSerializer(serializers.ModelSerializer):
 
 
 class CafeteriaSerializer(serializers.ModelSerializer):
+    opened_from = serializers.TimeField(input_formats=['%H:%M'])
+    opened_to = serializers.TimeField(input_formats=['%H:%M'])
+
     class Meta:
         model = Cafeteria
         fields = ['id', 'name', 'description', 'sub_description', 'longitude', 'latitude',
