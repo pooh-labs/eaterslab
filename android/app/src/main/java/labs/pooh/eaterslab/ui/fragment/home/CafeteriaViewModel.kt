@@ -9,6 +9,7 @@ import labs.pooh.eaterslab.repository.dao.CafeteriaDao
 import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
 import labs.pooh.eaterslab.ui.activity.abstracts.RepositoryAccessViewModel
 import labs.pooh.eaterslab.ui.activity.main.MainActivity
+import kotlin.math.min
 
 class CafeteriaViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessViewModel(notifier) {
 
@@ -58,8 +59,8 @@ class CafeteriaViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessV
         while (this.isActive) {
             val cafeteria = MainActivity.lastSelectedCafeteriaId
             val updatedData = repository.cafeteriasRead(cafeteria)
-            updatedData?.occupancy?.let {
-                _cafeteriaOccupancy.value = scaleOccupancy(it)
+            updatedData?.occupancyPercent?.let {
+                _cafeteriaOccupancy.value = it
             }
             delay(OCCUPANCY_DATA_UPDATE_MILLIS.toLong())
         }
@@ -76,9 +77,7 @@ class CafeteriaViewModel(notifier: ConnectionStatusNotifier) : RepositoryAccessV
             _cafeteriaOpenFrom.value = openedFrom
             _cafeteriaOpenTo.value = openedTo
             _cafeteriaAddress.value = address
-            _cafeteriaOccupancy.value = scaleOccupancy(occupancy)
+            _cafeteriaOccupancy.value = occupancyPercent
         }
     }
-
-    private fun scaleOccupancy(modelData: Double) = (modelData * 100).toInt()
 }

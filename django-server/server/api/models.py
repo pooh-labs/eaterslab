@@ -35,7 +35,7 @@ class Cafeteria(models.Model):
 
     @property
     def occupancy_relative(self):
-        return min(1.0, float(self.occupancy) / float(self.capacity))
+        return float(self.occupancy) / float(self.capacity)
 
     def __str__(self):
         return self.name
