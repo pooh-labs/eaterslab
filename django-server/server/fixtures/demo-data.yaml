@@ -683,43 +683,43 @@
 - model: api.camera
   pk: 1
   fields:
-    # name: cam-kubus-1
+    name: cam-kubus-1
     state: 1
     cafeteria: 1
 - model: api.camera
   pk: 2
   fields:
-    # name: cam-biologia-1
+    name: cam-biologia-1
     state: 1
     cafeteria: 2
 - model: api.camera
   pk: 3
   fields:
-    # name: nad-wejsciem
+    name: nad-wejsciem
     state: 1
     cafeteria: 3
 - model: api.camera
   pk: 4
   fields:
-    # name: biedronka-1
+    name: biedronka-1
     state: 1
     cafeteria: 4
 - model: api.camera
   pk: 5
   fields:
-    # name: biedronka-2
+    name: biedronka-2
     state: 1
     cafeteria: 4
 - model: api.camera
   pk: 6
   fields:
-    # name: vanbinh-wum
+    name: vanbinh-wum
     state: 1
     cafeteria: 5
 - model: api.camera
   pk: 7
   fields:
-    # name: kimloan
+    name: kimloan
     state: 1
     cafeteria: 6
 
