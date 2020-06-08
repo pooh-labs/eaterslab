@@ -30,6 +30,8 @@ class MyAdminSite(AdminSite):
 
 
 class CafeteriaAdmin(TranslationAdmin):
+    list_display = ['name', 'address', 'owner', 'capacity', 'occupancy', 'opened_from', 'opened_to']
+
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
         if not is_admin(request.user):
@@ -62,7 +64,7 @@ class CameraEventAdmin(ModelAdmin):
 
 
 class CameraAdmin(ModelAdmin):
-    list_display = ['id', 'name', 'state_with_icon', 'last_event']
+    list_display = ['id', 'name', 'cafeteria', 'state_with_icon', 'last_event']
 
     # Modify queryset to fetch last event timestamp (in _last_event column)
     def get_queryset(self, request):
