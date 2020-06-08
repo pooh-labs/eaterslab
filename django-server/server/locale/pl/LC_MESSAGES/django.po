@@ -132,11 +132,11 @@ msgid "address"
 msgstr "adres"
 
 #: api/models.py:51
-msgid "opened_from"
+msgid "open_from"
 msgstr "otwarta od"
 
 #: api/models.py:52
-msgid "opened_to"
+msgid "open_to"
 msgstr "otwarta do"
 
 #: api/models.py:53

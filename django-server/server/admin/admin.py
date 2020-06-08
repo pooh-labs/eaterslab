@@ -31,7 +31,7 @@ class MyAdminSite(AdminSite):
 
 
 class CafeteriaAdmin(TranslationAdmin):
-    list_display = ['id', 'clickable_name', 'address', 'owner', 'capacity', 'occupancy', 'opened_from', 'opened_to']
+    list_display = ['id', 'clickable_name', 'address', 'owner', 'capacity', 'occupancy', 'open_from', 'open_to']
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)

@@ -124,11 +124,11 @@ msgid "address"
 msgstr ""
 
 #: api/models.py:40
-msgid "opened_from"
+msgid "open_from"
 msgstr "open from"
 
 #: api/models.py:41
-msgid "opened_to"
+msgid "open_to"
 msgstr "open to"
 
 #: api/models.py:42
