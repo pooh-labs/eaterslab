@@ -8,7 +8,7 @@ from server import settings
 
 
 def index(request):
-    return render(request, 'home/home.html', {'app_name': settings.ARTIFACT_NAME})
+    return render(request, 'home/home.html', {'artifact_name': settings.ARTIFACT_NAME})
 
 
 def artifact_response(response):
