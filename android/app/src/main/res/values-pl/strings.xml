@@ -77,4 +77,5 @@
     <string name="username">Ustaw podpis opinii</string>
     <string name="your_review">Twoja opinia</string>
     <string name="send_review">Wyślij</string>
+    <string name="your_review_body">Opisz wrażenia</string>
 </resources>
