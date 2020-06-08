@@ -194,8 +194,8 @@ os.makedirs(STATIC_ROOT, exist_ok=True)
 
 # Configuration for artifacts of mobile client uploading
 
-ARTIFACT_NAME = 'EatersLab.apk'
+# Name for serving the client Android app on different environments
+ARTIFACT_NAME = env.str('ARTIFACT_NAME', default='EatersLab.apk')
 ARTIFACTS_ROOT = os.path.join(BASE_DIR, 'artifact')
-ARTIFACTS_ROOT_BETA = os.path.join(ARTIFACTS_ROOT, 'beta')
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 10485760  # set max limit of uploaded file to 10 MB

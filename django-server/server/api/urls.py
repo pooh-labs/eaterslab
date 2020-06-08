@@ -28,7 +28,6 @@ urlpatterns = [
     path('', include(fixed_menu_options_router.urls)),
     path('', include(cameras_router.urls)),
     path('upload/artifacts/<str:filename>/', UploadArtifactsView.as_view()),
-    path('upload/artifacts/beta/<str:filename>/', UploadArtifactsBetaView.as_view()),
 ]
 urlpatterns.extend([
     path('cafeterias/<int:cafeteria_pk>/stats/{}'.format(name), view.as_view())
