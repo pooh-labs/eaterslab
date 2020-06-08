@@ -6,6 +6,7 @@ from django.db.models import Subquery, OuterRef, Max
 from django.utils.html import format_html
 from modeltranslation.admin import TranslationAdmin
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 
 from .utils import is_admin
 from .views import StatsView
@@ -30,7 +31,7 @@ class MyAdminSite(AdminSite):
 
 
 class CafeteriaAdmin(TranslationAdmin):
-    list_display = ['id', 'name', 'address', 'owner', 'capacity', 'occupancy', 'open_from', 'open_to']
+    list_display = ['id', 'clickable_name', 'address', 'owner', 'capacity', 'occupancy', 'open_from', 'open_to']
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -50,9 +51,15 @@ class CafeteriaAdmin(TranslationAdmin):
             obj.occupancy = 0
         super().save_model(request, obj, form, change)
 
+    def clickable_name(self, obj):
+        link = reverse(f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change', args=(obj.pk,))
+        return format_html(f'<a href="{link}">{obj.name}</a>')
+
+    clickable_name.short_description = _('name')
+
 
 class CameraEventAdmin(ModelAdmin):
-    list_display = ['id', 'cafeteria', 'camera', 'event_type', 'timestamp']
+    list_display = ['id', 'clickable_event_type', 'timestamp', 'camera', 'cafeteria']
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -62,9 +69,15 @@ class CameraEventAdmin(ModelAdmin):
             queryset = queryset.filter(camera_id__in=set(owned_cameras))
         return queryset
 
+    def clickable_event_type(self, obj):
+        link = reverse(f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change', args=(obj.pk,))
+        return format_html(f'<a href="{link}">{obj.get_event_type_display()}</a>')
+
+    clickable_event_type.short_description = _('event type')
+
 
 class CameraAdmin(ModelAdmin):
-    list_display = ['id', 'name', 'cafeteria', 'state_with_icon', 'last_event']
+    list_display = ['id', 'clickable_name', 'state_with_icon', 'last_event', 'cafeteria']
 
     # Modify queryset to fetch last event timestamp (in _last_event column)
     def get_queryset(self, request):
@@ -97,12 +110,18 @@ class CameraAdmin(ModelAdmin):
     def last_event(self, obj):
         return obj._last_event
 
+    def clickable_name(self, obj):
+        link = reverse(f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change', args=(obj.pk,))
+        return format_html(f'<a href="{link}">{obj.name}</a>')
+
+    clickable_name.short_description = _('name')
+
     state_with_icon.short_description = _('state')
     last_event.short_description = _('last event time')
 
 
 class FixedMenuOptionAdmin(TranslationAdmin):
-    list_display = ['id', 'cafeteria', 'name', 'price', 'vegetarian', 'avg_review_stars']
+    list_display = ['id', 'clickable_name', 'price', 'vegetarian', 'avg_review_stars', 'cafeteria']
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -111,9 +130,15 @@ class FixedMenuOptionAdmin(TranslationAdmin):
             queryset = queryset.filter(cafeteria_id__in=set(owned_cafeterias))
         return queryset
 
+    def clickable_name(self, obj):
+        link = reverse(f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change', args=(obj.pk,))
+        return format_html(f'<a href="{link}">{obj.name}</a>')
+
+    clickable_name.short_description = _('name')
+
 
 class FixedMenuOptionReviewAdmin(ModelAdmin):
-    list_display = ['id', 'cafeteria', 'option', 'author_nick', 'rating', 'review_time']
+    list_display = ['id', 'clickable_author_nick', 'rating', 'review_time', 'option', 'cafeteria']
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -124,10 +149,16 @@ class FixedMenuOptionReviewAdmin(ModelAdmin):
         return queryset
 
     def rating(self, obj):
-        return format_html("⭐" * obj.stars)
+        return format_html('⭐' * obj.stars)
 
     def cafeteria(self, obj):
         return obj.option.cafeteria
+
+    def clickable_author_nick(self, obj):
+        link = reverse(f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change', args=(obj.pk,))
+        return format_html(f'<a href="{link}">{obj.author_nick}</a>')
+
+    clickable_author_nick.short_description = _('author nick')
 
     rating.short_description = _('rating')
     cafeteria.short_description = _('cafeteria')
