@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 from .utils import is_admin
 
+
 class StatsView(TemplateView):
     admin_site = None
     template_name = "admin/stats.html"
