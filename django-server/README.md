@@ -16,8 +16,8 @@ https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your
 
 ## Environment setup
 
-To setup environment locally the .env.sample file can be used as sample.
-User have to create his own .env file with needed from example fields.
+Before starting up the server User has to configure the environment. If setting up for the first time, copy `.env.sample` file from `server/.env.sample` to `server/server/.env` and change at least the `SECRET_KEY` value. [This site](https://miniwebtool.com/django-secret-key-generator/) can help with key generation.
+
 Then the server can be run with
 ```bash
 python manage.py runserver
