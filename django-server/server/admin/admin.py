@@ -30,7 +30,7 @@ class MyAdminSite(AdminSite):
 
 
 class CafeteriaAdmin(TranslationAdmin):
-    list_display = ['name', 'address', 'owner', 'capacity', 'occupancy', 'opened_from', 'opened_to']
+    list_display = ['id', 'name', 'address', 'owner', 'capacity', 'occupancy', 'opened_from', 'opened_to']
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
@@ -97,12 +97,12 @@ class CameraAdmin(ModelAdmin):
     def last_event(self, obj):
         return obj._last_event
 
-    state_with_icon.short_description = _('State')
-    last_event.short_description = _('Last event time')
+    state_with_icon.short_description = _('state')
+    last_event.short_description = _('last event time')
 
 
 class FixedMenuOptionAdmin(TranslationAdmin):
-    list_display = ['cafeteria', 'name', 'price', 'vegetarian', 'avg_review_stars']
+    list_display = ['id', 'cafeteria', 'name', 'price', 'vegetarian', 'avg_review_stars']
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
