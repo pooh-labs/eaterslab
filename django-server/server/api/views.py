@@ -110,7 +110,7 @@ class CafeteriaViewSet(viewsets.ReadOnlyModelViewSet):
 
 class CameraViewSet(viewsets.ModelViewSet):
     http_method_names = []
-    queryset = Camera.objects.all()
+    queryset = Camera.objects.all().order_by('cafeteria')
     serializer_class = CameraSerializer
 
 
