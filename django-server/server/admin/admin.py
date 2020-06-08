@@ -50,6 +50,8 @@ class CafeteriaAdmin(TranslationAdmin):
 
 
 class CameraEventAdmin(ModelAdmin):
+    list_display = ['id', 'cafeteria', 'camera', 'event_type', 'timestamp']
+
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
         if not is_admin(request.user):
