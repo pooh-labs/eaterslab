@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/dataGroupNav"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/navHome"
             android:icon="@drawable/ic_menu_place"
@@ -16,5 +18,14 @@
             android:id="@+id/navMenu"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/menu_slideshow" />
+    </group>
+
+    <group
+        android:id="@+id/settingsGroupNav"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/navSettings"
+            android:icon="@drawable/ic_baseline_settings"
+            android:title="@string/action_settings" />
     </group>
 </menu>

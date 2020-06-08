@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/occupancy_stats"
-                android:fontFamily="@font/alegreya_sc_bold"
+                android:fontFamily="@font/roboto"
                 android:layout_marginBottom="@dimen/stats_title_margin"
                 android:textSize="@dimen/stats_title_size"/>
 
@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/average_review_stats"
-                android:fontFamily="@font/alegreya_sc_bold"
+                android:fontFamily="@font/roboto"
                 android:layout_marginBottom="@dimen/stats_title_margin"
                 android:textSize="@dimen/stats_title_size"/>
 

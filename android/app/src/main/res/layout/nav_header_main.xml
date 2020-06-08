@@ -31,6 +31,7 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/nav_header_title"
         android:textSize="@dimen/nav_header_font"
+        android:fontFamily="@font/yanone_kaffeesatz"
         android:shadowColor="@color/colorBackgroundDark"
 
         android:textColor="@color/colorWhite"

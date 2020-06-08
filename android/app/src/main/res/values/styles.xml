@@ -11,6 +11,7 @@
         <item name="android:windowDisablePreview">true</item>
         <item name="android:textColorPrimary">@color/colorForegroundDark</item>
         <item name="android:textColorSecondary">@color/colorForegroundDark</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -34,6 +35,7 @@
         <item name="android:windowDisablePreview">true</item>
         <item name="android:textColorPrimary">@color/colorWhite</item>
         <item name="android:textColorSecondary">@color/colorWhite</item>
+        <item name="android:fontFamily">@font/roboto_light</item>
     </style>
 
     <style name="AppTheme.Dark.NoActionBar">

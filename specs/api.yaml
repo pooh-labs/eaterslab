@@ -316,22 +316,6 @@ paths:
       tags:
         - fixed_menu_reviews
     parameters: []
-  /upload/artifacts/beta/{filename}/:
-    put:
-      operationId: upload_artifacts_beta_update
-      description: ''
-      parameters: []
-      responses:
-        '200':
-          description: ''
-      consumes: []
-      tags:
-        - upload
-    parameters:
-      - name: filename
-        in: path
-        required: true
-        type: string
   /upload/artifacts/{filename}/:
     put:
       operationId: upload_artifacts_update
@@ -403,10 +387,10 @@ definitions:
         maxLength: 256
         minLength: 1
       opened_from:
-        title: Otwarta od
+        title: Opened from
         type: string
       opened_to:
-        title: Otwarta do
+        title: Opened to
         type: string
       occupancy:
         title: "Liczba os\xF3b w sto\u0142\xF3wce"
