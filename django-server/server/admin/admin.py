@@ -52,7 +52,7 @@ class CafeteriaAdmin(TranslationAdmin):
         super().save_model(request, obj, form, change)
 
     def clickable_name(self, obj):
-        link = reverse(f"admin:{obj._meta.app_label}_{obj._meta.model_name}_change", args=(obj.pk,))
+        link = reverse(f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change', args=(obj.pk,))
         return format_html(f'<a href="{link}">{obj.name}</a>')
 
     clickable_name.short_description = _('name')
@@ -70,7 +70,7 @@ class CameraEventAdmin(ModelAdmin):
         return queryset
 
     def clickable_event_type(self, obj):
-        link = reverse(f"admin:{obj._meta.app_label}_{obj._meta.model_name}_change", args=(obj.pk,))
+        link = reverse(f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change', args=(obj.pk,))
         return format_html(f'<a href="{link}">{obj.get_event_type_display()}</a>')
 
     clickable_event_type.short_description = _('event type')
@@ -111,7 +111,7 @@ class CameraAdmin(ModelAdmin):
         return obj._last_event
 
     def clickable_name(self, obj):
-        link = reverse(f"admin:{obj._meta.app_label}_{obj._meta.model_name}_change", args=(obj.pk,))
+        link = reverse(f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change', args=(obj.pk,))
         return format_html(f'<a href="{link}">{obj.name}</a>')
 
     clickable_name.short_description = _('name')
@@ -131,7 +131,7 @@ class FixedMenuOptionAdmin(TranslationAdmin):
         return queryset
 
     def clickable_name(self, obj):
-        link = reverse(f"admin:{obj._meta.app_label}_{obj._meta.model_name}_change", args=(obj.pk,))
+        link = reverse(f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change', args=(obj.pk,))
         return format_html(f'<a href="{link}">{obj.name}</a>')
 
     clickable_name.short_description = _('name')
@@ -149,13 +149,13 @@ class FixedMenuOptionReviewAdmin(ModelAdmin):
         return queryset
 
     def rating(self, obj):
-        return format_html("⭐" * obj.stars)
+        return format_html('⭐' * obj.stars)
 
     def cafeteria(self, obj):
         return obj.option.cafeteria
 
     def clickable_author_nick(self, obj):
-        link = reverse(f"admin:{obj._meta.app_label}_{obj._meta.model_name}_change", args=(obj.pk,))
+        link = reverse(f'admin:{obj._meta.app_label}_{obj._meta.model_name}_change', args=(obj.pk,))
         return format_html(f'<a href="{link}">{obj.author_nick}</a>')
 
     clickable_author_nick.short_description = _('author nick')
