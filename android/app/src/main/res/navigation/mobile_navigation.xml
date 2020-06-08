@@ -27,5 +27,5 @@
         android:id="@+id/navSettings"
         android:name="labs.pooh.eaterslab.ui.activity.settings.SettingsActivity"
         android:label="@string/action_settings"
-        tools:layout="@layout/fragment_settings"/>
+        tools:layout="@layout/activity_settings"/>
 </navigation>
