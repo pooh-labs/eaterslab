@@ -6,7 +6,8 @@ Authors: Krzysztof Antoniak, Robert Michna, Maciej Procyk
 
 ### Changelog
 
-* v1.0 (2020-04-22): Initial revision
+* v1.0 (2020-04-22): Initial revision (Maciej Procyk)
+* v1.1 (2020-05-05): Architecture fix (Krzysztof Antoniak, Robert Michna)
 
 ## Overview
 

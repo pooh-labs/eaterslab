@@ -6,8 +6,8 @@ Authors: Jakub Walendowski, Maciej Procyk, Krzysztof Antoniak, Robert Michna
 
 ### Changelog
 
-* v1.0 (2020-05-19): Initial revision
-* v2.0 (2020-05-26): First public version
+* v1.0 (2020-05-19): Initial revision (Jakub Walendowski)
+* v2.0 (2020-05-26): First public version (Jakub Walendowski, Maciej Procyk, Krzysztof Antoniak, Robert Michna)
 * v2.1 (2020-06-02): Add profile links and note about coding style enforcement (Krzysztof Antoniak)
 * v2.2 (2020-06-02): Fixes mentioned by the supervisor (Jakub Walendowski)
 
