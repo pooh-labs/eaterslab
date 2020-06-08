@@ -43,9 +43,9 @@ class PostViewSet(viewsets.ModelViewSet):
 
 
 class CafeteriaFilterSet(filters.FilterSet):
-    opened_from = filters.TimeFilter(method='get_opened_from')
-    opened_to = filters.TimeFilter(method='get_opened_to')
-    opened_now = filters.BooleanFilter(method='get_opened_now')
+    open_from = filters.TimeFilter(method='get_open_from')
+    open_to = filters.TimeFilter(method='get_open_to')
+    open_now = filters.BooleanFilter(method='get_open_now')
     prefix_name = filters.CharFilter(method='get_name_prefix')
     owner_id = filters.NumberFilter(method='get_for_owner')
     have_vegs = filters.BooleanFilter(method='get_for_vegetarian')
@@ -53,15 +53,15 @@ class CafeteriaFilterSet(filters.FilterSet):
 
     class Meta:
         model = Cafeteria
-        fields = ['opened_from', 'opened_to', 'opened_now', 'prefix_name', 'owner_id', 'have_vegs', 'min_avg_review']
+        fields = ['open_from', 'open_to', 'open_now', 'prefix_name', 'owner_id', 'have_vegs', 'min_avg_review']
 
-    def get_opened_now(self, queryset, field_name, value):
-        opened = value
+    def get_open_now(self, queryset, field_name, value):
+        is_open = value
         now = datetime.now().time()
-        if opened is True:
-            return queryset.filter(opened_from__lte=now).filter(opened_to__gte=now)
-        elif opened is False:
-            return (queryset.filter(opened_from__gt=now) | queryset.filter(opened_to__lt=now)).distinct()
+        if is_open is True:
+            return queryset.filter(open_from__lte=now).filter(open_to__gte=now)
+        elif is_open is False:
+            return (queryset.filter(open_from__gt=now) | queryset.filter(open_to__lt=now)).distinct()
         else:
             return queryset
 
@@ -83,15 +83,15 @@ class CafeteriaFilterSet(filters.FilterSet):
         for_vegs = FixedMenuOption.objects.filter(vegetarian=value).values_list('cafeteria_id')
         return queryset.filter(id__in=for_vegs)
 
-    def get_opened_from(self, queryset, field_name, value):
+    def get_open_from(self, queryset, field_name, value):
         if value is None:
             return queryset
-        return queryset.filter(opened_from__lte=value)
+        return queryset.filter(open_from__lte=value)
 
-    def get_opened_to(self, queryset, field_name, value):
+    def get_open_to(self, queryset, field_name, value):
         if value is None:
             return queryset
-        return queryset.filter(opened_to__gte=value)
+        return queryset.filter(open_to__gte=value)
 
     def get_with_min_review(self, queryset, field_name, value):
         if value is None:
@@ -402,4 +402,4 @@ def handle_file_as_chunked(request, file_path):
     with FileSystemStorage().open(file_path, 'wb+') as destination:
         for chunk in file_obj.chunks():
             destination.write(chunk)
-    return Response(status=204)
+    return Response(status=200)

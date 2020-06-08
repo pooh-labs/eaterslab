@@ -105,7 +105,7 @@ class Command(BaseCommand):
         return [uniform(0, seconds_open) for _ in range(visitors)]
 
     def generate_for_day(self, cafeteria, seconds_open, date):
-        open_timestamp = as_datetime(date, cafeteria.opened_from)
+        open_timestamp = as_datetime(date, cafeteria.open_from)
 
         single_visit_time = 15 * 60 # People eat exactly 15 minutes
         lunch_gathering_time = 20
@@ -129,8 +129,8 @@ class Command(BaseCommand):
         return events
 
     def generate_for_cafeteria(self, cafeteria):
-        timestamp_from = as_time_today(cafeteria.opened_from)
-        timestamp_to = as_time_today(cafeteria.opened_to)
+        timestamp_from = as_time_today(cafeteria.open_from)
+        timestamp_to = as_time_today(cafeteria.open_to)
         seconds_open = int((timestamp_to - timestamp_from).total_seconds())
 
         delta = self.date_to - self.date_from

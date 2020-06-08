@@ -28,8 +28,8 @@ class Cafeteria(models.Model):
     capacity = models.IntegerField(validators=[MinValueValidator(1)])
     logo_url = models.CharField(max_length=2048, validators=[URLValidator])
     address = models.CharField(max_length=256)
-    opened_from = models.TimeField()
-    opened_to = models.TimeField()
+    open_from = models.TimeField()
+    open_to = models.TimeField()
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     occupancy = models.IntegerField(validators=[MinValueValidator(0)])
 
@@ -48,8 +48,8 @@ class Cafeteria(models.Model):
     capacity.verbose_name = _('cafeteria capacity')
     logo_url.verbose_name = _('logo_url')
     address.verbose_name = _('address')
-    opened_from.verbose_name = _('opened_from')
-    opened_to.verbose_name = _('opened_to')
+    open_from.verbose_name = _('open_from')
+    open_to.verbose_name = _('open_to')
     owner.verbose_name = _('owner')
     occupancy.verbose_name = _('cafeteria occupancy')
 

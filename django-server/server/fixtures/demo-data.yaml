@@ -425,8 +425,8 @@
     capacity: 50
     logo_url: https://lumiere-a.akamaihd.net/v1/images/c94eed56a5e84479a2939c9172434567c0147d4f.jpeg
     address: Stefana Banacha 2, 02-097 Warszawa
-    opened_from: '09:00:00'
-    opened_to: '16:00:00'
+    open_from: '09:00:00'
+    open_to: '16:00:00'
     owner: 3
     occupancy: 0
 - model: api.cafeteria
@@ -446,8 +446,8 @@
     capacity: 80
     logo_url: http://im.biol.uw.edu.pl/wp-content/themes/imuw/img/logo_wb.png
     address: Ilii, Miecznikowa 1, 02-096 Warszawa 
-    opened_from: '08:00:00'
-    opened_to: '17:00:00'
+    open_from: '08:00:00'
+    open_to: '17:00:00'
     owner: 3
     occupancy: 0
 - model: api.cafeteria
@@ -467,8 +467,8 @@
     capacity: 30
     logo_url: https://lh3.ggpht.com/p/AF1QipO1xa-9m6_yZGDkWkz2QeZIkAQ1WqVItZwJrMOv=s1536
     address: Winnicka 8b, 02-095 Warszawa
-    opened_from: '11:00:00'
-    opened_to: '23:00:00'
+    open_from: '11:00:00'
+    open_to: '23:00:00'
     owner: 3
     occupancy: 0
 - model: api.cafeteria
@@ -488,8 +488,8 @@
     capacity: 40
     logo_url: https://lh3.ggpht.com/p/AF1QipNCGoyQ6Y6DLk91lR2E6GoHScjBuD_feXvq4oLy=s1024
     address: Grójecka 79, 02-094 Warszawa
-    opened_from: '11:00:00'
-    opened_to: '18:00:00'
+    open_from: '11:00:00'
+    open_to: '18:00:00'
     owner: 3
     occupancy: 0
 - model: api.cafeteria
@@ -509,8 +509,8 @@
     capacity: 15
     logo_url: http://im.biol.uw.edu.pl/wp-content/themes/imuw/img/logo_wb.png
     address: Stefana Banacha 1A, 02-097 Warszawa
-    opened_from: '09:00:00'
-    opened_to: '21:00:00'
+    open_from: '09:00:00'
+    open_to: '21:00:00'
     owner: 4
     occupancy: 0
 - model: api.cafeteria
@@ -530,8 +530,8 @@
     capacity: 20
     logo_url: https://lh3.ggpht.com/p/AF1QipODSqn_P2JXBB52keUzGvFGG2zxrFnUaG5XvlOA=s1536
     address: Stefana Banacha 16, 05-470 Warszawa
-    opened_from: '09:00:00'
-    opened_to: '22:00:00'
+    open_from: '09:00:00'
+    open_to: '22:00:00'
     owner: 4
     occupancy: 0
 
