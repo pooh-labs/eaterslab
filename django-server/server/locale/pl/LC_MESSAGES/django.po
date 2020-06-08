@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-06-08 00:05+0200\n"
+"POT-Creation-Date: 2020-06-08 16:17+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,13 +29,24 @@ msgstr "EatersLab"
 msgid "Administration"
 msgstr "Administracja"
 
-#: admin/admin.py:95
-msgid "State"
-msgstr "Stan"
+#: admin/admin.py:100 api/models.py:84
+msgid "state"
+msgstr "stan"
 
-#: admin/admin.py:96
-msgid "Last event time"
-msgstr "Czas ostatniego zdarzenia"
+#: admin/admin.py:101
+#, fuzzy
+#| msgid "Last event time"
+msgid "last event time"
+msgstr "czas ostatniego zdarzenia"
+
+#: admin/admin.py:132 api/models.py:257
+msgid "rating"
+msgstr "ocena"
+
+#: admin/admin.py:133 api/models.py:57 api/models.py:85 api/models.py:182
+#: api/models.py:226
+msgid "cafeteria"
+msgstr "stołówka"
 
 #: admin/templates/admin/app_list_override.html:8
 #, python-format
@@ -58,7 +69,7 @@ msgstr "Zmień"
 msgid "Other pages"
 msgstr "Inne strony"
 
-#: admin/templates/admin/app_list_override.html:44 admin/views.py:15
+#: admin/templates/admin/app_list_override.html:44 admin/views.py:16
 msgid "Statistics"
 msgstr "Statystyki"
 
@@ -138,10 +149,6 @@ msgstr "właściciel"
 msgid "cafeteria occupancy"
 msgstr "liczba osób w stołówce"
 
-#: api/models.py:57 api/models.py:85 api/models.py:182 api/models.py:226
-msgid "cafeteria"
-msgstr "stołówka"
-
 #: api/models.py:58
 msgid "cafeterias"
 msgstr "stołówki"
@@ -161,10 +168,6 @@ msgstr "brak połączenia"
 #: api/models.py:78
 msgid "Enter a valid name: use english letters, numbers and underscores"
 msgstr "Wpisz poprawną nazwę: użyj angielskich liter, cyfr oraz znaku '_'"
-
-#: api/models.py:84
-msgid "state"
-msgstr "Stan"
 
 #: api/models.py:89 api/models.py:181
 msgid "camera"
@@ -257,10 +260,6 @@ msgstr "pozycje ze stałego menu"
 #: api/models.py:256
 msgid "menu option"
 msgstr "opcja z menu"
-
-#: api/models.py:257
-msgid "rating"
-msgstr "ocena"
 
 #: api/models.py:258
 msgid "author"
@@ -389,3 +388,6 @@ msgstr "Polski"
 #: server/settings.py:159
 msgid "English"
 msgstr "Angielski"
+
+#~ msgid "State"
+#~ msgstr "Stan"
