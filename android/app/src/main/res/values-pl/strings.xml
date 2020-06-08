@@ -18,8 +18,8 @@
 
     <string name="occupancy">Zapełnienie</string>
     <string name="find_on_map">Wybierz na mapie</string>
-    <string name="search_in_list">Wyszukaj</string>
-    <string name="choose_action">Co chcesz zrobić?</string>
+    <string name="search_in_list">Wyszukaj na liście</string>
+    <string name="choose_action">Znajdź szukane miejsce</string>
     <string name="select">Wybierz</string>
     <string name="info_image">Informacje</string>
 
