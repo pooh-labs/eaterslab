@@ -88,7 +88,8 @@ class CameraAdmin(ModelAdmin):
         elif obj.state == Camera.State.LOST_CONNECTION:
             fill_color = '#FF9900'
         return format_html(
-            '<svg viewbox="0 0 26 26" style="height: 0.8em; width: 0.8em;"><circle fill="{}" cx="13" cy="14" r="10"/></svg> {}',
+            '<svg viewbox="0 0 26 26" style="height: 0.8em; width: 0.8em;">'
+            '<circle fill="{}" cx="13" cy="14" r="10"/></svg> {}',
             fill_color, obj.get_state_display()
         )
 
@@ -110,6 +111,8 @@ class FixedMenuOptionAdmin(TranslationAdmin):
 
 
 class FixedMenuOptionReviewAdmin(ModelAdmin):
+    list_display = ['id', 'cafeteria', 'option', 'author_nick', 'rating', 'review_time']
+
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
         if not is_admin(request.user):
@@ -117,6 +120,15 @@ class FixedMenuOptionReviewAdmin(ModelAdmin):
             owned_menu_options = FixedMenuOption.objects.filter(cafeteria_id__in=set(owned_cafeterias)).values_list('id', flat=True)
             queryset = queryset.filter(option__in=set(owned_menu_options))
         return queryset
+
+    def rating(self, obj):
+        return format_html("⭐" * obj.stars)
+
+    def cafeteria(self, obj):
+        return obj.option.cafeteria
+
+    rating.short_description = _('rating')
+    cafeteria.short_description = _('cafeteria')
 
 
 admin_site = MyAdminSite(name='admin')
