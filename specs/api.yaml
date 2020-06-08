@@ -21,17 +21,17 @@ paths:
       operationId: cafeterias_list
       description: ''
       parameters:
-        - name: opened_from
+        - name: open_from
           in: query
           description: ''
           required: false
           type: string
-        - name: opened_to
+        - name: open_to
           in: query
           description: ''
           required: false
           type: string
-        - name: opened_now
+        - name: open_now
           in: query
           description: ''
           required: false
@@ -342,8 +342,8 @@ definitions:
       - latitude
       - logo_url
       - address
-      - opened_from
-      - opened_to
+      - open_from
+      - open_to
       - occupancy
     type: object
     properties:
@@ -386,11 +386,11 @@ definitions:
         type: string
         maxLength: 256
         minLength: 1
-      opened_from:
-        title: Opened from
+      open_from:
+        title: Open from
         type: string
-      opened_to:
-        title: Opened to
+      open_to:
+        title: Open to
         type: string
       occupancy:
         title: "Liczba os\xF3b w sto\u0142\xF3wce"
