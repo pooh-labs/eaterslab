@@ -102,6 +102,8 @@ class CameraAdmin(ModelAdmin):
 
 
 class FixedMenuOptionAdmin(TranslationAdmin):
+    list_display = ['cafeteria', 'name', 'price', 'vegetarian', 'avg_review_stars']
+
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
         if not is_admin(request.user):
