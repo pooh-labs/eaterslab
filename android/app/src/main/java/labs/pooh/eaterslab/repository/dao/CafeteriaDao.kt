@@ -22,4 +22,4 @@ data class CafeteriaDao (
 
 fun Cafeteria.toDao() =
     CafeteriaDao(name, description, subDescription, longitude.toDouble(), latitude.toDouble(),
-        logoUrl, address, openedFrom, openedTo, occupancyRelative!!.toDouble(), id)
+        logoUrl, address, openFrom, openTo, occupancyRelative!!.toDouble(), id)

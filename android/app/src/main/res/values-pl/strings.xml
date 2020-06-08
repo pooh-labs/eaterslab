@@ -73,4 +73,9 @@
     <string name="vegeterian_options">Opcja dla wegetarian</string>
     <string name="occupancy_stats">Statystyki zajętości [%]</string>
     <string name="average_review_stats">Statystyki opinii</string>
+    <string name="anonymous">Anonimowy</string>
+    <string name="username">Ustaw podpis opinii</string>
+    <string name="your_review">Twoja opinia</string>
+    <string name="send_review">Wyślij</string>
+    <string name="your_review_body">Opisz wrażenia</string>
 </resources>

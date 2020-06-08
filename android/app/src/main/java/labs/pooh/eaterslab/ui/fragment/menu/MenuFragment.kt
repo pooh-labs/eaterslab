@@ -13,6 +13,8 @@ import labs.pooh.eaterslab.R
 import labs.pooh.eaterslab.repository.dao.FixedMenuOptionDao
 import labs.pooh.eaterslab.ui.activity.abstracts.ConnectionStatusNotifier
 import labs.pooh.eaterslab.ui.activity.abstracts.viewModelFactory
+import labs.pooh.eaterslab.ui.activity.main.MainActivity
+import labs.pooh.eaterslab.ui.fragment.dialogs.ReviewDialogFragment
 import labs.pooh.eaterslab.ui.view.RatedFoodView
 
 class MenuFragment : Fragment() {
@@ -68,6 +70,12 @@ class MenuFragment : Fragment() {
             else {
                 RatedFoodView(requireContext(), (1..5).random().toFloat(), R.drawable.ic_no_food_image, menuOption.name, menuOption.price)
             }
+        }
+        val username = (requireActivity() as MainActivity).currentUsername
+        option.setOnClickListener {
+            ReviewDialogFragment { text, stars ->
+                viewModel.addReview(menuOption.id!!, username, text, stars)
+            }.show(parentFragmentManager, "review${menuOption.id}")
         }
         option.layoutParams = layoutParams
         menuOptionsGridLayout.addView(option)

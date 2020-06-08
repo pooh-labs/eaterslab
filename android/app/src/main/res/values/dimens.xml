@@ -67,4 +67,5 @@
     <dimen name="stats_title_size">22sp</dimen>
     <dimen name="stats_title_margin">16dp</dimen>
     <dimen name="loading_bar_margin">8dp</dimen>
+    <dimen name="review_stars_bottom_margin">16dp</dimen>
 </resources>
