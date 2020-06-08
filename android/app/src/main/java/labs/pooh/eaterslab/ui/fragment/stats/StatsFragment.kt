@@ -60,7 +60,7 @@ class StatsFragment : ThemedAbstractFragment() {
                     ticksScale = 2.1
                     ticksDistance = 0.5
                     ticksMap = { value, index -> HourTicks(index, value.timestamp, context) }
-                }.plot(stats, red) { min(it.occupancyRelative, 1.0) * 100.0 }
+                }.plot(stats, red) { it.occupancyPercent }
 
                 frame += barView
                 frame.layoutParams = FrameLayout.LayoutParams(PLOT_WIDTH, PLOT_HEIGHT).apply {
