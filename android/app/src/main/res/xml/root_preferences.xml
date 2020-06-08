@@ -15,6 +15,13 @@
             app:title="@string/language_title"
             app:useSimpleSummaryProvider="true" />
 
+        <EditTextPreference
+            app:defaultValue="@string/anonymous"
+            app:title="@string/username"
+            app:iconSpaceReserved="false"
+            app:key="@string/username"
+            />
+
     </PreferenceCategory>
 
     <PreferenceCategory

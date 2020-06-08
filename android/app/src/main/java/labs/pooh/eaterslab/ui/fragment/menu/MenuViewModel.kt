@@ -54,4 +54,11 @@ class MenuViewModel(connectionStatusNotifier: ConnectionStatusNotifier) : ViewMo
     fun clearMenuOptionsData() {
         menuOptionLiveData.value = mutableListOf()
     }
+
+    fun addReview(optionId: Int, reviewUsername: String, reviewText: String,
+                  reviewStars: Int) {
+        viewModelScope.launch {
+            repository.addFixedMenuOptionReview(optionId, reviewStars, reviewUsername, reviewText)
+        }
+    }
 }

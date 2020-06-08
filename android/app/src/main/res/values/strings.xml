@@ -81,4 +81,8 @@
     <string name="vegeterian_options">Vegeterian options</string>
     <string name="occupancy_stats">Occupancy stats [%]</string>
     <string name="average_review_stats">Average review stats</string>
+    <string name="anonymous">Anonymous</string>
+    <string name="username">Set your review username</string>
+    <string name="your_review">Your review</string>
+    <string name="send_review">Send</string>
 </resources>

@@ -10,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import labs.pooh.eaterslab.R
@@ -60,5 +61,12 @@ class MainActivity : AbstractNetworkCheckingActivity() {
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.navHostFragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    val currentUsername: String
+    get() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(applicationContext)
+        return prefs.getString(getString(R.string.username), getString(R.string.anonymous))
+            ?: getString(R.string.anonymous)
     }
 }
