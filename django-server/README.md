@@ -78,6 +78,7 @@ psql $DATABASE_URL -t -c "select 'drop table \"' || tablename || '\" cascade;' f
 python manage.py migrate && 
 python manage.py loaddata fixtures/demo-data.yaml && 
 python manage.py reset_passwords  && 
+python manage.py drf_create_token admin &&
 python manage.py generate_events && 
 python manage.py generate_reviews 
 ```
