@@ -17,6 +17,7 @@
             android:layout_marginTop="@dimen/map_item_info_title_margin"
             android:paddingStart="@dimen/map_item_info_title_margin"
             android:paddingEnd="@dimen/map_item_info_title_margin"
+            android:fontFamily="@font/roboto"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
