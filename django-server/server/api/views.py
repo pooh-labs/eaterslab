@@ -397,12 +397,6 @@ class UploadArtifactsView(AdminUploadView):
         super().__init__(path_join(settings.ARTIFACTS_ROOT, settings.ARTIFACT_NAME), **kwargs)
 
 
-class UploadArtifactsBetaView(AdminUploadView):
-
-    def __init__(self, **kwargs):
-        super().__init__(path_join(settings.ARTIFACTS_ROOT_BETA, settings.ARTIFACT_NAME), **kwargs)
-
-
 def handle_file_as_chunked(request, file_path):
     file_obj = request.data['file']
     with FileSystemStorage().open(file_path, 'wb+') as destination:

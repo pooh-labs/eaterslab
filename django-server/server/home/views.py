@@ -8,15 +8,11 @@ from server import settings
 
 
 def index(request):
-    return render(request, 'home/home.html')
+    return render(request, 'home/home.html', {'app_name': settings.ARTIFACT_NAME})
 
 
 def artifact_response(response):
     return existing__binary_file_response(path_join(settings.ARTIFACTS_ROOT, settings.ARTIFACT_NAME))
-
-
-def artifact_beta_response(response):
-    return existing__binary_file_response(path_join(settings.ARTIFACTS_ROOT_BETA, settings.ARTIFACT_NAME))
 
 
 def existing__binary_file_response(path):
