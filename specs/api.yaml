@@ -316,22 +316,6 @@ paths:
       tags:
         - fixed_menu_reviews
     parameters: []
-  /upload/artifacts/beta/{filename}/:
-    put:
-      operationId: upload_artifacts_beta_update
-      description: ''
-      parameters: []
-      responses:
-        '200':
-          description: ''
-      consumes: []
-      tags:
-        - upload
-    parameters:
-      - name: filename
-        in: path
-        required: true
-        type: string
   /upload/artifacts/{filename}/:
     put:
       operationId: upload_artifacts_update
