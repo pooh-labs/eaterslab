@@ -1,6 +1,6 @@
 import abc
 from calendar import monthrange
-from datetime import datetime
+from datetime import datetime, timezone
 from dateutil.parser import parse as timestamp_parse
 from os.path import join as path_join
 from pytz import utc
@@ -206,6 +206,10 @@ LONGEST_SUPPORTED_STATS_LEN = 1024
 DEFAULT_GROUP_BY = HourStatsDivider
 
 
+def timestamp_middle(begin: datetime, end:datetime):
+    return begin + ((end - begin) / 2)
+
+
 class StatsView(generics.ListAPIView):
     filter_backends = [filters.DjangoFilterBackend]
     filterset_class = TimeStampedFilterSet
@@ -223,7 +227,7 @@ class StatsView(generics.ListAPIView):
         pass
 
     @abc.abstractmethod
-    def next_count_value(self, count_value, curr_queryset: QuerySet):
+    def next_count_value(self, count_value, curr_queryset: QuerySet, **kwargs):
         pass
 
     @abc.abstractmethod
@@ -263,24 +267,27 @@ class StatsView(generics.ListAPIView):
 
         data = self.get_full_queryset(cafeteria_pk)
         before_data = data.filter(**{lookup_lte: timestamp_start}).order_by(self.timestamp_field_name())
-        count_value = self.init_value(before_data)
-        begin_stamp = timestamp_start
-        end_stamp = timestamp_start + divider.get_timestamp_delta(timestamp_start)
+        value_holder = self.init_value(before_data)
+        begin = timestamp_start
+        end = timestamp_start + divider.get_timestamp_delta(timestamp_start)
 
-        results = [(count_value, begin_stamp)]
+        curr_queryset = data.filter(**{lookup_gt: begin, lookup_lte: end}) \
+            .order_by(self.timestamp_field_name())
+        value_holder = self.next_count_value(value_holder, curr_queryset, begin=begin, end=end)
+        results = [(value_holder, timestamp_middle(begin, end))]
         for interval_i in range(int(count) - 1):
             finish_now = False
-            if end_stamp.astimezone() > datetime.now().astimezone() \
-                    or end_stamp.astimezone() > timestamp_end.astimezone():
-                end_stamp = datetime.now()
+            if end.astimezone() > datetime.now().astimezone() \
+                    or end.astimezone() > timestamp_end.astimezone():
+                end = datetime.now().astimezone()
                 finish_now = True
 
-            curr_queryset = data.filter(**{lookup_gt: begin_stamp, lookup_lte: end_stamp}) \
+            curr_queryset = data.filter(**{lookup_gt: begin, lookup_lte: end}) \
                 .order_by(self.timestamp_field_name())
-            count_value = self.next_count_value(count_value, curr_queryset)
-            begin_stamp += divider.get_timestamp_delta(begin_stamp)
-            end_stamp += divider.get_timestamp_delta(begin_stamp)
-            results.append((count_value, begin_stamp))
+            value_holder = self.next_count_value(value_holder, curr_queryset, begin=begin, end=end)
+            begin += divider.get_timestamp_delta(begin)
+            end += divider.get_timestamp_delta(begin)
+            results.append((value_holder, timestamp_middle(begin, end)))
 
             if finish_now:
                 break
@@ -300,14 +307,35 @@ def get_divider(group_by):
     return available.get(group_by, DEFAULT_GROUP_BY)
 
 
-def count_people(queryset):
-    counter = 0
+def get_people_change(queryset):
+    change_there = 0
     for event in queryset:
         if event.event_type == CameraEventType.PERSON_ENTERED.value:
-            counter += 1
+            change_there += 1
         elif event.event_type == CameraEventType.PERSON_LEFT.value:
-            counter -= 1
-    return counter
+            change_there -= 1
+    return change_there
+
+
+def secs_diff(begin: datetime, end: datetime):
+    return (end - begin).seconds
+
+
+def calculate_on_interval(queryset, begin: datetime, end: datetime, start_value):
+    full_len = secs_diff(begin, end)
+    curr_value = start_value
+    curr_begin = begin
+    result = 0
+    for event in queryset:
+        if event.event_type == CameraEventType.PERSON_ENTERED.value:
+            curr_value += 1
+        elif event.event_type == CameraEventType.PERSON_LEFT.value:
+            curr_value -= 1
+        elif event.event_type == CameraEventType.OCCUPANCY_OVERRIDE.value:
+            curr_value = event.event_value
+        result += curr_value * secs_diff(curr_begin, event.timestamp)
+        curr_begin = event.timestamp
+    return float(result) / float(full_len)
 
 
 class OccupancyStatsView(StatsView):
@@ -320,32 +348,39 @@ class OccupancyStatsView(StatsView):
         return 'timestamp'
 
     def init_value(self, before_queryset: QuerySet):
+        # we keep (interval_finish_value, interval_weighted_average_value) as result in events
         overrides = before_queryset.filter(event_type=CameraEventType.OCCUPANCY_OVERRIDE.value)
         if len(overrides) == 0:
-            init_override_value = 0
-            changed = count_people(before_queryset)
+            change = get_people_change(before_queryset)
+            return change, 0
         else:
             init_override_value = overrides.latest(self.timestamp_field_name()).event_value
-            changed = count_people(
+            change = get_people_change(
                 before_queryset.filter(timestamp__gt=overrides.latest(self.timestamp_field_name()).timestamp))
-        return init_override_value + changed
+            return init_override_value + change, 0
 
-    def next_count_value(self, count_value, curr_queryset: QuerySet):
+    def next_count_value(self, count_value, curr_queryset: QuerySet, **kwargs):
         curr_overrides = curr_queryset.filter(event_type=CameraEventType.OCCUPANCY_OVERRIDE.value)
+        last_finished, _ = count_value
+        begin, end = kwargs.get('begin'), kwargs.get('end')
+        weighted_average = calculate_on_interval(curr_queryset, begin, end, last_finished)
         if len(curr_overrides) == 0:
-            count_value += count_people(curr_queryset)
+            change = get_people_change(curr_queryset)
+            return last_finished + change, weighted_average
         else:
             last_override = curr_overrides.latest(self.timestamp_field_name())
             after_override = curr_queryset.filter(timestamp__gt=last_override.timestamp)
-            count_value = last_override.event_value + count_people(after_override)
-        return count_value
+            override_value = last_override.event_value
+            change_after = get_people_change(after_override)
+            return override_value + change_after, weighted_average
 
     def map_to_result_objects(self, index, value, timestamp, cafeteria_pk):
+        _, weighted_average = value
         capacity = Cafeteria.objects.get(id=cafeteria_pk).capacity
         return OccupancyStatsData(id=index,
                                   timestamp=timestamp,
-                                  occupancy=value,
-                                  occupancy_relative=min((float(value) / float(capacity)), 1.0))
+                                  occupancy=weighted_average,
+                                  occupancy_relative=(float(weighted_average) / float(capacity)))
 
 
 class AverageDishReviewStatsView(StatsView):
@@ -364,7 +399,7 @@ class AverageDishReviewStatsView(StatsView):
         length = max(len(before_queryset), 1)
         return all_stars / length
 
-    def next_count_value(self, count_value, curr_queryset: QuerySet):
+    def next_count_value(self, count_value, curr_queryset: QuerySet, **kwargs):
         return self.init_value(curr_queryset)
 
     def map_to_result_objects(self, index, value, timestamp, cafeteria_pk):
