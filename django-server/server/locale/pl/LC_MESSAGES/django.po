@@ -34,8 +34,6 @@ msgid "state"
 msgstr "stan"
 
 #: admin/admin.py:101
-#, fuzzy
-#| msgid "Last event time"
 msgid "last event time"
 msgstr "czas ostatniego zdarzenia"
 
