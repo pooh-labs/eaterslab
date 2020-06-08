@@ -138,7 +138,7 @@ class CameraEvent(models.Model):
     event_value = models.IntegerField(validators=[MinValueValidator(0)], null=True, blank=True, default=None)
 
     def __str__(self):
-        return "[{}, {}, {}, {}]".format(self.cafeteria, self.camera, self.get_event_type_display(), self.timestamp)
+        return "{}@{}".format(self.get_event_type_display(), self.timestamp)
 
     def save(self, *args, **kwargs):
         self.update_cafeteria_occupancy()
