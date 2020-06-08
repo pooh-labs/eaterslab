@@ -6,7 +6,7 @@ Authors: Krzysztof Antoniak
 
 ### Changelog
 
-* v1.0 (2020-03-09): Initial revision
+* v1.0 (2020-03-09): Initial revision (Krzysztof Antoniak)
 
 ## Problem statement
 
