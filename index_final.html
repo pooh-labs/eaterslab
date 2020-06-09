@@ -198,8 +198,6 @@ by PoohLabs
 .lang-version[[English version](./index_en.html)]
 .footnote[Zapraszamy na [stronę projektu](https://github.com/pooh-labs/eaterslab)]
 ---
-## Co to właściwie i czemu właśnie Ty powinieneś tego używać?
----
 layout: false
 .left-column[
   ## Projekt
@@ -245,49 +243,6 @@ layout: false
   ## Projekt
   ### Problem
   ### Rozwiązanie
-  ### Korzyści
-]
-.right-column[
-
-Dla klientów:
-
-* Informacje dostępne przed pójściem na stołówkę
-
-* Grupowe oceny posiłków
-
-* Dane dostępne dla niepełnosprawnych i osób nie mówiących po polsku
-
-Dla właścicieli:
-
-* System pomaga rozładować skoki w liczbie klientów
-
-* Przegląd statystyk historycznych dot. odwiedzin i ocen
-
-* Możliwości automatycznego eksportu np. na fanpage FB
-
-]
----
-layout: false
-.left-column[
-  ## Projekt
-  ### Problem
-  ### Rozwiązanie
-  ### Korzyści
-  ### Architektura systemu
-]
-.right-column[
-
-<img style="margin-top: 100px;" height="230px" src="img/system-overview.png" />
-
-]
----
-layout: false
-.left-column[
-  ## Projekt
-  ### Problem
-  ### Rozwiązanie
-  ### Korzyści
-  ### Architektura systemu
   ### Prowadzenie projektu
 ]
 .right-column[
@@ -310,94 +265,12 @@ Efekty naszej pracy:
 
 ]
 ---
-template: inverse
 
-## Urządzenia śledzące - **kamery z RaspberryPi**
----
-.left-column[
-  ## Kamera
-  ### Co robi
-]
-.right-column[
+## Kamera
 
-** Co robią kamery? **
+<img src="./img/opencv_people_counter_result01.gif" alt="people on GIF" style="height: 400px; float: right;" />
+<img src="./img/camera.jpg" alt="RPi" style="height: 280px; position: relative; margin-top: -160px;" />
 
-* Wczytują obraz z jednego z dostępnych źródeł (kamerka USB, RPi Camera Module, plik wideo).
-
-* Rozpoznają pojedyncze osoby na obrazie.
-
-* Grupują i wysyłają dane do serwera.
-      * `person_entered`
-      * `person_left`
-      * `monitoring_started`
-      * `monitoring_ended`
-      * `occupancy_override`
-
-* Zapisują lokalne statystyki.
-]
----
-
-.left-column[
-  ## Kamera
-  ### Co robi
-  ### Jak działa
-]
-.right-column[
-
-* Śledzi pozycje osób na obrazie.
-
-* Sprawdza, od której strony osoba przekracza linię.
-
-<img src="./img/opencv_people_counter_result01.gif" alt="people on GIF" style="height: 400px;" />
-]
----
-
-.left-column[
-  ## Kamera
-  ### Co robi
-  ### Jak działa
-  #### Etap 1
-]
-.right-column[
-### Etap 1: Rozpoznawanie osób
-
-* Uruchamia gotową, wytrenowaną sieć neuronową na pojedynczej klatce (`cv2.dnn`)
-
-* Sieć zwraca wierzchołki prostokąta dla każdego obiektu (`(startX, startY, endX, endY)`)
-
-* Obliczamy środek prostokąta i zachowujemy dane
-
-Kosztowny etap, więc uruchamiany co np. 30 klatek.
-
-]
----
-
-.left-column[
-  ## Kamera
-  ### Co robi
-  ### Jak działa
-  #### Etap 1
-  #### Etap 2
-]
-.right-column[
-### Etap 2: Śledzenie osób
-
-* Działa na każdym obiekcie oddzielnie
-
-* Uruchamia algorytm śledzenia z bibilioteki `dlib` podając dane prostokąta
-
-* Otrzymuje nowe pozycje obiektów
-
-* Dla każdej starej pozycji przyporządkowuje nową, najbliższą
-
-* Jeżeli obiekt przekroczył linię, to osoba weszła/wyszła
-
-]
-
----
-template: inverse
-
-## Serwer danych **Django**
 ---
 .left-column[
   ## Django
