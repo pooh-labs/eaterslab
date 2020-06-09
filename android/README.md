@@ -17,3 +17,8 @@ Generation process can be run for *api.yaml* file with
 ./api_generate_kotlin.sh api.yaml
 ```
 The generated classes are automatically moved to client model folder in android/app/src/main/java/labs/pooh/eaterslab/client. If needed the script can be easily modified to generate for example Java model as the standard OpenAPI generator is used in this project.
+
+## Signed APK file
+
+Compiled and signed py PoohLabs APK version of the application is available [here](./release/EatersLab.apk) and can be safely 
+downloaded and installed by the system users.
