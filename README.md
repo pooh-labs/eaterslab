@@ -1,6 +1,11 @@
 # EatersLab
 
-EatersLab is a system monitoring live occupation of cafeterias. System of cameras counts visitors entering and leaving lunchroom space. Central endpoint aggregates occupancy reports for owners and customers using mobile or web clients which also serve as information/feedback loop.
+EatersLab is a system monitoring live occupation of cafeterias. System of cameras counts visitors entering and leaving 
+lunchroom space. Central endpoint aggregates occupancy reports for owners and customers using mobile or web clients which also serve as information/feedback loop.
+
+The project webpage is available on [https://eaterslab.herokuapp.com/](https://eaterslab.herokuapp.com/). There the 
+client app can be downloaded as well as the [API endpoint documentation](https://eaterslab.herokuapp.com/doc) can be tested.
+The more useful form of API specification can be downloaded from [here](https://eaterslab.herokuapp.com/api.yaml) as the `yaml` file.
 
 ## Documentation
 
