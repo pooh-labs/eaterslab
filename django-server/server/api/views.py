@@ -318,7 +318,7 @@ def get_people_change(queryset):
 
 
 def secs_diff(begin: datetime, end: datetime):
-    return (end - begin).seconds
+    return (end - begin).total_seconds()
 
 
 def calculate_on_interval(queryset, begin: datetime, end: datetime, start_value):
