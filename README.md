@@ -3,9 +3,37 @@
 EatersLab is a system monitoring live occupation of cafeterias. System of cameras counts visitors entering and leaving 
 lunchroom space. Central endpoint aggregates occupancy reports for owners and customers using mobile or web clients which also serve as information/feedback loop.
 
-The project webpage is available on [https://eaterslab.herokuapp.com/](https://eaterslab.herokuapp.com/). There the 
-client app can be downloaded as well as the [API endpoint documentation](https://eaterslab.herokuapp.com/doc) can be tested.
-The more useful form of API specification can be downloaded from [here](https://eaterslab.herokuapp.com/api.yaml) as the `yaml` file.
+Project webpage: [https://eaterslab.herokuapp.com/en](https://eaterslab.herokuapp.com/en)<br />
+API documentation: [https://eaterslab.herokuapp.com/doc](https://eaterslab.herokuapp.com/doc)<br />
+API YAML specification: [https://eaterslab.herokuapp.com/api.yaml](https://eaterslab.herokuapp.com/api.yaml)
+
+## Screenshots
+
+### Website
+<p align="center">
+    <a href="readme-images/home.png"><img src="readme-images/thumbs/home.png" width="290" /></a>
+    <a href="readme-images/api-docs.png"><img src="readme-images/thumbs/api-docs.png" width="290" /></a>
+    <a href="readme-images/admin-home.png"><img src="readme-images/thumbs/admin-home.png" width="290" /></a>
+    <a href="readme-images/admin-cafeterias.png"><img src="readme-images/thumbs/admin-cafeterias.png" width="290" /></a>
+    <a href="readme-images/admin-camera-events.png"><img src="readme-images/thumbs/admin-camera-events.png" width="290" /></a>
+    <a href="readme-images/admin-cameras.png"><img src="readme-images/thumbs/admin-cameras.png" width="290" /></a>
+    <a href="readme-images/admin-menus.png"><img src="readme-images/thumbs/admin-menus.png" width="290" /></a>
+    <a href="readme-images/admin-reviews.png"><img src="readme-images/thumbs/admin-reviews.png" width="290" /></a>
+    <a href="readme-images/admin-statistics.png"><img src="readme-images/thumbs/admin-statistics.png" width="290" /></a>
+</p>
+
+### Android
+<p align="center">
+    <a href="readme-images/android-home.png"><img src="readme-images/thumbs/android-home.png" width="290" /></a>
+    <a href="readme-images/android-list.png"><img src="readme-images/thumbs/android-list.png" width="290" /></a>
+    <a href="readme-images/android-map.png"><img src="readme-images/thumbs/android-map.png" width="290" /></a>
+    <a href="readme-images/android-cafeteria.png"><img src="readme-images/thumbs/android-cafeteria.png" width="290" /></a>
+    <a href="readme-images/android-menu.png"><img src="readme-images/thumbs/android-menu.png" width="290" /></a>
+    <a href="readme-images/android-review.png"><img src="readme-images/thumbs/android-review.png" width="290" /></a>
+    <a href="readme-images/android-stats.png"><img src="readme-images/thumbs/android-stats.png" width="290" /></a>
+    <a href="readme-images/android-settings.png"><img src="readme-images/thumbs/android-settings.png" width="290" /></a>
+</p>
+
 
 ## Documentation
 
