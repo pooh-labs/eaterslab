@@ -26,6 +26,7 @@ for filename in $files; do
 done
 
 # Generate Markdown
+raw_master_url = "https://raw.githubusercontent.com/pooh-labs/eaterslab/master/"
 cat <<EOF > screenshots.md
 ## Screenshots
 
@@ -35,7 +36,7 @@ EOF
 
 for filename in ${website_files[@]}; do
     cat <<EOF >> screenshots.md
-    <a href="readme-images/${filename}"><img src="readme-images/thumbs/${filename}" width="${thumb_width}" /></a>
+    <a href="${raw_master_url}readme-images/${filename}"><img src="readme-images/thumbs/${filename}" width="${thumb_width}" /></a>
 EOF
 done
 
@@ -48,7 +49,7 @@ EOF
 
 for filename in ${android_files[@]}; do
     cat <<EOF >> screenshots.md
-    <a href="readme-images/${filename}"><img src="readme-images/thumbs/${filename}" width="${thumb_width}" /></a>
+    <a href="${raw_master_url}readme-images/${filename}"><img src="readme-images/thumbs/${filename}" width="${thumb_width}" /></a>
 EOF
 done
 
