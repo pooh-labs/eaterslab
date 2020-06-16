@@ -5,7 +5,17 @@ lunchroom space. Central endpoint aggregates occupancy reports for owners and cu
 
 Project webpage: [https://eaterslab.herokuapp.com/en](https://eaterslab.herokuapp.com/en)<br />
 API documentation: [https://eaterslab.herokuapp.com/doc](https://eaterslab.herokuapp.com/doc)<br />
-API YAML specification: [https://eaterslab.herokuapp.com/api.yaml](https://eaterslab.herokuapp.com/api.yaml)
+YAML API specification: [https://eaterslab.herokuapp.com/api.yaml](https://eaterslab.herokuapp.com/api.yaml)
+
+## Documentation
+
+1. [Project pitch](specs/pitch.md)
+2. [Requirements specification](specs/requirements.md)
+3. [Use cases list](specs/use-cases.md)
+4. [System architecture specification](specs/architecture.md)
+5. [Testing specification](specs/testing.md)
+6. [Project plan](specs/project-plan.md)
+7. [Project presentation](https://pooh-labs.github.io/eaterslab/index_en.html)
 
 ## Screenshots
 
@@ -33,17 +43,6 @@ API YAML specification: [https://eaterslab.herokuapp.com/api.yaml](https://eater
     <a href="https://raw.githubusercontent.com/pooh-labs/eaterslab/master/readme-images/android-stats.png"><img src="readme-images/thumbs/android-stats.png" width="290" /></a>
     <a href="https://raw.githubusercontent.com/pooh-labs/eaterslab/master/readme-images/android-settings.png"><img src="readme-images/thumbs/android-settings.png" width="290" /></a>
 </p>
-
-
-## Documentation
-
-1. [Project pitch](specs/pitch.md)
-2. [Requirements specification](specs/requirements.md)
-3. [Use cases list](specs/use-cases.md)
-4. [System architecture specification](specs/architecture.md)
-5. [Testing specification](specs/testing.md)
-6. [Project plan](specs/project-plan.md)
-7. [Project presentation](https://pooh-labs.github.io/eaterslab/index_en.html)
 
 ## Authors
 
